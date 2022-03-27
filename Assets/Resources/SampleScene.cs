@@ -23,6 +23,11 @@ public class SampleScene : MonoBehaviourPunCallbacks
     {
         // ランダムな座標に自身のアバター（ネットワークオブジェクト）を生成する
         var position = new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f));
-        PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
+        GameObject avatar = PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
+
+
+        Camera camera = GetComponentInChildren<Camera>();
+        camera.transform.parent = avatar.transform;
+        camera.transform.position = avatar.transform.position;
     }
 }

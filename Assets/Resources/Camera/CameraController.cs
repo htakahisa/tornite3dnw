@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviourPunCallbacks
     float x, z;
     float speed = 0.1f;
 
-    public GameObject cam;
+    private GameObject cam;
     Quaternion cameraRot, characterRot;
     float Xsensityvity = 0.3f, Ysensityvity = 0.3f;
 
@@ -20,17 +20,40 @@ public class CameraController : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        cameraRot = cam.transform.localRotation;
-        characterRot = transform.localRotation;
+
 
         // マウスを中央で固定
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (photonView == null || !photonView.IsMine)
+        {
+            return;
+        }
+
+        if (GetComponentInChildren<Camera>() == null)
+        {
+            return;
+        } else
+        {
+            cam = GetComponentInChildren<Camera>().gameObject;
+            cameraRot = cam.transform.localRotation;
+            characterRot = transform.localRotation;
+        }
+
+        move();
+
+        UpdateCursorLock();
+    }
+
+    private void move()
+    {
+
         float xRot = Input.GetAxis("Mouse X") * Ysensityvity;
         float yRot = Input.GetAxis("Mouse Y") * Xsensityvity;
 
@@ -42,14 +65,12 @@ public class CameraController : MonoBehaviourPunCallbacks
 
         cam.transform.localRotation = cameraRot;
         transform.localRotation = characterRot;
-
-
-        UpdateCursorLock();
     }
+
 
     private void FixedUpdate()
     {
-        if (!photonView.IsMine)
+        if (photonView == null || !photonView.IsMine)
         {
             return;
         }
@@ -67,6 +88,11 @@ public class CameraController : MonoBehaviourPunCallbacks
 
     public void UpdateCursorLock()
     {
+        if (photonView == null || !photonView.IsMine)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             cursorLock = false;
@@ -88,8 +114,14 @@ public class CameraController : MonoBehaviourPunCallbacks
     }
 
     //角度制限関数の作成
-    public Quaternion ClampRotation(Quaternion q)
+    private Quaternion ClampRotation(Quaternion q)
     {
+        if (q.x == 0 && q.y == 0 && q.z == 0)
+        {
+            q.w = 1f;
+            return q;
+        }
+
         //q = x,y,z,w (x,y,zはベクトル（量と向き）：wはスカラー（座標とは無関係の量）)
 
         q.x /= q.w;
