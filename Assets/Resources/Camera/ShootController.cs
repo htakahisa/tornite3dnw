@@ -6,13 +6,28 @@ using Photon.Pun;
 public class ShootController : MonoBehaviourPunCallbacks
 {
     [SerializeField]
-    private GameObject bulletPrefab;
-    public float shotSpeed;
-    public int shotCount = 30;
+    private GameObject bullet1;
+
+    [SerializeField]
+    private GameObject bullet2;
 
 
-    private float shotInterval = 0.1f;
+    private int weponId = 1;
+    private BulletController bc;
+
+    public float shotSpeed = 0.0f;
     private float shotDeltatime = 999f;
+
+
+
+    public AudioClip weponSe1;
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        //Componentを取得
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -23,36 +38,85 @@ public class ShootController : MonoBehaviourPunCallbacks
         }
         shotDeltatime += Time.deltaTime;
 
+        if (weponId == 1)
+        {
+            bc = bullet1.GetComponent<BulletController>();
+        } else if (weponId == 2)
+        {
+            bc = bullet2.GetComponent<BulletController>();
+        }
+        if (bc == null)
+        {
+            return;
+        }
+
+
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            if (shotDeltatime < shotInterval)
+            if (shotDeltatime < bc.getInterval())
             {
                 return;
             }
             shotDeltatime = 0;
 
-            if (shotCount <= 0)
+            if (!bc.canShoot())
             {
                 return;
             }
-            shotCount -= 1;
 
-            GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0));
-            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+            if (weponId == 1)
+            {
 
-            bulletRb.transform.position += bulletRb.transform.forward * 1.01f;
-            bulletRb.AddForce(transform.forward * shotSpeed);
+                
+                shotSpeed = bc.getShotSpeed();
 
-            //射撃されてから3秒後に銃弾のオブジェクトを破壊する.
+                for (int i = 0; i < 8; i++)
+                {
+                    GameObject bullet = (GameObject)Instantiate(bullet1, transform.position, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0));
+                    Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
 
-            Destroy(bullet, 3.0f);
-            
+                    float spreadRatio = 0.2f;
+                    bulletRb.transform.position += bulletRb.transform.forward * 1.01f;
+                    bulletRb.transform.position += bulletRb.transform.right * Random.Range(-spreadRatio, spreadRatio);
+                    bulletRb.transform.position += bulletRb.transform.up * Random.Range(-spreadRatio, spreadRatio);
+                    bulletRb.AddForce(transform.forward * shotSpeed);
+
+                    //射撃されてから3秒後に銃弾のオブジェクトを破壊する.
+
+                    Destroy(bullet, 3.0f);
+                }
+                audioSource.PlayOneShot(weponSe1);
+            }
+            else if (weponId == 2)
+            {
+                shotSpeed = bc.getShotSpeed();
+
+                GameObject bullet = (GameObject)Instantiate(bullet2, transform.position, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0));
+                Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+
+                bulletRb.transform.position += bulletRb.transform.forward * 1.01f;
+                bulletRb.AddForce(transform.forward * shotSpeed);
+
+                //射撃されてから3秒後に銃弾のオブジェクトを破壊する.
+
+                Destroy(bullet, 3.0f);
+            }
+
+            // 弾発射カウントを1減らす
+            bc.shoot();
 
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
-            shotCount = 30;
+            bc.reload();
 
+        } else if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            weponId = 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            weponId = 2;
         }
 
     }
