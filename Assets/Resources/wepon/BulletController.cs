@@ -11,9 +11,12 @@ public abstract class BulletController : MonoBehaviour
 
     protected float interval = 0f;
 
+    protected int damage = 7;
+
     public BulletController(float shotSpeed,
         int magazineSize,
-        float interval
+        float interval,
+        int damage
         )
     {
         this.shotSpeed = shotSpeed;
@@ -21,6 +24,16 @@ public abstract class BulletController : MonoBehaviour
         this.currentMagazineSize = magazineSize;
 
         this.interval = interval;
+        this.damage = damage;
+    }
+
+
+
+
+
+    public int getDamage()
+    {
+        return this.damage;
     }
 
     public float getInterval()

@@ -9,9 +9,12 @@ public class Bullet2Controller : BulletController
     static public int magazineSize = 18;
     static float interval = 0.1f;
 
+    static int damage = 7;
+
     public Bullet2Controller() : base(shotSpeed,
          magazineSize,
-         interval)
+         interval,
+         damage)
     {
     }
 

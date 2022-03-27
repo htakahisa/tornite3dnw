@@ -74,7 +74,10 @@ public class ShootController : MonoBehaviourPunCallbacks
 
                 for (int i = 0; i < 8; i++)
                 {
-                    GameObject bullet = (GameObject)Instantiate(bullet1, transform.position, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0));
+
+                    GameObject bullet = PhotonNetwork.Instantiate("bullet1", transform.position, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0));
+                    //GameObject bullet = (GameObject)Instantiate(bullet1, transform.position, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0));
+                    
                     Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
 
                     float spreadRatio = 0.2f;
@@ -93,7 +96,8 @@ public class ShootController : MonoBehaviourPunCallbacks
             {
                 shotSpeed = bc.getShotSpeed();
 
-                GameObject bullet = (GameObject)Instantiate(bullet2, transform.position, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0));
+                GameObject bullet = PhotonNetwork.Instantiate("bullet2", transform.position, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0));
+                //GameObject bullet = (GameObject)Instantiate(bullet2, transform.position, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0));
                 Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
 
                 bulletRb.transform.position += bulletRb.transform.forward * 1.01f;
