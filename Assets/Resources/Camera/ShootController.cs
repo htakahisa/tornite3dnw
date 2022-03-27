@@ -19,8 +19,9 @@ public class ShootController : MonoBehaviourPunCallbacks
     private float shotDeltatime = 999f;
 
 
-
+    public AudioClip noArmo;
     public AudioClip weponSe1;
+    public AudioClip weponSe2;
     private AudioSource audioSource;
 
     void Start()
@@ -61,6 +62,7 @@ public class ShootController : MonoBehaviourPunCallbacks
 
             if (!bc.canShoot())
             {
+                audioSource.PlayOneShot(noArmo);
                 return;
             }
 
@@ -100,6 +102,7 @@ public class ShootController : MonoBehaviourPunCallbacks
                 //射撃されてから3秒後に銃弾のオブジェクトを破壊する.
 
                 Destroy(bullet, 3.0f);
+                audioSource.PlayOneShot(weponSe2);
             }
 
             // 弾発射カウントを1減らす
