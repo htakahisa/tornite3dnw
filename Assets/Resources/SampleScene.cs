@@ -22,12 +22,13 @@ public class SampleScene : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         // ランダムな座標に自身のアバター（ネットワークオブジェクト）を生成する
-        var position = new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f));
+        var position = new Vector3(-400, 3, -270);
         GameObject avatar = PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
 
 
         Camera camera = GetComponentInChildren<Camera>();
+        var cameraPosition = avatar.transform.position;
         camera.transform.parent = avatar.transform;
-        camera.transform.position = avatar.transform.position;
+        camera.transform.position = new Vector3(cameraPosition.x, cameraPosition.y + 3, cameraPosition.z);
     }
 }

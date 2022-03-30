@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviourPunCallbacks
 
     private GameObject cam;
     Quaternion cameraRot, characterRot;
-    float Xsensityvity = 0.3f, Ysensityvity = 0.3f;
+    float Xsensityvity = 0.5f, Ysensityvity = 0.5f;
 
     bool cursorLock = true;
 
