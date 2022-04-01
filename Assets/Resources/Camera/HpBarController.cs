@@ -9,6 +9,10 @@ public class HpBarController : MonoBehaviour
 
     private float hp = 100;
 
+
+    public AudioClip damagedSe;
+    private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,10 +31,16 @@ public class HpBarController : MonoBehaviour
         if (collision.gameObject.tag == "armo")
         {
             slider = GetComponentInChildren<Slider>();
-            if (slider != null) { 
+            if (slider != null) {
+                //Component‚ðŽæ“¾
+                audioSource = gameObject.GetComponentInChildren<AudioSource>();
+                audioSource.PlayOneShot(damagedSe);
+
                 BulletController bc = collision.gameObject.GetComponent<BulletController>();
                 hp = hp - bc.getDamage();
                 slider.value = hp;
+
+                collision.transform.root.GetComponent<DamageShowController>().Damage(collision);
             }
         }
     }
