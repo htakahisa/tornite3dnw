@@ -4,11 +4,8 @@ using UnityEngine;
 using Photon.Pun;
 
 public class CameraController : MonoBehaviourPunCallbacks {
-
-
-
     float x, z;
-    float speed = 0.2f;
+    float speed = 0.1f;
 
     private GameObject cam;
     Quaternion cameraRot, characterRot;
@@ -19,9 +16,18 @@ public class CameraController : MonoBehaviourPunCallbacks {
     //変数の宣言(角度の制限用)
     float minX = -90f, maxX = 90f;
 
+
+
+    //　通常のジャンプ力
+    [SerializeField]
+    private float jumpPower = 55000f;
+    private Rigidbody rb;
+
+
     // Start is called before the first frame update
     void Start() {
 
+        rb = GetComponent<Rigidbody>();
 
         // マウスを中央で固定
         Cursor.lockState = CursorLockMode.Locked;
@@ -31,25 +37,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     // Update is called once per frame
     void Update() {
-
-        if (Input.GetKeyDown(KeyCode.W)) {
-            Vector3 velocity = cam.transform.rotation * new Vector3(speed * 5, 0, speed);
-        }
-        if (Input.GetKeyDown(KeyCode.S)) {
-            Vector3 velocity = cam.transform.rotation * new Vector3(-speed * 5, 0, speed);
-        }
-        if (Input.GetKeyDown(KeyCode.A)) {
-            transform.position += new Vector3(-0.8f, 0, z);
-        }
-        if (Input.GetKeyDown(KeyCode.D)) {
-            transform.position += new Vector3(x, 0, 0.8f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            transform.position += new Vector3(x, 2, z);
-        }
-
-            if (photonView == null || !photonView.IsMine) {
+        if (photonView == null || !photonView.IsMine) {
             return;
         }
 
@@ -62,6 +50,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         }
 
         move();
+        jump();
 
         UpdateCursorLock();
     }
@@ -81,8 +70,36 @@ public class CameraController : MonoBehaviourPunCallbacks {
         transform.localRotation = characterRot;
     }
 
+    private void jump() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            ////　走って移動している時はジャンプ力を上げる
+            //if (runFlag && velocity.magnitude > 0f) {
+            //    velocity.y += dashJumpPower;
+            //} else {
+            //    velocity.y += jumpPower;
+            //}
+            //velocity.y += jumpPower;
+            rb.AddForce(new Vector3(0, jumpPower, 0));
+        }
+    }
 
- 
+    private void FixedUpdate() {
+        if (photonView == null || !photonView.IsMine) {
+            return;
+        }
+        x = 0;
+        z = 0;
+
+        x = Input.GetAxisRaw("Horizontal") * speed;
+        z = Input.GetAxisRaw("Vertical") * speed;
+
+        //transform.position += new Vector3(x,0,z);
+        Vector3 comFoward = new Vector3(cam.transform.forward.x, 0, cam.transform.forward.z).normalized;
+        Vector3 pos = comFoward * z + cam.transform.right * x;
+        transform.position += pos;
+
+        //transform.position += cam.transform.forward * z + cam.transform.right * x;
+    }
 
 
     public void UpdateCursorLock() {
@@ -126,9 +143,5 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         return q;
     }
+
 }
-
-   
-   
-
-
