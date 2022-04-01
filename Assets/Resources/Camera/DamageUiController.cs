@@ -26,7 +26,7 @@ public class DamageUiController : MonoBehaviour
 
 		if (damageText.color.a <= 0.1f)
 		{
-			Destroy(gameObject);
+			//Destroy(gameObject);
 		}
 	}
 }

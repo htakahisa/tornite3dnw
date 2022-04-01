@@ -40,7 +40,7 @@ public class HpBarController : MonoBehaviour
                 hp = hp - bc.getDamage();
                 slider.value = hp;
 
-                collision.transform.root.GetComponent<DamageShowController>().Damage(collision);
+                GetComponent<DamageShowController>().Damage(collision);
             }
         }
     }

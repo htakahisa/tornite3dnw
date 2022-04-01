@@ -28,6 +28,6 @@ public class DamageShowController : MonoBehaviour
     public void Damage(Collision col)
     {
         //　DamageUIをインスタンス化。登場位置は接触したコライダの中心からカメラの方向に少し寄せた位置
-        var obj = PhotonNetwork.Instantiate("DamageUi", col.collider.bounds.center - Camera.main.transform.forward * 20f, Quaternion.identity);
+        var obj = PhotonNetwork.Instantiate("DamageUi", gameObject.transform.up * 10f, Quaternion.identity);
     }
 }

@@ -15,7 +15,7 @@ public class ShootController : MonoBehaviourPunCallbacks
     private int weponId = 1;
     private BulletController bc;
 
-    public float shotSpeed = 0.0f;
+    private float shotSpeed = 0.0f;
     private float shotDeltatime = 999f;
 
 
