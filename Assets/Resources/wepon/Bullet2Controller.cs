@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet2Controller : BulletController
 {
 
-    static public float shotSpeed = 1200;
+    static public float shotSpeed = 3000;
     static public int magazineSize = 18;
     static float interval = 0.1f;
 

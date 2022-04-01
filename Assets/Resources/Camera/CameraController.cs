@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class CameraController : MonoBehaviourPunCallbacks
-{
+public class CameraController : MonoBehaviourPunCallbacks {
+
+
+
     float x, z;
-    float speed = 0.1f;
+    float speed = 0.2f;
 
     private GameObject cam;
     Quaternion cameraRot, characterRot;
@@ -18,8 +20,7 @@ public class CameraController : MonoBehaviourPunCallbacks
     float minX = -90f, maxX = 90f;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
 
 
         // マウスを中央で固定
@@ -29,18 +30,32 @@ public class CameraController : MonoBehaviourPunCallbacks
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (photonView == null || !photonView.IsMine)
-        {
+    void Update() {
+
+        if (Input.GetKeyDown(KeyCode.W)) {
+            Vector3 velocity = cam.transform.rotation * new Vector3(speed * 5, 0, speed);
+        }
+        if (Input.GetKeyDown(KeyCode.S)) {
+            Vector3 velocity = cam.transform.rotation * new Vector3(-speed * 5, 0, speed);
+        }
+        if (Input.GetKeyDown(KeyCode.A)) {
+            transform.position += new Vector3(-0.8f, 0, z);
+        }
+        if (Input.GetKeyDown(KeyCode.D)) {
+            transform.position += new Vector3(x, 0, 0.8f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            transform.position += new Vector3(x, 2, z);
+        }
+
+            if (photonView == null || !photonView.IsMine) {
             return;
         }
 
-        if (GetComponentInChildren<Camera>() == null)
-        {
+        if (GetComponentInChildren<Camera>() == null) {
             return;
-        } else
-        {
+        } else {
             cam = GetComponentInChildren<Camera>().gameObject;
             cameraRot = cam.transform.localRotation;
             characterRot = transform.localRotation;
@@ -51,8 +66,7 @@ public class CameraController : MonoBehaviourPunCallbacks
         UpdateCursorLock();
     }
 
-    private void move()
-    {
+    private void move() {
 
         float xRot = Input.GetAxis("Mouse X") * Ysensityvity;
         float yRot = Input.GetAxis("Mouse Y") * Xsensityvity;
@@ -68,56 +82,31 @@ public class CameraController : MonoBehaviourPunCallbacks
     }
 
 
-    private void FixedUpdate()
-    {
-        if (photonView == null || !photonView.IsMine)
-        {
-            return;
-        }
-        x = 0;
-        z = 0;
-
-        x = Input.GetAxisRaw("Horizontal") * speed;
-        z = Input.GetAxisRaw("Vertical") * speed;
-
-        //transform.position += new Vector3(x,0,z);
-
-        transform.position += cam.transform.forward * z + cam.transform.right * x;
-    }
+ 
 
 
-    public void UpdateCursorLock()
-    {
-        if (photonView == null || !photonView.IsMine)
-        {
+    public void UpdateCursorLock() {
+        if (photonView == null || !photonView.IsMine) {
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
             cursorLock = false;
-        }
-        else if (Input.GetMouseButton(0))
-        {
+        } else if (Input.GetMouseButton(0)) {
             cursorLock = true;
         }
 
 
-        if (cursorLock)
-        {
+        if (cursorLock) {
             Cursor.lockState = CursorLockMode.Locked;
-        }
-        else if (!cursorLock)
-        {
+        } else if (!cursorLock) {
             Cursor.lockState = CursorLockMode.None;
         }
     }
 
     //角度制限関数の作成
-    private Quaternion ClampRotation(Quaternion q)
-    {
-        if (q.x == 0 && q.y == 0 && q.z == 0)
-        {
+    private Quaternion ClampRotation(Quaternion q) {
+        if (q.x == 0 && q.y == 0 && q.z == 0) {
             q.w = 1f;
             return q;
         }
@@ -137,5 +126,9 @@ public class CameraController : MonoBehaviourPunCallbacks
 
         return q;
     }
-
 }
+
+   
+   
+
+

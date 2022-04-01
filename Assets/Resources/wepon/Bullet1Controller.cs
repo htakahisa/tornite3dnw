@@ -7,7 +7,7 @@ public class Bullet1Controller : BulletController
 {
 
 
-    static float shotSpeed = 1000;
+    static float shotSpeed = 4000;
     static int magazineSize = 8;
     static float interval = 0.5f;
 

@@ -21,14 +21,14 @@ public class SampleScene : MonoBehaviourPunCallbacks
     // ゲームサーバーへの接続が成功した時に呼ばれるコールバック
     public override void OnJoinedRoom()
     {
-        // ランダムな座標に自身のアバター（ネットワークオブジェクト）を生成する
-        var position = new Vector3(-400, 3, -270);
+        // 自身のアバター（ネットワークオブジェクト）を生成する
+        var position = new Vector3(-400, 10, -270);
         GameObject avatar = PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
 
 
         Camera camera = GetComponentInChildren<Camera>();
         var cameraPosition = avatar.transform.position;
         camera.transform.parent = avatar.transform;
-        camera.transform.position = new Vector3(cameraPosition.x, cameraPosition.y + 3, cameraPosition.z);
+        camera.transform.position = new Vector3(cameraPosition.x, cameraPosition.y + 1, cameraPosition.z);
     }
 }
