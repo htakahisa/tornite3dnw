@@ -26,6 +26,8 @@ public class SampleScene : MonoBehaviourPunCallbacks
         GameObject avatar = PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
 
 
+
+
         Camera camera = GetComponentInChildren<Camera>();
         var cameraPosition = avatar.transform.position;
         camera.transform.parent = avatar.transform;

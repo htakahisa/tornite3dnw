@@ -88,7 +88,7 @@ public class ShootController : MonoBehaviourPunCallbacks
 
                     //射撃されてから3秒後に銃弾のオブジェクトを破壊する.
 
-                    Destroy(bullet, 3.0f);
+                    Destroy(bullet, 2.0f);
                 }
                 audioSource.PlayOneShot(weponSe1);
             }
@@ -105,7 +105,7 @@ public class ShootController : MonoBehaviourPunCallbacks
 
                 //射撃されてから3秒後に銃弾のオブジェクトを破壊する.
 
-                Destroy(bullet, 3.0f);
+                Destroy(bullet, 2.0f);
                 audioSource.PlayOneShot(weponSe2);
             }
 

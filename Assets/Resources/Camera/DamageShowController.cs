@@ -4,30 +4,25 @@ using UnityEngine;
 using Photon.Pun;
 
 
-public class DamageShowController : MonoBehaviour
+
+public class DamageShowController : MonoBehaviourPunCallbacks
 {
 
-    //　DamageUIプレハブ
-    [SerializeField]
-    private GameObject damageUI;
+    private RectTransform myRectTfm;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        myRectTfm = GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // 自身の向きをカメラに向ける
+        myRectTfm.LookAt(Camera.main.transform);
     }
 
 
 
-    public void Damage(Collision col)
-    {
-        //　DamageUIをインスタンス化。登場位置は接触したコライダの中心からカメラの方向に少し寄せた位置
-        var obj = PhotonNetwork.Instantiate("DamageUi", gameObject.transform.up * 10f, Quaternion.identity);
-    }
 }
