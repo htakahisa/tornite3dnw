@@ -33,7 +33,7 @@ public class Bullet1Controller : BulletController
     // Update is called once per frame
     void Update()
     {
-        
+        Destroy(this.gameObject, 2.0f);
     }
 
 

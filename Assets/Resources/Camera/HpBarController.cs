@@ -21,6 +21,10 @@ public class HpBarController : MonoBehaviour
     private int damageSum = 0;
     private float textColorVisualRatio = 0; // テキストの透明度 0 は透明
 
+    [SerializeField]
+    private ParticleSystem damageParticle;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +69,9 @@ public class HpBarController : MonoBehaviour
                 //GetComponentInChildren<Text>().text = hp.ToString();
 
                 GetComponent<PhotonView>().RPC(nameof(DisplayHP), RpcTarget.Others, bc.getDamage().ToString());
+
+                damageParticle.transform.position = transform.position;
+                damageParticle.Play();
             }
         }
     }
@@ -74,7 +81,7 @@ public class HpBarController : MonoBehaviour
     {
         // receive the synced value if needed 
 
-        if (showDamageDelta < showDamageTime)
+        if (showDamageDelta < showDamageTime / 2)
         {
             damageSum += Int32.Parse(damage);
         } else
