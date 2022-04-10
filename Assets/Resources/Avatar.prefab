@@ -169,7 +169,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damagedSe: {fileID: 8300000, guid: 44367bbe1a0e39f45a9560f3461676bc, type: 3}
-  damageParticle: {fileID: 3618166171480400392, guid: e0486c1ec5cd78648ba262f3a3fb0e2d, type: 3}
 --- !u!54 &7194714533816853074
 Rigidbody:
   m_ObjectHideFlags: 0

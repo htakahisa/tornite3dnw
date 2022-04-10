@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
 
@@ -29,8 +30,11 @@ public class LoungeEnterController : MonoBehaviourPunCallbacks
 
     public void clickEnter()
     {
-        uiSync.RPC("addUserCount", RpcTarget.All);
+        //uiSync.RPC("addUserCount", RpcTarget.All);
 
-        userCountText.text = "USER COUNT : " +  pp.getUserCount().ToString();
+        //userCountText.text = "USER COUNT : " +  pp.getUserCount().ToString();
+
+        SceneManager.LoadScene("battle");
+
     }
 }
