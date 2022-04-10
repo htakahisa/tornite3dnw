@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Bullet2Controller : BulletController
 {
+    [SerializeField]
+    private ParticleSystem damageParticle;
 
-    static public float shotSpeed = 2500;
+    static public float shotSpeed = 3500;
     static public int magazineSize = 18;
     static float interval = 0.1f;
 
@@ -27,6 +29,26 @@ public class Bullet2Controller : BulletController
     // Update is called once per frame
     void Update()
     {
+    }
 
+    public void OnCollisionEnter(Collision collision)
+    {
+        // 爆発エフェクト取得
+        //damageParticle.transform.position = transform.position;
+        //damageParticle.Play();
+
+        if (collision.gameObject.CompareTag("armo"))
+        {
+            return;
+        }
+
+
+
+        var obj = Instantiate(damageParticle, transform.position, transform.rotation);
+        ParticleSystem p = obj.GetComponent<ParticleSystem>();
+        p.Play();
+
+
+        Destroy(this.gameObject, 0.01f);
     }
 }

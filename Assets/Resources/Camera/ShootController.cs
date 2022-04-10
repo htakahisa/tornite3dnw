@@ -22,6 +22,8 @@ public class ShootController : MonoBehaviourPunCallbacks
     public AudioClip noArmo;
     public AudioClip weponSe1;
     public AudioClip weponSe2;
+    public AudioClip reload;
+    public AudioClip changeWepon;
     private AudioSource audioSource;
 
     void Start()
@@ -115,14 +117,19 @@ public class ShootController : MonoBehaviourPunCallbacks
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
+            audioSource.PlayOneShot(reload);
             bc.reload();
 
         } else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+
+            audioSource.PlayOneShot(changeWepon);
+            
             weponId = 1;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            audioSource.PlayOneShot(changeWepon);
             weponId = 2;
         }
 
