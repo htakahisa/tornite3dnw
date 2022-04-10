@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
 using System;
@@ -69,6 +70,13 @@ public class HpBarController : MonoBehaviour
 
             }
         }
+
+        if (this.hp <= 0)
+        {
+            // イベント送信してロビーに
+
+            SceneManager.LoadScene("lounge");
+        }
     }
 
     [PunRPC]
@@ -88,5 +96,7 @@ public class HpBarController : MonoBehaviour
         showDamageDelta = 0;
         // 透明度を 100%にする
         textColorVisualRatio = 1;
+
+
     }
 }
