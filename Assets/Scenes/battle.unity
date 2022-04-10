@@ -1313,6 +1313,8 @@ MonoBehaviour:
   noArmo: {fileID: 8300000, guid: 538476d501baf7a4297b3633ad5b4e09, type: 3}
   weponSe1: {fileID: 8300000, guid: 35dbfcdee5eed1a4e89ac45460a69499, type: 3}
   weponSe2: {fileID: 8300000, guid: 382d93c40900dbf4ea5151c4be5e0993, type: 3}
+  reload: {fileID: 8300000, guid: c49204d56bf0aff48bfb20b7831f0fdf, type: 3}
+  changeWepon: {fileID: 8300000, guid: 0c354b14aa5fcff4482c0113f65911d8, type: 3}
 --- !u!81 &665274655
 AudioListener:
   m_ObjectHideFlags: 0

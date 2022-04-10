@@ -22,7 +22,7 @@ public class SampleScene : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         // 自身のアバター（ネットワークオブジェクト）を生成する
-        var position = new Vector3(-400, 10, -270);
+        var position = new Vector3(Random.Range(-500, -300), 10, Random.Range(-400, -200));
         GameObject avatar = PhotonNetwork.Instantiate("Avatar", position, Quaternion.identity);
 
 

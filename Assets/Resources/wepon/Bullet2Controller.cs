@@ -33,9 +33,6 @@ public class Bullet2Controller : BulletController
 
     public void OnCollisionEnter(Collision collision)
     {
-        // 爆発エフェクト取得
-        //damageParticle.transform.position = transform.position;
-        //damageParticle.Play();
 
         if (collision.gameObject.CompareTag("armo"))
         {
@@ -43,8 +40,9 @@ public class Bullet2Controller : BulletController
         }
 
 
+        Vector3 effectPos = transform.position - transform.forward * 3f;
 
-        var obj = Instantiate(damageParticle, transform.position, transform.rotation);
+        var obj = Instantiate(damageParticle, effectPos, transform.rotation);
         ParticleSystem p = obj.GetComponent<ParticleSystem>();
         p.Play();
 
