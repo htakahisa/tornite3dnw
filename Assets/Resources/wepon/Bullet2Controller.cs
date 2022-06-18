@@ -7,8 +7,8 @@ public class Bullet2Controller : BulletController
     [SerializeField]
     private ParticleSystem damageParticle;
 
-    static public float shotSpeed = 3500;
-    static public int magazineSize = 18;
+    static public float shotSpeed = 10000;
+    static public int magazineSize = 25;
     static float interval = 0.1f;
 
     static int damage = 7;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Pun.Demo.Asteroids;
 
 public class ShootController : MonoBehaviourPunCallbacks
 {
@@ -54,7 +55,7 @@ public class ShootController : MonoBehaviourPunCallbacks
         }
 
 
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked) 
         {
             if (shotDeltatime < bc.getInterval())
             {

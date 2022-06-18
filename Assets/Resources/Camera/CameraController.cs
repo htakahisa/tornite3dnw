@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
+
 public class CameraController : MonoBehaviourPunCallbacks {
     float x, z;
-    float speed = 0.1f;
+    float speed = 0.3f;
 
     private GameObject cam;
     Quaternion cameraRot, characterRot;
-    float Xsensityvity = 0.5f, Ysensityvity = 0.5f;
-
-    bool cursorLock = true;
+     float Xsensityvity = 1f, Ysensityvity = 1f;
 
     //変数の宣言(角度の制限用)
     float minX = -90f, maxX = 90f;
@@ -22,7 +21,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     [SerializeField]
     private float jumpPower = 55000f;
     private Rigidbody rb;
-
+    private float jamp = 1;
 
     // Start is called before the first frame update
     void Start() {
@@ -37,6 +36,16 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     // Update is called once per frame
     void Update() {
+
+        this.jamp -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (Cursor.lockState == CursorLockMode.Locked) {
+                Cursor.lockState = CursorLockMode.None;
+            } else {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
         if (photonView == null || !photonView.IsMine) {
             return;
         }
@@ -71,7 +80,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     }
 
     private void jump() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.Space) && this.jamp <= 0) {
             ////　走って移動している時はジャンプ力を上げる
             //if (runFlag && velocity.magnitude > 0f) {
             //    velocity.y += dashJumpPower;
@@ -80,6 +89,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             //}
             //velocity.y += jumpPower;
             rb.AddForce(new Vector3(0, jumpPower, 0));
+            this.jamp = 1;
         }
     }
 
@@ -89,36 +99,31 @@ public class CameraController : MonoBehaviourPunCallbacks {
         }
         x = 0;
         z = 0;
-
+        x = Input.GetAxisRaw("Horizontal") * speed;
+        z = Input.GetAxisRaw("Vertical") * speed;
+        if (z != 0 && x != 0 || Input.GetKey(KeyCode.LeftShift)) {
+            this.speed = 0.1f;
+        } else {
+            this.speed = 0.2f;
+        }
         x = Input.GetAxisRaw("Horizontal") * speed;
         z = Input.GetAxisRaw("Vertical") * speed;
 
-        //transform.position += new Vector3(x,0,z);
         Vector3 comFoward = new Vector3(cam.transform.forward.x, 0, cam.transform.forward.z).normalized;
         Vector3 pos = comFoward * z + cam.transform.right * x;
         transform.position += pos;
 
-        //transform.position += cam.transform.forward * z + cam.transform.right * x;
-    }
 
+        //transform.position += cam.transform.forward * z + cam.transform.right * x;
+
+    }
 
     public void UpdateCursorLock() {
         if (photonView == null || !photonView.IsMine) {
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            cursorLock = false;
-        } else if (Input.GetMouseButton(0)) {
-            cursorLock = true;
-        }
-
-
-        if (cursorLock) {
-            Cursor.lockState = CursorLockMode.Locked;
-        } else if (!cursorLock) {
-            Cursor.lockState = CursorLockMode.None;
-        }
+        
     }
 
     //角度制限関数の作成
@@ -142,6 +147,11 @@ public class CameraController : MonoBehaviourPunCallbacks {
         q.x = Mathf.Tan(angleX * Mathf.Deg2Rad * 0.5f);
 
         return q;
+    }
+    public void SensityvityChange(float sensi) {
+        Xsensityvity = sensi;
+        Ysensityvity = sensi;
+
     }
 
 }
