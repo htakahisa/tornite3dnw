@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 8796585412068248231}
   - component: {fileID: 8796585412068248228}
   - component: {fileID: 2842242301022997248}
+  - component: {fileID: -6740508136386268005}
   - component: {fileID: 1348135619894442498}
-  - component: {fileID: 4114754084321621077}
   - component: {fileID: 5812136688631891421}
   m_Layer: 0
   m_Name: bullet2
@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 8796585412068248229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.78, y: 0.18, z: 2.1}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -117,6 +117,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &-6740508136386268005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8796585412068248229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4cd0aea188dbb4c8643451ee7fa7e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1348135619894442498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,19 +152,6 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &4114754084321621077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8796585412068248229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a4cd0aea188dbb4c8643451ee7fa7e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageParticle: {fileID: 198000010585806678, guid: 96730f8640590934eacb6f860058e7f9, type: 3}
 --- !u!114 &5812136688631891421
 MonoBehaviour:
   m_ObjectHideFlags: 0

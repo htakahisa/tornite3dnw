@@ -64,6 +64,7 @@ public abstract class BulletController : MonoBehaviour
     public void shoot()
     {
         this.currentMagazineSize -= 1;
+        
     }
 
     public bool canShoot()

@@ -8,7 +8,7 @@ public class Bullet1Controller : BulletController
     [SerializeField]
     private ParticleSystem damageParticle;
 
-    static float shotSpeed = 3000;
+    static float shotSpeed = 999999;
     static int magazineSize = 8;
     static float interval = 0.5f;
 
@@ -49,11 +49,11 @@ public class Bullet1Controller : BulletController
 
 
 
-        Vector3 effectPos = transform.position - transform.forward * 3f;
+        //Vector3 effectPos = transform.position - transform.forward * 3f;
 
-        var obj = Instantiate(damageParticle, effectPos, transform.rotation);
-        ParticleSystem p = obj.GetComponent<ParticleSystem>();
-        p.Play();
+        //var obj = Instantiate(damageParticle, effectPos, transform.rotation);
+        //ParticleSystem p = obj.GetComponent<ParticleSystem>();
+        //p.Play();
 
 
         Destroy(this.gameObject, 0.01f);

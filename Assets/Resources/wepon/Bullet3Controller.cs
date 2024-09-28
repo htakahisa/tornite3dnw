@@ -1,19 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Bullet3Controller : MonoBehaviour {
-    [SerializeField]
-    private ParticleSystem damageParticle;
+public class Bullet3Controller : BulletController {
+   
 
-    static public float shotSpeed = 10000;
-    static public int magazineSize = 50;
-    static float interval = 0.05f;
-
-    static int damage = 2;
-
-  
+    static public float shotSpeed = 1000000;
+    static public int magazineSize = 33;
+    static float interval = 0.13f;
     
+    static int damage = 3;
+
+    public Bullet3Controller() : base(shotSpeed,
+         magazineSize,
+         interval,
+         damage) {
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +28,7 @@ public class Bullet3Controller : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -35,11 +40,7 @@ public class Bullet3Controller : MonoBehaviour {
         }
 
 
-        Vector3 effectPos = transform.position - transform.forward * 3f;
-
-        var obj = Instantiate(damageParticle, effectPos, transform.rotation);
-        ParticleSystem p = obj.GetComponent<ParticleSystem>();
-        p.Play();
+   
 
 
         Destroy(this.gameObject, 0.01f);

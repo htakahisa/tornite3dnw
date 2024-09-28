@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Bullet2Controller : BulletController
 {
-    [SerializeField]
-    private ParticleSystem damageParticle;
+    //[SerializeField]
+    //private ParticleSystem damageParticle;
 
-    static public float shotSpeed = 10000;
+    static public float shotSpeed = 9999990;
     static public int magazineSize = 25;
-    static float interval = 0.1f;
+    static float interval = 0.07f;
 
-    static int damage = 7;
+    static int damage = 2;
 
     public Bullet2Controller() : base(shotSpeed,
          magazineSize,
@@ -40,11 +40,11 @@ public class Bullet2Controller : BulletController
         }
 
 
-        Vector3 effectPos = transform.position - transform.forward * 3f;
+        //Vector3 effectPos = transform.position - transform.forward * 3f;
 
-        var obj = Instantiate(damageParticle, effectPos, transform.rotation);
-        ParticleSystem p = obj.GetComponent<ParticleSystem>();
-        p.Play();
+        //var obj = Instantiate(damageParticle, effectPos, transform.rotation);
+        //ParticleSystem p = obj.GetComponent<ParticleSystem>();
+        //p.Play();
 
 
         Destroy(this.gameObject, 0.01f);

@@ -6,11 +6,11 @@ using Photon.Pun;
 
 public class CameraController : MonoBehaviourPunCallbacks {
     float x, z;
-    float speed = 0.3f;
+    float speed = 0.5f;
 
     private GameObject cam;
     Quaternion cameraRot, characterRot;
-     float Xsensityvity = 1f, Ysensityvity = 1f;
+    float Xsensityvity = 1f, Ysensityvity = 1f;
 
     //変数の宣言(角度の制限用)
     float minX = -90f, maxX = 90f;
@@ -19,9 +19,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     //　通常のジャンプ力
     [SerializeField]
-    private float jumpPower = 55000f;
+    private float jumpPower = 50000f;
     private Rigidbody rb;
-    private float jamp = 1;
+    private float distanceToGround = 1f;
+
 
     // Start is called before the first frame update
     void Start() {
@@ -37,7 +38,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
     // Update is called once per frame
     void Update() {
 
-        this.jamp -= Time.deltaTime;
+
+
+
+
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (Cursor.lockState == CursorLockMode.Locked) {
@@ -80,7 +84,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     }
 
     private void jump() {
-        if (Input.GetKeyDown(KeyCode.Space) && this.jamp <= 0) {
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded()) {
             ////　走って移動している時はジャンプ力を上げる
             //if (runFlag && velocity.magnitude > 0f) {
             //    velocity.y += dashJumpPower;
@@ -89,11 +93,12 @@ public class CameraController : MonoBehaviourPunCallbacks {
             //}
             //velocity.y += jumpPower;
             rb.AddForce(new Vector3(0, jumpPower, 0));
-            this.jamp = 1;
+
         }
     }
 
     private void FixedUpdate() {
+
         if (photonView == null || !photonView.IsMine) {
             return;
         }
@@ -102,9 +107,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
         x = Input.GetAxisRaw("Horizontal") * speed;
         z = Input.GetAxisRaw("Vertical") * speed;
         if (z != 0 && x != 0 || Input.GetKey(KeyCode.LeftShift)) {
-            this.speed = 0.1f;
+            this.speed = 0.05f;
         } else {
-            this.speed = 0.2f;
+            this.speed = 0.1f;
         }
         x = Input.GetAxisRaw("Horizontal") * speed;
         z = Input.GetAxisRaw("Vertical") * speed;
@@ -123,7 +128,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
 
-        
+
     }
 
     //角度制限関数の作成
@@ -153,5 +158,25 @@ public class CameraController : MonoBehaviourPunCallbacks {
         Ysensityvity = sensi;
 
     }
+
+    private bool IsGrounded() {
+        return Physics.Raycast(transform.position, Vector3.down, distanceToGround);
+    }
+
+
+    protected bool WallCheck(Vector3 targetPosition, Vector3 desiredPosition, LayerMask wallLayers, out Vector3 wallHitPosition) {
+        if (Physics.Raycast(targetPosition, desiredPosition - targetPosition, out RaycastHit wallHit, Vector3.Distance(targetPosition, desiredPosition), wallLayers, QueryTriggerInteraction.Ignore)) {
+            wallHitPosition = wallHit.point;
+            return true;
+        } else {
+            wallHitPosition = desiredPosition;
+            return false;
+        }
+    }
+
+
+
+
+
 
 }
