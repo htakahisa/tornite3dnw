@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 9439ee2aeb656824f8e1b783207c68d5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - audioSource: {instanceID: 0}
+  - walk: {instanceID: 0}
+  - jump: {instanceID: 0}
+  - shoot: {instanceID: 0}
+  - reload: {instanceID: 0}
+  - noarmo: {instanceID: 0}
+  - phantom: {instanceID: 0}
+  - stray: {instanceID: 0}
+  - wolf: {instanceID: 0}
+  - coward: {instanceID: 0}
+  - flash: {fileID: 8300000, guid: 5f504773d6bf5514982981d513438d1d, type: 3}
+  - boostio: {instanceID: 0}
+  - beep: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

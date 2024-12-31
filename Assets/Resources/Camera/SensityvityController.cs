@@ -11,10 +11,10 @@ public class SensityvityController : MonoBehaviour
 
     // Update is called once per frame
      void Start()
-    { 
+    {
 
-        gameObject.SetActive(false);
-      
+        
+
     }
       void Update() {
 

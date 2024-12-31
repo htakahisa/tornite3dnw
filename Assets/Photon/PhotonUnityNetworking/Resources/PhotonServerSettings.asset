@@ -42,6 +42,18 @@ MonoBehaviour:
   - DisplayHP
   - setUserCount
   - addUserCount
+  - addRound
+  - BuyPhase
+  - ReStart
+  - getRound
+  - InstanceAvatar
+  - RoundEnd
+  - Duelistcount
+  - Scene
+  - Method
+  - SynchronizeHp
+  - PlaySoundRPC
+  - Stuned
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

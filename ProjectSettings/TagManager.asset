@@ -4,22 +4,35 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - CinemachineTarget
+  - Flash
+  - MapCamera
+  - Body
+  - Head
   - armo
-  - Ground
+  - Me
+  - Judge
+  - Money
+  - Manager
+  - Score
+  - Eagle
+  - Crosshair
+  - CrosshairBar
+  - PracticeTarget
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Me
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - BulletIgnore
+  - Bullet
+  - Enemy
+  - MyIcon
+  - EnemyIcon
+  - Target
+  - PracticeTarget
   - 
   - 
   - 
