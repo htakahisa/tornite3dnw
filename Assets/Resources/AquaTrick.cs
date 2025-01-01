@@ -104,7 +104,7 @@ public class AquaTrick : MonoBehaviourPunCallbacks
 
     public void DestroyPrefab()
     {
-        PhotonNetwork.Destroy(gameObject);
+        Destroy(gameObject);
         instantiatedPrefab.GetComponent<SmokeManager>().Destroy();
             Debug.Log("Prefab destroyed");
         

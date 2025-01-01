@@ -40,13 +40,16 @@ public class SmokeManager : MonoBehaviourPun {
 
     }
 
-    public void Destroy() {
 
-        if (InSmoke) {
+    public void Destroy()
+    {
+
+        if (InSmoke)
+        {
             PlayerFlashEffect.pfe.Distun();
             InSmoke = false;
         }
-        PhotonNetwork.Destroy(gameObject);
+        Destroy(gameObject);
 
     }
 

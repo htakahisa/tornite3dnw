@@ -6,7 +6,7 @@ using Photon.Pun;
 
 public class CameraController : MonoBehaviourPunCallbacks {
     float x, z;
-    float speed = 0.06f;
+    float speed = 0.04f;
 
     private float stepTimer = 0f;
     public float wallDetectionDistance = 0.5f;
@@ -172,7 +172,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     ratio /= 2;
                 }
                 if (Input.GetKey(KeyCode.LeftShift)) {
-                    ratio /= 2;
+                    ratio /= 1.5f;
                     issnake = true;
                 }
                 if (z != 0 || x != 0) {
@@ -185,7 +185,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                         }
                     }
                     //rb.velocity = new Vector3(0, rb.velocity.y, 0);  // 速度リセット
-                    this.speed = 0.06f * ratio * servicespeed;
+                    this.speed = 0.04f * ratio * servicespeed;
                     hasAppliedAirMove = 0;
                     lastMoveInput = Vector3.zero;
 
@@ -201,7 +201,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     //    ratio /= 2;
                     //}
                     if (Input.GetKey(KeyCode.LeftShift)) {
-                        ratio /= 2;
+                        ratio /= 1.5f;
                         issnake = true;
                     }
                     if (z != 0 || x != 0) {
@@ -214,7 +214,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                             }
                         }
                         //rb.velocity = new Vector3(0, rb.velocity.y, 0);  // 速度リセット
-                        this.speed = 0.06f * ratio * servicespeed;
+                        this.speed = 0.04f * ratio * servicespeed;
                         lastMoveInput = moveInput;
                     }
                     //// 修正後の移動方向でキャラクターを移動
