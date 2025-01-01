@@ -11,11 +11,12 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
     private Rigidbody rb;
     private PinManager pm;
     private Ability ability;
-
+    private SoundManager sm;
     public void OnPointerClick(PointerEventData eventData) {
+        sm = Camera.main.transform.parent.GetComponent<SoundManager>();
         player = Camera.main.transform.parent;
         if (CanWarp) {
-            SoundManager.sm.PlaySound("stray");
+            sm.PlaySound("stray");
             Vector3 screenPosition = Input.mousePosition;
             Vector2 localCursor;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(

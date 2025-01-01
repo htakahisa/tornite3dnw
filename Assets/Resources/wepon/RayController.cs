@@ -98,6 +98,7 @@ public class RayController : MonoBehaviourPun {
     }
 
     private void DelayGet() {
+
         avatar = transform.parent.gameObject;
         sm = gameObject.GetComponentInParent<SoundManager>();
         camcon = avatar.GetComponent<CameraController>();
@@ -272,7 +273,7 @@ public class RayController : MonoBehaviourPun {
                 }
                 else
                 {
-                    SoundManager.sm.PlaySound("beep");
+                    sm.PlaySound("beep");
                     return false;
                 }
             }

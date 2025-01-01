@@ -18,10 +18,10 @@ public class SoundManager : MonoBehaviourPun {
     public AudioClip boostio;
     public AudioClip beep;
 
-    public static SoundManager sm;
+    
 
     void Awake() {
-        sm = this;
+        
         // AudioSourceコンポーネントがアタッチされていない場合は自動取得
         if (audioSource == null) {
             audioSource = GetComponent<AudioSource>();

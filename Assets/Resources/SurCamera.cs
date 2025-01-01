@@ -8,6 +8,7 @@ public class SurCamera : MonoBehaviour {
     private Transform cam;
     private Transform sur;
     private GameObject playerCamera;
+    private SoundManager sm;
 
     // Start is called before the first frame update
     void Start() {
@@ -15,7 +16,8 @@ public class SurCamera : MonoBehaviour {
     }
 
     private void Awake() {
-        SoundManager.sm.PlaySound("coward");
+        sm = Camera.main.transform.parent.GetComponent<SoundManager>();
+        sm.PlaySound("coward");
         playerCamera = Camera.main.gameObject;
         playerCamera.SetActive(false);
         gameObject.SetActive(true);        

@@ -9,8 +9,11 @@ public class Wolf : MonoBehaviourPun {
     private bool antirugcheck = false;
     private float stepTimer = 0f;
 
+    private SoundManager sm;
+
     void Start() {
         GameObject enemy = GameObject.FindGameObjectWithTag("Player");
+        sm = Camera.main.transform.parent.GetComponent<SoundManager>();
         if (enemy != null) {
             // NavMeshAgentコンポーネントの取得
             agent = GetComponent<NavMeshAgent>();
@@ -27,7 +30,7 @@ public class Wolf : MonoBehaviourPun {
             stepTimer += Time.deltaTime;
             // 足音を0.5秒毎に再生
             if (stepTimer >= 0.5f) {
-                SoundManager.sm.PlaySound("wolf");
+                sm.PlaySound("wolf");
                 stepTimer = 0f; // タイマーをリセット
             }
             agent.SetDestination(target.position);

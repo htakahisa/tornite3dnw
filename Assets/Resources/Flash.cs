@@ -12,12 +12,13 @@ public class Flash : MonoBehaviour
 
     Rigidbody rb;
 
-
+    private SoundManager sm;
 
     // Start is called before the first frame update
     void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody>();
+        sm = Camera.main.transform.parent.GetComponent<SoundManager>();
         // グレネードに力を加える
         Vector3 throwDirection = transform.forward + transform.up * upwardForce;
         rb.AddForce(throwDirection * throwForce, ForceMode.VelocityChange);
@@ -47,7 +48,7 @@ public class Flash : MonoBehaviour
     private void Blast()
     {
 
-        SoundManager.sm.PlaySound("flash");
+        sm.PlaySound("flash");
         if (IsVisibleFrom(_renderer, Camera.main))
         {
             // レイキャストで障害物をチェック

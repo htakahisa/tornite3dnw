@@ -57,7 +57,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private float distanceToGround = 0.03f;
 
     RayController rc;
-
+    private SoundManager sm;
 
     // 歩き音タイマー(SoundDetector用)
     private float runTimer = 0;
@@ -72,7 +72,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         Cursor.lockState = CursorLockMode.Locked;
 
         ability = Camera.main.transform.parent.GetComponent<Ability>();
-
+        sm = Camera.main.transform.parent.GetComponent<SoundManager>();
         coward = (GameObject)Resources.Load("SurveillanceCamera");
 
     }
@@ -189,7 +189,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                         stepTimer += Time.deltaTime;
                         // 足音を0.5秒毎に再生
                         if (stepTimer >= 0.5f) {
-                            SoundManager.sm.PlaySound("walk");
+                            sm.PlaySound("walk");
                             stepTimer = 0f; // タイマーをリセット
 
                             runTimer = 1f;
@@ -220,7 +220,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                             stepTimer += Time.deltaTime;
                             // 足音を0.5秒毎に再生
                             if (stepTimer >= 0.5f) {
-                                SoundManager.sm.PlaySound("walk");
+                                sm.PlaySound("walk");
                                 stepTimer = 0f; // タイマーをリセット
 
                                 runTimer = 1f;
@@ -336,7 +336,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             //velocity.y += jumpPower;
             rb.AddForce(new Vector3(0, jumpPower, 0));
 
-            SoundManager.sm.PlaySound("jump");
+            sm.PlaySound("jump");
             IsJump = false;
         }
            
@@ -358,7 +358,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (IsGrounded()) { 
         rb.velocity = new Vector3(0, 0, 0);  // 縦方向の速度リセット
         rb.AddForce(new Vector3(0, jumpPower * 2, 0));
-        SoundManager.sm.PlaySound("phantom");
+        sm.PlaySound("phantom");
         ability.Spend(2);
         }
 
@@ -503,7 +503,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (IsGrounded() && !IsJump) {
             rb.velocity = new Vector3(0, 0, 0);  // 速度リセット
             IsJump = true;
-            SoundManager.sm.PlaySound("boostio");
+            sm.PlaySound("boostio");
             // グレネードに力を加える
             Vector3 throwDirection = transform.forward*1.5f + transform.up;
             rb.AddForce(throwDirection * 4, ForceMode.VelocityChange);
