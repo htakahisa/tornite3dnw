@@ -11,7 +11,7 @@ public class AquaTrick : MonoBehaviourPunCallbacks
                     
     public float scanRadius = 3f;            // スキャン範囲
     public LayerMask hitMask;                 // ヒット判定用のレイヤーマスク
-
+    private Ability ability;
 
 
     // Start is called before the first frame update
@@ -51,14 +51,15 @@ public class AquaTrick : MonoBehaviourPunCallbacks
     }
 
      private void OnActive() {
+        ability = Camera.main.transform.parent.GetComponent<Ability>();
 
-        if (Ability.ability.number2 >= 1) { 
+        if (ability.number2 >= 1) { 
         
 
             // 生成したプレファブが存在しない場合に生成
             if (instantiatedPrefab == null)
             {
-                Ability.ability.Spend(2);
+                ability.Spend(2);
                 Debug.Log($"{gameObject.name} が左クリックされました");
                 instantiatedPrefab = PhotonNetwork.Instantiate("AquaSmoke", transform.position, Quaternion.identity);
 
@@ -67,7 +68,7 @@ public class AquaTrick : MonoBehaviourPunCallbacks
             {
 
 
-                Ability.ability.Spend(2);
+                ability.Spend(2);
                 instantiatedScan = true;
                 StartCoroutine(Scan());
 
@@ -91,7 +92,7 @@ public class AquaTrick : MonoBehaviourPunCallbacks
         Debug.Log($"{gameObject.name} が右クリックされました");
        
         DestroyPrefab();
-        Ability.ability.Collect(2);
+        ability.Collect(2);
 
         } else { 
                

@@ -40,6 +40,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private float upwardForce = 1.5f; // 上向きの力
 
     GameObject coward;
+    private Ability ability;
 
     // エフェクトが生成される位置のオフセット
     public Vector3 effectOffset = new Vector3(0, 1, 2);
@@ -65,6 +66,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
+        ability = Camera.main.transform.parent.GetComponent<Ability>();
+
         coward = (GameObject)Resources.Load("SurveillanceCamera");
 
     }
@@ -74,7 +77,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
 
         if (Input.GetKeyDown(KeyCode.L)) {
-           Aqua();
+           //Aqua();
         }
 
 
@@ -343,7 +346,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         rb.velocity = new Vector3(0, 0, 0);  // 縦方向の速度リセット
         rb.AddForce(new Vector3(0, jumpPower * 2, 0));
         SoundManager.sm.PlaySound("phantom");
-        Ability.ability.Spend(2);
+        ability.Spend(2);
         }
 
     }
@@ -389,7 +392,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (Physics.Raycast(ray, out hit, cowardRange)) {
           
             Instantiate(coward, hit.point, rota);
-            Ability.ability.Spend(2);
+            ability.Spend(2);
         }
 
 
@@ -436,10 +439,11 @@ public class CameraController : MonoBehaviourPunCallbacks {
     }
 
     public void StraDarts() {
-        Vector3 spawnPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.2f;
+
         if (photonView == null || !photonView.IsMine) {
             return;
         }
+        Vector3 spawnPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.2f;
 
         // カメラの位置を取得
         Vector3 cameraPosition = Camera.main.transform.position;
@@ -491,7 +495,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             Vector3 throwDirection = transform.forward*1.5f + transform.up;
             rb.AddForce(throwDirection * 4, ForceMode.VelocityChange);
             IsJump = false;
-            Ability.ability.Spend(1);
+            ability.Spend(1);
         }
 
     }
@@ -566,7 +570,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     }
 
-    private bool IsGrounded() {
+    public bool IsGrounded() {
  
         return Physics.Raycast(transform.position, Vector3.down, distanceToGround);
         

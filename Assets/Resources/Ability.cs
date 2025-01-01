@@ -17,11 +17,11 @@ public class Ability : MonoBehaviourPun {
     public int number1 = 0;
     public int number2 = 0;
 
-     public static Ability ability = null;
+    
 
     // Start is called before the first frame update
-    void Start() {
-        ability = this;
+    void Awake() {
+        
     }
 
     // Update is called once per frame

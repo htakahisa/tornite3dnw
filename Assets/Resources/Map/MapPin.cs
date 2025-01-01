@@ -10,6 +10,7 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
     private bool CanSetAqua = false;
     private Rigidbody rb;
     private PinManager pm;
+    private Ability ability;
 
     public void OnPointerClick(PointerEventData eventData) {
         player = Camera.main.transform.parent;
@@ -54,6 +55,7 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
         }
         if (CanSetAqua)
         {
+            ability = Camera.main.transform.parent.GetComponent<Ability>();
             Vector3 screenPosition = Input.mousePosition;
             Vector2 localCursor;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -70,7 +72,7 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
             CanSetAqua = false;
             pm = GetComponentInParent<PinManager>();
             pm.Hide();
-            Ability.ability.Spend(2);
+            ability.Spend(2);
         }
     }
 

@@ -26,6 +26,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Practice.unity
     guid: 203df8387fffd114b9d296cd0ad4211a
+  - enabled: 1
+    path: Assets/Scenes/Collecting.unity
+    guid: 85ee58cb07ce7ea4bb45c7cddc4d9695
+  - enabled: 1
+    path: Assets/Scenes/Silver.unity
+    guid: 8dc0c6f44e00c6748b5e6c1af7c08a93
+  - enabled: 1
+    path: Assets/Scenes/Yor.unity
+    guid: 49218bf20c894074f85ad48adf0ae3ee
+  - enabled: 1
+    path: Assets/Scenes/Noel.unity
+    guid: 0ff3df8ad4b333749bd89aa13bd072c0
   - enabled: 0
     path: 
     guid: 9486b29329f4ee540922485d4221056b

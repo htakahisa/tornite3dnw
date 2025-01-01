@@ -18,7 +18,7 @@ public class RayController : MonoBehaviourPun {
     private RoundManager rmc;
 
     public float range = 100f; // Raycastの射程距離
-    private float distanceToGround = 3f;
+    private float distanceToGround = 0.15f;
     private GameObject gc;
     private Classic classic;
     private Misstake sheriff;
@@ -62,6 +62,8 @@ public class RayController : MonoBehaviourPun {
 
     [SerializeField] private GameObject[] weapons; // 武器のプロファブを格納する配列
     private int currentWeaponIndex = 0;
+    private GameObject avatar;
+    private CameraController camcon;
 
     // Start is called before the first frame update
     void Start() {
@@ -96,7 +98,9 @@ public class RayController : MonoBehaviourPun {
     }
 
     private void DelayGet() {
+        avatar = transform.parent.gameObject;
         sm = gameObject.GetComponentInParent<SoundManager>();
+        camcon = avatar.GetComponent<CameraController>();
     }
 
     // Update is called once per frame
@@ -118,7 +122,7 @@ public class RayController : MonoBehaviourPun {
                 IsZooming = true;
             }
             if (Input.GetMouseButtonUp(1)) {
-                cam.fieldOfView = 60;
+                cam.fieldOfView = 80;
                 IsZooming = false;
             }
         }
@@ -233,7 +237,7 @@ public class RayController : MonoBehaviourPun {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D)) {
-            if (IsGrounded())
+            if (camcon.IsGrounded())
             {
               
 

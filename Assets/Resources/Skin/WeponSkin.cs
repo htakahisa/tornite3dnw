@@ -1,0 +1,57 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class WeponSkin : MonoBehaviour
+{
+    public static WeponSkin weponSkin;
+    static public int SilverSkinNumber = 0;
+    static public int YorSkinNumber = 0;
+    static public int NoelSkinNumber = 0;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        weponSkin = this;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void Confirmed(string weapon) {
+        if (weapon.Equals("silver")) {
+            SilverSkinNumber = SkinChanger.skinchanger.GetIndex();
+            Debug.Log(SilverSkinNumber);
+        }
+        if (weapon.Equals("yor"))
+        {
+            YorSkinNumber = SkinChanger.skinchanger.GetIndex();
+            Debug.Log(YorSkinNumber);
+        }
+        if (weapon.Equals("noel"))
+        {
+            NoelSkinNumber = SkinChanger.skinchanger.GetIndex();
+            Debug.Log(NoelSkinNumber);
+        }
+        SceneManager.LoadScene("Collecting");
+    }
+
+
+    public int GetSilver() {
+        return SilverSkinNumber;
+    }
+
+    public int GetYor()
+    {
+        return YorSkinNumber;
+    }
+
+    public int GetNoel()
+    {
+        return NoelSkinNumber;
+    }
+}

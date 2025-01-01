@@ -12,26 +12,38 @@ public class AbilityUiManager : MonoBehaviour
     // TextMeshProオブジェクトをアタッチ
     public TextMeshProUGUI BattleText;
 
+    private Ability ability;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        ability = Camera.main.transform.parent.GetComponent<Ability>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (BattleText != null)
+
+        if (ability == null)
         {
-            BattleText.text = Ability.ability.number1.ToString();
-        }
-        if (TacticalText != null)
-        {
-            TacticalText.text = Ability.ability.number2.ToString();
+            ability = Camera.main.transform.parent.GetComponent<Ability>();
         }
         else
         {
-            Debug.LogWarning("TextMeshProUGUIがアタッチされていません。");
+
+            if (BattleText != null)
+            {
+                BattleText.text = ability.number1.ToString();
+            }
+            if (TacticalText != null)
+            {
+                TacticalText.text = ability.number2.ToString();
+            }
+            else
+            {
+                Debug.LogWarning("TextMeshProUGUIがアタッチされていません。");
+            }
+
         }
     }
 }

@@ -25,4 +25,30 @@ public class PracticeMode : MonoBehaviour {
     public void Dictionary() {
         SceneManager.LoadScene("Dictionary");
     }
+
+    public void Collecting()
+    {
+        SceneManager.LoadScene("Collecting");
+    }
+
+    public void Silver()
+    {
+        SceneManager.LoadScene("Silver");
+    }
+
+    public void Yor()
+    {
+        SceneManager.LoadScene("Yor");
+    }
+
+    public void Noel()
+    {
+        SceneManager.LoadScene("Noel");
+    }
+
+    public void Lounge()
+    {
+        SceneManager.LoadScene("lounge");
+    }
+
 }
