@@ -20,10 +20,6 @@ public class SoundManager : MonoBehaviourPun {
 
     public static SoundManager sm;
 
-    // 走る音
-    private float runTimer = 0;
-
-
     void Awake() {
         sm = this;
         // AudioSourceコンポーネントがアタッチされていない場合は自動取得

@@ -38,6 +38,8 @@ public class SoundDetectorController : MonoBehaviour
         }
         if (opponent == null || player == null)
         {
+            // 足跡は非表示
+            opponentIcon.gameObject.SetActive(false);
             return;
         }
 
@@ -46,13 +48,13 @@ public class SoundDetectorController : MonoBehaviour
         if (runTimer <= 0)
         {
             // 足跡は非表示
-            opponent.gameObject.SetActive(false);
+            opponentIcon.gameObject.SetActive(false);
             return;
         }
         else
         {
             // 足跡は表示
-            opponent.gameObject.SetActive(true);
+            opponentIcon.gameObject.SetActive(true);
             // 相手とプレイヤーの位置から方向ベクトルを計算
             Vector3 direction = opponent.position - player.position;
             direction.y = 0; // 高さを無視して水平面の方向のみ計算
