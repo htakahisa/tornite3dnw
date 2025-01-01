@@ -44,14 +44,8 @@ public class SoundDetectorController : MonoBehaviour
         }
 
 
-        float runTimer = opponent.gameObject.GetComponent<CameraController>().getRunTimer();
-        if (runTimer <= 0)
-        {
-            // 足跡は非表示
-            opponentIcon.gameObject.SetActive(false);
-            return;
-        }
-        else
+        
+        if (opponent.gameObject.GetComponent<AudioSource>().isPlaying)
         {
             // 足跡は表示
             opponentIcon.gameObject.SetActive(true);
@@ -65,6 +59,13 @@ public class SoundDetectorController : MonoBehaviour
 
             // 円周上の座標を計算
             UpdateOpponentIconPosition(angle);
+
+        }
+        else
+        {
+            // 足跡は非表示
+            opponentIcon.gameObject.SetActive(false);
+            return;
         }
     }
 

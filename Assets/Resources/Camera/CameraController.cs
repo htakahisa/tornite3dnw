@@ -59,10 +59,6 @@ public class CameraController : MonoBehaviourPunCallbacks {
     RayController rc;
     private SoundManager sm;
 
-    // 歩き音タイマー(SoundDetector用)
-    private float runTimer = 0;
-
-
     // Start is called before the first frame update
     void Start() {
 
@@ -153,14 +149,6 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private void FixedUpdate() {
 
-        if (runTimer > -10)
-        {
-            runTimer -= Time.deltaTime;
-        }
-
-
-
-
         if (photonView == null || !photonView.IsMine) {
             return;
         }
@@ -191,8 +179,6 @@ public class CameraController : MonoBehaviourPunCallbacks {
                         if (stepTimer >= 0.5f) {
                             sm.PlaySound("walk");
                             stepTimer = 0f; // タイマーをリセット
-
-                            runTimer = 1f;
                         }
                     }
                     //rb.velocity = new Vector3(0, rb.velocity.y, 0);  // 速度リセット
@@ -222,8 +208,6 @@ public class CameraController : MonoBehaviourPunCallbacks {
                             if (stepTimer >= 0.5f) {
                                 sm.PlaySound("walk");
                                 stepTimer = 0f; // タイマーをリセット
-
-                                runTimer = 1f;
                             }
                         }
                         //rb.velocity = new Vector3(0, rb.velocity.y, 0);  // 速度リセット
@@ -602,18 +586,5 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return false;
         }
     }
-
-
-
-
-    public float getRunTimer()
-    {
-        return runTimer;
-    }
-
-
-
-
-
 
 }
