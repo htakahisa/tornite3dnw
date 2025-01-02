@@ -98,8 +98,16 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
 
         if (this.hp1 <= 0) {
             rm.RoundEnd(false);
+            if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+            {
+                Camera.main.transform.parent.GetComponent<CameraController>().Dead();
+            }
         } else if (this.hp2 <= 0) {
             rm.RoundEnd(true);
+            if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+            {
+                Camera.main.transform.parent.GetComponent<CameraController>().Dead();
+            }
         }
 
 

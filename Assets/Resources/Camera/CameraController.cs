@@ -6,7 +6,7 @@ using Photon.Pun;
 
 public class CameraController : MonoBehaviourPunCallbacks {
     float x, z;
-    float speed = 0.04f;
+    float speed = 0.05f;
 
     private float stepTimer = 0f;
     public float wallDetectionDistance = 0.5f;
@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     static float NormalSensityvity = 1f;
     float Xsensityvity = 1f, Ysensityvity = 1f;
 
-    private float zoomSensitivityMultiplier = 0.25f;
+    private float zoomSensitivityMultiplier = 0.5f;
 
 
     private float cowardRange = 10f;
@@ -54,10 +54,14 @@ public class CameraController : MonoBehaviourPunCallbacks {
     [SerializeField]
     private float jumpPower = 20000;
     private Rigidbody rb;
-    private float distanceToGround = 0.03f;
+    private float distanceToGround = 0.04f;
 
     RayController rc;
     private SoundManager sm;
+    private bool katarina = false;
+
+    private float katarinaInterval = 0;
+    public GameObject foot;
 
     // Start is called before the first frame update
     void Start() {
@@ -78,14 +82,44 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
 
         if (Input.GetKeyDown(KeyCode.L)) {
-           //Aqua();
+           Katarina();
+        }
+
+        if (katarina)
+        {
+            if (PhaseManager.pm.GetPhase().Equals("Battle"))
+            {
+                katarinaInterval += Time.deltaTime;
+                if (katarinaInterval >= 0.5f)
+                {
+                    ability.Collect(2, 1);
+                    katarinaInterval = 0f;
+                }
+                if (Input.GetKeyDown(KeyCode.Q) && ability.number2 >= 10)
+                {
+                    KatarinaSmoke();
+                    ability.Spend(2, 10);
+                }
+                if (Input.GetKeyDown(KeyCode.F) && ability.number2 >= 30)
+                if (Input.GetKeyDown(KeyCode.F) && ability.number2 >= 30)
+                {
+                    C4();
+                    ability.Spend(2, 30);
+                }
+                if (Input.GetKeyDown(KeyCode.X) && ability.number2 >= 50)
+                {
+                    Debug.Log("敵を検出");
+                    BattleData.bd.Detect("enemy\ndetected");
+                    // 敵に対する処理をここに追加
+                    ScanCamera.sc.ActiveScan();
+                    ability.Spend(2, 50);
+                }
+            }
         }
 
 
-
-
-        // Escapeキーが押されたときの処理
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+            // Escapeキーが押されたときの処理
+            if (Input.GetKeyDown(KeyCode.Escape)) {
             // マウスが表示されていない場合は表示し、自由に動かせるようにする
             if (!Cursor.visible) {
                 Cursor.visible = true;
@@ -114,6 +148,12 @@ public class CameraController : MonoBehaviourPunCallbacks {
         jump();
 
         UpdateCursorLock();
+    }
+
+
+    public void Dead() {
+        PhotonNetwork.Destroy(gameObject);
+      
     }
 
     private void move() {
@@ -221,18 +261,25 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 }
             }
 
-            // 入力から移動方向を設定
-            moveDirection = new Vector3(x, 0, z).normalized;
+            
 
-            // 壁に接触しているかどうかを確認
-            if (moveDirection != Vector3.zero && IsWallInFront()) {
-                // 壁に沿う方向に移動を修正
-                moveDirection = Vector3.ProjectOnPlane(moveDirection, GetWallNormal());
-            }
+          
             if (cam != null) {
-                Vector3 comFoward = new Vector3(cam.transform.forward.x, 0, cam.transform.forward.z).normalized;
-                Vector3 pos = comFoward * z + cam.transform.right * x;
-                transform.position += pos;
+
+                // カメラのY軸回転を基準に回転を計算
+                Quaternion cameraRotation = Quaternion.Euler(0, cam.transform.eulerAngles.y, 0);
+
+                // 入力ベクトルを定義（x: 左右, z: 前後）
+                Vector3 inputDirection = new Vector3(x, 0, z).normalized;
+
+                // 入力をカメラの回転に基づいて回転
+                Vector3 moveDirection = cameraRotation * inputDirection;
+
+                // 移動処理
+                transform.position += moveDirection * speed;
+
+                // デバッグ用
+                Debug.Log($"Move Direction: {moveDirection}");
             }
 
         }
@@ -261,20 +308,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     }
 
 
-    // 壁に接触しているかどうかの判定
-    private bool IsWallInFront() {
-        RaycastHit hit;
-        return Physics.Raycast(transform.position, moveDirection, out hit, wallDetectionDistance);
-    }
-
-    // 壁の法線ベクトルを取得
-    private Vector3 GetWallNormal() {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, moveDirection, out hit, wallDetectionDistance)) {
-            return hit.normal;
-        }
-        return Vector3.zero;
-    }
+  
 
 
     public void Stuned(float duration, float magnitude) {
@@ -343,7 +377,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         rb.velocity = new Vector3(0, 0, 0);  // 縦方向の速度リセット
         rb.AddForce(new Vector3(0, jumpPower * 2, 0));
         sm.PlaySound("phantom");
-        ability.Spend(2);
+        ability.Spend(2, 1);
         }
 
     }
@@ -367,6 +401,39 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     }
 
+    public void KatarinaSmoke()
+    {
+        if (photonView == null || !photonView.IsMine)
+        {
+            return;
+        }
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            PhotonNetwork.Instantiate("KatarinaSmoke", hit.point, Quaternion.identity);
+        }
+
+    }
+
+    public void C4()
+    {
+        if (photonView == null || !photonView.IsMine)
+        {
+            return;
+        }
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            PhotonNetwork.Instantiate("C4", hit.point, Quaternion.identity);
+        }
+
+    }
+
+
     public void RireDuDiable() {
         if (photonView == null || !photonView.IsMine) {
             return;
@@ -389,7 +456,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (Physics.Raycast(ray, out hit, cowardRange)) {
           
             Instantiate(coward, hit.point, rota);
-            ability.Spend(2);
+            ability.Spend(2, 1);
         }
 
 
@@ -404,7 +471,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     }
 
-
+   
 
 
 
@@ -423,6 +490,17 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
         PinManager.pm.Aqua();
+
+    }
+
+    public void Katarina()
+    {
+
+        if (photonView == null || !photonView.IsMine)
+        {
+            return;
+        }
+        katarina = true;
 
     }
 
@@ -492,7 +570,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             Vector3 throwDirection = transform.forward*1.5f + transform.up;
             rb.AddForce(throwDirection * 4, ForceMode.VelocityChange);
             IsJump = false;
-            ability.Spend(1);
+            ability.Spend(1, 1);
         }
 
     }
@@ -568,8 +646,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
     }
 
     public bool IsGrounded() {
- 
-        return Physics.Raycast(transform.position, Vector3.down, distanceToGround);
+
+        Vector3 footPosition = foot.transform.position;
+        return Physics.Raycast(footPosition, Vector3.down, distanceToGround);
         
     }
 

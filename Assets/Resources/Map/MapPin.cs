@@ -73,7 +73,7 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
             CanSetAqua = false;
             pm = GetComponentInParent<PinManager>();
             pm.Hide();
-            ability.Spend(2);
+            ability.Spend(2, 1);
         }
     }
 

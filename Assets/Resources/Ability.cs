@@ -65,29 +65,29 @@ public class Ability : MonoBehaviourPun {
 
         if (able.Equals("flash1")) {
             cc.Flash();
-            Spend(1);
+            Spend(1, 1);
 
         }
 
         if (able.Equals("straychild2")) {
             cc.Stray();
-            Spend(2);
+            Spend(2, 1);
 
         }
 
         if (able.Equals("whiteout2")) {
             cc.Smoke();
-            Spend(2);
+            Spend(2, 1);
 
         }
         if (able.Equals("bluelight2")) {
             cc.BlueLight();
-            Spend(2);
+            Spend(2, 1);
 
         }
         if (able.Equals("diable1")) {
             cc.RireDuDiable();
-            Spend(1);
+            Spend(1, 1);
 
         }
         if (able.Equals("coward2")) {
@@ -97,27 +97,27 @@ public class Ability : MonoBehaviourPun {
         }
         if (able.Equals("yor1")) {
             rc.Yor();
-            Spend(1);
+            Spend(1,1);
 
         }
         if (able.Equals("stradarts2")) {
             cc.StraDarts();
-            Spend(2);
+            Spend(2, 1);
 
         }
         if (able.Equals("blackbell1")) {
             rc.BlackBell();
-            Spend(1);
+            Spend(1, 1);
 
         }
         if (able.Equals("wolf1")) {
             cc.Wolf();
-            Spend(1);
+            Spend(1, 1);
 
         }
         if (able.Equals("eagle2")) {
             cc.Eagle();
-            Spend(2);
+            Spend(2, 1);
 
         }
         if (able.Equals("boostio1")) {
@@ -126,7 +126,7 @@ public class Ability : MonoBehaviourPun {
         }
         if (able.Equals("kamaitachi1")) {
             cc.Kamaitachi();
-            Spend(1);
+            Spend(1, 1);
 
         }
         if (able.Equals("aqua2"))
@@ -135,27 +135,34 @@ public class Ability : MonoBehaviourPun {
             
 
         }
+
+        if (able.Equals("Katarina"))
+        {
+            cc.Katarina();
+
+
+        }
     }
 
-    public void Spend(int number) {
+    public void Spend(int number, int cost) {
         if (number == 1)
         {
-            number1--;
+            number1 -= cost;
         }
-        else { 
-            number2--;
+        else {
+            number2 -= cost;
         }
     }
 
-    public void Collect(int number)
+    public void Collect(int number, int many)
     {
         if (number == 1)
         {
-            number1++;
+            number1 += many;
         }
         else
         {
-            number2++;
+            number2 += many;
         }
     }
 

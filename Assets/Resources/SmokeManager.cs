@@ -26,6 +26,11 @@ public class SmokeManager : MonoBehaviourPun {
             color = Color.cyan;
             Invoke("Destroy", 10f);
         }
+        if (gameObject.name.Equals("KatarinaSmoke(Clone)"))
+        {
+            color = Color.magenta;
+            Invoke("Destroy", 1.5f);
+        }
         if (gameObject.name.Equals("AquaSmoke(Clone)"))
         {
             color = new Color(0.0f, 1.0f, 0.5f);
@@ -52,7 +57,17 @@ public class SmokeManager : MonoBehaviourPun {
         Destroy(gameObject);
 
     }
+    public void PhotonDestroy()
+    {
 
+        if (InSmoke)
+        {
+            PlayerFlashEffect.pfe.Distun();
+            InSmoke = false;
+        }
+        PhotonNetwork.Destroy(gameObject);
+
+    }
 
 
     void OnTriggerStay(Collider other) {

@@ -59,7 +59,7 @@ public class AquaTrick : MonoBehaviourPunCallbacks
             // 生成したプレファブが存在しない場合に生成
             if (instantiatedPrefab == null)
             {
-                ability.Spend(2);
+                ability.Spend(2,1);
                 Debug.Log($"{gameObject.name} が左クリックされました");
                 instantiatedPrefab = PhotonNetwork.Instantiate("AquaSmoke", transform.position, Quaternion.identity);
 
@@ -68,7 +68,7 @@ public class AquaTrick : MonoBehaviourPunCallbacks
             {
 
 
-                ability.Spend(2);
+                ability.Spend(2, 1);
                 instantiatedScan = true;
                 StartCoroutine(Scan());
 
@@ -92,7 +92,7 @@ public class AquaTrick : MonoBehaviourPunCallbacks
         Debug.Log($"{gameObject.name} が右クリックされました");
        
         DestroyPrefab();
-        ability.Collect(2);
+        ability.Collect(2, 1);
 
         } else { 
                
@@ -104,8 +104,8 @@ public class AquaTrick : MonoBehaviourPunCallbacks
 
     public void DestroyPrefab()
     {
-        Destroy(gameObject);
-        instantiatedPrefab.GetComponent<SmokeManager>().Destroy();
+        PhotonNetwork.Destroy(gameObject);
+        instantiatedPrefab.GetComponent<SmokeManager>().PhotonDestroy();
             Debug.Log("Prefab destroyed");
         
     }

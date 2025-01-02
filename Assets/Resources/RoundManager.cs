@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class RoundManager : MonoBehaviourPun {
 
@@ -22,9 +23,11 @@ public class RoundManager : MonoBehaviourPun {
     private int Aloadout = 0;
     private int Bloadout = 0;
 
-    
+   
 
-    
+
+
+
     private GameObject judget;
 
     private Judge judgec;
@@ -40,14 +43,14 @@ public class RoundManager : MonoBehaviourPun {
 
     private float recklesstime;
 
- 
+    private bool winnerIsA;
 
 
     //private PhotonMethod pmc;
 
     BuyWeponManager bwm;
 
-
+    public GameObject finisher;
 
 
     private static RoundManager instance = null;
@@ -132,11 +135,24 @@ public class RoundManager : MonoBehaviourPun {
 
     public void RoundEnd(bool WinnerIsA) {
 
+        winnerIsA = WinnerIsA;
 
-        if (bwm != null) {
+        Finisher();
+  
+        Invoke("RoundProcess", 5.0f);
+      
+
+    }
+
+
+
+    private void RoundProcess()
+    {
+        if (bwm != null)
+        {
             bwm.nowweponcost = 0;
         }
-        Debug.Log(WinnerIsA);
+        Debug.Log(winnerIsA);
 
 
 
@@ -160,16 +176,20 @@ public class RoundManager : MonoBehaviourPun {
 
 
 
-        if (Awin && WinnerIsA) {
+        if (Awin && winnerIsA)
+        {
             this.Bcoin += 1000;
             this.streak = 1;
-        } else if (Bwin && !WinnerIsA) {
+        }
+        else if (Bwin && !winnerIsA)
+        {
             this.Acoin += 1000;
             this.streak = 2;
         }
 
 
-        if (WinnerIsA) {
+        if (winnerIsA)
+        {
 
             this.Awin = true;
             this.Ascore += 1;
@@ -178,7 +198,9 @@ public class RoundManager : MonoBehaviourPun {
             this.Bcoin += round * 500;
 
 
-        } else {
+        }
+        else
+        {
 
             this.Bwin = true;
             this.Bscore += 1;
@@ -186,22 +208,28 @@ public class RoundManager : MonoBehaviourPun {
             this.Acoin += round * 500;
         }
 
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 1) {
+        if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+        {
             BattleLog.battlelog.ChangeText(HpMaster.hpmaster.GetHp(2));
-        } else {
+        }
+        else
+        {
             BattleLog.battlelog.ChangeText(HpMaster.hpmaster.GetHp(1));
         }
 
 
 
 
-        if (Ascore > 4 || Bscore > 4) {
+        if (Ascore > 4 || Bscore > 4)
+        {
 
             //GameEnd();
-            StartLoadingScene("battle", WinnerIsA);
+            StartLoadingScene("battle", winnerIsA);
 
-        } else {
-            StartLoadingScene("battle", WinnerIsA);
+        }
+        else
+        {
+            StartLoadingScene("battle", winnerIsA);
         }
 
         //if (pmc != null) {
@@ -213,18 +241,14 @@ public class RoundManager : MonoBehaviourPun {
         //} else {
         //    SceneManager.LoadScene("battle");
         //}
-
-
-        
-
+    }
 
 
 
-
-
-
-
-
+    private void Finisher()
+    {
+       
+        finisher.SetActive(true);
     }
 
 
