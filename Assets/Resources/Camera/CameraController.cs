@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private float stepTimer = 0f;
     public float wallDetectionDistance = 0.5f;
 
-    private Vector3 moveDirection;
+
 
     private Vector3 lastMoveInput;
 
@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     static float NormalSensityvity = 1f;
     float Xsensityvity = 1f, Ysensityvity = 1f;
 
-    private float zoomSensitivityMultiplier = 0.5f;
+    private float zoomSensitivityMultiplier = 1f;
 
 
     private float cowardRange = 10f;
@@ -279,9 +279,12 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 // ì¸óÕÇÉJÉÅÉâÇÃâÒì]Ç…äÓÇ√Ç¢ÇƒâÒì]
                 Vector3 moveDirection = cameraRotation * inputDirection;
 
-                // à⁄ìÆèàóù
-                transform.position += moveDirection * speed;
+                if (CanWalk(moveDirection))
+                {
+                    // à⁄ìÆèàóù
+                    transform.position += moveDirection * speed;
 
+                }
                 
             }
 
@@ -301,7 +304,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         if (rc != null) {
             if (rc.GetIsZooming()) {
-                zoomSensitivityMultiplier = 80 / Camera.main.fieldOfView;
+                //zoomSensitivityMultiplier = 80 / Camera.main.fieldOfView;
+                zoomSensitivityMultiplier = 1;
                 Xsensityvity = NormalSensityvity * zoomSensitivityMultiplier;
                 Ysensityvity = NormalSensityvity * zoomSensitivityMultiplier;
             } else {
@@ -656,18 +660,18 @@ public class CameraController : MonoBehaviourPunCallbacks {
         
     }
 
+    public bool CanWalk(Vector3 movedirection)
+    {
 
+        Vector3 footPosition = foot.transform.position;
+        return !Physics.Raycast(footPosition, movedirection, 0.2f);
 
-
-
-    protected bool WallCheck(Vector3 targetPosition, Vector3 desiredPosition, LayerMask wallLayers, out Vector3 wallHitPosition) {
-        if (Physics.Raycast(targetPosition, desiredPosition - targetPosition, out RaycastHit wallHit, Vector3.Distance(targetPosition, desiredPosition), wallLayers, QueryTriggerInteraction.Ignore)) {
-            wallHitPosition = wallHit.point;
-            return true;
-        } else {
-            wallHitPosition = desiredPosition;
-            return false;
-        }
     }
+
+
+
+
+
+ 
 
 }

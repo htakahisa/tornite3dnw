@@ -31,6 +31,11 @@ public class PracticeMode : MonoBehaviour {
         SceneManager.LoadScene("Collecting");
     }
 
+    public void Classic()
+    {
+        SceneManager.LoadScene("Classic");
+    }
+
     public void Silver()
     {
         SceneManager.LoadScene("Silver");
