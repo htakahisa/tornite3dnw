@@ -100,7 +100,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     KatarinaSmoke();
                     ability.Spend(2, 10);
                 }
-                if (Input.GetKeyDown(KeyCode.F) && ability.number2 >= 30)
+
                 if (Input.GetKeyDown(KeyCode.F) && ability.number2 >= 30)
                 {
                     C4();
@@ -212,6 +212,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     ratio /= 1.5f;
                     issnake = true;
                 }
+                if (Input.GetMouseButton(1))
+                {
+                    ratio /= 1.5f;
+                }
                 if (z != 0 || x != 0) {
                     if (!issnake) {
                         stepTimer += Time.deltaTime;
@@ -297,6 +301,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         if (rc != null) {
             if (rc.GetIsZooming()) {
+                zoomSensitivityMultiplier = 80 / Camera.main.fieldOfView;
                 Xsensityvity = NormalSensityvity * zoomSensitivityMultiplier;
                 Ysensityvity = NormalSensityvity * zoomSensitivityMultiplier;
             } else {
