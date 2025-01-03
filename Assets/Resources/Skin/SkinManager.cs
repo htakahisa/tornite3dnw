@@ -43,4 +43,16 @@ public class SkinManager : MonoBehaviour
             weapons[i].SetActive(i == index);
         }
     }
+
+    public string getSkinName()
+    {
+        for (int i = 0; i < weapons.Length; i++)
+        {
+            if (weapons[i].active)
+            {
+                return weapons[i].name;
+            }
+        }
+        return null;
+    }
 }

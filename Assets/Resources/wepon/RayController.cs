@@ -597,7 +597,7 @@ public class RayController : MonoBehaviourPun {
             }
         }
 
-        SkinIF skin = usedWepon.GetComponent<SkinIF>();
+        SkinManager skin = usedWepon.GetComponent<SkinManager>();
         if (skin == null)
         {
             return null;
