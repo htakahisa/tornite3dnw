@@ -270,6 +270,16 @@ public class RoundManager : MonoBehaviourPun {
                 PhotonNetwork.Instantiate(ray.getSkinName(), loser.transform.position, Quaternion.identity);
             }
         }
+        else
+        {
+            GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+            Vector3 loserPosition = GameObject.FindGameObjectWithTag("Me").transform.position; // 負けた側の位置
+            Vector3 offset = new Vector3(0, 3, -3); // カメラの位置を調整（斜め上に移動）
+            camera.transform.position = loserPosition + offset; // カメラを新しい位置に移動
+
+            // カメラの向きを負けた側の位置に向ける
+            camera.transform.LookAt(loserPosition);
+        }
 
     }
 
