@@ -9,15 +9,15 @@ public class CameraController : MonoBehaviourPunCallbacks {
     float speed = 0.05f;
 
     private float stepTimer = 0f;
-    public float wallDetectionDistance = 0.5f;
+    private float wallDetectionDistance = 0.13f;
 
-
+    public GameObject WallCheck;
 
     private Vector3 lastMoveInput;
 
     private float servicespeed = 1;
 
-    private Vector3 airMoveVector;
+
     private int hasAppliedAirMove = 0;
 
     private GameObject cam;
@@ -36,8 +36,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private bool IsJump = false;
 
     public GameObject flash; // グレネードのプレハブ
-    private float throwForce = 4f; // 投げる力
-    private float upwardForce = 1.5f; // 上向きの力
+
 
     GameObject coward;
     private Ability ability;
@@ -54,7 +53,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     [SerializeField]
     private float jumpPower = 20000;
     private Rigidbody rb;
-    private float distanceToGround = 0.04f;
+    private float distanceToGround = 0.03f;
 
     RayController rc;
     private SoundManager sm;
@@ -663,9 +662,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
     public bool CanWalk(Vector3 movedirection)
     {
 
-        Vector3 footPosition = foot.transform.position;
-        return !Physics.Raycast(footPosition, movedirection, 0.2f);
-
+        Vector3 wallcheckposition = WallCheck.transform.position;        
+        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance);
     }
 
 
