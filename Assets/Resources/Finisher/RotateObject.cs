@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class RotateObject : MonoBehaviour
 {
-    public Vector3 rotationSpeed = new Vector3(0, 50, 0); // Y軸を中心に回転させる速度
+    [SerializeField]
+    private Vector3 rotationSpeed = new Vector3(0, 50, 0); // Y軸を中心に回転させる速度
 
     void Update()
     {
