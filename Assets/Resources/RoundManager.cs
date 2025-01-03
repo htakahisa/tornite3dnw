@@ -247,23 +247,26 @@ public class RoundManager : MonoBehaviourPun {
 
     private void Finisher()
     {
+        GameObject loser = GameObject.FindGameObjectWithTag("Player");
 
-        GameObject loser;
-
-        loser = GameObject.FindGameObjectWithTag("Me");
-
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 2 == winnerIsA)
+        if (PhotonNetwork.LocalPlayer.ActorNumber == 1 == winnerIsA)
         {
-            PhotonNetwork.Instantiate("sakura", loser.transform.position, Quaternion.identity);
-            Debug.Log("a");
+            // finisher の名前を武器から取得
+            GameObject winner = GameObject.FindGameObjectWithTag("MainCamera");
+            RayController ray = winner.GetComponent<RayController>();
+
+            if (ray.getSkinName() != null)
+            {
+                PhotonNetwork.Instantiate(ray.getSkinName(), loser.transform.position, Quaternion.identity);
+            }
         }
 
-        }
+    }
 
 
 
         // シーンの非同期読み込みを行うコルーチン
-        public IEnumerator LoadYourScene(string sceneName, bool WinnerIsA) {
+    public IEnumerator LoadYourScene(string sceneName, bool WinnerIsA) {
         // シーンの読み込み開始
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 

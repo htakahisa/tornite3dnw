@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SilverSkin : MonoBehaviour
+public class SilverSkin : MonoBehaviour, SkinIF
 {
     WeponSkin weponskin = new WeponSkin();
     [SerializeField] private GameObject[] weapons; // 武器のプロファブを格納する配列
@@ -27,5 +27,17 @@ public class SilverSkin : MonoBehaviour
         {
             weapons[i].SetActive(i == index);
         }
+    }
+
+    public string getSkinName()
+    {
+        for (int i = 0; i < weapons.Length; i++)
+        {
+            if (weapons[i].active)
+            {
+                return weapons[i].name;
+            }
+        }
+        return "";
     }
 }

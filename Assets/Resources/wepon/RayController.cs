@@ -584,6 +584,30 @@ public class RayController : MonoBehaviourPun {
     }
 
 
+    public string getSkinName()
+    {
+        // g‚Á‚Ä‚¢‚é•Ší‚Ìæ“¾
+        GameObject usedWepon = null;
+        for (int i = 0; i < weapons.Length; i++)
+        {
+            if (weapons[i].active)
+            {
+                usedWepon = weapons[i];
+                break;
+            }
+        }
+
+        SkinIF skin = usedWepon.GetComponent<SkinIF>();
+        if (skin == null)
+        {
+            return null;
+        }
+        else
+        {
+            return skin.getSkinName();
+        }
+
+    }
 
 
 
