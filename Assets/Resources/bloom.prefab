@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2970099928417534123}
   - component: {fileID: -357232911982900856}
   m_Layer: 0
-  m_Name: sakura
+  m_Name: bloom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

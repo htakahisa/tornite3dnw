@@ -176,7 +176,7 @@ public class RoundManager : MonoBehaviourPun {
 
 
 
-        // RPC‚ÅBƒƒ\ƒbƒh‚ğŒÄ‚Ño‚µA‚·‚×‚Ä‚ÌƒNƒ‰ƒCƒAƒ“ƒg‚É“¯Šú
+        // RPCï¿½ï¿½Bï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½×‚Ä‚ÌƒNï¿½ï¿½ï¿½Cï¿½Aï¿½ï¿½ï¿½gï¿½É“ï¿½ï¿½ï¿½
         //photonView.RPC("InstanceAvatar", RpcTarget.All);
 
 
@@ -257,36 +257,39 @@ public class RoundManager : MonoBehaviourPun {
 
     private void Finisher()
     {
+        GameObject loser = GameObject.FindGameObjectWithTag("Player");
 
-        GameObject loser;
-
-        loser = GameObject.FindGameObjectWithTag("Me");
-
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 2 == winnerIsA)
+        if (PhotonNetwork.LocalPlayer.ActorNumber == 1 == winnerIsA)
         {
-            PhotonNetwork.Instantiate("sakura", loser.transform.position, Quaternion.identity);
-          
+            // finisher ï¿½Ì–ï¿½ï¿½Oï¿½ğ•Ší‚©ï¿½ï¿½æ“¾
+            GameObject winner = GameObject.FindGameObjectWithTag("MainCamera");
+            RayController ray = winner.GetComponent<RayController>();
+
+            if (ray.getSkinName() != null)
+            {
+                PhotonNetwork.Instantiate(ray.getSkinName(), loser.transform.position, Quaternion.identity);
+            }
         }
 
-        }
+    }
 
 
 
-        // ƒV[ƒ“‚Ì”ñ“¯Šú“Ç‚İ‚İ‚ğs‚¤ƒRƒ‹[ƒ`ƒ“
-        public IEnumerator LoadYourScene(string sceneName, bool WinnerIsA) {
-        // ƒV[ƒ“‚Ì“Ç‚İ‚İŠJn
+        // ï¿½Vï¿½[ï¿½ï¿½ï¿½Ì”ñ“¯Šï¿½ï¿½Ç‚İï¿½ï¿½İ‚ï¿½sï¿½ï¿½ï¿½Rï¿½ï¿½ï¿½[ï¿½`ï¿½ï¿½
+    public IEnumerator LoadYourScene(string sceneName, bool WinnerIsA) {
+        // ï¿½Vï¿½[ï¿½ï¿½ï¿½Ì“Ç‚İï¿½ï¿½İŠJï¿½n
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
-        // ƒV[ƒ“‚Ì“Ç‚İ‚İ‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‹@
+        // ï¿½Vï¿½[ï¿½ï¿½ï¿½Ì“Ç‚İï¿½ï¿½İ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚Å‘Ò‹@
         while (!asyncLoad.isDone) {
             yield return null;
         }
 
-        // ƒV[ƒ“‚Ì“Ç‚İ‚İŠ®—¹Œã‚És‚¢‚½‚¢ˆ—
+        // ï¿½Vï¿½[ï¿½ï¿½ï¿½Ì“Ç‚İï¿½ï¿½İŠï¿½ï¿½ï¿½ï¿½ï¿½Ésï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Debug.Log("Scene Loaded. Now executing the next task.");
 
 
-        // ‚±‚±‚ÅŸ‚Ìˆ—‚ğs‚¤
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Åï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
         GetData();
         if (recklesstime <= 25) {
             judgec.Reckless();
@@ -318,7 +321,7 @@ public class RoundManager : MonoBehaviourPun {
         this.streak = 0;
     }
 
-    // ƒV[ƒ““Ç‚İ‚İ‚ğŠJn‚·‚éƒƒ\ƒbƒh
+    // ï¿½Vï¿½[ï¿½ï¿½ï¿½Ç‚İï¿½ï¿½İ‚ï¿½Jï¿½nï¿½ï¿½ï¿½éƒï¿½\ï¿½bï¿½h
     public void StartLoadingScene(string sceneName, bool WinnerIsA) {
         StartCoroutine(LoadYourScene(sceneName, WinnerIsA));
     }
