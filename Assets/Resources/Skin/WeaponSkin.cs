@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class WeaponSkin : MonoBehaviour
 {
     public static WeaponSkin weaponSkin;
+    static public int ClassicSkinNumber = 0;
     static public int SilverSkinNumber = 0;
     static public int YorSkinNumber = 0;
     static public int NoelSkinNumber = 0;
@@ -23,6 +24,11 @@ public class WeaponSkin : MonoBehaviour
     }
 
     public void Confirmed(string weapon) {
+        if (weapon.Equals("classic"))
+        {
+            ClassicSkinNumber = SkinChanger.skinchanger.GetIndex();
+            Debug.Log(ClassicSkinNumber);
+        }
         if (weapon.Equals("silver")) {
             SilverSkinNumber = SkinChanger.skinchanger.GetIndex();
             Debug.Log(SilverSkinNumber);
@@ -53,5 +59,10 @@ public class WeaponSkin : MonoBehaviour
     public int GetNoel()
     {
         return NoelSkinNumber;
+    }
+
+    public int GetClassic()
+    {
+        return ClassicSkinNumber;
     }
 }

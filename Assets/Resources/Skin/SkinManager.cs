@@ -14,7 +14,10 @@ public class SkinManager : MonoBehaviour
     {
 
         usingWeapon = gameObject.name;
-
+        if (usingWeapon.Equals("Classic"))
+        {
+            currentWeaponIndex = weaponskin.GetClassic();
+        }
         if (usingWeapon.Equals("Silver"))
         {
             currentWeaponIndex = weaponskin.GetSilver();
