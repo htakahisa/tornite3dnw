@@ -58,13 +58,20 @@ public class RoundManager : MonoBehaviourPun {
     // Start is called before the first frame update
     void Start() {
 
+        
         GetData();
 
-
+        Invoke("FirstWeapon", 0.01f);
 
     }
 
-    private void Awake() {
+    private void FirstWeapon()
+    {
+        RayController.rc.Classic();
+    }
+
+
+        private void Awake() {
 
 
 
@@ -73,6 +80,7 @@ public class RoundManager : MonoBehaviourPun {
         if (instance == null) {
             instance = this;
             DontDestroyOnLoad(gameObject);
+           
         } else {
             Destroy(gameObject);
         }
@@ -81,13 +89,14 @@ public class RoundManager : MonoBehaviourPun {
 
 
 
+
     // Update is called once per frame
     void Update() {
 
-        
+      
 
         recklesstime += Time.deltaTime;
-        if (mont != null) {
+        if (mont != null) {           
             if (PhotonNetwork.LocalPlayer.ActorNumber == 1) {
                 mont.text = Acoin + " platinum";
             } else {
@@ -114,7 +123,8 @@ public class RoundManager : MonoBehaviourPun {
 
     private void GetData() {
 
-      
+
+        
 
         judget = GameObject.FindWithTag("Judge");
 
@@ -255,7 +265,7 @@ public class RoundManager : MonoBehaviourPun {
         if (PhotonNetwork.LocalPlayer.ActorNumber == 2 == winnerIsA)
         {
             PhotonNetwork.Instantiate("sakura", loser.transform.position, Quaternion.identity);
-            Debug.Log("a");
+          
         }
 
         }
@@ -290,6 +300,8 @@ public class RoundManager : MonoBehaviourPun {
             judgec.Olive();
             service += 500;
         }
+
+        RayController.rc.Classic();
 
         Aloadout = 0;
         Bloadout = 0;

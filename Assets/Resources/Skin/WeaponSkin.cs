@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class WeponSkin : MonoBehaviour
+public class WeaponSkin : MonoBehaviour
 {
-    public static WeponSkin weponSkin;
+    public static WeaponSkin weaponSkin;
     static public int SilverSkinNumber = 0;
     static public int YorSkinNumber = 0;
     static public int NoelSkinNumber = 0;
@@ -13,7 +13,7 @@ public class WeponSkin : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        weponSkin = this;
+        weaponSkin = this;
     }
 
     // Update is called once per frame

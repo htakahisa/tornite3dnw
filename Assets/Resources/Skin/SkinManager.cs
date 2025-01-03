@@ -2,16 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoelSkin : MonoBehaviour
+public class SkinManager : MonoBehaviour
 {
-    WeponSkin weponskin = new WeponSkin();
+    WeaponSkin weaponskin = new WeaponSkin();
     [SerializeField] private GameObject[] weapons; // 武器のプロファブを格納する配列
     private int currentWeaponIndex = 0;
+    private string usingWeapon;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentWeaponIndex = weponskin.GetNoel();
+
+        usingWeapon = gameObject.name;
+
+        if (usingWeapon.Equals("Silver"))
+        {
+            currentWeaponIndex = weaponskin.GetSilver();
+        }
+        if (usingWeapon.Equals("Noel"))
+        {
+            currentWeaponIndex = weaponskin.GetNoel();
+        }
+        if (usingWeapon.Equals("Yor"))
+        {
+            currentWeaponIndex = weaponskin.GetYor();
+        }
         SwitchWeapon(currentWeaponIndex);
     }
 

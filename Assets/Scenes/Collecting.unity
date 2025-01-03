@@ -3958,7 +3958,7 @@ GameObject:
   - component: {fileID: 149037950}
   - component: {fileID: 149037951}
   m_Layer: 5
-  m_Name: FA Superhawk
+  m_Name: Silver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3997,7 +3997,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 149037949}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c383dfacb942be49ae570a5c7359cc7, type: 3}
+  m_Script: {fileID: 11500000, guid: 8acc1bdfa1f016940b44da97cfc5977e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
@@ -5889,7 +5889,7 @@ GameObject:
   - component: {fileID: 202015783}
   - component: {fileID: 202015784}
   m_Layer: 5
-  m_Name: NoelSkin
+  m_Name: Noel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5934,7 +5934,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 202015782}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f47f7b53a52290429d27136651577b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 8acc1bdfa1f016940b44da97cfc5977e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
@@ -33431,7 +33431,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1156484750}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 52.000008, y: 18.200005, z: -23}
+  m_LocalPosition: {x: 52, y: 18.200005, z: -23}
   m_LocalScale: {x: 350, y: 350, z: 350}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -46268,7 +46268,7 @@ GameObject:
   - component: {fileID: 1573092159}
   - component: {fileID: 1573092160}
   m_Layer: 5
-  m_Name: YorSkin
+  m_Name: Yor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46312,13 +46312,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1573092158}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5558d2a89709669458414fdcfdbe8cd3, type: 3}
+  m_Script: {fileID: 11500000, guid: 8acc1bdfa1f016940b44da97cfc5977e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
   - {fileID: 1006824199}
-  - {fileID: 2047961253}
   - {fileID: 856967741}
+  - {fileID: 2047961253}
   - {fileID: 404038263}
   - {fileID: 176370238}
   - {fileID: 1820198585}

@@ -46,6 +46,10 @@ public class SelfCamera : MonoBehaviour
                     if (sibling.name == "Body") {
                         sibling.gameObject.layer = LayerMask.NameToLayer("Target");
                     }
+                    if (sibling.name == "Plane")
+                    {
+                        sibling.gameObject.layer = LayerMask.NameToLayer("Me");
+                    }
                 }
             }
 
