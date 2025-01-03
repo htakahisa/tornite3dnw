@@ -27,7 +27,7 @@ public class SkinManager : MonoBehaviour
         {
             currentWeaponIndex = weaponskin.GetYor();
         }
-        SwitchWeapon(currentWeaponIndex);
+        SwitchWeapon(6);
     }
 
     // Update is called once per frame
