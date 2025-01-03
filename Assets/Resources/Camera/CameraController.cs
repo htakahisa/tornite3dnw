@@ -208,7 +208,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 if (z != 0 && x != 0) {
                     ratio /= 2;
                 }
-                if (Input.GetKey(KeyCode.LeftShift)) {
+                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftControl)) {
                     ratio /= 1.5f;
                     issnake = true;
                 }
@@ -241,7 +241,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     //if (z != 0 && x != 0) {
                     //    ratio /= 2;
                     //}
-                    if (Input.GetKey(KeyCode.LeftShift)) {
+                    if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftControl)) {
                         ratio /= 1.5f;
                         issnake = true;
                     }
