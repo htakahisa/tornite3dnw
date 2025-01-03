@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 23838468300625122}
   - component: {fileID: 136231897336347784}
   m_Layer: 0
-  m_Name: sakura
+  m_Name: sakura_demo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
