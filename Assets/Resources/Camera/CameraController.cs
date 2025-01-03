@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     float speed = 0.05f;
 
     private float stepTimer = 0f;
-    private float wallDetectionDistance = 0.13f;
+    private float wallDetectionDistance = 0.05f;
 
     public GameObject WallCheck;
 
@@ -662,7 +662,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
     public bool CanWalk(Vector3 movedirection)
     {
 
-        Vector3 wallcheckposition = WallCheck.transform.position;        
+        Vector3 wallcheckposition = WallCheck.transform.position;
+
         return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance);
     }
 
