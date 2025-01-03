@@ -50,7 +50,7 @@ public class RoundManager : MonoBehaviourPun {
 
     BuyWeponManager bwm;
 
-    public GameObject finisher;
+    GameObject finisherManager;
 
 
     private static RoundManager instance = null;
@@ -105,7 +105,7 @@ public class RoundManager : MonoBehaviourPun {
 
 
         if (Input.GetKeyDown(KeyCode.I)) {
-            RoundEnd(true);
+            RoundEnd(false);
 
         }
 
@@ -247,14 +247,23 @@ public class RoundManager : MonoBehaviourPun {
 
     private void Finisher()
     {
-       
-        finisher.SetActive(true);
-    }
+
+        GameObject loser;
+
+        loser = GameObject.FindGameObjectWithTag("Me");
+
+        if (PhotonNetwork.LocalPlayer.ActorNumber == 2 == winnerIsA)
+        {
+            PhotonNetwork.Instantiate("sakura", loser.transform.position, Quaternion.identity);
+            Debug.Log("a");
+        }
+
+        }
 
 
 
-    // シーンの非同期読み込みを行うコルーチン
-    public IEnumerator LoadYourScene(string sceneName, bool WinnerIsA) {
+        // シーンの非同期読み込みを行うコルーチン
+        public IEnumerator LoadYourScene(string sceneName, bool WinnerIsA) {
         // シーンの読み込み開始
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 

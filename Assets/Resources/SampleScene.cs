@@ -40,14 +40,14 @@ public class SampleScene : MonoBehaviourPunCallbacks {
         var position = new Vector3(0, 0, 0);
 
         // 自身のアバター（ネットワークオブジェクト）を生成する
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 2) {
+        if (PhotonNetwork.LocalPlayer.ActorNumber == 1) {
             Debug.Log("You are Player 1");
             // Player 1の初期化処理
             position = new Vector3(0f, 0f, 13);
-        } else if (PhotonNetwork.LocalPlayer.ActorNumber == 1) {
+        } else if (PhotonNetwork.LocalPlayer.ActorNumber == 2) {
             Debug.Log("You are Player 2");
             // Player 2の初期化処理
-            position = new Vector3(7f, 0f, -12f);
+            position = new Vector3(7f, 0.85f, -12f);
         } else {
             Debug.Log("You are Player "+ PhotonNetwork.LocalPlayer.ActorNumber);
         }

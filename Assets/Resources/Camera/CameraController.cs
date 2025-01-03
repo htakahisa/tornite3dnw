@@ -278,8 +278,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 // 移動処理
                 transform.position += moveDirection * speed;
 
-                // デバッグ用
-                Debug.Log($"Move Direction: {moveDirection}");
+                
             }
 
         }

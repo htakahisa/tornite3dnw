@@ -19,6 +19,7 @@ TagManager:
   - Crosshair
   - CrosshairBar
   - PracticeTarget
+  - FinisherManager
   layers:
   - Default
   - TransparentFX
