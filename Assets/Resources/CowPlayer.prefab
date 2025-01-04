@@ -1438,6 +1438,7 @@ GameObject:
   - component: {fileID: -4792546256271761457}
   - component: {fileID: 6223386477289434817}
   - component: {fileID: 4909231365802194501}
+  - component: {fileID: 1181795755}
   m_Layer: 0
   m_Name: CowPlayer
   m_TagString: Player
@@ -1704,6 +1705,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &1181795755
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4399057441147084911}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 8e1b7866b7e6d37479f549ab070dd7e0, type: 3}
+  m_Controller: {fileID: 9100000, guid: 38f90ac82021acb43aafe667f5d8121f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4665059870376447102
 GameObject:
   m_ObjectHideFlags: 0
