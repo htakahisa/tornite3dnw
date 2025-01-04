@@ -27,8 +27,8 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
 
 
             rb = player.GetComponent<Rigidbody>();
-
-            Vector3 to = new Vector3((screenPosition.x - 920) / 30, 10, (screenPosition.y - 544) / 29);
+            Debug.Log(screenPosition);
+            Vector3 to = new Vector3((screenPosition.x - 917.5f) / 30f, 10, (screenPosition.y - 544.275f) / 32f);
             rb.MovePosition(to);
             Debug.Log(screenPosition);
             CanWarp = false;
@@ -47,7 +47,7 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
 
             rb = player.GetComponent<Rigidbody>();
 
-            Vector3 to = new Vector3((screenPosition.x - 920) / 30, 0.5f, (screenPosition.y - 544) / 29);
+            Vector3 to = new Vector3((screenPosition.x - 917.5f) / 30f, 10, (screenPosition.y - 544.275f) / 32f);
             PhotonNetwork.Instantiate("BlueLightSmoke", to, Quaternion.identity);
             Debug.Log(screenPosition);
             CanSmoke = false;
@@ -67,7 +67,7 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
 
 
             rb = player.GetComponent<Rigidbody>();
-            Vector3 to = new Vector3((screenPosition.x - 920) / 30, 0.5f, (screenPosition.y - 544) / 29);
+            Vector3 to = new Vector3((screenPosition.x - 917.5f) / 30f, 10, (screenPosition.y - 544.275f) / 32f);
             PhotonNetwork.Instantiate("Aquaring", to, Quaternion.identity);
             Debug.Log(screenPosition);
             CanSetAqua = false;

@@ -81,7 +81,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
 
         if (Input.GetKeyDown(KeyCode.L)) {
-           Katarina();
+           ability.number2 ++;
         }
 
         if (katarina)
@@ -219,7 +219,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     if (!issnake) {
                         stepTimer += Time.deltaTime;
                         // 足音を0.5秒毎に再生
-                        if (stepTimer >= 0.5f) {
+                        if (stepTimer >= 0.5f && sm != null) {
                             sm.PlaySound("walk");
                             stepTimer = 0f; // タイマーをリセット
                         }
@@ -351,6 +351,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
         } else
 
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() && !IsJump) {
+            
+           
             IsJump = true;
             ////　走って移動している時はジャンプ力を上げる
             //if (runFlag && velocity.magnitude > 0f) {
@@ -360,9 +362,11 @@ public class CameraController : MonoBehaviourPunCallbacks {
             //}
             //velocity.y += jumpPower;
             rb.AddForce(new Vector3(0, jumpPower, 0));
-
-            sm.PlaySound("jump");
-            IsJump = false;
+            if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
+            {
+                sm.PlaySound("jump");
+            }
+                IsJump = false;
         }
            
         
