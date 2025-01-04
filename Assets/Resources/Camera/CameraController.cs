@@ -81,7 +81,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
 
         if (Input.GetKeyDown(KeyCode.L)) {
-           ability.number2 ++;
+          // ability.number2 ++;
         }
 
         if (katarina)

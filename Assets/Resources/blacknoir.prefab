@@ -46,7 +46,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: eb7c65bd02866604eae72622b310fa76, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 63bfbf9fe6a3bed469907a6fdc1dc693, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.287
   m_Pitch: 1
@@ -744,6 +744,30 @@ PrefabInstance:
     - target: {fileID: 7712536730736800278, guid: 8946b08ec61b47d4283fcb5ca735c1bd, type: 3}
       propertyPath: m_Name
       value: blacknoir_tornado
+      objectReference: {fileID: 0}
+    - target: {fileID: 7712536730736800280, guid: 8946b08ec61b47d4283fcb5ca735c1bd, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7712536730736800280, guid: 8946b08ec61b47d4283fcb5ca735c1bd, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7712536730736800280, guid: 8946b08ec61b47d4283fcb5ca735c1bd, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7712536730736800280, guid: 8946b08ec61b47d4283fcb5ca735c1bd, type: 3}
+      propertyPath: InitialModule.startColor.minColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7712536730736800280, guid: 8946b08ec61b47d4283fcb5ca735c1bd, type: 3}
+      propertyPath: InitialModule.startColor.minColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7712536730736800280, guid: 8946b08ec61b47d4283fcb5ca735c1bd, type: 3}
+      propertyPath: InitialModule.startColor.minColor.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7712536730736800283, guid: 8946b08ec61b47d4283fcb5ca735c1bd, type: 3}
       propertyPath: m_RootOrder
