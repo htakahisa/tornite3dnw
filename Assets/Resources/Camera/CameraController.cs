@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     float speed = 0.05f;
 
     private float stepTimer = 0f;
-    private float wallDetectionDistance = 0.13f;
+    private float wallDetectionDistance = 0.16f;
 
     public GameObject WallCheck;
 
