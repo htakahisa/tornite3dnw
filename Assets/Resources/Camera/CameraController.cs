@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private Vector3 lastMoveInput;
 
     private float servicespeed = 1;
-
+    public LayerMask hitMask;
 
     private int hasAppliedAirMove = 0;
 
@@ -668,7 +668,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         Vector3 wallcheckposition = WallCheck.transform.position;
 
-        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance);
+        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance, hitMask);
     }
 
 

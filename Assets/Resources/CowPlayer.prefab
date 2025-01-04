@@ -153,7 +153,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 414235742477092293}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.07, z: 0}
+  m_LocalPosition: {x: 0, y: 0.123, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -800,7 +800,7 @@ GameObject:
   - component: {fileID: 8163998608728695221}
   - component: {fileID: 6291152948274562475}
   - component: {fileID: 460753762627484306}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Head
   m_TagString: Head
   m_Icon: {fileID: 0}
@@ -936,7 +936,7 @@ GameObject:
   - component: {fileID: 5980704222431439869}
   - component: {fileID: 5067438813429653922}
   - component: {fileID: 6577789617108060066}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Body
   m_TagString: Body
   m_Icon: {fileID: 0}
@@ -1575,6 +1575,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WallCheck: {fileID: 414235742477092293}
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 2305
   flash: {fileID: 5769905515425661358, guid: 7184873f4704bad4da7955ac7d15b1bb, type: 3}
   effectOffset: {x: 0, y: 1, z: 2}
   diable: {x: 0, y: 1, z: 2}
