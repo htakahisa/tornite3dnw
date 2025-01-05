@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7740426219264017170}
   - component: {fileID: 8016207524782556060}
   - component: {fileID: -5100536362390243286}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: KatarinaSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}

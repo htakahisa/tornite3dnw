@@ -19,6 +19,7 @@ public class SoundManager : MonoBehaviourPun {
     public AudioClip beep;
     public AudioClip clapping;
     public AudioClip selfwalk;
+    public AudioClip warp;
 
     void Awake() {
         
@@ -92,7 +93,11 @@ public class SoundManager : MonoBehaviourPun {
         {
             audioSource.PlayOneShot(clapping);
         }
-      
+        if (type.Equals("warp"))
+        {
+            audioSource.PlayOneShot(warp);
+        }
+
 
     }
 
@@ -142,6 +147,10 @@ public class SoundManager : MonoBehaviourPun {
         if (type.Equals("clapping"))
         {
             audioSource.PlayOneShot(clapping);
+        }
+        if (type.Equals("warp"))
+        {
+            audioSource.PlayOneShot(warp);
         }
 
     }

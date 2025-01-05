@@ -9,6 +9,10 @@ public class SampleScene : MonoBehaviourPunCallbacks {
 
     public int playerNo = 1;
 
+    GameObject rmo;
+
+    RoundManager rm;
+
     private void Start() {
         // PhotonServerSettingsの設定内容を使ってマスターサーバーへ接続する
         PhotonNetwork.ConnectUsingSettings();
@@ -39,21 +43,52 @@ public class SampleScene : MonoBehaviourPunCallbacks {
     public void InstanceAvatar() {
         var position = new Vector3(0, 0, 0);
 
-        // 自身のアバター（ネットワークオブジェクト）を生成する
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 1) {
-            Debug.Log("You are Player 1");
-            // Player 1の初期化処理
-            position = new Vector3(0f, 0f, 13);
-        } else if (PhotonNetwork.LocalPlayer.ActorNumber == 2) {
-            Debug.Log("You are Player 2");
-            // Player 2の初期化処理
-            position = new Vector3(7f, 0f, -12f);
-        } else {
-            Debug.Log("You are Player "+ PhotonNetwork.LocalPlayer.ActorNumber);
+        rmo = GameObject.Find("Roundmanager");
+        rm = rmo.GetComponent<RoundManager>();
+
+        if (rm.round <= 12)
+        {
+            // 自身のアバター（ネットワークオブジェクト）を生成する
+            if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+            {
+                Debug.Log("You are Player 1");
+                // Player 1の初期化処理
+                position = new Vector3(0f, 0f, 13);
+            }
+            else if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+            {
+                Debug.Log("You are Player 2");
+                // Player 2の初期化処理
+                position = new Vector3(7f, 0f, -12f);
+            }
+            else
+            {
+                Debug.Log("You are Player " + PhotonNetwork.LocalPlayer.ActorNumber);
+            }
+        }
+        else
+        {
+            // 自身のアバター（ネットワークオブジェクト）を生成する
+            if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+            {
+                Debug.Log("You are Player 1");
+                // Player 1の初期化処理
+                position = new Vector3(7f, 0f, -12);
+            }
+            else if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+            {
+                Debug.Log("You are Player 2");
+                // Player 2の初期化処理
+                position = new Vector3(0f, 0f, 13);
+            }
+            else
+            {
+                Debug.Log("You are Player " + PhotonNetwork.LocalPlayer.ActorNumber);
+            }
         }
 
 
-        GameObject avatar = PhotonNetwork.Instantiate("CowPlayer", position, Quaternion.identity);
+            GameObject avatar = PhotonNetwork.Instantiate("CowPlayer", position, Quaternion.identity);
         Camera camera = GetComponentInChildren<Camera>();
         var cameraPosition = avatar.transform.position;
         camera.transform.parent = avatar.transform;

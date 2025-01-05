@@ -21,6 +21,8 @@ public class WarpGate : MonoBehaviour
 
     private void Warp(Vector3 warpposition)
     {
+        SoundManager sm = Camera.main.transform.parent.GetComponent<SoundManager>();
+        sm.PlaySound("warp");
         GameObject character = GameObject.FindGameObjectWithTag("Me");
         character.transform.position = warpposition;
     }
@@ -32,6 +34,7 @@ public class WarpGate : MonoBehaviour
         // 右クリックにつき回収
         if (Input.GetKeyDown(KeyCode.F))
         {
+           
             Warp(warppos);
         }
 

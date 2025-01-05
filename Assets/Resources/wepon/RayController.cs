@@ -12,6 +12,7 @@ public class RayController : MonoBehaviourPun {
     private PinManager pinmanager;
 
     public LayerMask hitMask;
+    public LayerMask wallHitMask;
 
     private GameObject pm;
     private PhaseManager pmc;
@@ -267,10 +268,14 @@ public class RayController : MonoBehaviourPun {
                         //}
 
                     }
-                    else if(Physics.Raycast(ray, out hit)) {
-                        PhotonNetwork.Instantiate("WallHit", hit.point, Quaternion.identity);
+                    else if(Physics.Raycast(ray, out hit, range, wallHitMask)) {
+                        
+                            Debug.Log(hit.collider.gameObject.name);
+                            PhotonNetwork.Instantiate("WallHit", hit.point, Quaternion.identity);
+                        
+
+                        }
                     }
-                }
                 else
                 {
                     sm.PlaySound("beep");

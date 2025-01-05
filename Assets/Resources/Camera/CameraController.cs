@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     float speed = 0.05f;
 
     private float stepTimer = 0f;
-    private float wallDetectionDistance = 0.16f;
+    private float wallDetectionDistance = 0.17f;
 
     public GameObject WallCheck;
 
@@ -553,8 +553,6 @@ public class CameraController : MonoBehaviourPunCallbacks {
         }
         Vector3 spawnPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.2f;
 
-        // カメラの位置を取得
-        Vector3 cameraPosition = Camera.main.transform.position;
 
         // カメラの向いている方向を取得
         Vector3 spawnDirection = Camera.main.transform.forward;
@@ -568,8 +566,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
 
-        // カメラの位置を取得
-        Vector3 cameraPosition = Camera.main.transform.position;
+
 
         // カメラの向いている方向を取得
         Vector3 spawnDirection = Camera.main.transform.forward;

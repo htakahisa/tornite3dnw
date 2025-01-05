@@ -7,13 +7,12 @@ using UnityEngine;
 public class Eagle : MonoBehaviourPun
 {
     private float speed = 8;      // 前進速度
-    private float sensitivity = 70f;  // マウス感度
+
 
     private GameObject playerCamera;
     private Transform cam;
 
-    private float rotationX = 0f;
-    private float rotationY = 0f;
+
     private Rigidbody rb;
 
 
