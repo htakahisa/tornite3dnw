@@ -1875,6 +1875,8 @@ MonoBehaviour:
   flash: {fileID: 8300000, guid: 5f504773d6bf5514982981d513438d1d, type: 3}
   boostio: {fileID: 8300000, guid: 7b516443d5fdfb94d8b8832a5bf46512, type: 3}
   beep: {fileID: 8300000, guid: 786de1e657a86714ba70b1eaa5eab4f5, type: 3}
+  crapping: {fileID: 8300000, guid: ccbdd3bcab20dbc4aa5dda680df6ffab, type: 3}
+  selfwalk: {fileID: 8300000, guid: f0c2b85380260b244bc9cd0b86058e49, type: 3}
 --- !u!82 &4909231365802194501
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2978,7 +2980,7 @@ GameObject:
   - component: {fileID: 9151506956967523304}
   - component: {fileID: 585453942916086889}
   - component: {fileID: 1722337560861409824}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Rio
   m_TagString: Untagged
   m_Icon: {fileID: 0}

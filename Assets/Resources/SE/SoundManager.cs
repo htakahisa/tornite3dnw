@@ -17,8 +17,8 @@ public class SoundManager : MonoBehaviourPun {
     public AudioClip flash;
     public AudioClip boostio;
     public AudioClip beep;
-
-    
+    public AudioClip crapping;
+    public AudioClip selfwalk;
 
     void Awake() {
         
@@ -30,7 +30,7 @@ public class SoundManager : MonoBehaviourPun {
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.H)) {
-            audioSource.PlayOneShot(walk);
+          //  audioSource.PlayOneShot(walk);
         }
     }
 
@@ -52,7 +52,7 @@ public class SoundManager : MonoBehaviourPun {
         
 
             if (type.Equals("walk")) {
-                audioSource.PlayOneShot(walk);
+                audioSource.PlayOneShot(selfwalk);
             }
             if (type.Equals("jump")) {
                 audioSource.PlayOneShot(jump);
@@ -88,7 +88,12 @@ public class SoundManager : MonoBehaviourPun {
                 audioSource.PlayOneShot(beep);
             }
 
-        
+        if (type.Equals("crapping"))
+        {
+            audioSource.PlayOneShot(crapping);
+        }
+      
+
     }
 
 
@@ -134,7 +139,10 @@ public class SoundManager : MonoBehaviourPun {
         if (type.Equals("beep")) {
             audioSource.PlayOneShot(beep);
         }
-
+        if (type.Equals("crapping"))
+        {
+            audioSource.PlayOneShot(crapping);
+        }
 
     }
 }

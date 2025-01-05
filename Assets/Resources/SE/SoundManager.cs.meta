@@ -17,6 +17,8 @@ MonoImporter:
   - flash: {fileID: 8300000, guid: 5f504773d6bf5514982981d513438d1d, type: 3}
   - boostio: {instanceID: 0}
   - beep: {instanceID: 0}
+  - crapping: {fileID: 8300000, guid: ccbdd3bcab20dbc4aa5dda680df6ffab, type: 3}
+  - selfwalk: {fileID: 8300000, guid: f0c2b85380260b244bc9cd0b86058e49, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
