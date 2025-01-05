@@ -11,13 +11,12 @@ public class CrosshairManager : MonoBehaviour {
     private GameObject crosshair;
     Slider slider;
 
+    private float crosshairAdjust = 150f;
 
     // Start is called before the first frame update
     void Awake() {
-
-
-            crosshair = GameObject.FindGameObjectWithTag("Crosshair");
-       
+        crosshair = GameObject.FindGameObjectWithTag("Crosshair");
+        crosshairsize = 1f * crosshairAdjust;
     }
 
     // Update is called once per frame
@@ -31,7 +30,7 @@ public class CrosshairManager : MonoBehaviour {
     public void DotSizeChange() {
         customizebar = GameObject.FindGameObjectWithTag("CrosshairBar");
         slider = customizebar.GetComponent<Slider>();
-        crosshairsize = slider.value * 150;
+        crosshairsize = slider.value * crosshairAdjust;
     }
 
 }
