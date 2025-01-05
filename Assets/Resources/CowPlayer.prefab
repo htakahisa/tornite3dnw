@@ -1706,7 +1706,7 @@ GameObject:
   - component: {fileID: -62882838507654837}
   m_Layer: 0
   m_Name: CowPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

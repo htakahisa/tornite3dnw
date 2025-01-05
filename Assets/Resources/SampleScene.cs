@@ -47,7 +47,7 @@ public class SampleScene : MonoBehaviourPunCallbacks {
         } else if (PhotonNetwork.LocalPlayer.ActorNumber == 2) {
             Debug.Log("You are Player 2");
             // Player 2‚Ì‰Šú‰»ˆ—
-            position = new Vector3(7f, 05f, -12f);
+            position = new Vector3(7f, 0f, -12f);
         } else {
             Debug.Log("You are Player "+ PhotonNetwork.LocalPlayer.ActorNumber);
         }
