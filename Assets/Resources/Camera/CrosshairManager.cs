@@ -6,17 +6,17 @@ using UnityEngine.UI;
 
 public class CrosshairManager : MonoBehaviour {
 
-    public static float crosshairsize;
+    private static float crosshairAdjust = 150f;
+    public static float crosshairsize = 1f * crosshairAdjust;
     private GameObject customizebar;
     private GameObject crosshair;
     Slider slider;
 
-    private float crosshairAdjust = 150f;
 
     // Start is called before the first frame update
     void Awake() {
         crosshair = GameObject.FindGameObjectWithTag("Crosshair");
-        crosshairsize = 1f * crosshairAdjust;
+        
     }
 
     // Update is called once per frame
