@@ -136,12 +136,7 @@ public class Ability : MonoBehaviourPun {
 
         }
 
-        if (able.Equals("Katarina"))
-        {
-            cc.Katarina();
-
-
-        }
+       
     }
 
     public void Spend(int number, int cost) {
@@ -176,6 +171,13 @@ public class Ability : MonoBehaviourPun {
             number1 = 0;
             number2 = 0;
             return;
+        }
+
+        if (item.Equals("katarina2"))
+        {
+            rc = RayController.rc;
+            cc = gameObject.GetComponent<CameraController>();
+            cc.Katarina();
         }
 
 

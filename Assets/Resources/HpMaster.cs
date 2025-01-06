@@ -22,8 +22,7 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
 
     void Awake() {
         hpmaster = this;
-        rmo = GameObject.Find("Roundmanager");
-        rm = rmo.GetComponent<RoundManager>();
+ 
         Invoke("SetArmer", 0.01f);
     }
 
@@ -38,6 +37,8 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
     }
 
     private void SetArmer() {
+        rmo = GameObject.Find("Roundmanager");
+        rm = rmo.GetComponent<RoundManager>();
         hp1 = 100;
         hp2 = 100;
         if (rm.round < 2) {

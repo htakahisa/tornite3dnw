@@ -54,8 +54,6 @@ public class Flash : MonoBehaviour
             // レイキャストで障害物をチェック
             Vector3 directionToPlayer = Camera.main.transform.position - transform.position;
             RaycastHit hit;
-            Debug.Log("blast:" + Physics.Raycast(transform.position, directionToPlayer, out hit, directionToPlayer.magnitude));
-            Debug.Log("相手:" + hit.collider.gameObject.name);
             if (!Physics.Raycast(transform.position, directionToPlayer, out hit, directionToPlayer.magnitude)
                 || hit.collider.gameObject.name == "Head")
             {

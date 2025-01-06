@@ -47,7 +47,7 @@ public class AquaTrick : MonoBehaviourPunCallbacks
     }
     private void End()
     {
-        BattleData.bd.Detect("");
+        BattleData.bd.DetectEnd();
     }
 
      private void OnActive() {

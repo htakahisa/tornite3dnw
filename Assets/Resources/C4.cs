@@ -29,7 +29,13 @@ public class C4 : MonoBehaviourPunCallbacks
             PhotonNetwork.Destroy(gameObject);
 
         }
+
+        
     }
+
+  
+
+
 
     void OnMouseOver()
     {

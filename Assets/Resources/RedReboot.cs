@@ -10,15 +10,20 @@ public class RedReboot : MonoBehaviourPun
     private float time = 0;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        Invoke("DestroyPun", 10f);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void DestroyPun()
+    {
+        PhotonNetwork.Destroy(gameObject);
     }
 
     void OnTriggerStay(Collider other)

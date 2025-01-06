@@ -54,6 +54,7 @@ MonoBehaviour:
   - SynchronizeHp
   - PlaySoundRPC
   - Stuned
+  - Detected
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

@@ -122,37 +122,44 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks {
                     able2cost += 600;
                     nowability = "coward";
                 }
-                if (CanBuy(1300) && IsSelected() && IsSelectedThis(9) && able.Limit(1, 2, "eagle2")) {
+                if (CanBuy(3000) && IsSelected() && IsSelectedThis(9) && able.Limit(1, 2, "katarina2"))
+                {
+                    Buy(3000);
+                    able.Buy("katarina2");
+                    able1cost += 3000;
+                    nowability = "katarina";
+                }
+                if (CanBuy(1300) && IsSelected() && IsSelectedThis(10) && able.Limit(1, 2, "eagle2")) {
                     Buy(1300);
                     able.Buy("eagle2");
                     able2cost += 1300;
                     nowability = "eagle";
                 }
-                if (CanBuy(1300) && IsSelected() && IsSelectedThis(10) && able.Limit(1, 1, "wolf1")) {
+                if (CanBuy(1300) && IsSelected() && IsSelectedThis(11) && able.Limit(1, 1, "wolf1")) {
                     Buy(1300);
                     able.Buy("wolf1");
                     able1cost += 1300;
                     nowability = "wolf";
                 }
-                if (CanBuy(2000) && IsSelected() && IsSelectedThis(11) && able.Limit(1, 1, "yor1")) {
+                if (CanBuy(2000) && IsSelected() && IsSelectedThis(12) && able.Limit(1, 1, "yor1")) {
                     Buy(2000);
                     able.Buy("yor1");
                     able1cost += 2000;
                     nowability = "yor";
                 }
-                if (CanBuy(5000) && IsSelected() && IsSelectedThis(12) && able.Limit(1, 1, "blackbell1")) {
+                if (CanBuy(5000) && IsSelected() && IsSelectedThis(13) && able.Limit(1, 1, "blackbell1")) {
                     Buy(5000);
                     able.Buy("blackbell1");
                     able1cost += 5000;
                     nowability = "blackbell";
                 }
-                if (CanBuy(1500) && IsSelected() && IsSelectedThis(13) && able.Limit(1, 1, "diable1")) {
+                if (CanBuy(1500) && IsSelected() && IsSelectedThis(14) && able.Limit(1, 1, "diable1")) {
                     Buy(1500);
                     able.Buy("diable1");
                     able1cost += 1500;
                     nowability = "diable";
                 }
-                if (CanBuy(2000) && IsSelected() && IsSelectedThis(14) && able.Limit(1, 2, "straychild2")) {
+                if (CanBuy(2000) && IsSelected() && IsSelectedThis(15) && able.Limit(1, 2, "straychild2")) {
                     Buy(2000);
                     able.Buy("straychild2");
                     able2cost += 2000;

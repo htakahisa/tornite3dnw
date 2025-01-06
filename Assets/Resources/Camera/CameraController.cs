@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     float speed = 0.05f;
 
     private float stepTimer = 0f;
-    private float wallDetectionDistance = 0.17f;
+    private float wallDetectionDistance = 0.01f;
 
     public GameObject WallCheck;
 
@@ -27,6 +27,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private float zoomSensitivityMultiplier = 1f;
 
+    public LayerMask AbilityHitMask;
 
     private float cowardRange = 10f;
 
@@ -84,7 +85,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
 
         if (Input.GetKeyDown(KeyCode.L)) {
-          // ability.number2 ++;
+           ability.number2 ++;
         }
 
         if (katarina)
@@ -115,6 +116,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     // ìGÇ…ëŒÇ∑ÇÈèàóùÇÇ±Ç±Ç…í«â¡
                     ScanCamera.sc.ActiveScan();
                     ability.Spend(2, 50);
+                    Invoke("DestroyPun", 5f); 
                 }
             }
         }
@@ -152,6 +154,11 @@ public class CameraController : MonoBehaviourPunCallbacks {
         UpdateCursorLock();
     }
 
+    private void DestroyPun()
+    {
+        BattleData.bd.DetectEnd();
+        ScanCamera.sc.InActiveScan();
+    }
 
     public void Dead() {
         PhotonNetwork.Destroy(gameObject);
@@ -428,7 +435,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit)) {
+        if (Physics.Raycast(ray, out hit, 100, AbilityHitMask)) {
             PhotonNetwork.Instantiate("WhiteSmoke", hit.point, Quaternion.identity);
         }
 
@@ -443,7 +450,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, 100, AbilityHitMask))
         {
             PhotonNetwork.Instantiate("KatarinaSmoke", hit.point, Quaternion.identity);
         }
@@ -459,7 +466,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, 100, AbilityHitMask))
         {
             PhotonNetwork.Instantiate("C4", hit.point, Quaternion.identity);
         }
@@ -486,7 +493,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         Quaternion rota = transform.localRotation;
         rota *= Quaternion.Euler(0, 180, 0);
        
-        if (Physics.Raycast(ray, out hit, cowardRange)) {
+        if (Physics.Raycast(ray, out hit, cowardRange, AbilityHitMask)) {
           
             Instantiate(coward, hit.point, rota);
             ability.Spend(2, 1);
@@ -529,10 +536,6 @@ public class CameraController : MonoBehaviourPunCallbacks {
     public void Katarina()
     {
 
-        if (photonView == null || !photonView.IsMine)
-        {
-            return;
-        }
         katarina = true;
 
     }

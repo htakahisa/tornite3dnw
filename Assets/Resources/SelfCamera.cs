@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class SelfCamera : MonoBehaviour
 {
-
-
+    public GameObject MapIcon;
+    public GameObject Plane;
+    [SerializeField] public List<GameObject> target;
     private PhotonView photonView;
 
     // Start is called before the first frame update
@@ -28,31 +29,31 @@ public class SelfCamera : MonoBehaviour
             gameObject.layer = LayerMask.NameToLayer("Me");
             transform.parent.gameObject.tag = "Me";
         } else {
-            // 現在のオブジェクトの親を取得
-            Transform parent = transform.parent;
-            gameObject.layer = LayerMask.NameToLayer("Enemy");
-            if (parent != null) {
-                // 親の子オブジェクトをすべて取得
-                foreach (Transform sibling in parent) {
 
-                    // "MapIcon"という名前のオブジェクトを探す
-                    if (sibling.name == "MapIcon") {
-                        sibling.gameObject.layer = LayerMask.NameToLayer("EnemyIcon");
-                    }
 
-                    if (sibling.name == "Head") {
-                        sibling.gameObject.layer = LayerMask.NameToLayer("Target");
-                    }
-                    if (sibling.name == "Body") {
-                        sibling.gameObject.layer = LayerMask.NameToLayer("Target");
-                    }
-                    if (sibling.name == "Plane")
-                    {
-                        sibling.gameObject.layer = LayerMask.NameToLayer("Me");
-                    }
+                    
+                   
+            MapIcon.layer = LayerMask.NameToLayer("EnemyIcon");
+
+
+
+            // リスト内の全オブジェクトのレイヤーを変更
+            foreach (GameObject obj in target)
+            {
+                if (obj != null)
+                {
+                    obj.layer = LayerMask.NameToLayer("target");
                 }
             }
 
+
+
+
+            Plane.layer = LayerMask.NameToLayer("Me");
+                    
         }
+            
+
     }
+    
 }

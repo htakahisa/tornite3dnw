@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
 public class RoundManager : MonoBehaviourPun {
 
@@ -52,6 +53,7 @@ public class RoundManager : MonoBehaviourPun {
 
     GameObject finisherManager;
 
+    List<string> finisherList = new List<string> { "wood", "fireaxe", "dummy", "blacknoir", "gridwhite", "bloom", "snow"};
 
     private static RoundManager instance = null;
 
@@ -60,7 +62,8 @@ public class RoundManager : MonoBehaviourPun {
 
         
         GetData();
-
+        // サンプルのリスト
+     
         Invoke("FirstWeapon", 0.01f);
 
     }
@@ -70,8 +73,19 @@ public class RoundManager : MonoBehaviourPun {
         RayController.rc.Classic();
     }
 
+    // 指定された文字列がリストに存在するかを確認するメソッド
+    public bool IsFinisher(string finisher)
+    {
+        if (finisherList == null || finisher == null)
+        {
+            return false;
+        }
 
-        private void Awake() {
+        return finisherList.Contains(finisher);
+    }
+
+
+    private void Awake() {
 
 
 
@@ -172,7 +186,7 @@ public class RoundManager : MonoBehaviourPun {
 
 
 
-        round += 1;
+        
 
 
 
@@ -204,8 +218,8 @@ public class RoundManager : MonoBehaviourPun {
             this.Awin = true;
             this.Ascore += 1;
 
-            this.Acoin += round * 700;
-            this.Bcoin += round * 500;
+            this.Acoin += 1000 + round * 500;
+            this.Bcoin += 500 + round * 300;
 
 
         }
@@ -228,13 +242,13 @@ public class RoundManager : MonoBehaviourPun {
         }
 
 
+        round += 1;
 
-
-        if (Ascore > 4 || Bscore > 4)
+        if (Ascore > 13 || Bscore > 13)
         {
 
             //GameEnd();
-            StartLoadingScene("battle", winnerIsA);
+            StartLoadingScene("lounge", winnerIsA);
 
         }
         else
@@ -265,10 +279,10 @@ public class RoundManager : MonoBehaviourPun {
             GameObject winner = GameObject.FindGameObjectWithTag("MainCamera");
             RayController ray = winner.GetComponent<RayController>();
 
-            if (ray.getSkinName() != null)
-            {
+           if (IsFinisher(ray.getSkinName()))
+           {
                 PhotonNetwork.Instantiate(ray.getSkinName(), loser.transform.position, Quaternion.identity);
-            }
+           }
         }
         else
         {

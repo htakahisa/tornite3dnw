@@ -61,7 +61,7 @@ public class Stradarts : MonoBehaviourPun {
     }
 
     private void DestroyPun() {
-        BattleData.bd.Detect("");
+        BattleData.bd.DetectEnd();
         ScanCamera.sc.InActiveScan();
         PhotonNetwork.Destroy(gameObject);
     }
