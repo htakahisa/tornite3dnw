@@ -74,7 +74,7 @@ public class SmokeManager : MonoBehaviourPun {
 
         InSmoke = true;
         // 衝突したオブジェクトにPhotonViewがあるか確認
-        PhotonView targetPhotonView = other.transform.parent.gameObject.GetComponent<PhotonView>();
+        PhotonView targetPhotonView = other.gameObject.GetComponent<PhotonView>();
 
         if (targetPhotonView != null) {
             // そのオブジェクトが自分のコントローラーかどうかを確認
@@ -97,7 +97,7 @@ public class SmokeManager : MonoBehaviourPun {
         void OnTriggerExit(Collider other) {
         InSmoke = false;
         // 衝突したオブジェクトにPhotonViewがあるか確認
-        PhotonView targetPhotonView = other.transform.parent.gameObject.GetComponent<PhotonView>();
+        PhotonView targetPhotonView = other.gameObject.GetComponent<PhotonView>();
 
         if (targetPhotonView != null) {
             // そのオブジェクトが自分のコントローラーかどうかを確認

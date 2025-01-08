@@ -55,7 +55,7 @@ public class Flash : MonoBehaviour
             Vector3 directionToPlayer = Camera.main.transform.position - transform.position;
             RaycastHit hit;
             if (!Physics.Raycast(transform.position, directionToPlayer, out hit, directionToPlayer.magnitude)
-                || hit.collider.gameObject.name == "Head")
+                || hit.collider.gameObject.name == "head.x")
             {
 
                 flashEffect.GetComponent<PlayerFlashEffect>().ApplyFlash(flashDuration);

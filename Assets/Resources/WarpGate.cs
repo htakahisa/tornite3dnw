@@ -30,9 +30,13 @@ public class WarpGate : MonoBehaviour
 
     void OnMouseOver()
     {
+        if (PhaseManager.pm.GetPhase().Equals("Buy"))
+        {
+            return;
+        }
 
-        // 右クリックにつき回収
-        if (Input.GetKeyDown(KeyCode.F))
+        // Cでワープ
+        if (Input.GetKeyDown(KeyCode.C))
         {
            
             Warp(warppos);

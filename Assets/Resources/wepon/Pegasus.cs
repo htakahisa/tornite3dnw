@@ -6,14 +6,16 @@ using Photon.Pun;
 public class Pegasus : MonoBehaviour {
 
     float rate = 0.06f;
-    int damage = 25;
+    int damage = 20;
     int headdamage = 45;
-    int magazine = 25;
+    int magazine = 15;
     bool auto = true;
     float reloadtime = 1.8f;
     bool zoomable = true;
     float zoomratio = 10;
     bool accuracy = true;
+    float YRecoil = 1f;
+    float XRecoil = 1f;
 
     void Start() {
 
@@ -56,7 +58,15 @@ public class Pegasus : MonoBehaviour {
         return accuracy;
     }
 
+    public float GetYRecoil()
+    {
+        return YRecoil;
+    }
 
+    public float GetXRecoil()
+    {
+        return XRecoil;
+    }
 
     public void GetStatus() {
 

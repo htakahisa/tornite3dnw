@@ -51,6 +51,10 @@ public class PracticeMode : MonoBehaviour {
         SceneManager.LoadScene("Noel");
     }
 
+    public void Duelist()
+    {
+        SceneManager.LoadScene("Duelist");
+    }
     public void Lounge()
     {
         SceneManager.LoadScene("lounge");

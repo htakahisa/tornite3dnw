@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 193235846780734354}
   - component: {fileID: -4152431225435066905}
   - component: {fileID: -1799619787063319204}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: RedReboot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

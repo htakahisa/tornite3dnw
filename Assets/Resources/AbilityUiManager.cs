@@ -23,11 +23,12 @@ public class AbilityUiManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (ability == null)
-        {
-            ability = Camera.main.transform.parent.GetComponent<Ability>();
-        }
+        
+            if (ability == null)
+            {
+                ability = Camera.main.transform.parent.GetComponent<Ability>();
+            }
+        
         else
         {
 

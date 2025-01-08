@@ -228,8 +228,8 @@ public class RoundManager : MonoBehaviourPun {
 
             this.Bwin = true;
             this.Bscore += 1;
-            this.Bcoin += round * 700;
-            this.Acoin += round * 500;
+            this.Bcoin += 1000 + round * 500;
+            this.Acoin += 500 + round * 300;
         }
 
         if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
@@ -342,7 +342,7 @@ public class RoundManager : MonoBehaviourPun {
             Bcoin += service;
         }
         Debug.Log("Acoin:" + Acoin + " Bcoin:" + Bcoin);
-        this.streak = 0;
+        
     }
 
     // �V�[���ǂݍ��݂�J�n���郁�\�b�h

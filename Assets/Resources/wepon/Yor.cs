@@ -14,6 +14,7 @@ public class Yor : MonoBehaviour {
     bool zoomable = false;
     float zoomratio = 1;
     bool accuracy = true;
+    float YRecoil = 10f;
 
     void Start() {
 
@@ -56,7 +57,10 @@ public class Yor : MonoBehaviour {
         return accuracy;
     }
 
-
+    public float GetYRecoil()
+    {
+        return YRecoil;
+    }
 
     public void GetStatus() {
 

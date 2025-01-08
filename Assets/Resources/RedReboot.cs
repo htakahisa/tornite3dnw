@@ -26,32 +26,57 @@ public class RedReboot : MonoBehaviourPun
         PhotonNetwork.Destroy(gameObject);
     }
 
+ 
+
     void OnTriggerStay(Collider other)
     {
 
-        if (other.gameObject != photonView.IsMine)
+        if (other.CompareTag("Body") || other.CompareTag("Feet"))
+        {
+            PhotonView targetPhotonView = other.gameObject.GetComponent<PhotonView>();
+
+        if (!targetPhotonView.IsMine)
         {
             return;
         }
 
 
-        if (other.CompareTag("Body"))
-        {
-            
+       
+            GameObject HitCharacter = GetTopmostParent(other.gameObject);
+            HitCharacter.GetComponent<CameraController>().Stuned(0.05f, 0.05f);
+
             time += Time.deltaTime;
-            if (time >= 0.5)
+            if (time >= 0.5f)
             {
+                
                 Damage(other.gameObject);
                 time = 0;
             }
         }
+
+        
+
+        
+    }
+
+    GameObject GetTopmostParent(GameObject obj)
+    {
+        Transform current = obj.transform;
+
+        // ルートオブジェクトに到達するまで親をたどる
+        while (current.parent != null)
+        {
+            current = current.parent;
+        }
+
+        return current.gameObject;
     }
 
     public void Damage(GameObject target)
     {
 
         DamageManager dm = new DamageManager();
-        dm.causeDamage(target.transform.gameObject, 5);
+        dm.causeDamage(target.transform.gameObject, 10);
 
     }
 }

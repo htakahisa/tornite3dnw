@@ -18,7 +18,7 @@ public class RayController : MonoBehaviourPun {
     private PhaseManager pmc;
     private RoundManager rmc;
 
-    public float range = 100f; // RaycastÇÃéÀíˆãóó£
+    public float range = 200f; // RaycastÇÃéÀíˆãóó£
     private float distanceToGround = 0.15f;
     private GameObject gc;
     private Classic classic;
@@ -65,6 +65,9 @@ public class RayController : MonoBehaviourPun {
     private int currentWeaponIndex = 0;
     private GameObject avatar;
     private CameraController camcon;
+
+    private float yRecoil = 0;
+    private float xRecoil = 0;
 
     // Start is called before the first frame update
     void Start() {
@@ -150,6 +153,8 @@ public class RayController : MonoBehaviourPun {
                     deltaTimeSum = 0;
                     Magazinesize -= 1;
 
+                    
+
                     if (mzt != null) {
                         mzt.text = "écíeêî " + Magazinesize;
                     }
@@ -166,6 +171,8 @@ public class RayController : MonoBehaviourPun {
 
 
                     }
+
+                    camcon.recoil(yRecoil, xRecoil) ;
                 }
             }
 
@@ -327,7 +334,7 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = sheriff.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = sheriff.GetReloadTime();
-
+        yRecoil = sheriff.GetYRecoil();
 
         Auto = sheriff.GetAuto();
         ZoomAble = false;
@@ -352,7 +359,7 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = silver.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = silver.GetReloadTime();
-
+        yRecoil = silver.GetYRecoil();
 
         Auto = silver.GetAuto();
         ZoomAble = false;
@@ -378,6 +385,8 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = pegasus.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = pegasus.GetReloadTime();
+        yRecoil = pegasus.GetYRecoil();
+        xRecoil = pegasus.GetXRecoil();
 
         Auto = pegasus.GetAuto();
         ZoomAble = pegasus.GetZoomAble();
@@ -500,6 +509,7 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = yor.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = yor.GetReloadTime();
+        yRecoil = yor.GetYRecoil();
 
         Auto = yor.GetAuto();
         ZoomAble = yor.GetZoomAble();

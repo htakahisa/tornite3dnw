@@ -30,6 +30,10 @@ public class SkinManager : MonoBehaviour
         {
             currentWeaponIndex = weaponskin.GetYor();
         }
+        if (usingWeapon.Equals("Duelist"))
+        {
+            currentWeaponIndex = weaponskin.GetDuelist();
+        }
         SwitchWeapon(currentWeaponIndex);
     }
 

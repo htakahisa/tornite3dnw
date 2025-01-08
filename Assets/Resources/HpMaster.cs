@@ -52,10 +52,23 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
             armer.armermanager.ArmerNo(3);
         }
         if (rm.streak == 1) {
-            this.shield = 0.67f;
-            armer.armermanager.ArmerNo(4);
+             if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+             {
+                this.shield = 0.67f;
+                armer.armermanager.ArmerNo(4);
+             }
         }
+        if (rm.streak == 2)
+        {
+            if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+            {
+                this.shield = 0.67f;
+                armer.armermanager.ArmerNo(4);
+            }
+        }
+        rm.streak = 0;
     }
+
 
     
     public void SetHp(float damage, int player) {

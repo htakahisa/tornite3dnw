@@ -20,6 +20,7 @@ TagManager:
   - CrosshairBar
   - PracticeTarget
   - FinisherManager
+  - Feet
   layers:
   - Default
   - TransparentFX

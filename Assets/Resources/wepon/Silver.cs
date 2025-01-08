@@ -12,6 +12,7 @@ public class Silver : MonoBehaviour {
     bool auto = false;
     float reloadtime = 0.5f;
     bool accuracy = true;
+    float YRecoil = 2f;
 
     void Start() {
 
@@ -45,6 +46,11 @@ public class Silver : MonoBehaviour {
 
     public bool GetUnZoomAccuracy() {
         return accuracy;
+    }
+
+    public float GetYRecoil()
+    {
+        return YRecoil;
     }
 
     public void GetStatus() {

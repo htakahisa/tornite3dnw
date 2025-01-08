@@ -31,7 +31,10 @@ public class Diable : MonoBehaviourPun {
 
     void OnTriggerStay(Collider other) {
 
-        if (other.gameObject != photonView.IsMine) {
+        PhotonView targetPhotonView = other.gameObject.GetComponent<PhotonView>();
+
+        if (targetPhotonView != null)
+        {
             return;
         }
 
@@ -48,6 +51,13 @@ public class Diable : MonoBehaviourPun {
 
 
     void OnTriggerExit(Collider other) {
+        PhotonView targetPhotonView = other.gameObject.GetComponent<PhotonView>();
+
+        if (targetPhotonView != null)
+        {
+            return;
+        }
+
         if (other.CompareTag("Head")) {
 
             PlayerFlashEffect.pfe.Distun();

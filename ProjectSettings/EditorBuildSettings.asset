@@ -32,5 +32,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Classic.unity
     guid: 84a7715b9479d934ca54d073cb5cd4b3
+  - enabled: 1
+    path: Assets/Scenes/Duelist.unity
+    guid: ee3c4a8ca3c61d44592d34364a11721b
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}

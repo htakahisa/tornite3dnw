@@ -12,6 +12,8 @@ public class Misstake : MonoBehaviour {
     bool auto = false;
     float reloadtime = 1f;
     bool accuracy = true;
+    float YRecoil = 5f;
+
 
     void Start() {
 
@@ -46,6 +48,13 @@ public class Misstake : MonoBehaviour {
     public bool GetUnZoomAccuracy() {
         return accuracy;
     }
+
+    public float GetYRecoil()
+    {
+        return YRecoil;
+    }
+
+  
 
     public void GetStatus() {
 

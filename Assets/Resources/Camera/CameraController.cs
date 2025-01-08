@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     float speed = 0.05f;
 
     private float stepTimer = 0f;
-    private float wallDetectionDistance = 0.01f;
+    private float wallDetectionDistance = 0.17f;
 
     public GameObject WallCheck;
 
@@ -30,6 +30,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
     public LayerMask AbilityHitMask;
 
     private float cowardRange = 10f;
+
+    private float crouchInterval = 0.5f;
 
     //変数の宣言(角度の制限用)
     float minX = -90f, maxX = 90f;
@@ -184,7 +186,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         while (elapsed < duration) {
 
-            recoil(Random.Range(-1f, 1f) * magnitude, Random.Range(-1f, 1f) * magnitude);
+            recoil(Random.Range(-1, 2) * magnitude, magnitude);
 
             elapsed += Time.deltaTime;
 
@@ -202,11 +204,52 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
 
+        if (false)
+        {
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+            crouchInterval = 0;
+            }
+        
+            if (Input.GetKey(KeyCode.LeftShift) && (crouchInterval >= 0.5f))
+            {
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+                animator.SetBool("crouching", true);
+                // GameObjectの現在のpositionを取得
+                Vector3 newPosition = Camera.main.transform.position;
+
+                // y座標を1に変更
+                newPosition.y = transform.position.y + 1;
+
+                // 新しいpositionを適用
+                Camera.main.transform.position = newPosition;
+
+
+
+            }
+
+            else
+            {
+                animator.SetBool("crouching", false);
+                // GameObjectの現在のpositionを取得
+                Vector3 newPosition = Camera.main.transform.position;
+
+                // y座標を1.7に変更
+                newPosition.y = transform.position.y + 1.7f;
+
+                // 新しいpositionを適用
+                Camera.main.transform.position = newPosition;
+
+                crouchInterval += Time.deltaTime;
+
+            }
+        }
+
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
             Vector3 moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
-            animator.SetBool("walking", true);
+           
             if (IsGrounded())
             {
 
@@ -216,15 +259,23 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 z = Input.GetAxisRaw("Vertical") * speed;
                 float ratio = 1f;
                 bool issnake = false;
+
                 if (z != 0 && x != 0)
                 {
                     ratio /= 2;
                 }
-                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftControl))
+                if (Input.GetKey(KeyCode.LeftControl))
                 {
                     ratio /= 1.5f;
                     issnake = true;
                 }
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    ratio /= 3f;
+                    issnake = true;
+                  
+                }
+              
                 if (Input.GetMouseButton(1))
                 {
                     ratio /= 1.5f;
@@ -257,14 +308,23 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     z = Input.GetAxisRaw("Vertical") * speed;
                     float ratio = 0.5f;
                     bool issnake = false;
+                  
                     //if (z != 0 && x != 0) {
                     //    ratio /= 2;
                     //}
-                    if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftControl))
+                    if (Input.GetKey(KeyCode.LeftControl))
                     {
                         ratio /= 1.5f;
                         issnake = true;
                     }
+                    if (Input.GetKey(KeyCode.LeftShift))
+                    {
+                        ratio /= 3f;
+                        issnake = true;
+
+                    }
+                   
+                   
                     if (z != 0 || x != 0)
                     {
                         if (!issnake)
@@ -305,9 +365,21 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
                 if (CanWalk(moveDirection))
                 {
+                    if (CanWalkAnime(moveDirection))
+                    {
+
+                        
+                            animator.SetBool("walking", true);
+                        
+
+                    }
+                        else
+                    {
+                        animator.SetBool("walking", false);
+                    }
                     // 移動処理
                     transform.position += moveDirection * speed;
-
+                    
                 }
 
             }
@@ -346,19 +418,19 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
   
 
-
+    [PunRPC]
     public void Stuned(float duration, float magnitude) {
 
         StartCoroutine(Stun(duration,magnitude));
 
     }
 
-    private void recoil(float yRot, float xRot) {
+    public void recoil(float yRot, float xRot) {
 
-     
+        float xRandomRot = Random.Range(-xRot, xRot);
 
         cameraRot *= Quaternion.Euler(-yRot, 0, 0);
-        characterRot *= Quaternion.Euler(0, xRot, 0);
+        characterRot *= Quaternion.Euler(0, xRandomRot, 0);
 
         //Updateの中で作成した関数を呼ぶ
         cameraRot = ClampRotation(cameraRot);
@@ -689,14 +761,29 @@ public class CameraController : MonoBehaviourPunCallbacks {
     {
 
         Vector3 wallcheckposition = WallCheck.transform.position;
-
+        if (animator.GetBool("crouching")) {
+      //      return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.5f, hitMask);
+        }
         return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance, hitMask);
     }
 
+    public bool CanWalkAnime (Vector3 movedirection)
+    {
+
+        Vector3 wallcheckposition = WallCheck.transform.position;
+
+        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.6f, hitMask);
+    }
+
+    public bool CheckCrouch(Vector3 movedirection)
+    {
+
+        Vector3 wallcheckposition = WallCheck.transform.position;
+        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.5f, hitMask);
+        
+        
+    }
 
 
-
-
- 
 
 }

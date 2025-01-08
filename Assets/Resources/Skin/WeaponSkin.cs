@@ -10,6 +10,7 @@ public class WeaponSkin : MonoBehaviour
     static public int SilverSkinNumber = 0;
     static public int YorSkinNumber = 0;
     static public int NoelSkinNumber = 0;
+    static public int DuelistSkinNumber = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -43,12 +44,29 @@ public class WeaponSkin : MonoBehaviour
             NoelSkinNumber = SkinChanger.skinchanger.GetIndex();
             Debug.Log(NoelSkinNumber);
         }
+        if (weapon.Equals("duelist"))
+        {
+            DuelistSkinNumber = SkinChanger.skinchanger.GetIndex();
+            Debug.Log(DuelistSkinNumber);
+        }
         SceneManager.LoadScene("Collecting");
     }
 
+    public int GetClassic()
+    {
+        return ClassicSkinNumber;
+    }
 
     public int GetSilver() {
         return SilverSkinNumber;
+    }
+    public int GetNoel()
+    {
+        return NoelSkinNumber;
+    }
+    public int GetDuelist()
+    {
+        return DuelistSkinNumber;
     }
 
     public int GetYor()
@@ -56,13 +74,8 @@ public class WeaponSkin : MonoBehaviour
         return YorSkinNumber;
     }
 
-    public int GetNoel()
-    {
-        return NoelSkinNumber;
-    }
+   
 
-    public int GetClassic()
-    {
-        return ClassicSkinNumber;
-    }
+  
+ 
 }
