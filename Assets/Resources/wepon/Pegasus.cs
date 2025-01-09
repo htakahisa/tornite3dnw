@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class Pegasus : MonoBehaviour {
 
-    float rate = 0.06f;
+    float rate = 0.07f;
     int damage = 20;
     int headdamage = 45;
     int magazine = 15;

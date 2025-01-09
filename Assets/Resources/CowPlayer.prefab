@@ -2584,9 +2584,9 @@ GameObject:
   - component: {fileID: 6148200984557246945}
   - component: {fileID: 4399191406387053134}
   - component: {fileID: 8767687648780525298}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: leg_twist.r
-  m_TagString: Untagged
+  m_TagString: Body
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

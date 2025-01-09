@@ -20,10 +20,10 @@ public class ScanCamera : MonoBehaviour
     }
 
     public void ActiveScan() {
-        gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(0).gameObject.SetActive(true);
     }
 
     public void InActiveScan() {
-        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 }

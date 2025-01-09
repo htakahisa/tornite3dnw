@@ -175,7 +175,7 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks {
 
 
 
-                if (IsSelected() && IsSelectedThis(15)) {
+                if (IsSelected() && IsSelectedThis(16)) {
                     
                     able.Buy("cancel");
                     Return(able1cost);

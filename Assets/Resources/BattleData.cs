@@ -36,6 +36,12 @@ public class BattleData : MonoBehaviourPun
         }
     }
 
+    public void DetectedEnd()
+    {
+        photonView.RPC("DetectEnd", RpcTarget.All);
+    }
+
+    [PunRPC]
     public void DetectEnd()
     {
         battletext.text = "";

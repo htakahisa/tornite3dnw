@@ -141,11 +141,11 @@ public class RayController : MonoBehaviourPun {
 
         deltaTimeSum += Time.deltaTime;
 
-        RaycastHit hit;
+
         Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward, Color.red);
 
         if ((Auto && HullAuto()) || (!Auto && SemiAuto())) {
-            if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, range)) {
+
 
 
                 if (Shootable()) {
@@ -158,25 +158,34 @@ public class RayController : MonoBehaviourPun {
                     if (mzt != null) {
                         mzt.text = "残弾数 " + Magazinesize;
                     }
-                   
 
-                        if (Hit()) {
+                    if (!UnZoomAccuracy)
+                    {
+                        cam.fieldOfView = 80;
+                        IsZooming = false;
+                    }
+
+                    GameObject target = Hit();
+
+
+                    if (target.CompareTag("Body") || target.CompareTag("Head")) {
+                       
+                        
+
                        
 
-
-                       
-
-                            shoot(hit.collider.gameObject, hit.collider.tag);
+                            shoot(target, target.tag);
                         
 
 
                     }
 
-                    camcon.recoil(yRecoil, xRecoil) ;
+                    camcon.recoil(yRecoil, xRecoil);
+
                 }
             }
 
-        }
+        
     }
 
 
@@ -224,10 +233,10 @@ public class RayController : MonoBehaviourPun {
 
     public bool Shootable() {
         
-        RaycastHit hit;
+
         if (RateDeltaTime <= deltaTimeSum) {
             if (CanShoot) {
-                if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, range)) {
+
                     if (Magazinesize >= 1) {
                         if ((Auto && HullAuto()) || (!Auto && SemiAuto())) {
                             return true;
@@ -236,64 +245,64 @@ public class RayController : MonoBehaviourPun {
                         sm.PlaySound("noarmo");
                     }
 
-                }
+                
             }
         }
         return false;
     }
 
-    public bool Hit() {
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    public GameObject Hit() {
+        RaycastHit hit; 
         if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D)) {
             if (camcon.IsGrounded())
             {
-              
+
 
 
                 if (UnZoomAccuracy || IsZooming)
                 {
                     sm.PlaySound("shoot");
 
+
+
+
+
+
                     if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, range, hitMask))
                     {
-                        if (!UnZoomAccuracy)
-                        {
-                            cam.fieldOfView = 80;
-                            IsZooming = false;
-                        }
 
-                        //if ((hit.collider.tag == "Body" || hit.collider.tag == "Head") && hit.transform.gameObject != transform.parent.gameObject) {
-
-
-                        
-                        if ((hit.collider.tag == "Body" || hit.collider.tag == "Head"))
-                        {
-                            PhotonNetwork.Instantiate("DamageBlood", hit.point, Quaternion.identity);
-                        }
-                        return true;
-                        //}
+                        PhotonNetwork.Instantiate("DamageBlood", hit.point, Quaternion.identity);
+                        return hit.collider.gameObject;
 
                     }
-                    else if(Physics.Raycast(ray, out hit, range, wallHitMask)) {
-                        
-                            Debug.Log(hit.collider.gameObject.name);
-                            PhotonNetwork.Instantiate("WallHit", hit.point, Quaternion.identity);
-                        
 
-                        }
+
+
+
+
+                    if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, range, wallHitMask))
+                    {
+
+                        Debug.Log(hit.collider.gameObject.name);
+                        PhotonNetwork.Instantiate("WallHit", hit.point, Quaternion.identity);
+
+
+
                     }
-                else
-                {
-                    sm.PlaySound("beep");
-                    return false;
+                    else
+                    {
+
+                        sm.PlaySound("beep");
+                        
+                    }
                 }
             }
-           
 
 
-        } 
-        return false;
+
+        }
+        return gameObject;
+
     }
 
     public void Classic() {
@@ -308,6 +317,8 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = classic.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = classic.GetReloadTime();
+        yRecoil = 0;
+        xRecoil = 0;
 
         Auto = classic.GetAuto();
         ZoomAble = false;
@@ -335,6 +346,7 @@ public class RayController : MonoBehaviourPun {
         MaxMagazine = Magazinesize;
         ReloadTime = sheriff.GetReloadTime();
         yRecoil = sheriff.GetYRecoil();
+        xRecoil = 0;
 
         Auto = sheriff.GetAuto();
         ZoomAble = false;
@@ -360,6 +372,7 @@ public class RayController : MonoBehaviourPun {
         MaxMagazine = Magazinesize;
         ReloadTime = silver.GetReloadTime();
         yRecoil = silver.GetYRecoil();
+        xRecoil = 0;
 
         Auto = silver.GetAuto();
         ZoomAble = false;
@@ -413,6 +426,8 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = stella.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = stella.GetReloadTime();
+        yRecoil = 0;
+        xRecoil = 0;
 
         Auto = stella.GetAuto();
         ZoomAble = stella.GetZoomAble();
@@ -437,6 +452,8 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = noel.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = noel.GetReloadTime();
+        yRecoil = 0;
+        xRecoil = 0;
 
         Auto = noel.GetAuto();
         ZoomAble = noel.GetZoomAble();
@@ -461,6 +478,8 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = reine.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = reine.GetReloadTime();
+        yRecoil = 0;
+        xRecoil = 0;
 
         Auto = reine.GetAuto();
         ZoomAble = reine.GetZoomAble();
@@ -485,6 +504,8 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = duelist.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = duelist.GetReloadTime();
+        yRecoil = 0;
+        xRecoil = 0;
 
         Auto = duelist.GetAuto();
         ZoomAble = duelist.GetZoomAble();
@@ -510,6 +531,7 @@ public class RayController : MonoBehaviourPun {
         MaxMagazine = Magazinesize;
         ReloadTime = yor.GetReloadTime();
         yRecoil = yor.GetYRecoil();
+        xRecoil = 0;
 
         Auto = yor.GetAuto();
         ZoomAble = yor.GetZoomAble();
@@ -532,6 +554,8 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = blackbell.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = blackbell.GetReloadTime();
+        yRecoil = 0;
+        xRecoil = 0;
 
         Auto = blackbell.GetAuto();
         ZoomAble = blackbell.GetZoomAble();
@@ -563,7 +587,7 @@ public class RayController : MonoBehaviourPun {
 
 
     public void shoot(GameObject enemy, string tag) {
-        Debug.Log(tag); // ヒットしたオブジェクトの名前をログに表示
+        Debug.Log(enemy.name); // ヒットしたオブジェクトの名前をログに表示
         if (SceneManager.GetActiveScene().Equals("Practice")) {
             
 
@@ -572,8 +596,14 @@ public class RayController : MonoBehaviourPun {
             int damage = 0;
             if (tag.Equals("Head")) {
                 damage = HeadDamage;
-            } else {
+            }
+            if (tag.Equals("Body"))
+            {                
                 damage = Damage;
+            }
+            if(!tag.Equals("Head") && !tag.Equals("Body"))
+            {
+                return;
             }
             dm.causeDamage(enemy, damage);
         }

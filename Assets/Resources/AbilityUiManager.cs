@@ -26,11 +26,14 @@ public class AbilityUiManager : MonoBehaviour
         
             if (ability == null)
             {
+            if (Camera.main.transform.parent != null)
+            {
                 ability = Camera.main.transform.parent.GetComponent<Ability>();
             }
+            }
+
+        else { 
         
-        else
-        {
 
             if (BattleText != null)
             {

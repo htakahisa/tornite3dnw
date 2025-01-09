@@ -30,7 +30,7 @@ public class SelfCamera : MonoBehaviour
             transform.parent.gameObject.tag = "Me";
         } else {
 
-            gameObject.layer = LayerMask.NameToLayer("Target");
+            gameObject.layer = LayerMask.NameToLayer("Enemy");
 
 
             MapIcon.layer = LayerMask.NameToLayer("EnemyIcon");

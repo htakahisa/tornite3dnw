@@ -6,6 +6,8 @@ public class WarpGate : MonoBehaviour
 {
     [SerializeField]
     private Vector3 warppos;
+    [SerializeField]
+    private Quaternion warprot;
 
     // Start is called before the first frame update
     void Start()
@@ -19,12 +21,14 @@ public class WarpGate : MonoBehaviour
 
     }
 
-    private void Warp(Vector3 warpposition)
+    private void Warp(Vector3 warpposition, Quaternion warprotation)
     {
         SoundManager sm = Camera.main.transform.parent.GetComponent<SoundManager>();
         sm.PlaySound("warp");
         GameObject character = GameObject.FindGameObjectWithTag("Me");
+        character.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         character.transform.position = warpposition;
+        character.transform.rotation = warprotation;
     }
 
 
@@ -39,7 +43,7 @@ public class WarpGate : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
            
-            Warp(warppos);
+            Warp(warppos, warprot);
         }
 
 

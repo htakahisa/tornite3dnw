@@ -41,6 +41,7 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
         rm = rmo.GetComponent<RoundManager>();
         hp1 = 100;
         hp2 = 100;
+        photonView.RPC("SynchronizeHp", RpcTarget.All, hp1, hp2);
         if (rm.round < 2) {
             this.shield = 1;
             armer.armermanager.ArmerNo(1);
@@ -111,12 +112,16 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
 
 
         if (this.hp1 <= 0) {
+            hp1 = 1000;
+            photonView.RPC("SynchronizeHp", RpcTarget.All, hp1, hp2);
             rm.RoundEnd(false);
             if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
             {
                 Camera.main.transform.parent.GetComponent<CameraController>().Dead();
             }
         } else if (this.hp2 <= 0) {
+            hp2 = 1000;
+            photonView.RPC("SynchronizeHp", RpcTarget.All, hp1, hp2);
             rm.RoundEnd(true);
             if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
             {

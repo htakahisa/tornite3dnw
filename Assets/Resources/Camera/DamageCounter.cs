@@ -8,7 +8,6 @@ public class DamageCounter : MonoBehaviour {
 
     private GameObject hmo;
     private HpMaster hmc;
-    private PhotonView pv;
     private CameraController cc;
     
     // Start is called before the first frame update
@@ -25,10 +24,11 @@ public class DamageCounter : MonoBehaviour {
 
     public void DamageCount(int damage, GameObject enemy) {
 
-        PhotonView photonView = enemy.GetComponentInParent<PhotonView>();
-        if (photonView != null && photonView.Owner != null) {
+        PhotonView photonView = enemy.GetComponent<PhotonView>();
+        Photon.Realtime.Player owner = photonView.Owner;
+        if (photonView != null && owner != null) {
             // オブジェクトの所有者（Owner）のActorNumberを取得
-            int ownerActorNumber = photonView.Owner.ActorNumber;
+            int ownerActorNumber = owner.ActorNumber;
             Debug.Log("The ActorNumber of the object owner is: " + ownerActorNumber);
             hmc.SetHp(damage, ownerActorNumber);
         }
