@@ -159,11 +159,7 @@ public class RayController : MonoBehaviourPun {
                         mzt.text = "écíeêî " + Magazinesize;
                     }
 
-                    if (!UnZoomAccuracy)
-                    {
-                        cam.fieldOfView = 80;
-                        IsZooming = false;
-                    }
+                   
 
                     GameObject target = Hit();
 
@@ -181,8 +177,13 @@ public class RayController : MonoBehaviourPun {
                     }
 
                     camcon.recoil(yRecoil, xRecoil);
-
+                if (!UnZoomAccuracy)
+                {
+                    cam.fieldOfView = 80;
+                    IsZooming = false;
                 }
+
+            }
             }
 
         
