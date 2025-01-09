@@ -142,7 +142,7 @@ public class BuyWeponManager : MonoBehaviourPunCallbacks {
 
     public bool CanBuy(int cost) {
 
-        return (rmc.IsCanBuy(cost, PhotonNetwork.LocalPlayer.ActorNumber));
+        return (rmc.IsCanBuy(cost - nowweponcost, PhotonNetwork.LocalPlayer.ActorNumber));
 
 
     }

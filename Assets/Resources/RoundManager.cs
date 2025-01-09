@@ -9,6 +9,7 @@ using System.Collections.Generic;
 public class RoundManager : MonoBehaviourPun {
 
     public int round = 1;
+    public int sideRound = 1;
     private int Ascore = 0;
     private int Bscore = 0;
     private int Acoin = 700;
@@ -218,8 +219,8 @@ public class RoundManager : MonoBehaviourPun {
             this.Awin = true;
             this.Ascore += 1;
 
-            this.Acoin += 1000 + round * 500;
-            this.Bcoin += 500 + round * 300;
+            this.Acoin += 1000 + sideRound * 500;
+            this.Bcoin += 500 + sideRound * 300;
 
 
         }
@@ -228,8 +229,8 @@ public class RoundManager : MonoBehaviourPun {
 
             this.Bwin = true;
             this.Bscore += 1;
-            this.Bcoin += 1000 + round * 500;
-            this.Acoin += 500 + round * 300;
+            this.Bcoin += 1000 + sideRound * 500;
+            this.Acoin += 500 + sideRound * 300;
         }
 
         if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
@@ -243,8 +244,9 @@ public class RoundManager : MonoBehaviourPun {
 
 
         round += 1;
+        sideRound += 1;
 
-        if (Ascore > 13 || Bscore > 13)
+        if (Ascore > 12 || Bscore > 12)
         {
 
             //GameEnd();
@@ -255,17 +257,23 @@ public class RoundManager : MonoBehaviourPun {
         {
             StartLoadingScene("battle", winnerIsA);
         }
+        if (round == 13)
+        {
+            sideRound = 1;
+            Acoin = 700;
+            Bcoin = 700;
+        }
 
-        //if (pmc != null) {
-        //    pmc.Method("Scene");
-        //}
+            //if (pmc != null) {
+            //    pmc.Method("Scene");
+            //}
 
-        //if (SceneManager.GetActiveScene().name.Equals("battle")) {
-        //    SceneManager.LoadScene("battle2");
-        //} else {
-        //    SceneManager.LoadScene("battle");
-        //}
-    }
+            //if (SceneManager.GetActiveScene().name.Equals("battle")) {
+            //    SceneManager.LoadScene("battle2");
+            //} else {
+            //    SceneManager.LoadScene("battle");
+            //}
+        }
 
 
 
@@ -342,7 +350,8 @@ public class RoundManager : MonoBehaviourPun {
             Bcoin += service;
         }
         Debug.Log("Acoin:" + Acoin + " Bcoin:" + Bcoin);
-        
+
+
     }
 
     // �V�[���ǂݍ��݂�J�n���郁�\�b�h
@@ -395,7 +404,7 @@ public class RoundManager : MonoBehaviourPun {
         SceneManager.LoadScene("lounge");
 
     }
-
+   
     public void AddOutLoad(int outload, int number) {
 
         if (number == 1) {
@@ -403,9 +412,14 @@ public class RoundManager : MonoBehaviourPun {
         } else {
             Bloadout += outload;
         }
+
+       
+
     }
 
  
+
+
 
 
 }

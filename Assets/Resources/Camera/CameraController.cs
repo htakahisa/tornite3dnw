@@ -17,6 +17,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private float servicespeed = 1;
     public LayerMask hitMask;
+    public LayerMask groundLayer;
 
     private int hasAppliedAirMove = 0;
 
@@ -40,6 +41,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     public GameObject flash; // グレネードのプレハブ
 
+    public float stepHeight = 0.5f; // 段差の高さ
 
     GameObject coward;
     private Ability ability;
@@ -64,6 +66,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private float katarinaInterval = 0;
     public GameObject foot;
+    public GameObject stepClimbCheck;
 
     private Animator animator;
 
@@ -245,8 +248,13 @@ public class CameraController : MonoBehaviourPunCallbacks {
             }
         }
 
+        
+        RaycastHit hit;
 
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+     
+
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
             Vector3 moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
            
@@ -370,7 +378,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
                         
                             animator.SetBool("walking", true);
-                        
+                            StepClimb(moveDirection);
 
                     }
                         else
@@ -765,6 +773,23 @@ public class CameraController : MonoBehaviourPunCallbacks {
       //      return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.5f, hitMask);
         }
         return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance, hitMask);
+    }
+
+    private void StepClimb(Vector3 movedirection) {
+        RaycastHit hit;
+        Vector3 footPosition = stepClimbCheck.transform.position;
+    
+        if (Physics.Raycast(footPosition, movedirection, out hit, wallDetectionDistance, groundLayer))
+        {
+            // 段差の高さを計算
+            float step = hit.point.y - transform.position.y;
+
+            if (step > 0 && step <= stepHeight)
+            {
+                // Rigidbodyを段差の上に持ち上げる
+                rb.position += Vector3.up * (stepHeight - step + 0.01f);
+            }
+        }
     }
 
     public bool CanWalkAnime (Vector3 movedirection)

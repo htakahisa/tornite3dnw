@@ -53,7 +53,7 @@ public class Diable : MonoBehaviourPun {
     void OnTriggerExit(Collider other) {
         PhotonView targetPhotonView = other.gameObject.GetComponent<PhotonView>();
 
-        if (targetPhotonView != null)
+        if (targetPhotonView == null || !targetPhotonView.IsMine)
         {
             return;
         }
