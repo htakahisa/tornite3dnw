@@ -12,7 +12,7 @@ public class RoundManager : MonoBehaviourPun {
     public int sideRound = 1;
     private int Ascore = 0;
     private int Bscore = 0;
-    private int Acoin = 700;
+    private int Acoin = 70000;
     private int Bcoin = 700;
     private bool Awin = false;
     private bool Bwin = false;
@@ -54,7 +54,7 @@ public class RoundManager : MonoBehaviourPun {
 
     GameObject finisherManager;
 
-    List<string> finisherList = new List<string> { "wood", "fireaxe", "dummy", "blacknoir", "gridwhite", "bloom", "snow"};
+    List<string> finisherList = new List<string> { "wood", "fireaxe", "dummy", "blacknoir", "gridwhite", "liberation", "bloom", "snow"};
 
     private static RoundManager instance = null;
 

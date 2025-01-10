@@ -175,9 +175,15 @@ public class RayController : MonoBehaviourPun {
 
 
                     }
-
+                if (IsZooming)
+                {
+                    camcon.recoil(yRecoil/2, xRecoil/2);
+                }
+                else
+                {
                     camcon.recoil(yRecoil, xRecoil);
-                if (!UnZoomAccuracy)
+                }
+                    if (!UnZoomAccuracy)
                 {
                     cam.fieldOfView = 80;
                     IsZooming = false;
@@ -318,7 +324,7 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = classic.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = classic.GetReloadTime();
-        yRecoil = 0;
+        yRecoil = classic.GetYRecoil();
         xRecoil = 0;
 
         Auto = classic.GetAuto();
@@ -427,8 +433,8 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = stella.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = stella.GetReloadTime();
-        yRecoil = 0;
-        xRecoil = 0;
+        yRecoil = pegasus.GetYRecoil();
+        xRecoil = pegasus.GetXRecoil();
 
         Auto = stella.GetAuto();
         ZoomAble = stella.GetZoomAble();
@@ -453,8 +459,8 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = noel.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = noel.GetReloadTime();
-        yRecoil = 0;
-        xRecoil = 0;
+        yRecoil = pegasus.GetYRecoil();
+        xRecoil = pegasus.GetXRecoil();
 
         Auto = noel.GetAuto();
         ZoomAble = noel.GetZoomAble();

@@ -14,6 +14,8 @@ public class Stella : MonoBehaviour {
     bool zoomable = true;
     float zoomratio = 15;
     bool accuracy = true;
+    float YRecoil = 0.13f;
+    float XRecoil = 0.05f;
 
     void Start() {
 
@@ -56,7 +58,15 @@ public class Stella : MonoBehaviour {
         return accuracy;
     }
 
+    public float GetYRecoil()
+    {
+        return YRecoil;
+    }
 
+    public float GetXRecoil()
+    {
+        return XRecoil;
+    }
 
     public void GetStatus() {
 

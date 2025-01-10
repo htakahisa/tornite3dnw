@@ -5,13 +5,15 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class Classic : MonoBehaviour {
 
-    float rate = 0.13f;
+    float rate = 0.15f;
     int damage = 25;
     int headdamage = 75;
     int magazine = 9;
     bool auto = false;
     float reloadtime = 0.8f;
     bool accuracy = true;
+    float YRecoil = 1.5f;
+
 
     void Start() {
 
@@ -46,6 +48,12 @@ public class Classic : MonoBehaviour {
     public bool GetUnZoomAccuracy() {
         return accuracy;
     }
+    public float GetYRecoil()
+    {
+        return YRecoil;
+    }
+
+
 
     public void GetStatus() { 
         

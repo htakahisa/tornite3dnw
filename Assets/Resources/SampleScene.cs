@@ -88,7 +88,7 @@ public class SampleScene : MonoBehaviourPunCallbacks {
         }
 
 
-            GameObject avatar = PhotonNetwork.Instantiate("CowPlayer", position, Quaternion.identity);
+        GameObject avatar = PhotonNetwork.Instantiate("CowPlayer", position, Quaternion.identity);
         Camera camera = GetComponentInChildren<Camera>();
         var cameraPosition = avatar.transform.position;
         camera.transform.parent = avatar.transform;

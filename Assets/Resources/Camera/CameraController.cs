@@ -17,7 +17,6 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private float servicespeed = 1;
     public LayerMask hitMask;
-    public LayerMask groundLayer;
 
     private int hasAppliedAirMove = 0;
 
@@ -29,6 +28,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private float zoomSensitivityMultiplier = 1f;
 
     public LayerMask AbilityHitMask;
+    public LayerMask GroundLayer;
 
     private float cowardRange = 10f;
 
@@ -41,7 +41,6 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     public GameObject flash; // グレネードのプレハブ
 
-    public float stepHeight = 0.5f; // 段差の高さ
 
     GameObject coward;
     private Ability ability;
@@ -55,10 +54,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private bool IsKamaitachi = false;  
 
     //　通常のジャンプ力
-    [SerializeField]
-    private float jumpPower = 20000;
-    private Rigidbody rb;
-    private float distanceToGround = 0.03f;
+
+    private float jumpPower = 0.9f;
+    // private Rigidbody rb;
+    private float distanceToGround = 0.07f;
 
     RayController rc;
     private SoundManager sm;
@@ -66,14 +65,21 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private float katarinaInterval = 0;
     public GameObject foot;
-    public GameObject stepClimbCheck;
+    // public GameObject stepClimbCheck;
 
     private Animator animator;
+
+    private float gravity = -16f;    // 重力の強さ
+
+    private CharacterController controller;  // CharacterControllerコンポーネント
+    private Vector3 velocity;
+
+   
 
     // Start is called before the first frame update
     void Start() {
 
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         // ゲーム開始時にマウスを非表示にし、中央にロックする
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -83,6 +89,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
         coward = (GameObject)Resources.Load("SurveillanceCamera");
 
         animator = GetComponent<Animator>();
+        // CharacterControllerを取得
+        controller = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -206,6 +214,22 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (photonView == null || !photonView.IsMine) {
             return;
         }
+
+        
+
+        // 地面にいる場合、垂直速度をリセット
+        if (IsGrounded() && velocity.y < 0)
+        {
+            velocity.y = -2f; // 少し負の値にして地面に密着させる
+            velocity.x = 0f;  // 水平方向の速度をリセット
+            velocity.z = 0f;
+        }
+
+        // 重力を適用
+        velocity.y += gravity * Time.deltaTime;
+
+        // 垂直方向の移動
+        controller.Move(velocity * Time.deltaTime);
 
         if (false)
         {
@@ -386,8 +410,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
                         animator.SetBool("walking", false);
                     }
                     // 移動処理
-                    transform.position += moveDirection * speed;
-                    
+                    //transform.position += moveDirection * speed;
+                    // キャラクターを移動
+                    controller.Move(moveDirection * speed);
+
                 }
 
             }
@@ -463,14 +489,13 @@ public class CameraController : MonoBehaviourPunCallbacks {
             
            
             IsJump = true;
-            ////　走って移動している時はジャンプ力を上げる
-            //if (runFlag && velocity.magnitude > 0f) {
-            //    velocity.y += dashJumpPower;
-            //} else {
-            //    velocity.y += jumpPower;
-            //}
+
             //velocity.y += jumpPower;
-            rb.AddForce(new Vector3(0, jumpPower, 0));
+
+            //rb.AddForce(new Vector3(0, jumpPower, 0));
+
+            velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity); // ジャンプの初速度
+
             if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
             {
                 sm.PlaySound("jump");
@@ -494,8 +519,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
         if (IsGrounded()) { 
-        rb.velocity = new Vector3(0, 0, 0);  // 縦方向の速度リセット
-        rb.AddForce(new Vector3(0, jumpPower * 2, 0));
+        velocity.y = Mathf.Sqrt(jumpPower * -8f * gravity); // ジャンプの初速度
+        //rb.velocity = new Vector3(0, 0, 0);  // 縦方向の速度リセット
+        //rb.AddForce(new Vector3(0, jumpPower * 2, 0));
         sm.PlaySound("phantom");
         ability.Spend(2, 1);
         }
@@ -676,14 +702,19 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     public void Boostio() {
         if (IsGrounded() && !IsJump) {
-            rb.velocity = new Vector3(0, 0, 0);  // 速度リセット
+            velocity = new Vector3(0, 0, 0);
             IsJump = true;
             sm.PlaySound("boostio");
             // グレネードに力を加える
-            Vector3 throwDirection = transform.forward*1.5f + transform.up;
-            rb.AddForce(throwDirection * 4, ForceMode.VelocityChange);
+            // 垂直方向のジャンプ速度
+            velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity);
+
+            // 水平方向のブースト速度（前方向に移動）
+            Vector3 boostDirection = transform.forward.normalized; // 前方向
+            velocity += boostDirection * 8f;
             IsJump = false;
             ability.Spend(1, 1);
+            
         }
 
     }
@@ -700,9 +731,14 @@ public class CameraController : MonoBehaviourPunCallbacks {
     void WallKickAction() {
 
         // プレイヤーの反対方向に壁キックの力を加える
-        Vector3 kickDirection = -transform.forward*1.5f + Vector3.up*1.2f;
-        rb.velocity = new Vector3(0, 0, 0);  // 縦方向の速度リセット
-        rb.AddForce(kickDirection * 220, ForceMode.Impulse);
+        Vector3 kickDirection = -transform.forward * 5f;
+        // 垂直方向のジャンプ速度
+        velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity);
+
+        velocity += kickDirection;
+        //修正
+        //rb.velocity = new Vector3(0, 0, 0);  // 縦方向の速度リセット
+        //rb.AddForce(kickDirection * 220, ForceMode.Impulse);
 
     }
 
@@ -761,7 +797,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     public bool IsGrounded() {
 
         Vector3 footPosition = foot.transform.position;
-        return Physics.Raycast(footPosition, Vector3.down, distanceToGround);
+        return Physics.Raycast(footPosition, Vector3.down, distanceToGround, GroundLayer);
         
     }
 
@@ -775,22 +811,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance, hitMask);
     }
 
-    private void StepClimb(Vector3 movedirection) {
-        RaycastHit hit;
-        Vector3 footPosition = stepClimbCheck.transform.position;
-    
-        if (Physics.Raycast(footPosition, movedirection, out hit, wallDetectionDistance, groundLayer))
-        {
-            // 段差の高さを計算
-            float step = hit.point.y - transform.position.y;
 
-            if (step > 0 && step <= stepHeight)
-            {
-                // Rigidbodyを段差の上に持ち上げる
-                rb.position += Vector3.up * (stepHeight - step + 0.01f);
-            }
-        }
-    }
 
     public bool CanWalkAnime (Vector3 movedirection)
     {
