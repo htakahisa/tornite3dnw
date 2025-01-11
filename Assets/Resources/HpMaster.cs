@@ -112,16 +112,12 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
 
 
         if (this.hp1 <= 0) {
-            hp1 = 100;
-            photonView.RPC("SynchronizeHp", RpcTarget.All, hp1, hp2);
             rm.RoundEnd(false);
             if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
             {
                 Camera.main.transform.parent.GetComponent<CameraController>().Dead();
             }
         } else if (this.hp2 <= 0) {
-            hp2 = 100;
-            photonView.RPC("SynchronizeHp", RpcTarget.All, hp1, hp2);
             rm.RoundEnd(true);
             if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
             {

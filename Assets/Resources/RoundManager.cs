@@ -203,12 +203,12 @@ public class RoundManager : MonoBehaviourPun {
 
         if (Awin && winnerIsA)
         {
-            this.Bcoin += 1000;
+            this.Bcoin += 1500;
             this.streak = 1;
         }
         else if (Bwin && !winnerIsA)
         {
-            this.Acoin += 1000;
+            this.Acoin += 1500;
             this.streak = 2;
         }
 

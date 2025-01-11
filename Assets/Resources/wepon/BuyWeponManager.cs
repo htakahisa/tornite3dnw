@@ -71,44 +71,51 @@ public class BuyWeponManager : MonoBehaviourPunCallbacks {
                     rc.Classic();
                     nowweponcost = 0;
                 }
+                if (CanBuy(300) && IsSelected() && IsSelectedThis(1))
+                {
+                    Buy(300);
+                    rc.JawKha();
+                    nowweponcost = 300;
 
-                    if (CanBuy(700) && IsSelected() && IsSelectedThis(1)) {
+                }
+
+                if (CanBuy(700) && IsSelected() && IsSelectedThis(2)) {
                         Buy(700);
                         rc.Misstake();
                         nowweponcost = 700;
 
                     }
-                    if (CanBuy(1500) && IsSelected() && IsSelectedThis(2)) {
+                    if (CanBuy(1500) && IsSelected() && IsSelectedThis(3)) {
                         Buy(1500);
                         rc.Silver();
                         nowweponcost = 1500;
 
                     }
-                    if (CanBuy(1100) && IsSelected() && IsSelectedThis(3)) {
+                    if (CanBuy(1100) && IsSelected() && IsSelectedThis(4)) {
                         Buy(1100);
                         rc.Pegasus();
                         nowweponcost = 1100;
 
                     }
-                    if (CanBuy(1900) && IsSelected() && IsSelectedThis(4)) {
+                    if (CanBuy(1900) && IsSelected() && IsSelectedThis(5)) {
                         Buy(1900);
                         rc.Stella();
                         nowweponcost = 1900;
 
                     }
-                    if (CanBuy(2400) && IsSelected() && IsSelectedThis(5)) {
+                    if (CanBuy(2400) && IsSelected() && IsSelectedThis(6)) {
                         Buy(2400);
                         rc.Noel();
                         nowweponcost = 2400;
 
                     }
-                    if (CanBuy(2000) && IsSelected() && IsSelectedThis(6)) {
+                    if (CanBuy(2000) && IsSelected() && IsSelectedThis(7)) {
                         Buy(2000);
                         rc.Reine();
                         nowweponcost = 2000;
 
                     }
-                    if (CanBuy(4000) && IsSelected() && IsSelectedThis(7)) {
+                    if (CanBuy(4000) && IsSelected() && IsSelectedThis(8)) {
                         Buy(4000);
                         rc.Duelist();
                         nowweponcost = 4000;

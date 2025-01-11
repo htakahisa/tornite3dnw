@@ -22,6 +22,7 @@ public class RayController : MonoBehaviourPun {
     private float distanceToGround = 0.15f;
     private GameObject gc;
     private Classic classic;
+    private JawKha jawkha;
     private Misstake sheriff;
     private Stella stella;
     private Duelist duelist;
@@ -69,6 +70,8 @@ public class RayController : MonoBehaviourPun {
     private float yRecoil = 0;
     private float xRecoil = 0;
 
+    private float punch = 0f;
+
     // Start is called before the first frame update
     void Start() {
 
@@ -84,6 +87,7 @@ public class RayController : MonoBehaviourPun {
         mzt = mz.GetComponent<Text>();
         gc = GameObject.Find("GunController");
         classic = gc.GetComponent<Classic>();
+        jawkha = gc.GetComponent<JawKha>();
         sheriff = gc.GetComponent<Misstake>();
         stella = gc.GetComponent<Stella>();
         duelist = gc.GetComponent<Duelist>();
@@ -165,12 +169,14 @@ public class RayController : MonoBehaviourPun {
 
 
                     if (target.CompareTag("Body") || target.CompareTag("Head")) {
-                       
-                        
 
-                       
 
-                            shoot(target, target.tag);
+
+
+
+                    PhotonView photonView = GetTopmostParent(target).GetComponent<PhotonView>();
+                    photonView.RPC("Stuned", RpcTarget.Others, punch, punch);
+                    shoot(target, target.tag);
                         
 
 
@@ -196,7 +202,7 @@ public class RayController : MonoBehaviourPun {
     }
 
 
-  
+
 
 
 
@@ -211,10 +217,21 @@ public class RayController : MonoBehaviourPun {
     //        return false;
     //    }
     //}
+    GameObject GetTopmostParent(GameObject obj)
+    {
+        Transform current = obj.transform;
+
+        // ルートオブジェクトに到達するまで親をたどる
+        while (current.parent != null)
+        {
+            current = current.parent;
+        }
+
+        return current.gameObject;
+    }
 
 
-
-    public bool GetIsZooming() {
+        public bool GetIsZooming() {
         return IsZooming;
 
     }
@@ -326,6 +343,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = classic.GetReloadTime();
         yRecoil = classic.GetYRecoil();
         xRecoil = 0;
+        punch = 0;
 
         Auto = classic.GetAuto();
         ZoomAble = false;
@@ -339,11 +357,41 @@ public class RayController : MonoBehaviourPun {
 
 
     }
+    public void JawKha()
+    {
+
+
+        currentWeaponIndex = 1;
+        SwitchWeapon(currentWeaponIndex);
+
+        Damage = jawkha.GetDamage();
+        HeadDamage = jawkha.GetHeadDamage();
+        RateDeltaTime = jawkha.GetRate();
+        Magazinesize = jawkha.GetMagazine();
+        MaxMagazine = Magazinesize;
+        ReloadTime = jawkha.GetReloadTime();
+        yRecoil = jawkha.GetYRecoil();
+        xRecoil = jawkha.GetXRecoil();
+        punch = jawkha.GetPunch();
+
+        Auto = jawkha.GetAuto();
+        ZoomAble = jawkha.GetZoomAble();
+        ZoomRatio = jawkha.GetZoomRatio();
+        UnZoomAccuracy = jawkha.GetUnZoomAccuracy();
+
+        this.UseWepon = "jawkha";
+        if (mzt != null)
+        {
+            mzt.text = "残弾数 " + Magazinesize;
+        }
+
+
+    }
 
 
     public void Misstake() {
 
-        currentWeaponIndex = 1;
+        currentWeaponIndex = 2;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = sheriff.GetDamage();
@@ -354,6 +402,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = sheriff.GetReloadTime();
         yRecoil = sheriff.GetYRecoil();
         xRecoil = 0;
+        punch = 0;
 
         Auto = sheriff.GetAuto();
         ZoomAble = false;
@@ -369,7 +418,7 @@ public class RayController : MonoBehaviourPun {
 
     public void Silver() {
 
-        currentWeaponIndex = 2;
+        currentWeaponIndex = 3;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = silver.GetDamage();
@@ -380,6 +429,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = silver.GetReloadTime();
         yRecoil = silver.GetYRecoil();
         xRecoil = 0;
+        punch = 0;
 
         Auto = silver.GetAuto();
         ZoomAble = false;
@@ -396,7 +446,7 @@ public class RayController : MonoBehaviourPun {
     public void Pegasus() {
 
 
-        currentWeaponIndex = 3;
+        currentWeaponIndex = 4;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = pegasus.GetDamage();
@@ -407,6 +457,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = pegasus.GetReloadTime();
         yRecoil = pegasus.GetYRecoil();
         xRecoil = pegasus.GetXRecoil();
+        punch = 0;
 
         Auto = pegasus.GetAuto();
         ZoomAble = pegasus.GetZoomAble();
@@ -424,7 +475,7 @@ public class RayController : MonoBehaviourPun {
     public void Stella() {
 
 
-        currentWeaponIndex = 4;
+        currentWeaponIndex = 5;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = stella.GetDamage();
@@ -435,6 +486,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = stella.GetReloadTime();
         yRecoil = pegasus.GetYRecoil();
         xRecoil = pegasus.GetXRecoil();
+        punch = 0;
 
         Auto = stella.GetAuto();
         ZoomAble = stella.GetZoomAble();
@@ -450,7 +502,7 @@ public class RayController : MonoBehaviourPun {
     }
 
     public void Noel() {
-        currentWeaponIndex = 5;
+        currentWeaponIndex = 6;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = noel.GetDamage();
@@ -461,6 +513,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = noel.GetReloadTime();
         yRecoil = pegasus.GetYRecoil();
         xRecoil = pegasus.GetXRecoil();
+        punch = 0;
 
         Auto = noel.GetAuto();
         ZoomAble = noel.GetZoomAble();
@@ -476,7 +529,7 @@ public class RayController : MonoBehaviourPun {
     }
 
     public void Reine() {
-        currentWeaponIndex = 6;
+        currentWeaponIndex = 7;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = reine.GetDamage();
@@ -487,6 +540,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = reine.GetReloadTime();
         yRecoil = 0;
         xRecoil = 0;
+        punch = 0;
 
         Auto = reine.GetAuto();
         ZoomAble = reine.GetZoomAble();
@@ -502,7 +556,7 @@ public class RayController : MonoBehaviourPun {
     }
 
     public void Duelist() {
-        currentWeaponIndex = 7;
+        currentWeaponIndex = 8;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = duelist.GetDamage();
@@ -513,6 +567,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = duelist.GetReloadTime();
         yRecoil = 0;
         xRecoil = 0;
+        punch = 0;
 
         Auto = duelist.GetAuto();
         ZoomAble = duelist.GetZoomAble();
@@ -528,7 +583,7 @@ public class RayController : MonoBehaviourPun {
         }
     }
     public void Yor() {
-        currentWeaponIndex = 8;
+        currentWeaponIndex = 9;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = yor.GetDamage();
@@ -539,6 +594,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = yor.GetReloadTime();
         yRecoil = yor.GetYRecoil();
         xRecoil = 0;
+        punch = 0;
 
         Auto = yor.GetAuto();
         ZoomAble = yor.GetZoomAble();
@@ -552,7 +608,7 @@ public class RayController : MonoBehaviourPun {
       
     }
     public void BlackBell() {
-        currentWeaponIndex = 9;
+        currentWeaponIndex = 10;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = blackbell.GetDamage();
@@ -563,6 +619,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = blackbell.GetReloadTime();
         yRecoil = 0;
         xRecoil = 0;
+        punch = 0;
 
         Auto = blackbell.GetAuto();
         ZoomAble = blackbell.GetZoomAble();

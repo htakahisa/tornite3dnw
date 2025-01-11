@@ -6,8 +6,8 @@ using Photon.Pun;
 public class Classic : MonoBehaviour {
 
     float rate = 0.15f;
-    int damage = 25;
-    int headdamage = 75;
+    int damage = 30;
+    int headdamage = 70;
     int magazine = 9;
     bool auto = false;
     float reloadtime = 0.8f;

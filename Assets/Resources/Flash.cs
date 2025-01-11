@@ -26,7 +26,7 @@ public class Flash : MonoBehaviour
         _renderer = GetComponent<Renderer>();
 
 
-        Invoke("Blast", 0.5f);
+        Invoke("Blast", 1f);
     }
 
     // Update is called once per frame
