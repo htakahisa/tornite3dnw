@@ -85,7 +85,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     void Start() {
 
         //rb = GetComponent<Rigidbody>();
-        // ゲーム開始時にマウスを非表示にし、中央にロックする
+        // ゲーム開始時にマウスを表示
          Cursor.visible = true;
          Cursor.lockState = CursorLockMode.None;
 

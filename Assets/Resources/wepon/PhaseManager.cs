@@ -27,11 +27,29 @@ public class PhaseManager : MonoBehaviourPun {
 
     // Update is called once per frame
     void Update() {
+        if (phase == "Buy")
+        {
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                if (Cursor.lockState == CursorLockMode.None)
+                {
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                }
+                else
+                {
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
+                buypanel.SetActive(!buypanel.activeSelf);
+                wall.SetActive(!wall.activeSelf);
+            }
+        }
 
     }
 
 
-    public void BuyPhase() {
+        public void BuyPhase() {
 
         phase = "Buy";
         buypanel.SetActive(true);
