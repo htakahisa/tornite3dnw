@@ -74,15 +74,20 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private CharacterController controller;  // CharacterControllerコンポーネント
     private Vector3 velocity;
 
-   
+    public bool CanPlant = false;
+    private float PlantTime = 4f;
+    private float DefuseTime = 6f;
+    private bool IsHalf = false;
+
+    Disturber disturber = null;
 
     // Start is called before the first frame update
     void Start() {
 
         //rb = GetComponent<Rigidbody>();
         // ゲーム開始時にマウスを非表示にし、中央にロックする
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+         Cursor.visible = true;
+         Cursor.lockState = CursorLockMode.None;
 
         ability = Camera.main.transform.parent.GetComponent<Ability>();
         sm = Camera.main.transform.parent.GetComponent<SoundManager>();
@@ -94,11 +99,13 @@ public class CameraController : MonoBehaviourPunCallbacks {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
 
 
-        if (Input.GetKeyDown(KeyCode.L)) {
-          // ability.number2 ++;
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            // ability.number2 ++;
         }
 
         if (katarina)
@@ -129,45 +136,59 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     // 敵に対する処理をここに追加
                     ScanCamera.sc.ActiveScan();
                     ability.Spend(2, 50);
-                    Invoke("DestroyPun", 5f); 
+                    Invoke("DestroyPun", 5f);
                 }
             }
         }
+        if (PhaseManager.pm != null)
+        {
+            if (PhaseManager.pm.GetPhase().Equals("Battle"))
+            {
 
+                    // Escapeキーが押されたときの処理
+                    if (Input.GetKeyDown(KeyCode.Escape))
+                    {
+                        // マウスが表示されていない場合は表示し、自由に動かせるようにする
+                        if (!Cursor.visible)
+                        {
+                            Cursor.visible = true;
+                            Cursor.lockState = CursorLockMode.None;
+                        }
+                        // マウスが表示されている場合は非表示にし、中央にロックする
+                        else
+                        {
+                            Cursor.visible = false;
+                            Cursor.lockState = CursorLockMode.Locked;
+                        }
+                    }
+                }
+            }
 
-            // Escapeキーが押されたときの処理
-            if (Input.GetKeyDown(KeyCode.Escape)) {
-            // マウスが表示されていない場合は表示し、自由に動かせるようにする
-            if (!Cursor.visible) {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-            }
-            // マウスが表示されている場合は非表示にし、中央にロックする
-            else {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-        }
-            if (photonView == null || !photonView.IsMine) {
+        if (photonView == null || !photonView.IsMine)
+        {
             return;
         }
 
-        if (GetComponentInChildren<Camera>() == null) {
-            return;
-        } else {
-            cam = GetComponentInChildren<Camera>().gameObject;
-            cameraRot = cam.transform.localRotation;
-            characterRot = transform.localRotation;
-            this.rc = cam.GetComponent<RayController>();
-        }
+            if (GetComponentInChildren<Camera>() == null)
+            {
+                return;
+            }
+            else
+            {
+                cam = GetComponentInChildren<Camera>().gameObject;
+                cameraRot = cam.transform.localRotation;
+                characterRot = transform.localRotation;
+                this.rc = cam.GetComponent<RayController>();
+            }
 
-        move();
-        jump();
+            move();
+            jump();
 
-        UpdateCursorLock();
+            UpdateCursorLock();
+        
     }
 
-    private void DestroyPun()
+        private void DestroyPun()
     {
         BattleData.bd.DetectEnd();
         ScanCamera.sc.InActiveScan();
@@ -215,7 +236,43 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
 
+        if (Input.GetKey(KeyCode.Alpha4))
+        {
+            Debug.Log(RoundManager.rm.GetSide());
+            if (RoundManager.rm.GetSide().Equals("Leviathan") && disturber != null)
+            {
+                DefuseTime -= Time.deltaTime;
+                if (DefuseTime <= 3)
+                {
+                    IsHalf = true;
+                }
+            }
+            else if(RoundManager.rm.GetSide().Equals("Valkyrie") && CanPlant && disturber == null)
+            {
+                
+                PlantTime -= Time.deltaTime;
+                
+
+            }
+        }
         
+        if (Input.GetKeyUp(KeyCode.Alpha4))
+        {
+            if (IsHalf)
+            {
+                DefuseTime = 3;
+            }
+            else if(!IsHalf){
+                DefuseTime = 6;
+            }
+           
+            PlantTime = 5;
+        }
+
+        if (PlantTime <= 0)
+        {
+            disturber = PhotonNetwork.Instantiate("Disturber", transform.position, transform.rotation).GetComponent<Disturber>();
+        }
 
         // 地面にいる場合、垂直速度をリセット
         if (IsGrounded() && velocity.y < 0)
@@ -829,6 +886,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         
         
     }
+
 
 
 

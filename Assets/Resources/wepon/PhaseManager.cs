@@ -12,7 +12,7 @@ public class PhaseManager : MonoBehaviourPun {
     [SerializeField]
     GameObject wall;
 
-    private string phase;
+    private string phase = "Buy";
 
     public static PhaseManager  pm = null;
 

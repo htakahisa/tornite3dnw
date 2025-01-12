@@ -25,7 +25,7 @@ public class RoundManager : MonoBehaviourPun {
     private int Aloadout = 0;
     private int Bloadout = 0;
 
-   
+    private string Side = "";
 
 
 
@@ -56,7 +56,7 @@ public class RoundManager : MonoBehaviourPun {
 
     List<string> finisherList = new List<string> { "wood", "fireaxe", "dummy", "blacknoir", "gridwhite", "liberation", "bloom", "snow"};
 
-    private static RoundManager instance = null;
+    public static RoundManager rm = null;
 
     // Start is called before the first frame update
     void Start() {
@@ -72,6 +72,7 @@ public class RoundManager : MonoBehaviourPun {
     private void FirstWeapon()
     {
         RayController.rc.Classic();
+
     }
 
     // 指定された文字列がリストに存在するかを確認するメソッド
@@ -85,6 +86,11 @@ public class RoundManager : MonoBehaviourPun {
         return finisherList.Contains(finisher);
     }
 
+    public string GetSide()
+    {
+        return Side;
+    }
+
 
     private void Awake() {
 
@@ -92,13 +98,16 @@ public class RoundManager : MonoBehaviourPun {
 
     
 
-        if (instance == null) {
-            instance = this;
+        if (rm == null) {
+            rm = this;
             DontDestroyOnLoad(gameObject);
            
         } else {
             Destroy(gameObject);
         }
+
+      
+
 
     }
 
@@ -108,27 +117,41 @@ public class RoundManager : MonoBehaviourPun {
     // Update is called once per frame
     void Update() {
 
-      
-
-        recklesstime += Time.deltaTime;
+        if (Side.Equals(""))
+        {
+            if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+            {
+                Side = "Leviathan";
+            }
+            else if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+            {
+                Side = "Valkyrie";
+            }
+        }
+            recklesstime += Time.deltaTime;
         if (mont != null) {           
             if (PhotonNetwork.LocalPlayer.ActorNumber == 1) {
                 mont.text = Acoin + " platinum";
             } else {
                 mont.text = Bcoin + " platinum";
+                }
             }
-        }
-        if (scoretext != null) {
-            if (PhotonNetwork.LocalPlayer.ActorNumber == 1) {
-                scoretext.text = Ascore + " - " + Bscore;
-            } else {
-                scoretext.text = Bscore + " - " + Ascore;
+            if (scoretext != null)
+            {
+                if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                {
+                    scoretext.text = Ascore + " - " + Bscore;
+                }
+                else
+                {
+                    scoretext.text = Bscore + " - " + Ascore;
+                }
+
             }
-         
-        }
 
 
-        if (Input.GetKeyDown(KeyCode.I)) {
+
+            if (Input.GetKeyDown(KeyCode.I)) {
             RoundEnd(false);
 
         }
@@ -257,12 +280,7 @@ public class RoundManager : MonoBehaviourPun {
         {
             StartLoadingScene("battle", winnerIsA);
         }
-        if (round == 13)
-        {
-            sideRound = 1;
-            Acoin = 700;
-            Bcoin = 700;
-        }
+      
 
             //if (pmc != null) {
             //    pmc.Method("Scene");
@@ -334,6 +352,21 @@ public class RoundManager : MonoBehaviourPun {
         if (olive) {
             judgec.Olive();
             service += 500;
+        }
+
+        if (round == 13)
+        {
+            sideRound = 1;
+            Acoin = 700;
+            Bcoin = 700;
+            if (Side.Equals("Leviathan"))
+            {
+                Side = "Valkyrie";
+            }
+            else if (Side.Equals("Valkyrie"))
+            {
+                Side = "Leviathan";
+            }
         }
 
         RayController.rc.Classic();

@@ -58,78 +58,78 @@ public class Ability : MonoBehaviourPun {
 
         rc = RayController.rc;
         cc = gameObject.GetComponent<CameraController>();
-        if (able.Equals("updraft2")) {
+        if (able.Equals("Phantom")) {
             cc.UpDraft();
             
         }
 
-        if (able.Equals("flash1")) {
+        if (able.Equals("Flash")) {
             cc.Flash();
             Spend(1, 1);
 
         }
 
-        if (able.Equals("straychild2")) {
+        if (able.Equals("Stray")) {
             cc.Stray();
             Spend(2, 1);
 
         }
 
-        if (able.Equals("whiteout2")) {
+        if (able.Equals("Whiteout")) {
             cc.Smoke();
             Spend(2, 1);
 
         }
-        if (able.Equals("bluelight2")) {
+        if (able.Equals("BlueLight")) {
             cc.BlueLight();
             Spend(2, 1);
 
         }
-        if (able.Equals("diable1")) {
+        if (able.Equals("Diable")) {
             cc.RireDuDiable();
             Spend(1, 1);
 
         }
-        if (able.Equals("coward2")) {
+        if (able.Equals("Coward")) {
             cc.Coward();
             
 
         }
-        if (able.Equals("yor1")) {
+        if (able.Equals("Yor")) {
             rc.Yor();
             Spend(1,1);
 
         }
-        if (able.Equals("stradarts2")) {
+        if (able.Equals("Stradarts")) {
             cc.StraDarts();
             Spend(2, 1);
 
         }
-        if (able.Equals("blackbell1")) {
+        if (able.Equals("BlackBell")) {
             rc.BlackBell();
             Spend(1, 1);
 
         }
-        if (able.Equals("wolf1")) {
+        if (able.Equals("Wolf")) {
             cc.Wolf();
             Spend(1, 1);
 
         }
-        if (able.Equals("eagle2")) {
+        if (able.Equals("Eagle")) {
             cc.Eagle();
             Spend(2, 1);
 
         }
-        if (able.Equals("boostio1")) {
+        if (able.Equals("Boostio")) {
             cc.Boostio();
            
         }
-        if (able.Equals("kamaitachi1")) {
+        if (able.Equals("Kamaitachi")) {
             cc.Kamaitachi();
             Spend(1, 1);
 
         }
-        if (able.Equals("aqua2"))
+        if (able.Equals("Aqua"))
         {
             cc.Aqua();
             
@@ -163,7 +163,7 @@ public class Ability : MonoBehaviourPun {
 
 
 
-    public void Buy(string item) {
+    public void Buy(string item, int kind) {
 
         if (item.Contains("cancel")) {
             Able1 = "";
@@ -173,7 +173,7 @@ public class Ability : MonoBehaviourPun {
             return;
         }
 
-        if (item.Equals("katarina2"))
+        if (item.Equals("katarina"))
         {
             rc = RayController.rc;
             cc = gameObject.GetComponent<CameraController>();
@@ -181,7 +181,7 @@ public class Ability : MonoBehaviourPun {
         }
 
 
-        if (item.Contains("1")) {
+        if (kind == 1) {
             if (item.Equals(Able1)) {
                 number1++;
             } else {

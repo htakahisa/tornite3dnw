@@ -58,6 +58,9 @@ MonoBehaviour:
   - DetectEnd
   - AddOutLoad
   - SynchronizeCoin
+  - OnExplode
+  - StartDefusing
+  - StartPlanting
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
