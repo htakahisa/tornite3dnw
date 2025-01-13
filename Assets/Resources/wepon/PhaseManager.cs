@@ -64,6 +64,8 @@ public class PhaseManager : MonoBehaviourPun {
         phase = "Battle";
         buypanel.SetActive(false);
         wall.SetActive(false);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
     }
 
