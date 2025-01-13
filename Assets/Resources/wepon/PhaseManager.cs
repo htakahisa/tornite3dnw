@@ -31,7 +31,7 @@ public class PhaseManager : MonoBehaviourPun {
         {
             if (Input.GetKeyDown(KeyCode.B))
             {
-                if (Cursor.lockState == CursorLockMode.None)
+                if (Cursor.visible == false)
                 {
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
@@ -42,7 +42,7 @@ public class PhaseManager : MonoBehaviourPun {
                     Cursor.lockState = CursorLockMode.Locked;
                 }
                 buypanel.SetActive(!buypanel.activeSelf);
-                wall.SetActive(!wall.activeSelf);
+
             }
         }
 

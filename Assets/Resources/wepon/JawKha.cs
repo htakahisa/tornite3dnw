@@ -15,8 +15,8 @@ public class JawKha : MonoBehaviour
     bool zoomable = false;
     float zoomratio = 1;
     bool accuracy = true;
-    float YRecoil = 1f;
-    float XRecoil = 0.2f;
+    float YRecoil = 2.5f;
+    float XRecoil = 0.7f;
     float punch = 0.1f;
 
     void Start()

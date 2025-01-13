@@ -20,7 +20,7 @@ public class Flash : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         sm = Camera.main.transform.parent.GetComponent<SoundManager>();
         // グレネードに力を加える
-        Vector3 throwDirection = transform.forward + transform.up * upwardForce;
+        Vector3 throwDirection = transform.forward * 2;
         rb.AddForce(throwDirection * throwForce, ForceMode.VelocityChange);
         flashEffect = GameObject.FindWithTag("Flash");
         _renderer = GetComponent<Renderer>();

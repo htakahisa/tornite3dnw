@@ -8,8 +8,12 @@ public class BuyWeapon : MonoBehaviour
     private int Cost;
     [SerializeField]
     private string Weapon;
+    [SerializeField]
+    private string Discription;
 
     private BuyWeponManager bwm;
+
+ 
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +29,8 @@ public class BuyWeapon : MonoBehaviour
 
     private void OnMouseOver()
     {
+        DiscriptionTextManager.dtm.TextChange(Discription);
+
         if (Input.GetMouseButtonDown(0))
         {
             if (bwm == null) {

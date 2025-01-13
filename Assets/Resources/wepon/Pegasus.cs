@@ -14,8 +14,8 @@ public class Pegasus : MonoBehaviour {
     bool zoomable = true;
     float zoomratio = 10;
     bool accuracy = true;
-    float YRecoil = 1f;
-    float XRecoil = 1f;
+    float YRecoil = 2f;
+    float XRecoil = 2f;
 
     void Start() {
 

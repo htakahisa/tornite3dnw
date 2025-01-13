@@ -1768,20 +1768,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WallCheck: {fileID: 414235742477092293}
-  hitMask:
+  HitMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 32768
   AbilityHitMask:
     serializedVersion: 2
-    m_Bits: 2305
+    m_Bits: 35072
   GroundLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 32768
   flash: {fileID: 5769905515425661358, guid: 7184873f4704bad4da7955ac7d15b1bb, type: 3}
   effectOffset: {x: 0, y: 1, z: 2}
   diable: {x: 0, y: 1, z: 2}
   foot: {fileID: 2425630165191655316}
   CanPlant: 0
+  pinPrefab: {fileID: 3396055247076033621, guid: b8b0bdb21c67d604eb104d784c447c05, type: 3}
 --- !u!114 &6223386477289434817
 MonoBehaviour:
   m_ObjectHideFlags: 0

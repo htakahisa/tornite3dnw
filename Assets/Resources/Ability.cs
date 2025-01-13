@@ -166,14 +166,27 @@ public class Ability : MonoBehaviourPun {
     public void Buy(string item, int kind) {
 
         if (item.Contains("cancel")) {
-            Able1 = "";
-            Able2 = "";
-            number1 = 0;
-            number2 = 0;
-            return;
+            if (kind == 1)
+            {
+                Able1 = "";
+                number1 = 0;
+            }
+            if (kind == 2)
+            {
+                Able2 = "";
+                number2 = 0;
+            }
+            if (kind == 3)
+            {
+                Able1 = "";
+                Able2 = "";
+                number1 = 0;
+                number2 = 0;
+            }
+                return;
         }
 
-        if (item.Equals("katarina"))
+        if (item.Equals("Katarina"))
         {
             rc = RayController.rc;
             cc = gameObject.GetComponent<CameraController>();

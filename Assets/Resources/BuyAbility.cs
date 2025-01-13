@@ -15,6 +15,9 @@ public class BuyAbility : MonoBehaviour
 
     private AbilityBuyManager abm;
 
+    [SerializeField]
+    private string Discription;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,14 +32,24 @@ public class BuyAbility : MonoBehaviour
 
     private void OnMouseOver()
     {
+        DiscriptionTextManager.dtm.TextChange(Discription);
+
         if (Input.GetMouseButtonDown(0))
         {
             if (abm == null)
             {
                 abm = gameObject.GetComponentInParent<AbilityBuyManager>();
             }
-            abm.Buy(Cost, Ability,Limits,Kind);
+            abm.Buy(Cost, Ability, Limits, Kind);
 
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (abm == null)
+            {
+                abm = gameObject.GetComponentInParent<AbilityBuyManager>();
+            }
+            abm.Buy(Cost, "cancel", Limits, Kind);
         }
     }
 }

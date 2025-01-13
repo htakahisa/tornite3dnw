@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class Noel : MonoBehaviour {
 
-    float rate = 0.12f;
+    float rate = 0.11f;
     int damage = 40;
     int headdamage = 150;
     int magazine = 25;
@@ -14,8 +14,8 @@ public class Noel : MonoBehaviour {
     bool zoomable = true;
     float zoomratio = 30;
     bool accuracy = true;
-    float YRecoil = 0.3f;
-    float XRecoil = 0.08f;
+    float YRecoil = 0.13f;
+    float XRecoil = 0.005f;
 
     void Start() {
 

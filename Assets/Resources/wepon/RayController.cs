@@ -23,7 +23,7 @@ public class RayController : MonoBehaviourPun {
     private GameObject gc;
     private Classic classic;
     private JawKha jawkha;
-    private Misstake sheriff;
+    private Mistake mistake;
     private Stella stella;
     private Duelist duelist;
     private ReineBlanche reine;
@@ -88,7 +88,7 @@ public class RayController : MonoBehaviourPun {
         gc = GameObject.Find("GunController");
         classic = gc.GetComponent<Classic>();
         jawkha = gc.GetComponent<JawKha>();
-        sheriff = gc.GetComponent<Misstake>();
+        mistake = gc.GetComponent<Mistake>();
         stella = gc.GetComponent<Stella>();
         duelist = gc.GetComponent<Duelist>();
         reine = gc.GetComponent<ReineBlanche>();
@@ -389,26 +389,26 @@ public class RayController : MonoBehaviourPun {
     }
 
 
-    public void Misstake() {
+    public void Mistake() {
 
         currentWeaponIndex = 2;
         SwitchWeapon(currentWeaponIndex);
 
-        Damage = sheriff.GetDamage();
-        HeadDamage = sheriff.GetHeadDamage();
-        RateDeltaTime = sheriff.GetRate();
-        Magazinesize = sheriff.GetMagazine();
+        Damage = mistake.GetDamage();
+        HeadDamage = mistake.GetHeadDamage();
+        RateDeltaTime = mistake.GetRate();
+        Magazinesize = mistake.GetMagazine();
         MaxMagazine = Magazinesize;
-        ReloadTime = sheriff.GetReloadTime();
-        yRecoil = sheriff.GetYRecoil();
+        ReloadTime = mistake.GetReloadTime();
+        yRecoil = mistake.GetYRecoil();
         xRecoil = 0;
         punch = 0;
 
-        Auto = sheriff.GetAuto();
+        Auto = mistake.GetAuto();
         ZoomAble = false;
-        UnZoomAccuracy = sheriff.GetUnZoomAccuracy();
+        UnZoomAccuracy = mistake.GetUnZoomAccuracy();
 
-        this.UseWepon = "sheriff";
+        this.UseWepon = "mistake";
         if (mzt != null) {
             mzt.text = "écíeêî " + Magazinesize;
         }

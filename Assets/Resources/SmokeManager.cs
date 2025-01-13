@@ -29,7 +29,7 @@ public class SmokeManager : MonoBehaviourPun {
         if (gameObject.name.Equals("KatarinaSmoke(Clone)"))
         {
             color = Color.magenta;
-            Invoke("Destroy", 1.5f);
+            Invoke("Destroy", 2f);
         }
         if (gameObject.name.Equals("AquaSmoke(Clone)"))
         {

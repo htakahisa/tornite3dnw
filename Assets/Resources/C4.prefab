@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5754451796227841978}
   - component: {fileID: 1794157719269991686}
   - component: {fileID: 580056008106472041}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,8 @@ GameObject:
   - component: {fileID: -1354924022976488520}
   - component: {fileID: -3802725153326423622}
   - component: {fileID: -3056054954470897446}
-  m_Layer: 0
+  - component: {fileID: -3657068396092201397}
+  m_Layer: 5
   m_Name: C4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +129,7 @@ Transform:
   m_GameObject: {fileID: 6632679241577278821}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.747, y: 3.079, z: 7.218}
-  m_LocalScale: {x: 0.3, y: 0.1, z: 0.3}
+  m_LocalScale: {x: 0.3, y: 0.32985002, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6713267129901915334}
@@ -249,3 +250,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dade6b9df4400214c8dd8b135a031855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &-3657068396092201397
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6632679241577278821}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

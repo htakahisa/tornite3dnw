@@ -54,11 +54,30 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks
 
         if (Ability == "cancel")
         {
-            able.Buy("cancel", 1);
-            Return(able1cost);
-            Return(able2cost);
-            able1cost = 0;
-            able2cost = 0;
+            
+            if (kind == 1)
+            {
+                Return(able1cost);
+                able1cost = 0;
+                able.Buy("cancel", 1);
+            }
+            if (kind == 2)
+            {
+                Return(able2cost);
+                able2cost = 0;
+                able.Buy("cancel", 2);
+            }
+            if (kind == 3)
+            {
+                Return(able1cost);
+                Return(able2cost);
+                able1cost = 0;
+                able2cost = 0;
+                able.Buy("cancel", 3);
+            }
+
+            
+            
             nowability = "";
         }
         else

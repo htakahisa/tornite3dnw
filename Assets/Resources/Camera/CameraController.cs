@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private Vector3 lastMoveInput;
 
     private float servicespeed = 1;
-    public LayerMask hitMask;
+    public LayerMask HitMask;
 
     private int hasAppliedAirMove = 0;
 
@@ -79,6 +79,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private float DefuseTime = 6f;
     private bool IsHalf = false;
 
+    public GameObject pinPrefab;
+
     Disturber disturber = null;
 
     // Start is called before the first frame update
@@ -101,7 +103,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetMouseButtonDown(2)) // ƒ}ƒEƒX‰Ÿ‚µž‚Ý
+        {
+            PlacePinAtClickPosition();
+        }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
@@ -124,10 +129,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     ability.Spend(2, 10);
                 }
 
-                if (Input.GetKeyDown(KeyCode.F) && ability.number2 >= 30)
+                if (Input.GetKeyDown(KeyCode.F) && ability.number2 >= 20)
                 {
                     C4();
-                    ability.Spend(2, 30);
+                    
                 }
                 if (Input.GetKeyDown(KeyCode.X) && ability.number2 >= 50)
                 {
@@ -227,10 +232,24 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         
     }
+    void PlacePinAtClickPosition()
+    {
+        RaycastHit hit;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit, 100, GroundLayer))
+        {
+            Debug.Log(hit.collider.gameObject.name);
+            Instantiate(pinPrefab, hit.point, Quaternion.identity);
+
+        }
+
+    }
 
 
 
-    private void FixedUpdate() {
+        private void FixedUpdate() {
 
         if (photonView == null || !photonView.IsMine) {
             return;
@@ -327,6 +346,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 crouchInterval += Time.deltaTime;
 
             }
+
+           
+
         }
 
         
@@ -629,10 +651,12 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100, AbilityHitMask))
+        if (Physics.Raycast(ray, out hit, 10, AbilityHitMask))
         {
             PhotonNetwork.Instantiate("C4", hit.point, Quaternion.identity);
+            ability.Spend(2, 30);
         }
+
 
     }
 
@@ -706,9 +730,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     void Throw() {
         Vector3 spawnDirection = Camera.main.transform.forward;
-        Vector3 spawnPosition = transform.position + transform.forward * 1.3f + transform.up * 1.5f;
+        Vector3 spawnPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.3f;
         GameObject grenade = PhotonNetwork.Instantiate("Flash", spawnPosition, Quaternion.LookRotation(spawnDirection));
-        Rigidbody rb = grenade.GetComponent<Rigidbody>();
 
     }
 
@@ -865,7 +888,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (animator.GetBool("crouching")) {
       //      return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.5f, hitMask);
         }
-        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance, hitMask);
+        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance, HitMask);
     }
 
 
@@ -875,14 +898,14 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         Vector3 wallcheckposition = WallCheck.transform.position;
 
-        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.6f, hitMask);
+        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.6f, HitMask);
     }
 
     public bool CheckCrouch(Vector3 movedirection)
     {
 
         Vector3 wallcheckposition = WallCheck.transform.position;
-        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.5f, hitMask);
+        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.5f, HitMask);
         
         
     }

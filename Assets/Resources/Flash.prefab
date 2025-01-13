@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7187995159589153754}
   - component: {fileID: 1041286211525689336}
   - component: {fileID: -5671670287193008446}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}

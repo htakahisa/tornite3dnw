@@ -5,14 +5,14 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class Silver : MonoBehaviour {
 
-    float rate = 0.3f;
+    float rate = 0.4f;
     int damage = 60;
     int headdamage = 163;
     int magazine = 6;
     bool auto = false;
     float reloadtime = 0.5f;
     bool accuracy = true;
-    float YRecoil = 2f;
+    float YRecoil = 1.5f;
 
     void Start() {
 

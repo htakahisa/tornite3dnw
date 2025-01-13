@@ -1,12 +1,14 @@
 using UnityEngine;
 
 public class PinManager : MonoBehaviour {
-    public GameObject pinPrefab;
+
 
     public static PinManager pm = null;
 
     private GameObject Map;
     Transform map;
+
+
 
     private void Start() {
 
@@ -34,19 +36,10 @@ public class PinManager : MonoBehaviour {
        
 
 
-        if (Input.GetMouseButtonDown(2)) // É}ÉEÉXâüÇµçûÇ›
-        {
-            PlacePinAtClickPosition();
-        }
+       
     }
 
-    void PlacePinAtClickPosition() {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit)) {
-            Instantiate(pinPrefab, hit.point, Quaternion.identity);
-        }
-    }
+   
 
     public void StrayChild() {
 
