@@ -88,10 +88,13 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         //rb = GetComponent<Rigidbody>();
         // ゲーム開始時にマウスを表示
-         Cursor.visible = true;
-         Cursor.lockState = CursorLockMode.None;
+        if (photonView.IsMine)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
 
-        ability = Camera.main.transform.parent.GetComponent<Ability>();
+            ability = Camera.main.transform.parent.GetComponent<Ability>();
         sm = Camera.main.transform.parent.GetComponent<SoundManager>();
         coward = (GameObject)Resources.Load("SurveillanceCamera");
 
