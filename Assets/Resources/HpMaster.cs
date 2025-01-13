@@ -18,7 +18,7 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
 
     RoundManager rm;
 
-
+    private bool HasKill = false;
 
     void Awake() {
         hpmaster = this;
@@ -110,28 +110,35 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
         this.hp1 = hp1;
         this.hp2 = hp2;
 
-
-        if (this.hp1 <= 0) {
-            rm.RoundEnd(false);
-            if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+        if (!HasKill)
+        {
+            if (this.hp1 <= 0)
             {
-                Camera.main.transform.parent.GetComponent<CameraController>().Dead();
+                rm.RoundEnd(false);
+                if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                {
+                    Camera.main.transform.parent.GetComponent<CameraController>().Dead();
+                }
+                HasKill = true;
             }
-        } else if (this.hp2 <= 0) {
-            rm.RoundEnd(true);
-            if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+            else if (this.hp2 <= 0)
             {
-                Camera.main.transform.parent.GetComponent<CameraController>().Dead();
+                rm.RoundEnd(true);
+                if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+                {
+                    Camera.main.transform.parent.GetComponent<CameraController>().Dead();
+                }
+                HasKill = true;
             }
         }
 
 
-    }
- 
+        }
 
 
 
-    public float GetHp(int player) {
+
+        public float GetHp(int player) {
         if (player == 1) {
             return hp1;
         } else if (player == 2) {

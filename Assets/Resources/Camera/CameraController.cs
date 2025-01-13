@@ -145,10 +145,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 }
             }
         }
-        if (PhaseManager.pm != null)
-        {
-            if (PhaseManager.pm.GetPhase().Equals("Battle"))
-            {
+       
 
                     // EscapeƒL[‚ª‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
                     if (Input.GetKeyDown(KeyCode.Escape))
@@ -166,8 +163,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
                             Cursor.lockState = CursorLockMode.Locked;
                         }
                     }
-                }
-            }
+                
+            
 
         if (photonView == null || !photonView.IsMine)
         {
