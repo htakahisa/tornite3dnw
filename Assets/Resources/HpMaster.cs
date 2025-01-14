@@ -110,30 +110,38 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
         this.hp1 = hp1;
         this.hp2 = hp2;
 
-        if (!HasKill)
+        if (HasKill)
         {
+            return;
+        }
+        if (rm.RoundProcessing)
+        {
+            return;
+        }
             if (this.hp1 <= 0)
             {
+                HasKill = true;
                 rm.RoundEnd(false);
                 if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
                 {
                     Camera.main.transform.parent.GetComponent<CameraController>().Dead();
                 }
-                HasKill = true;
+                
             }
             else if (this.hp2 <= 0)
             {
+                HasKill = true;
                 rm.RoundEnd(true);
                 if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
                 {
                     Camera.main.transform.parent.GetComponent<CameraController>().Dead();
                 }
-                HasKill = true;
+                
             }
-        }
+        
 
 
-        }
+    }
 
 
 
@@ -176,10 +184,12 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
             // データを送信
             stream.SendNext(hp1);
             stream.SendNext(hp2);
+            stream.SendNext(HasKill);
         } else {
             // データを受信
             hp1 = (float)stream.ReceiveNext();
             hp2 = (float)stream.ReceiveNext();
+            HasKill = (bool)stream.ReceiveNext();
         }
     }
 }

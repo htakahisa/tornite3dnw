@@ -213,11 +213,13 @@ public class RoundManager : MonoBehaviourPun {
         StartCoroutine(judgec.TextChange());
 
         Finisher();
-  
+
         Invoke("RoundProcess", 5.0f);
-      
+
 
     }
+  
+    
 
 
 
