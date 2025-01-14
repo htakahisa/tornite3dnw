@@ -38,20 +38,28 @@ public class Ability : MonoBehaviourPun {
         if (pm.GetPhase().Equals("Buy")) {
             return;
         }
-
-
-        if (Input.GetKeyDown(KeyCode.E) && number1 >= 1) {
-            Use(Able1);
+        if (cc == null)
+        {
+            cc = gameObject.GetComponent<CameraController>();
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && number2 >= 1) {
-            Use(Able2);
+            if (cc.AbilityAble)
+        {
+            if (Input.GetKeyDown(KeyCode.E) && number1 >= 1)
+            {
+                Use(Able1);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Q) && number2 >= 1)
+            {
+                Use(Able2);
+            }
         }
 
 
     }
 
-    public void Use(string able) {
+        public void Use(string able) {
 
 
 

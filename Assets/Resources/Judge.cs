@@ -14,7 +14,7 @@ public class Judge : MonoBehaviour {
 
         text = gameObject.GetComponent<Text>();
 
-        StartCoroutine(Texture());
+        
     }
 
     // Update is called once per frame
@@ -45,9 +45,21 @@ public class Judge : MonoBehaviour {
         judgement = "Olive";
 
     }
+    public void Win()
+    {
 
+        judgement = "Win";
 
-    IEnumerator Texture() {
+    }
+
+    public void Lose()
+    {
+
+        judgement = "Lose";
+
+    }
+
+    public IEnumerator TextChange() {
         text.text = judgement;
         yield return new WaitForSeconds(3); // 2•b‘Ò‚Â
         text.text = "";

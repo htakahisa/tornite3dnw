@@ -42,7 +42,7 @@ public class RayController : MonoBehaviourPun {
     private int MaxMagazine;
     private float ReloadTime = 0f;
     private Camera cam;
-    private bool CanShoot = true;
+    public bool CanShoot = true;
 
     private bool ZoomAble = false;
     private float ZoomRatio = 0f;
@@ -71,6 +71,7 @@ public class RayController : MonoBehaviourPun {
     private float xRecoil = 0;
 
     private float punch = 0f;
+
 
     // Start is called before the first frame update
     void Start() {
@@ -238,7 +239,10 @@ public class RayController : MonoBehaviourPun {
 
 
     IEnumerator Reload() {
-
+        if (!CanShoot)
+        {
+            yield break;
+        }
         Debug.Log("Reloading...");
 
         CanShoot = false;
@@ -484,8 +488,8 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = stella.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = stella.GetReloadTime();
-        yRecoil = pegasus.GetYRecoil();
-        xRecoil = pegasus.GetXRecoil();
+        yRecoil = stella.GetYRecoil();
+        xRecoil = stella.GetXRecoil();
         punch = 0;
 
         Auto = stella.GetAuto();
@@ -511,8 +515,8 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = noel.GetMagazine();
         MaxMagazine = Magazinesize;
         ReloadTime = noel.GetReloadTime();
-        yRecoil = pegasus.GetYRecoil();
-        xRecoil = pegasus.GetXRecoil();
+        yRecoil = noel.GetYRecoil();
+        xRecoil = noel.GetXRecoil();
         punch = 0;
 
         Auto = noel.GetAuto();

@@ -6,9 +6,9 @@ public class PlantZone : MonoBehaviour
     {
         if (other.CompareTag("Body"))
         {
-            CameraController cc = other.GetComponentInParent<CameraController>();
-            cc.CanPlant = true;
-            Debug.Log("a");
+            PlantAndDefuse defuse = other.GetComponentInParent<PlantAndDefuse>();
+            defuse.CanPlant = true;
+
         }
     }
 
@@ -16,8 +16,8 @@ public class PlantZone : MonoBehaviour
     {
         if (other.CompareTag("Body"))
         {
-            CameraController cc = other.GetComponentInParent<CameraController>();
-            cc.CanPlant = false;
+            PlantAndDefuse defuse = other.GetComponentInParent<PlantAndDefuse>();
+            defuse.CanPlant = false;
         }
     }
 }

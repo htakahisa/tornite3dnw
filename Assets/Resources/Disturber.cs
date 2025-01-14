@@ -1,28 +1,38 @@
 using UnityEngine;
 using Photon.Pun;
 
-public class Disturber : MonoBehaviourPun, IPunObservable
+public class Disturber : MonoBehaviourPun
 {
     public float explosionTime = 30.0f;
 
     private float timer = 0f;
     private bool isPlanted = false;
-    private bool isDefusing = false;
     private bool hasExploded = false;
+
+
+    private void Start()
+    {
+         
+    }
 
     private void Update()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
+        if (!photonView.IsMine)
+        {
+            return;
+        }
 
         if (isPlanted && !hasExploded)
         {
             timer += Time.deltaTime;
+            //Physics.Simulate(0.02f);
 
             if (timer >= explosionTime)
             {
                 Explode();
             }
         }
+   
     }
 
     public void Plant()
@@ -39,52 +49,75 @@ public class Disturber : MonoBehaviourPun, IPunObservable
         timer = 0f;
     }
 
-    public void Defuse()
-    {
-        if (!isPlanted || hasExploded) return;
 
-        photonView.RPC(nameof(StartDefusing), RpcTarget.All);
-    }
 
-    [PunRPC]
-    private void StartDefusing()
-    {
-        isDefusing = true;
-    }
+
+
 
     private void Explode()
     {
+        if (RoundManager.rm.RoundProcessing)
+        {
+            return;
+        }
+
         hasExploded = true;
         photonView.RPC(nameof(OnExplode), RpcTarget.All);
     }
+
+    public void Defuse()
+    {
+
+        photonView.RPC(nameof(OnDefuse), RpcTarget.All);
+
+    }
+    [PunRPC]
+    public void OnDefuse()
+    {
+        if (RoundManager.rm.RoundProcessing)
+        {
+            return;
+        }
+
+
+
+        if (RoundManager.rm.GetSide().Equals("Leviathan"))
+        {
+
+            RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 1);
+
+        }
+        if (RoundManager.rm.GetSide().Equals("Valkyrie"))
+        {
+
+            RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 2);
+
+        }
+
+        Destroy(gameObject);
+    }
+
+
 
     [PunRPC]
     private void OnExplode()
     {
         Debug.Log("Bomb exploded!");
-        //サイドをチェンジしていなくてアタッカー側の場合、Player1の勝利であり、Player1だけがPlayer1の勝利を祝福する。サイドをチェンジしていてディフェンダー側の場合、Player1の勝利であり、Player2だけがPlayer1の勝利を祝福する。
-        if (RoundManager.rm.round <= 12 == RoundManager.rm.GetSide().Equals("Valkyrie"))
+        
+        if (RoundManager.rm.GetSide().Equals("Valkyrie"))
         {
-            RoundManager.rm.RoundEnd(true);
-        } else
+            
+            RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 1);
+      
+                    
+        }
+        if (RoundManager.rm.GetSide().Equals("Leviathan"))
         {
-            RoundManager.rm.RoundEnd(false);
+
+            RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 2);
+
         }
     }
 
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(isPlanted);
-            stream.SendNext(isDefusing);
-            stream.SendNext(timer);
-        }
-        else
-        {
-            isPlanted = (bool)stream.ReceiveNext();
-            isDefusing = (bool)stream.ReceiveNext();
-            timer = (float)stream.ReceiveNext();
-        }
-    }
+  
 }

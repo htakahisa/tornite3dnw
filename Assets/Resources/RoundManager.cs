@@ -47,6 +47,7 @@ public class RoundManager : MonoBehaviourPun {
 
     private bool winnerIsA;
 
+    public bool RoundProcessing = false;
 
     //private PhotonMethod pmc;
 
@@ -183,7 +184,33 @@ public class RoundManager : MonoBehaviourPun {
 
     public void RoundEnd(bool WinnerIsA) {
 
+        if (RoundProcessing)
+        {
+            return;
+        }
+
+        RoundProcessing = true;
+
         winnerIsA = WinnerIsA;
+
+        if (winnerIsA == (PhotonNetwork.LocalPlayer.ActorNumber == 1))
+        {
+            judgec.Win();
+        }
+        else
+        {
+            judgec.Lose();
+        }
+
+
+
+
+        if (recklesstime <= 25)
+        {
+            judgec.Reckless();
+            service += 500;
+        }
+        StartCoroutine(judgec.TextChange());
 
         Finisher();
   
@@ -210,8 +237,7 @@ public class RoundManager : MonoBehaviourPun {
 
 
 
-        
-
+   
 
 
         // RPC��B���\�b�h��Ăяo���A���ׂẴN���C�A���g�ɓ���
@@ -337,23 +363,13 @@ public class RoundManager : MonoBehaviourPun {
 
         // �V�[���̓ǂݍ��݊�����ɍs����������
         Debug.Log("Scene Loaded. Now executing the next task.");
-
-
-        // �����Ŏ��̏�����s��
-        GetData();
-        if (recklesstime <= 25) {
-            judgec.Reckless();
-            service += 500;
-        }
+   
         //if ((Aloadout - Bloadout >= 2000 && Bwin) || (Bloadout - Aloadout >= 2000 && Awin)) {
         //    judgec.Upset();
         //    service += 1000;
         //}
-        if (olive) {
-            judgec.Olive();
-            service += 500;
-        }
-
+     
+        GetData();
         if (round == 13)
         {
             sideRound = 1;
@@ -367,7 +383,12 @@ public class RoundManager : MonoBehaviourPun {
             {
                 Side = "Leviathan";
             }
+
+            
+
         }
+
+        RoundProcessing = false;
 
         RayController.rc.Classic();
 

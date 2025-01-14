@@ -14,8 +14,8 @@ public class Noel : MonoBehaviour {
     bool zoomable = true;
     float zoomratio = 30;
     bool accuracy = true;
-    float YRecoil = 0.13f;
-    float XRecoil = 0.005f;
+    float YRecoil = 2f;
+    float XRecoil = 1f;
 
     void Start() {
 

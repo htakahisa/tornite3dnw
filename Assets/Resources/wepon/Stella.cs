@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class Stella : MonoBehaviour {
 
-    float rate = 0.1f;
+    float rate = 0.09f;
     int damage = 30;
     int headdamage = 100;
     int magazine = 17;
@@ -14,8 +14,8 @@ public class Stella : MonoBehaviour {
     bool zoomable = true;
     float zoomratio = 15;
     bool accuracy = true;
-    float YRecoil = 0.13f;
-    float XRecoil = 0.05f;
+    float YRecoil = 1f;
+    float XRecoil = 0.7f;
 
     void Start() {
 

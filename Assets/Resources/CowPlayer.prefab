@@ -1649,6 +1649,7 @@ GameObject:
   - component: {fileID: 4909231365802194501}
   - component: {fileID: 1181795755}
   - component: {fileID: 6344238305887381187}
+  - component: {fileID: -7885187439592561593}
   m_Layer: 0
   m_Name: CowPlayer
   m_TagString: Player
@@ -1781,7 +1782,6 @@ MonoBehaviour:
   effectOffset: {x: 0, y: 1, z: 2}
   diable: {x: 0, y: 1, z: 2}
   foot: {fileID: 2425630165191655316}
-  CanPlant: 0
   pinPrefab: {fileID: 3396055247076033621, guid: b8b0bdb21c67d604eb104d784c447c05, type: 3}
 --- !u!114 &6223386477289434817
 MonoBehaviour:
@@ -1939,13 +1939,27 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.6
-  m_Radius: 0.1
-  m_SlopeLimit: 20
+  m_Height: 1.5
+  m_Radius: 0.01
+  m_SlopeLimit: 30
   m_StepOffset: 0.4
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!114 &-7885187439592561593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4399057441147084911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 549caa928f809b44bb1a9044169fd903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanPlant: 0
+  CanDefuse: 0
 --- !u!1 &4665059870376447102
 GameObject:
   m_ObjectHideFlags: 0

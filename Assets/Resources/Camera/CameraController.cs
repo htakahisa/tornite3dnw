@@ -74,14 +74,12 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private CharacterController controller;  // CharacterControllerコンポーネント
     private Vector3 velocity;
 
-    public bool CanPlant = false;
-    private float PlantTime = 4f;
-    private float DefuseTime = 6f;
-    private bool IsHalf = false;
 
     public GameObject pinPrefab;
 
-    Disturber disturber = null;
+    public bool WalkAble = true;
+    public bool AbilityAble = true;
+    
 
     // Start is called before the first frame update
     void Start() {
@@ -116,7 +114,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             // ability.number2 ++;
         }
 
-        if (katarina)
+        if (katarina && AbilityAble)
         {
             if (PhaseManager.pm.GetPhase().Equals("Battle"))
             {
@@ -153,18 +151,11 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     // Escapeキーが押されたときの処理
                     if (Input.GetKeyDown(KeyCode.Escape))
                     {
-                        // マウスが表示されていない場合は表示し、自由に動かせるようにする
-                        if (!Cursor.visible)
-                        {
-                            Cursor.visible = true;
-                            Cursor.lockState = CursorLockMode.None;
-                        }
-                        // マウスが表示されている場合は非表示にし、中央にロックする
-                        else
-                        {
-                            Cursor.visible = false;
-                            Cursor.lockState = CursorLockMode.Locked;
-                        }
+                       
+                            Cursor.visible = !Cursor.visible;
+                            Cursor.lockState = ~Cursor.lockState;
+                        
+                      
                     }
                 
             
@@ -203,6 +194,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
         PhotonNetwork.Destroy(gameObject);
       
     }
+
+
 
     private void move() {
 
@@ -255,46 +248,14 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
 
-        if (Input.GetKey(KeyCode.Alpha4))
-        {
-            Debug.Log(RoundManager.rm.GetSide());
-            if (RoundManager.rm.GetSide().Equals("Leviathan") && disturber != null)
-            {
-                DefuseTime -= Time.deltaTime;
-                if (DefuseTime <= 3)
-                {
-                    IsHalf = true;
-                }
-            }
-            else if(RoundManager.rm.GetSide().Equals("Valkyrie") && CanPlant && disturber == null)
-            {
-                
-                PlantTime -= Time.deltaTime;
-                
+    
 
-            }
-        }
-        
-        if (Input.GetKeyUp(KeyCode.Alpha4))
-        {
-            if (IsHalf)
-            {
-                DefuseTime = 3;
-            }
-            else if(!IsHalf){
-                DefuseTime = 6;
-            }
-           
-            PlantTime = 5;
-        }
+      
 
-        if (PlantTime <= 0)
-        {
-            disturber = PhotonNetwork.Instantiate("Disturber", transform.position, transform.rotation).GetComponent<Disturber>();
-        }
+   
 
-        // 地面にいる場合、垂直速度をリセット
-        if (IsGrounded() && velocity.y < 0)
+            // 地面にいる場合、垂直速度をリセット
+            if (IsGrounded() && velocity.y < 0)
         {
             velocity.y = -2f; // 少し負の値にして地面に密着させる
             velocity.x = 0f;  // 水平方向の速度をリセット
@@ -302,10 +263,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
         }
 
         // 重力を適用
-        velocity.y += gravity * Time.deltaTime;
+        velocity.y += gravity * Time.fixedDeltaTime;
 
         // 垂直方向の移動
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity * Time.fixedDeltaTime);
 
         if (false)
         {
@@ -343,7 +304,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 // 新しいpositionを適用
                 Camera.main.transform.position = newPosition;
 
-                crouchInterval += Time.deltaTime;
+                crouchInterval += Time.fixedDeltaTime;
 
             }
 
@@ -354,75 +315,28 @@ public class CameraController : MonoBehaviourPunCallbacks {
         
         RaycastHit hit;
 
-     
 
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        if (WalkAble)
         {
-            Vector3 moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
-           
-            if (IsGrounded())
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
+                Vector3 moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
 
-                //// 修正後の移動方向でキャラクターを移動
-                //rb.MovePosition(rb.position + moveDirection * speed * Time.fixedDeltaTime);
-                x = Input.GetAxisRaw("Horizontal") * speed;
-                z = Input.GetAxisRaw("Vertical") * speed;
-                float ratio = 1f;
-                bool issnake = false;
+                if (IsGrounded())
+                {
 
-                if (z != 0 && x != 0)
-                {
-                    ratio /= 2;
-                }
-                if (Input.GetKey(KeyCode.LeftControl))
-                {
-                    ratio /= 1.5f;
-                    issnake = true;
-                }
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    ratio /= 3f;
-                    issnake = true;
-                  
-                }
-              
-                if (Input.GetMouseButton(1))
-                {
-                    ratio /= 1.5f;
-                }
-                if (z != 0 || x != 0)
-                {
-                    if (!issnake)
-                    {
-                        stepTimer += Time.deltaTime;
-                        // 足音を0.5秒毎に再生
-                        if (stepTimer >= 0.5f && sm != null)
-                        {
-                            sm.PlaySound("walk");
-                            stepTimer = 0f; // タイマーをリセット
-                        }
-                    }
-                    //rb.velocity = new Vector3(0, rb.velocity.y, 0);  // 速度リセット
-                    this.speed = 0.04f * ratio * servicespeed;
-                    hasAppliedAirMove = 0;
-                    lastMoveInput = Vector3.zero;
-
-                }
-            }
-            else if (hasAppliedAirMove <= 1 && moveInput != Vector3.zero)
-            {
-                // 空中での移動処理：移動入力が変更されたときのみ実行
-                if (moveInput != lastMoveInput)
-                {
+                    //// 修正後の移動方向でキャラクターを移動
+                    //rb.MovePosition(rb.position + moveDirection * speed * Time.fixedDeltaTime);
                     x = Input.GetAxisRaw("Horizontal") * speed;
                     z = Input.GetAxisRaw("Vertical") * speed;
-                    float ratio = 0.5f;
+                    float ratio = 1f;
                     bool issnake = false;
-                  
-                    //if (z != 0 && x != 0) {
-                    //    ratio /= 2;
-                    //}
+
+                    if (z != 0 && x != 0)
+                    {
+                        ratio /= 2;
+                    }
                     if (Input.GetKey(KeyCode.LeftControl))
                     {
                         ratio /= 1.5f;
@@ -434,15 +348,18 @@ public class CameraController : MonoBehaviourPunCallbacks {
                         issnake = true;
 
                     }
-                   
-                   
+
+                    if (Input.GetMouseButton(1))
+                    {
+                        ratio /= 1.5f;
+                    }
                     if (z != 0 || x != 0)
                     {
                         if (!issnake)
                         {
-                            stepTimer += Time.deltaTime;
+                            stepTimer += Time.fixedDeltaTime;
                             // 足音を0.5秒毎に再生
-                            if (stepTimer >= 0.5f)
+                            if (stepTimer >= 0.5f && sm != null)
                             {
                                 sm.PlaySound("walk");
                                 stepTimer = 0f; // タイマーをリセット
@@ -450,53 +367,99 @@ public class CameraController : MonoBehaviourPunCallbacks {
                         }
                         //rb.velocity = new Vector3(0, rb.velocity.y, 0);  // 速度リセット
                         this.speed = 0.04f * ratio * servicespeed;
-                        lastMoveInput = moveInput;
+                        hasAppliedAirMove = 0;
+                        lastMoveInput = Vector3.zero;
+
                     }
-                    //// 修正後の移動方向でキャラクターを移動
-                    //rb.MovePosition(rb.position + moveDirection * speed * Time.fixedDeltaTime);
-                    // 空中での移動を一度だけ設定
-                    hasAppliedAirMove++;
                 }
-            }
-
-
-
-
-            if (cam != null)
-            {
-
-                // カメラのY軸回転を基準に回転を計算
-                Quaternion cameraRotation = Quaternion.Euler(0, cam.transform.eulerAngles.y, 0);
-
-                // 入力ベクトルを定義（x: 左右, z: 前後）
-                Vector3 inputDirection = new Vector3(x, 0, z).normalized;
-
-                // 入力をカメラの回転に基づいて回転
-                Vector3 moveDirection = cameraRotation * inputDirection;
-
-                if (CanWalk(moveDirection))
+                else if (hasAppliedAirMove <= 1 && moveInput != Vector3.zero)
                 {
-                    if (CanWalkAnime(moveDirection))
+                    // 空中での移動処理：移動入力が変更されたときのみ実行
+                    if (moveInput != lastMoveInput)
                     {
+                        x = Input.GetAxisRaw("Horizontal") * speed;
+                        z = Input.GetAxisRaw("Vertical") * speed;
+                        float ratio = 0.5f;
+                        bool issnake = false;
 
-                        
+                        //if (z != 0 && x != 0) {
+                        //    ratio /= 2;
+                        //}
+                        if (Input.GetKey(KeyCode.LeftControl))
+                        {
+                            ratio /= 1.5f;
+                            issnake = true;
+                        }
+                        if (Input.GetKey(KeyCode.LeftShift))
+                        {
+                            ratio /= 3f;
+                            issnake = true;
+
+                        }
+
+
+                        if (z != 0 || x != 0)
+                        {
+                            if (!issnake)
+                            {
+                                stepTimer += Time.fixedDeltaTime;
+                                // 足音を0.5秒毎に再生
+                                if (stepTimer >= 0.5f)
+                                {
+                                    sm.PlaySound("walk");
+                                    stepTimer = 0f; // タイマーをリセット
+                                }
+                            }
+                            //rb.velocity = new Vector3(0, rb.velocity.y, 0);  // 速度リセット
+                            this.speed = 0.04f * ratio * servicespeed;
+                            lastMoveInput = moveInput;
+                        }
+                        //// 修正後の移動方向でキャラクターを移動
+                        //rb.MovePosition(rb.position + moveDirection * speed * Time.fixedDeltaTime);
+                        // 空中での移動を一度だけ設定
+                        hasAppliedAirMove++;
+                    }
+                }
+
+
+
+
+                if (cam != null)
+                {
+
+                    // カメラのY軸回転を基準に回転を計算
+                    Quaternion cameraRotation = Quaternion.Euler(0, cam.transform.eulerAngles.y, 0);
+
+                    // 入力ベクトルを定義（x: 左右, z: 前後）
+                    Vector3 inputDirection = new Vector3(x, 0, z).normalized;
+
+                    // 入力をカメラの回転に基づいて回転
+                    Vector3 moveDirection = cameraRotation * inputDirection;
+
+                    if (CanWalk(moveDirection))
+                    {
+                        if (CanWalkAnime(moveDirection))
+                        {
+
+
                             animator.SetBool("walking", true);
                             //StepClimb(moveDirection);
 
-                    }
+                        }
                         else
-                    {
-                        animator.SetBool("walking", false);
+                        {
+                            animator.SetBool("walking", false);
+                        }
+                        // 移動処理
+                        //transform.position += moveDirection * speed;
+                        // キャラクターを移動
+                        controller.Move(moveDirection * speed);
+
                     }
-                    // 移動処理
-                    //transform.position += moveDirection * speed;
-                    // キャラクターを移動
-                    controller.Move(moveDirection * speed);
 
                 }
 
             }
-
         }
         else
         {
@@ -651,10 +614,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 10, AbilityHitMask))
+        if (Physics.Raycast(ray, out hit, 5, AbilityHitMask))
         {
             PhotonNetwork.Instantiate("C4", hit.point, Quaternion.identity);
-            ability.Spend(2, 30);
+            ability.Spend(2, 20);
         }
 
 
