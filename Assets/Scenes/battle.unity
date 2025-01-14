@@ -18459,7 +18459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cost: 0
   Weapon: Classic
-  Discription: "0 Platinum / Name \"Classic\" / 70 : 20 \u5024\u6BB5\u304C\u7121\u6599\u3002
+  Discription: "0 Platinum / Name \"Classic\" / 70 : 30 \u5024\u6BB5\u304C\u7121\u6599\u3002
     \u63A8\u5968\u3055\u308C\u308B\u30E9\u30A6\u30F3\u30C9 : 1st\u30E9\u30A6\u30F3\u30C9\u3001\u30A8\u30B3\u30E9\u30A6\u30F3\u30C9 
     \u63A8\u5968\u3055\u308C\u308B\u5C04\u6483\u6CD5:\u9AD8\u901F\u30EC\u30EC\u30EC\u6483\u3061\""
 --- !u!1001 &360976228

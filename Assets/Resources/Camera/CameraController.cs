@@ -149,7 +149,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
        
 
                     // EscapeƒL[‚ª‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
-                    if (Input.GetKeyDown(KeyCode.Escape))
+                    if (Input.GetKeyDown(KeyCode.Backspace))
                     {
                        
                             Cursor.visible = !Cursor.visible;
