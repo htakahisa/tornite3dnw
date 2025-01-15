@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,10 +8,11 @@ using UnityEngine.UI;
 public class SensityvityController : MonoBehaviour
 {
     // Start is called before the first frame update
-  
 
+    public TMP_InputField inputField;
+    private float floatValue;
     // Update is called once per frame
-     void Start()
+    void Start()
     {
 
         
@@ -25,11 +27,15 @@ public class SensityvityController : MonoBehaviour
     }
 
     public void SensityvityControl() {
-        Slider value = gameObject.GetComponent<Slider>();
-        float sensi = value.value;
-        FindObjectOfType<CameraController>().SensityvityChange(sensi);
+        // テキストをfloatに変換
+        if (float.TryParse(inputField.text, out floatValue))
+        {
+            
+            float sensi = floatValue;
+            FindObjectOfType<CameraController>().SensityvityChange(sensi);
+        }
     }
 
-       
-    
+
+
 }

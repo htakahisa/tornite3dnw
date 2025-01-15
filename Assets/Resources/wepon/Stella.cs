@@ -6,7 +6,7 @@ using Photon.Pun;
 public class Stella : MonoBehaviour {
 
     float rate = 0.09f;
-    int damage = 30;
+    int damage = 45;
     int headdamage = 100;
     int magazine = 17;
     bool auto = true;
@@ -14,8 +14,10 @@ public class Stella : MonoBehaviour {
     bool zoomable = true;
     float zoomratio = 15;
     bool accuracy = true;
-    float YRecoil = 1f;
-    float XRecoil = 0.7f;
+    float YRecoil = 1.5f;
+    float XRecoil = 0.5f;
+    int Burst = 3;
+    float BurstRate = 0.3f;
 
     void Start() {
 
@@ -66,6 +68,15 @@ public class Stella : MonoBehaviour {
     public float GetXRecoil()
     {
         return XRecoil;
+    }
+    public int GetBurst()
+    {
+        return Burst;
+    }
+
+    public float GetBurstRate()
+    {
+        return BurstRate;
     }
 
     public void GetStatus() {

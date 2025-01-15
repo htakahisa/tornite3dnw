@@ -25,6 +25,7 @@ public class RayController : MonoBehaviourPun {
     private JawKha jawkha;
     private Mistake mistake;
     private Stella stella;
+    private Rapetter rapetter;
     private Duelist duelist;
     private ReineBlanche reine;
     private Noel noel;
@@ -32,6 +33,7 @@ public class RayController : MonoBehaviourPun {
     private Pegasus pegasus;
     private Yor yor;
     private BlackBell blackbell;
+
 
     private int Damage = 0;
     private int HeadDamage = 0;
@@ -71,6 +73,12 @@ public class RayController : MonoBehaviourPun {
     private float xRecoil = 0;
 
     private float punch = 0f;
+    private int burst = 0;
+    private float burstrate = 0;
+
+    private float RecoilService = 1;
+  
+
 
 
     // Start is called before the first frame update
@@ -90,12 +98,13 @@ public class RayController : MonoBehaviourPun {
         classic = gc.GetComponent<Classic>();
         jawkha = gc.GetComponent<JawKha>();
         mistake = gc.GetComponent<Mistake>();
-        stella = gc.GetComponent<Stella>();
-        duelist = gc.GetComponent<Duelist>();
-        reine = gc.GetComponent<ReineBlanche>();
-        noel = gc.GetComponent<Noel>();
-        silver = gc.GetComponent<Silver>();
+       silver = gc.GetComponent<Silver>();
         pegasus = gc.GetComponent<Pegasus>();
+        stella = gc.GetComponent<Stella>();
+        rapetter = gc.GetComponent<Rapetter>();
+        noel = gc.GetComponent<Noel>();
+        reine = gc.GetComponent<ReineBlanche>();
+        duelist = gc.GetComponent<Duelist>();
         yor = gc.GetComponent<Yor>();
         blackbell = gc.GetComponent<BlackBell>();
     }
@@ -146,60 +155,80 @@ public class RayController : MonoBehaviourPun {
 
         deltaTimeSum += Time.deltaTime;
 
-
         Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward, Color.red);
 
         if ((Auto && HullAuto()) || (!Auto && SemiAuto())) {
 
 
+            Fire();
 
-                if (Shootable()) {
-                    //SoundManager.sm.PlaySound("shoot");
-                    deltaTimeSum = 0;
-                    Magazinesize -= 1;
-
-                    
-
-                    if (mzt != null) {
-                        mzt.text = "écíeêî " + Magazinesize;
-                    }
-
-                   
-
-                    GameObject target = Hit();
-
-
-                    if (target.CompareTag("Body") || target.CompareTag("Head")) {
-
-
-
-
-
-                    PhotonView photonView = GetTopmostParent(target).GetComponent<PhotonView>();
-                    photonView.RPC("Stuned", RpcTarget.Others, punch, punch);
-                    shoot(target, target.tag);
-                        
-
-
-                    }
-                if (IsZooming)
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (deltaTimeSum >= burstrate)
+            {
+                if (burst != 0)
                 {
-                    camcon.recoil(yRecoil/2, xRecoil/2);
+                    StartCoroutine(Burst());
                 }
-                else
-                {
-                    camcon.recoil(yRecoil, xRecoil);
-                }
-                    if (!UnZoomAccuracy)
-                {
-                    cam.fieldOfView = 80;
-                    IsZooming = false;
-                }
-
             }
+        }
+
+
+
+    }
+
+        private void Fire()
+        {
+        if (Shootable())
+        {
+            //SoundManager.sm.PlaySound("shoot");
+            deltaTimeSum = 0;
+            Magazinesize -= 1;
+
+
+
+            if (mzt != null)
+            {
+                mzt.text = "écíeêî " + Magazinesize;
             }
 
-        
+
+
+            GameObject target = Hit();
+
+
+            if (target.CompareTag("Body") || target.CompareTag("Head"))
+            {
+
+
+
+
+
+                PhotonView photonView = GetTopmostParent(target).GetComponent<PhotonView>();
+                photonView.RPC("Stuned", RpcTarget.Others, punch, punch);
+                shoot(target, target.tag);
+
+
+
+            }
+            if (IsZooming)
+            {
+                RecoilService += 1.5f;
+            }
+           
+
+            camcon.recoil(yRecoil / RecoilService, xRecoil / RecoilService);
+
+            RecoilService = 1;
+
+            if (ZoomRatio >= 40)
+            {
+                cam.fieldOfView = 80;
+                IsZooming = false;
+            }
+
+        }
     }
 
 
@@ -262,20 +291,20 @@ public class RayController : MonoBehaviourPun {
     public bool Shootable() {
         
 
-        if (RateDeltaTime <= deltaTimeSum) {
+        
             if (CanShoot) {
 
                     if (Magazinesize >= 1) {
-                        if ((Auto && HullAuto()) || (!Auto && SemiAuto())) {
+
                             return true;
-                        }
+                        
                     } else {
                         sm.PlaySound("noarmo");
                     }
 
                 
             }
-        }
+        
         return false;
     }
 
@@ -348,6 +377,8 @@ public class RayController : MonoBehaviourPun {
         yRecoil = classic.GetYRecoil();
         xRecoil = 0;
         punch = 0;
+        burst = 0;
+        burstrate = 0;
 
         Auto = classic.GetAuto();
         ZoomAble = false;
@@ -377,6 +408,8 @@ public class RayController : MonoBehaviourPun {
         yRecoil = jawkha.GetYRecoil();
         xRecoil = jawkha.GetXRecoil();
         punch = jawkha.GetPunch();
+        burst = 0;
+        burstrate = 0;
 
         Auto = jawkha.GetAuto();
         ZoomAble = jawkha.GetZoomAble();
@@ -407,6 +440,8 @@ public class RayController : MonoBehaviourPun {
         yRecoil = mistake.GetYRecoil();
         xRecoil = 0;
         punch = 0;
+        burst = 0;
+        burstrate = 0;
 
         Auto = mistake.GetAuto();
         ZoomAble = false;
@@ -434,6 +469,8 @@ public class RayController : MonoBehaviourPun {
         yRecoil = silver.GetYRecoil();
         xRecoil = 0;
         punch = 0;
+        burst = 0;
+        burstrate = 0;
 
         Auto = silver.GetAuto();
         ZoomAble = false;
@@ -462,6 +499,9 @@ public class RayController : MonoBehaviourPun {
         yRecoil = pegasus.GetYRecoil();
         xRecoil = pegasus.GetXRecoil();
         punch = 0;
+        burst = 0;
+        burst = 0;
+        burstrate = 0;
 
         Auto = pegasus.GetAuto();
         ZoomAble = pegasus.GetZoomAble();
@@ -491,6 +531,8 @@ public class RayController : MonoBehaviourPun {
         yRecoil = stella.GetYRecoil();
         xRecoil = stella.GetXRecoil();
         punch = 0;
+        burst = stella.GetBurst();
+        burstrate = stella.GetBurstRate();
 
         Auto = stella.GetAuto();
         ZoomAble = stella.GetZoomAble();
@@ -505,8 +547,41 @@ public class RayController : MonoBehaviourPun {
 
     }
 
-    public void Noel() {
+    public void Rapetter()
+    {
+
+
         currentWeaponIndex = 6;
+        SwitchWeapon(currentWeaponIndex);
+
+        Damage = rapetter.GetDamage();
+        HeadDamage = rapetter.GetHeadDamage();
+        RateDeltaTime = rapetter.GetRate();
+        Magazinesize = rapetter.GetMagazine();
+        MaxMagazine = Magazinesize;
+        ReloadTime = rapetter.GetReloadTime();
+        yRecoil = rapetter.GetYRecoil();
+        xRecoil = rapetter.GetXRecoil();
+        punch = 0;
+        burst = 0;
+        burstrate = 0;
+
+        Auto = rapetter.GetAuto();
+        ZoomAble = rapetter.GetZoomAble();
+        ZoomRatio = rapetter.GetZoomRatio();
+        UnZoomAccuracy = rapetter.GetUnZoomAccuracy();
+
+        this.UseWepon = "rapetter";
+        if (mzt != null)
+        {
+            mzt.text = "écíeêî " + Magazinesize;
+        }
+
+
+    }
+
+    public void Noel() {
+        currentWeaponIndex = 7;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = noel.GetDamage();
@@ -518,6 +593,8 @@ public class RayController : MonoBehaviourPun {
         yRecoil = noel.GetYRecoil();
         xRecoil = noel.GetXRecoil();
         punch = 0;
+        burst = 0;
+        burstrate = 0;
 
         Auto = noel.GetAuto();
         ZoomAble = noel.GetZoomAble();
@@ -533,7 +610,7 @@ public class RayController : MonoBehaviourPun {
     }
 
     public void Reine() {
-        currentWeaponIndex = 7;
+        currentWeaponIndex = 8;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = reine.GetDamage();
@@ -545,6 +622,8 @@ public class RayController : MonoBehaviourPun {
         yRecoil = 0;
         xRecoil = 0;
         punch = 0;
+        burst = 0;
+        burstrate = 0;
 
         Auto = reine.GetAuto();
         ZoomAble = reine.GetZoomAble();
@@ -560,7 +639,7 @@ public class RayController : MonoBehaviourPun {
     }
 
     public void Duelist() {
-        currentWeaponIndex = 8;
+        currentWeaponIndex = 9;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = duelist.GetDamage();
@@ -572,6 +651,8 @@ public class RayController : MonoBehaviourPun {
         yRecoil = 0;
         xRecoil = 0;
         punch = 0;
+        burst = 0;
+        burstrate = 0;
 
         Auto = duelist.GetAuto();
         ZoomAble = duelist.GetZoomAble();
@@ -587,7 +668,7 @@ public class RayController : MonoBehaviourPun {
         }
     }
     public void Yor() {
-        currentWeaponIndex = 9;
+        currentWeaponIndex = 10;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = yor.GetDamage();
@@ -599,6 +680,8 @@ public class RayController : MonoBehaviourPun {
         yRecoil = yor.GetYRecoil();
         xRecoil = 0;
         punch = 0;
+        burst = 0;
+        burstrate = 0;
 
         Auto = yor.GetAuto();
         ZoomAble = yor.GetZoomAble();
@@ -612,7 +695,7 @@ public class RayController : MonoBehaviourPun {
       
     }
     public void BlackBell() {
-        currentWeaponIndex = 10;
+        currentWeaponIndex = 11;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = blackbell.GetDamage();
@@ -624,6 +707,8 @@ public class RayController : MonoBehaviourPun {
         yRecoil = 0;
         xRecoil = 0;
         punch = 0;
+        burst = 0;
+        burstrate = 0;
 
         Auto = blackbell.GetAuto();
         ZoomAble = blackbell.GetZoomAble();
@@ -682,15 +767,41 @@ public class RayController : MonoBehaviourPun {
     }
 
     private bool HullAuto() {
+        if (RateDeltaTime >= deltaTimeSum)
+        {
+            return false;
+        }
+
+        if (burst != 0 && IsZooming)
+        {
+           return false;
+        }
         return Input.GetKey(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked;
 
     }
     private bool SemiAuto() {
+        if (RateDeltaTime >= deltaTimeSum)
+        {
+            return false;
+        }
         return Input.GetKeyDown(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked;
 
     }
 
-    void SwitchWeapon(int index) {
+    private IEnumerator Burst()
+    {
+
+       
+            for (int i = 0; i < burst; i++)
+            {
+            Fire();
+            yield return new WaitForSeconds(RateDeltaTime);
+            }
+            
+
+    }
+
+        void SwitchWeapon(int index) {
         for (int i = 0; i < weapons.Length; i++) {
             weapons[i].SetActive(i == index);
         }

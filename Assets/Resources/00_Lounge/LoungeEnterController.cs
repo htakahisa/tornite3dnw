@@ -26,7 +26,7 @@ public class LoungeEnterController : MonoBehaviourPunCallbacks
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            clickEnter();
+         //   clickEnter();
         }
     }
 

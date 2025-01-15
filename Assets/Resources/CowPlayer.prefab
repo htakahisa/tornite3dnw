@@ -841,7 +841,7 @@ GameObject:
   - component: {fileID: 1987976926716305069}
   - component: {fileID: 528018365465521734}
   - component: {fileID: 5404101703113976409}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Plane
   m_TagString: Feet
   m_Icon: {fileID: 0}
@@ -1783,6 +1783,8 @@ MonoBehaviour:
   diable: {x: 0, y: 1, z: 2}
   foot: {fileID: 2425630165191655316}
   pinPrefab: {fileID: 3396055247076033621, guid: b8b0bdb21c67d604eb104d784c447c05, type: 3}
+  WalkAble: 1
+  AbilityAble: 1
 --- !u!114 &6223386477289434817
 MonoBehaviour:
   m_ObjectHideFlags: 0

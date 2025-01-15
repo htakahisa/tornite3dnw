@@ -79,7 +79,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     public bool WalkAble = true;
     public bool AbilityAble = true;
-    
+
+    private bool isCursorLocked = true;
+
 
     // Start is called before the first frame update
     void Start() {
@@ -99,6 +101,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
         animator = GetComponent<Animator>();
         // CharacterControllerを取得
         controller = GetComponent<CharacterController>();
+
+        SetCursorState(isCursorLocked);
+
     }
 
     // Update is called once per frame
@@ -146,19 +151,17 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 }
             }
         }
-       
 
-                    // Escapeキーが押されたときの処理
-                    if (Input.GetKeyDown(KeyCode.Backspace))
-                    {
-                       
-                            Cursor.visible = !Cursor.visible;
-                            Cursor.lockState = ~Cursor.lockState;
-                        
-                      
-                    }
-                
-            
+
+        // Escapeキーでマウスのロックと表示を切り替える
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isCursorLocked = !isCursorLocked;
+            SetCursorState(isCursorLocked);
+        }
+
+
+
 
         if (photonView == null || !photonView.IsMine)
         {
@@ -184,7 +187,21 @@ public class CameraController : MonoBehaviourPunCallbacks {
         
     }
 
-        private void DestroyPun()
+    private void SetCursorState(bool lockCursor)
+    {
+        if (lockCursor)
+        {
+            Cursor.lockState = CursorLockMode.Locked; // マウスを画面中央に固定
+            Cursor.visible = false;                  // マウスカーソルを非表示
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;  // マウスロック解除
+            Cursor.visible = true;                   // マウスカーソルを表示
+        }
+    }
+
+    private void DestroyPun()
     {
         BattleData.bd.DetectEnd();
         ScanCamera.sc.InActiveScan();

@@ -13,7 +13,7 @@ public class PracticeMode : MonoBehaviour {
     void Update() {
 
         if (Input.GetKeyDown(KeyCode.Alpha2)) {
-            Practice();
+        //    Practice();
         }
 
     }

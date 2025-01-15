@@ -6,7 +6,7 @@ using Photon.Pun;
 public class ReineBlanche : MonoBehaviour {
 
     float rate = 0.7f;
-    int damage = 50;
+    int damage = 75;
     int headdamage = 155;
     int magazine = 6;
     bool auto = false;

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -1218040369302191593}
   - component: {fileID: -1366504629037693694}
   - component: {fileID: -351285486800128768}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Aquaring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
