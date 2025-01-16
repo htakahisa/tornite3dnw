@@ -11,15 +11,15 @@ public class Diable : MonoBehaviourPun {
 
     private float time = 0;
 
-    Color green;
+    Color pink;
 
     // Start is called before the first frame update
     void Awake() {
         gameObject.SetActive(true);
         StartCoroutine(ScaleWidthOverTime());
         
-        green = Color.green;
-        green.a = 0.5f;
+        pink = Color.magenta;
+       
     }
 
     // Update is called once per frame
@@ -40,7 +40,7 @@ public class Diable : MonoBehaviourPun {
 
 
         if (other.CompareTag("Head")) {
-            PlayerFlashEffect.pfe.Stun(green);
+            PlayerFlashEffect.pfe.Stun(pink);
             time += Time.deltaTime;
             if (time >= 0.5) {
                 Damage(other.gameObject);

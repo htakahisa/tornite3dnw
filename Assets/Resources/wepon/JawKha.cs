@@ -17,7 +17,7 @@ public class JawKha : MonoBehaviour
     bool accuracy = true;
     float YRecoil = 2.0f;
     float XRecoil = 0.7f;
-    float punch = 0.1f;
+    float punch = 2f;
 
     void Start()
     {

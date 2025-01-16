@@ -14,7 +14,7 @@ public class ReineBlanche : MonoBehaviour {
     bool zoomable = true;
     float zoomratio = 50;
     bool accuracy = true;
-
+    float PeekingSpeed = 0.8f;
     void Start() {
 
     }
@@ -54,6 +54,10 @@ public class ReineBlanche : MonoBehaviour {
 
     public bool GetUnZoomAccuracy() {
         return accuracy;
+    }
+    public float GetPeekingSpeed()
+    {
+        return PeekingSpeed;
     }
 
     public void GetStatus() {

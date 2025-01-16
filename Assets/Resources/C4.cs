@@ -16,7 +16,10 @@ public class C4 : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        
+        if (!photonView.IsMine)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Me");
+        }
     }
 
     private void OnActive() {

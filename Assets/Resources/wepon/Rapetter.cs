@@ -7,16 +7,17 @@ public class Rapetter : MonoBehaviour
 {
 
     float rate = 0.08f;
-    int damage = 20;
-    int headdamage = 30;
+    int damage = 50;
+    int headdamage = 60;
     int magazine = 100;
     bool auto = true;
     float reloadtime = 5f;
     bool zoomable = true;
-    float zoomratio = 30;
+    float zoomratio = 45;
     bool accuracy = false;
-    float YRecoil = 0.3f;
+    float YRecoil = 0.5f;
     float XRecoil = 1f;
+    float PeekingSpeed = 1.3f;
 
     void Start()
     {
@@ -78,6 +79,11 @@ public class Rapetter : MonoBehaviour
     public float GetXRecoil()
     {
         return XRecoil;
+    }
+
+    public float GetPeekingSpeed()
+    {
+        return PeekingSpeed;
     }
     public void GetStatus()
     {

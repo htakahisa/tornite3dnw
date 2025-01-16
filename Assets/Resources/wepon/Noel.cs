@@ -12,10 +12,11 @@ public class Noel : MonoBehaviour {
     bool auto = true;
     float reloadtime = 1.5f;
     bool zoomable = true;
-    float zoomratio = 30;
+    float zoomratio = 50;
     bool accuracy = true;
     float YRecoil = 1.8f;
     float XRecoil = 0.8f;
+    float PeekingSpeed = 0.1f;
 
     void Start() {
 
@@ -67,6 +68,11 @@ public class Noel : MonoBehaviour {
     {
         return XRecoil;
     }
+    public float GetPeekingSpeed()
+    {
+        return PeekingSpeed;
+    }
+
     public void GetStatus() {
 
     }

@@ -21,6 +21,8 @@ TagManager:
   - PracticeTarget
   - FinisherManager
   - Feet
+  - Meter
+  - TimerText
   layers:
   - Default
   - TransparentFX
@@ -39,7 +41,7 @@ TagManager:
   - Second
   - MapObject
   - PlantCollider
-  - 
+  - lack of vision
   - 
   - 
   - 

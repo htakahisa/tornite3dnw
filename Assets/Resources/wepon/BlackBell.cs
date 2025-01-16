@@ -12,8 +12,9 @@ public class BlackBell : MonoBehaviour {
     bool auto = false;
     float reloadtime = 3f;
     bool zoomable = true;
-    float zoomratio = 50;
+    float zoomratio = 30;
     bool accuracy = false;
+    float PeekingSpeed = 0.5f;
 
     void Start() {
 
@@ -56,7 +57,10 @@ public class BlackBell : MonoBehaviour {
         return accuracy;
     }
 
-
+    public float GetPeekingSpeed()
+    {
+        return PeekingSpeed;
+    }
 
     public void GetStatus() {
 

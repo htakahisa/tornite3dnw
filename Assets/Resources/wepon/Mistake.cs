@@ -13,6 +13,7 @@ public class Mistake : MonoBehaviour {
     float reloadtime = 1f;
     bool accuracy = true;
     float YRecoil = 5f;
+    float punch = 4f;
 
 
     void Start() {
@@ -54,7 +55,10 @@ public class Mistake : MonoBehaviour {
         return YRecoil;
     }
 
-  
+    public float GetPunch()
+    {
+        return punch;
+    }
 
     public void GetStatus() {
 

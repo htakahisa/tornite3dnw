@@ -1,0 +1,34 @@
+using Photon.Pun;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using Photon.Realtime;
+
+public class Loading : MonoBehaviour
+{
+
+ 
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
+            if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+            {
+                SceneManager.LoadScene("battle");
+
+            }
+        }
+
+            
+    }
+}

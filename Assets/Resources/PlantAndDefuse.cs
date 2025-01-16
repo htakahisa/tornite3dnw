@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlantAndDefuse : MonoBehaviourPun
 {
@@ -18,12 +19,17 @@ public class PlantAndDefuse : MonoBehaviourPun
 
     private CameraController cc;
     private RayController rc;
+    private SoundManager sm;
+    private DisturberMeter meter;
 
     // Start is called before the first frame update
     void Start()
     {
         cc = GetComponent<CameraController>();
         rc = Camera.main.GetComponent<RayController>();
+        sm = GetComponent<SoundManager>();
+        meter = GameObject.FindGameObjectWithTag("Meter").GetComponent<DisturberMeter>();
+
     }
 
     // Update is called once per frame
@@ -34,13 +40,25 @@ public class PlantAndDefuse : MonoBehaviourPun
         {
             return;
         }
-
-        if (Input.GetKey(KeyCode.Alpha4))
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
 
             if (RoundManager.rm.GetSide().Equals("Leviathan") && CanDefuse)
             {
+                sm.PlaySound("defuse");
+            }
+        }
+
+        if (Input.GetKey(KeyCode.Alpha4))
+        {
+
+            // if (RoundManager.rm.GetSide().Equals("Leviathan") && CanDefuse)
+            if (CanDefuse)
+            {
+                
+
                 DefuseTime -= Time.deltaTime;
+                meter.Defuse(DefuseTime);
                 Debug.Log(DefuseTime);
                 if (DefuseTime <= 3)
                 {
@@ -51,13 +69,17 @@ public class PlantAndDefuse : MonoBehaviourPun
                 cc.AbilityAble = false;
                 rc.CanShoot = false;
 
+               
+
 
             }
-            else if (RoundManager.rm.GetSide().Equals("Valkyrie") && CanPlant && disturber == null)
+            //else if (RoundManager.rm.GetSide().Equals("Valkyrie") && CanPlant && disturber == null)
+            else if (CanPlant && disturber == null)
             {
 
                 PlantTime -= Time.deltaTime;
 
+                meter.Plant(PlantTime);
 
                 cc.WalkAble = false;
                 cc.AbilityAble = false;
@@ -81,6 +103,9 @@ public class PlantAndDefuse : MonoBehaviourPun
             }
 
             PlantTime = 4;
+
+            meter.MeterInactive();
+
         }
       
         if (!HasDefuse)
@@ -90,6 +115,7 @@ public class PlantAndDefuse : MonoBehaviourPun
 
                 disturber = GameObject.Find("Disturber(Clone)").GetComponent<Disturber>();
                 disturber.Defuse();
+                meter.MeterInactive();
                 HasDefuse = true;
             }
         }
@@ -99,6 +125,7 @@ public class PlantAndDefuse : MonoBehaviourPun
         {
             disturber = PhotonNetwork.Instantiate("Disturber", transform.position, transform.rotation).GetComponent<Disturber>();
             disturber.Plant();
+            meter.MeterInactive();
             PlantTime = 5;
         }
 

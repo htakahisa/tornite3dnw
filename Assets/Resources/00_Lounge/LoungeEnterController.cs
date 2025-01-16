@@ -36,7 +36,7 @@ public class LoungeEnterController : MonoBehaviourPunCallbacks
 
         //userCountText.text = "USER COUNT : " +  pp.getUserCount().ToString();
 
-        SceneManager.LoadScene("battle");
+        SceneManager.LoadScene("Loading");
 
     }
 }

@@ -5,10 +5,11 @@ public class Disturber : MonoBehaviourPun
 {
     public float explosionTime = 30.0f;
 
-    private float timer = 0f;
+    public float timer = 0f;
     private bool isPlanted = false;
     private bool hasExploded = false;
 
+    private TimerInRound timerinround;
 
     private void Start()
     {
@@ -21,6 +22,7 @@ public class Disturber : MonoBehaviourPun
         {
             return;
         }
+
 
         if (isPlanted && !hasExploded)
         {
@@ -47,6 +49,8 @@ public class Disturber : MonoBehaviourPun
     {
         isPlanted = true;
         timer = 0f;
+        timerinround = GameObject.FindGameObjectWithTag("TimerText").GetComponent<TimerInRound>();
+        timerinround.Planted(this);
     }
 
 

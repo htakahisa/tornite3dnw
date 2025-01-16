@@ -7,7 +7,6 @@ public class PublicProperty : MonoBehaviourPun {
 
     // ユーザー数
     private int userCount;
-    private int round;
 
 
     [PunRPC]//RPCを使って呼べようにするにはこの属性をつける(これが無いと呼べない)

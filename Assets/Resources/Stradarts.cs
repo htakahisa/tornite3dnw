@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Stradarts : MonoBehaviourPun {
     public float speed = 150f;                // ダートの移動速度        
-    public float scanRadius = 7f;            // スキャン範囲
+    public float scanRadius = 10f;            // スキャン範囲
     public LayerMask hitMask;                 // ヒット判定用のレイヤーマスク
 
     private Vector3 launchDirection;          // 発射方向

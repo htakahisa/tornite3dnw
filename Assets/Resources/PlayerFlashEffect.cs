@@ -41,11 +41,13 @@ public class PlayerFlashEffect : MonoBehaviour {
         stun.SetActive(true); // フラッシュオーバーレイを表示
         image.color = color;
         IsStun = true;
+        Camera.main.GetComponent<Camera>().farClipPlane = 5;
 
     }
 
     public void Distun() {
         stun.SetActive(false); // フラッシュオーバーレイを表示
         IsStun = false;
+        Camera.main.GetComponent<Camera>().farClipPlane = 1000;
     }
 }

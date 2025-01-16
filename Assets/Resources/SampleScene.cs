@@ -44,8 +44,12 @@ public class SampleScene : MonoBehaviourPunCallbacks {
         var position = new Vector3(0, 0, 0);
 
         rmo = GameObject.Find("Roundmanager");
+        if (rmo == null)
+        {
+            return;
+        }
         rm = rmo.GetComponent<RoundManager>();
-
+       
         if (rm.round <= 12)
         {
             // 自身のアバター（ネットワークオブジェクト）を生成する
@@ -92,7 +96,7 @@ public class SampleScene : MonoBehaviourPunCallbacks {
         Camera camera = GetComponentInChildren<Camera>();
         var cameraPosition = avatar.transform.position;
         camera.transform.parent = avatar.transform;
-        camera.transform.position = new Vector3(cameraPosition.x, cameraPosition.y + 1.7f, cameraPosition.z);
+        camera.transform.position = new Vector3(cameraPosition.x, cameraPosition.y + 1.582f, cameraPosition.z);
     }
 
 

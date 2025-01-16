@@ -77,8 +77,8 @@ public class RayController : MonoBehaviourPun {
     private float burstrate = 0;
 
     private float RecoilService = 1;
-  
 
+    private float PeekingSpeed = 0;
 
 
     // Start is called before the first frame update
@@ -135,12 +135,14 @@ public class RayController : MonoBehaviourPun {
 
 
 
-        if (ZoomAble) {
-            if (Input.GetMouseButtonDown(1)) {
-                cam.fieldOfView -= ZoomRatio;
-                IsZooming = true;
+        if (ZoomAble)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                StartCoroutine(Zoom());
             }
-            if (Input.GetMouseButtonUp(1)) {
+            if (Input.GetMouseButtonUp(1))
+            {
                 cam.fieldOfView = 80;
                 IsZooming = false;
             }
@@ -178,6 +180,22 @@ public class RayController : MonoBehaviourPun {
 
     }
 
+
+    private IEnumerator Zoom()
+    {
+        for (float zoom = 80 - ZoomRatio; ZoomRatio < cam.fieldOfView;)
+        {
+            if (!Input.GetMouseButton(1))
+            {
+                cam.fieldOfView = 80;
+                yield break;
+            }
+            cam.fieldOfView -= 1;
+            yield return new WaitForSeconds(PeekingSpeed / zoom);
+        }
+            IsZooming = true;
+    }
+
         private void Fire()
         {
         if (Shootable())
@@ -193,7 +211,10 @@ public class RayController : MonoBehaviourPun {
                 mzt.text = "Žc’e” " + Magazinesize;
             }
 
-
+            if(UseWepon.Equals("yor"))
+            {
+                camcon.Boost(0.5f, -5);
+            }
 
             GameObject target = Hit();
 
@@ -205,14 +226,18 @@ public class RayController : MonoBehaviourPun {
 
 
 
-                PhotonView photonView = GetTopmostParent(target).GetComponent<PhotonView>();
-                photonView.RPC("Stuned", RpcTarget.Others, punch, punch);
+                PhotonView photonView = GetTopmostParent(target).GetComponent<PhotonView>();                
                 shoot(target, target.tag);
-
+               
 
 
             }
-            if (IsZooming)
+            if (target.CompareTag("Head"))
+            {
+                photonView.RPC("Stuned", RpcTarget.Others, punch, punch);
+            }
+
+                if (IsZooming)
             {
                 RecoilService += 1.5f;
             }
@@ -222,7 +247,7 @@ public class RayController : MonoBehaviourPun {
 
             RecoilService = 1;
 
-            if (ZoomRatio >= 40)
+            if (ZoomRatio <= 40)
             {
                 cam.fieldOfView = 80;
                 IsZooming = false;
@@ -295,8 +320,8 @@ public class RayController : MonoBehaviourPun {
             if (CanShoot) {
 
                     if (Magazinesize >= 1) {
-
-                            return true;
+                sm.PlaySound("shoot");
+                return true;
                         
                     } else {
                         sm.PlaySound("noarmo");
@@ -318,7 +343,7 @@ public class RayController : MonoBehaviourPun {
 
                 if (UnZoomAccuracy || IsZooming)
                 {
-                    sm.PlaySound("shoot");
+                   
 
 
 
@@ -346,12 +371,7 @@ public class RayController : MonoBehaviourPun {
 
 
                     }
-                    else
-                    {
-
-                        sm.PlaySound("beep");
-                        
-                    }
+                  
                 }
             }
 
@@ -410,6 +430,7 @@ public class RayController : MonoBehaviourPun {
         punch = jawkha.GetPunch();
         burst = 0;
         burstrate = 0;
+        PeekingSpeed = 0;
 
         Auto = jawkha.GetAuto();
         ZoomAble = jawkha.GetZoomAble();
@@ -439,9 +460,10 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = mistake.GetReloadTime();
         yRecoil = mistake.GetYRecoil();
         xRecoil = 0;
-        punch = 0;
+        punch = mistake.GetPunch();
         burst = 0;
         burstrate = 0;
+        PeekingSpeed = 0;
 
         Auto = mistake.GetAuto();
         ZoomAble = false;
@@ -471,6 +493,7 @@ public class RayController : MonoBehaviourPun {
         punch = 0;
         burst = 0;
         burstrate = 0;
+        PeekingSpeed = 0;
 
         Auto = silver.GetAuto();
         ZoomAble = false;
@@ -500,8 +523,8 @@ public class RayController : MonoBehaviourPun {
         xRecoil = pegasus.GetXRecoil();
         punch = 0;
         burst = 0;
-        burst = 0;
         burstrate = 0;
+        PeekingSpeed = pegasus.GetPeekingSpeed();
 
         Auto = pegasus.GetAuto();
         ZoomAble = pegasus.GetZoomAble();
@@ -530,9 +553,10 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = stella.GetReloadTime();
         yRecoil = stella.GetYRecoil();
         xRecoil = stella.GetXRecoil();
-        punch = 0;
+        punch = stella.GetPunch();
         burst = stella.GetBurst();
         burstrate = stella.GetBurstRate();
+        PeekingSpeed = stella.GetPeekingSpeed();
 
         Auto = stella.GetAuto();
         ZoomAble = stella.GetZoomAble();
@@ -565,6 +589,7 @@ public class RayController : MonoBehaviourPun {
         punch = 0;
         burst = 0;
         burstrate = 0;
+        PeekingSpeed = rapetter.GetPeekingSpeed();
 
         Auto = rapetter.GetAuto();
         ZoomAble = rapetter.GetZoomAble();
@@ -595,6 +620,7 @@ public class RayController : MonoBehaviourPun {
         punch = 0;
         burst = 0;
         burstrate = 0;
+        PeekingSpeed = noel.GetPeekingSpeed();
 
         Auto = noel.GetAuto();
         ZoomAble = noel.GetZoomAble();
@@ -624,6 +650,7 @@ public class RayController : MonoBehaviourPun {
         punch = 0;
         burst = 0;
         burstrate = 0;
+        PeekingSpeed = reine.GetPeekingSpeed();
 
         Auto = reine.GetAuto();
         ZoomAble = reine.GetZoomAble();
@@ -653,6 +680,7 @@ public class RayController : MonoBehaviourPun {
         punch = 0;
         burst = 0;
         burstrate = 0;
+        PeekingSpeed = duelist.GetPeekingSpeed();
 
         Auto = duelist.GetAuto();
         ZoomAble = duelist.GetZoomAble();
@@ -682,6 +710,7 @@ public class RayController : MonoBehaviourPun {
         punch = 0;
         burst = 0;
         burstrate = 0;
+        PeekingSpeed = 0;
 
         Auto = yor.GetAuto();
         ZoomAble = yor.GetZoomAble();
@@ -709,6 +738,7 @@ public class RayController : MonoBehaviourPun {
         punch = 0;
         burst = 0;
         burstrate = 0;
+        PeekingSpeed = blackbell.GetPeekingSpeed();
 
         Auto = blackbell.GetAuto();
         ZoomAble = blackbell.GetZoomAble();

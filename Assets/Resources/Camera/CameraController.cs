@@ -534,7 +534,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private void jump() {
 
-
+        if (!WalkAble)
+        {
+            return;
+        }
 
 
         if (Input.GetKeyDown(KeyCode.Space) && !Input.GetKey(KeyCode.W) && isTouchingWall() && !IsGrounded() && !IsJump && IsKamaitachi) {
@@ -578,7 +581,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
         if (IsGrounded()) { 
-        velocity.y = Mathf.Sqrt(jumpPower * -8f * gravity); // ジャンプの初速度
+        velocity.y = Mathf.Sqrt(jumpPower * -7f * gravity); // ジャンプの初速度
         //rb.velocity = new Vector3(0, 0, 0);  // 縦方向の速度リセット
         //rb.AddForce(new Vector3(0, jumpPower * 2, 0));
         sm.PlaySound("phantom");
@@ -778,6 +781,24 @@ public class CameraController : MonoBehaviourPunCallbacks {
         }
 
     }
+
+    public void Boost(float y, float x)
+    {
+        
+            velocity = new Vector3(0, 0, 0);
+            IsJump = true;
+            velocity.y = Mathf.Sqrt(jumpPower * -y * gravity);
+
+            // 水平方向のブースト速度（前方向に移動）
+            Vector3 boostDirection = transform.forward.normalized; // 前方向
+            velocity += boostDirection * x;
+            IsJump = false;
+            
+
+        
+
+    }
+
     public void Kamaitachi() {
 
         if (photonView == null || !photonView.IsMine) {

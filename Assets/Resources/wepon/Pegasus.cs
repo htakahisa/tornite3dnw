@@ -12,11 +12,11 @@ public class Pegasus : MonoBehaviour {
     bool auto = true;
     float reloadtime = 1.8f;
     bool zoomable = true;
-    float zoomratio = 10;
+    float zoomratio = 70;
     bool accuracy = true;
     float YRecoil = 2f;
     float XRecoil = 2f;
-
+    float PeekingSpeed = 0.06f;
     void Start() {
 
     }
@@ -68,6 +68,10 @@ public class Pegasus : MonoBehaviour {
         return XRecoil;
     }
 
+    public float GetPeekingSpeed()
+    {
+        return PeekingSpeed;
+    }
     public void GetStatus() {
 
     }

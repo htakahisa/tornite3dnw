@@ -12,12 +12,14 @@ public class Stella : MonoBehaviour {
     bool auto = true;
     float reloadtime = 1.5f;
     bool zoomable = true;
-    float zoomratio = 15;
+    float zoomratio = 65;
     bool accuracy = true;
     float YRecoil = 1.5f;
     float XRecoil = 0.5f;
     int Burst = 3;
     float BurstRate = 0.3f;
+    float PeekingSpeed = 0.08f;
+    float punch = 1f;
 
     void Start() {
 
@@ -77,6 +79,15 @@ public class Stella : MonoBehaviour {
     public float GetBurstRate()
     {
         return BurstRate;
+    }
+
+    public float GetPeekingSpeed()
+    {
+        return PeekingSpeed;
+    }
+    public float GetPunch()
+    {
+        return punch;
     }
 
     public void GetStatus() {

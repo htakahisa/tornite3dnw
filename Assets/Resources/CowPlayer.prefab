@@ -1813,6 +1813,7 @@ MonoBehaviour:
   clapping: {fileID: 8300000, guid: ccbdd3bcab20dbc4aa5dda680df6ffab, type: 3}
   selfwalk: {fileID: 8300000, guid: f0c2b85380260b244bc9cd0b86058e49, type: 3}
   warp: {fileID: 8300000, guid: 52a7f2d58fe0e6d40a8c45600e66b35f, type: 3}
+  defuse: {fileID: 8300000, guid: 7e42ad2eea30afa449fb39c1ac01ef21, type: 3}
 --- !u!82 &4909231365802194501
 AudioSource:
   m_ObjectHideFlags: 0
