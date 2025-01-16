@@ -52,8 +52,8 @@ public class PlantAndDefuse : MonoBehaviourPun
         if (Input.GetKey(KeyCode.Alpha4))
         {
 
-            // if (RoundManager.rm.GetSide().Equals("Leviathan") && CanDefuse)
-            if (CanDefuse)
+             if (RoundManager.rm.GetSide().Equals("Leviathan") && CanDefuse)
+            
             {
                 
 
@@ -73,8 +73,8 @@ public class PlantAndDefuse : MonoBehaviourPun
 
 
             }
-            //else if (RoundManager.rm.GetSide().Equals("Valkyrie") && CanPlant && disturber == null)
-            else if (CanPlant && disturber == null)
+            else if (RoundManager.rm.GetSide().Equals("Valkyrie") && CanPlant && disturber == null)
+
             {
 
                 PlantTime -= Time.deltaTime;
