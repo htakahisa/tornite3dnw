@@ -33,13 +33,13 @@ public class WallSwitch : MonoBehaviourPun
         // ‚Å”­“®
         if (Input.GetMouseButtonDown(3))
         {
-            Close();
+            photonView.RPC("Close", RpcTarget.All);
 
         }
 
 
     }
-  
+    [PunRPC]
     private void Close()
     {
         
