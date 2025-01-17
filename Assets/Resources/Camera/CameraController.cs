@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private Vector3 lastMoveInput;
 
-    private float servicespeed = 1;
+    public float servicespeed = 1;
     public LayerMask HitMask;
 
     private int hasAppliedAirMove = 0;
@@ -39,10 +39,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private bool IsJump = false;
 
-    public GameObject flash; // グレネードのプレハブ
+    
 
 
-    GameObject coward;
     private Ability ability;
 
     // エフェクトが生成される位置のオフセット
@@ -82,6 +81,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private bool isCursorLocked = true;
 
+  
+    private GameObject abilitycheck;
+
+    private Coroutine currentCoroutine = null;
 
     // Start is called before the first frame update
     void Start() {
@@ -94,9 +97,12 @@ public class CameraController : MonoBehaviourPunCallbacks {
             Cursor.lockState = CursorLockMode.None;
         }
 
-            ability = Camera.main.transform.parent.GetComponent<Ability>();
-        sm = Camera.main.transform.parent.GetComponent<SoundManager>();
-        coward = (GameObject)Resources.Load("SurveillanceCamera");
+        abilitycheck = GameObject.FindGameObjectWithTag("AbilityCheck");
+        abilitycheck.SetActive(false);
+
+        ability = GetComponent<Ability>();
+        sm = GetComponent<SoundManager>();
+        
 
         animator = GetComponent<Animator>();
         // CharacterControllerを取得
@@ -116,6 +122,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         if (Input.GetKeyDown(KeyCode.L))
         {
+             
             // ability.number2 ++;
         }
 
@@ -634,13 +641,47 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+     
         if (Physics.Raycast(ray, out hit, 5, AbilityHitMask))
         {
-            PhotonNetwork.Instantiate("C4", hit.point, Quaternion.identity);
-            ability.Spend(2, 20);
+
+
+            abilitycheck.SetActive(true);
+            abilitycheck.transform.position = hit.point;
+            Vector3 abilityUnder = abilitycheck.transform.position;
+           // if (Physics.Raycast(abilityUnder, Vector3.down, 5f, GroundLayer))
+          //  {
+                
+                
+                    // 既存のコルーチンがあれば停止
+                    if (currentCoroutine != null)
+                    {
+                        StopCoroutine(currentCoroutine);
+                    }
+
+                    // 新しいコルーチンを開始し、保持
+                    currentCoroutine = StartCoroutine(WaitC4(hit));
+
+                    
+
+                
+          //  }
         }
 
 
+    }
+    IEnumerator WaitC4(RaycastHit hit)
+    {
+
+
+        Debug.Log("条件を待機中...");
+
+        // 条件が満たされるまで待機
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(3));
+        currentCoroutine = null;
+        abilitycheck.SetActive(false);
+        PhotonNetwork.Instantiate("C4", hit.point, Quaternion.identity);
+        ability.Spend(2, 20);
     }
 
 
@@ -654,30 +695,58 @@ public class CameraController : MonoBehaviourPunCallbacks {
         
 
     }
-    public void Coward() {
-        if (photonView == null || !photonView.IsMine) {
+    public void Coward()
+    {
+        abilitycheck.SetActive(false);
+        if (photonView == null || !photonView.IsMine)
+        {
             return;
         }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         Quaternion rota = transform.localRotation;
         rota *= Quaternion.Euler(0, 180, 0);
-       
-        if (Physics.Raycast(ray, out hit, cowardRange, AbilityHitMask)) {
-          
-            Instantiate(coward, hit.point, rota);
-            ability.Spend(2, 1);
+
+        if (Physics.Raycast(ray, out hit, cowardRange, AbilityHitMask))
+        {
+            abilitycheck.SetActive(true);
+            abilitycheck.transform.position = hit.point;
+            abilitycheck.transform.rotation = rota;
+            // 既存のコルーチンがあれば停止
+            if (currentCoroutine != null)
+            {
+                StopCoroutine(currentCoroutine);
+            }
+
+            // 新しいコルーチンを開始し、保持
+            currentCoroutine = StartCoroutine(WaitCoward(hit, rota));
+
+
         }
-
-
     }
+    IEnumerator WaitCoward(RaycastHit hit, Quaternion rota)
+    {
+        
+
+        Debug.Log("条件を待機中...");
+
+        // 条件が満たされるまで待機
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(3));
+        currentCoroutine = null;
+        PhotonNetwork.Instantiate("SurveillanceCamera", hit.point, rota);
+        abilitycheck.SetActive(false);
+        ability.Spend(2, 1);
+    }
+
+
+
 
     public void Stray() {
 
         if (photonView == null || !photonView.IsMine) {
             return;
         }
-        PinManager.pm.StrayChild();
+      
 
     }
 
@@ -714,7 +783,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     void Throw() {
         Vector3 spawnDirection = Camera.main.transform.forward;
         Vector3 spawnPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.3f;
-        GameObject grenade = PhotonNetwork.Instantiate("Flash", spawnPosition, Quaternion.LookRotation(spawnDirection));
+        PhotonNetwork.Instantiate("Flash", spawnPosition, Quaternion.LookRotation(spawnDirection));
 
     }
 

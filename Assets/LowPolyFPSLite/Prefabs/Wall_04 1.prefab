@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6186919355528829422}
   - component: {fileID: 9048935297240766443}
   - component: {fileID: 1494684241914958774}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Brick_01 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 1332449122119922179}
   - component: {fileID: 8194178882201725456}
   - component: {fileID: 2836907752287578963}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 8419724709349278617}
   - component: {fileID: 5997713104682039123}
   - component: {fileID: 456024368049089909}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Wall_04 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 5025787008514447844}
   - component: {fileID: 1477199655794657113}
   - component: {fileID: 1517421294423807004}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Brick_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -401,7 +401,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 418631798096536097}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: 'Brick_01 (2) (Missing Prefab with guid: 9e6691cf91b03f44784c637dd44db604)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}

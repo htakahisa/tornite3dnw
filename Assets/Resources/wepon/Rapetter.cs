@@ -17,7 +17,7 @@ public class Rapetter : MonoBehaviour
     bool accuracy = false;
     float YRecoil = 0.5f;
     float XRecoil = 1f;
-    float PeekingSpeed = 1.3f;
+    float PeekingSpeed = 0.8f;
 
     void Start()
     {

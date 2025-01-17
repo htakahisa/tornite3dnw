@@ -21,6 +21,7 @@ public class SoundManager : MonoBehaviourPun {
     public AudioClip selfwalk;
     public AudioClip warp;
     public AudioClip defuse;
+    public AudioClip wallclose;
 
     void Awake() {
         
@@ -44,6 +45,7 @@ public class SoundManager : MonoBehaviourPun {
         photonView.RPC("PlaySoundRPC", RpcTarget.Others, type);       
         PlayMySound(type);
     }
+
 
     private void PlayMySound(string type) {
 
@@ -102,7 +104,10 @@ public class SoundManager : MonoBehaviourPun {
         {
             audioSource.PlayOneShot(defuse);
         }
-
+        if (type.Equals("wallclose"))
+        {
+            audioSource.PlayOneShot(wallclose);
+        }
 
     }
 
@@ -160,6 +165,10 @@ public class SoundManager : MonoBehaviourPun {
         if (type.Equals("defuse"))
         {
             audioSource.PlayOneShot(defuse);
+        }
+        if (type.Equals("wallclose"))
+        {
+            audioSource.PlayOneShot(wallclose);
         }
 
     }

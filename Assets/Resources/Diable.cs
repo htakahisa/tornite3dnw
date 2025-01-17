@@ -11,14 +11,14 @@ public class Diable : MonoBehaviourPun {
 
     private float time = 0;
 
-    Color pink;
+
 
     // Start is called before the first frame update
     void Awake() {
         gameObject.SetActive(true);
         StartCoroutine(ScaleWidthOverTime());
         
-        pink = Color.magenta;
+
        
     }
 
@@ -29,46 +29,51 @@ public class Diable : MonoBehaviourPun {
 
 
 
-    void OnTriggerStay(Collider other) {
+    private void OnTriggerStay(Collider other) {
 
         PhotonView targetPhotonView = other.gameObject.GetComponent<PhotonView>();
-
+ 
         if (targetPhotonView == null || !targetPhotonView.IsMine)
         {
             return;
         }
-
+      
 
         if (other.CompareTag("Head")) {
-            PlayerFlashEffect.pfe.Stun(pink);
+            CameraController cc = other.gameObject.GetComponentInParent<CameraController>();
+            AudioListener al = Camera.main.GetComponent<AudioListener>();
             time += Time.deltaTime;
             if (time >= 0.5) {
                 Damage(other.gameObject);
                 time = 0;
             }
+            cc.servicespeed = 0.8f;
+            al.enabled = false;
         }
+
+        
     }
 
-
-    void OnTriggerExit(Collider other) {
+    private void OnTriggerExit(Collider other)
+    {
         PhotonView targetPhotonView = other.gameObject.GetComponent<PhotonView>();
 
         if (targetPhotonView == null || !targetPhotonView.IsMine)
         {
             return;
         }
-
-        if (other.CompareTag("Head")) {
-
-            PlayerFlashEffect.pfe.Distun();
-
+        if (other.CompareTag("Head"))
+        {
+            CameraController cc = other.gameObject.GetComponentInParent<CameraController>();
+            AudioListener al = Camera.main.GetComponent<AudioListener>();
+            cc.servicespeed = 1f;
+            al.enabled = true;
         }
-
-
-
     }
 
-    public void Damage(GameObject target) {
+
+
+        public void Damage(GameObject target) {
 
         DamageManager dm = new DamageManager();
         dm.causeDamage(target.transform.gameObject, 2);

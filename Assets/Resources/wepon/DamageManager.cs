@@ -15,7 +15,18 @@ public class DamageManager {
         
 
     }
+    public void damageToObj(GameObject enemy, int damage)
+    {
 
+        ObjectDamage od = enemy.GetComponent<ObjectDamage>();
+        if (od != null)
+        {
+            od.DamageCount(damage);
+        }
+
+
+
+    }
 
 
 }

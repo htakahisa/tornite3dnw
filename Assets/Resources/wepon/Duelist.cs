@@ -14,7 +14,7 @@ public class Duelist : MonoBehaviour {
     bool zoomable = true;
     float zoomratio = 40;
     bool accuracy = false;
-    float PeekingSpeed = 1.5f;
+    float PeekingSpeed = 1f;
     void Start() {
 
     }

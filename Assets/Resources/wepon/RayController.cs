@@ -224,18 +224,24 @@ public class RayController : MonoBehaviourPun {
 
 
 
-
-
-                PhotonView photonView = GetTopmostParent(target).GetComponent<PhotonView>();                
+              
                 shoot(target, target.tag);
                
 
 
             }
+
             if (target.CompareTag("Head"))
             {
                 photonView.RPC("Stuned", RpcTarget.Others, punch, punch);
             }
+
+            if (target.CompareTag("Destructible"))
+            {
+                shoot(target, target.tag);
+            }
+
+
 
                 if (IsZooming)
             {
@@ -368,7 +374,10 @@ public class RayController : MonoBehaviourPun {
                         Debug.Log(hit.collider.gameObject.name);
                         PhotonNetwork.Instantiate("WallHit", hit.point, Quaternion.identity);
 
-
+                        if(hit.collider.gameObject.tag == "Destructible")
+                        {
+                            return hit.collider.gameObject;
+                        }
 
                     }
                   
@@ -775,20 +784,31 @@ public class RayController : MonoBehaviourPun {
             
 
         } else {
-            DamageManager dm = new DamageManager();
-            int damage = 0;
-            if (tag.Equals("Head")) {
-                damage = HeadDamage;
-            }
-            if (tag.Equals("Body"))
-            {                
-                damage = Damage;
-            }
-            if(!tag.Equals("Head") && !tag.Equals("Body"))
+            if (tag.Equals("Destructible"))
             {
-                return;
+                DamageManager dm = new DamageManager();
+                int damage = 0;
+                damage = Damage;
+                dm.damageToObj(enemy, damage);
             }
-            dm.causeDamage(enemy, damage);
+            else
+            {
+                DamageManager dm = new DamageManager();
+                int damage = 0;
+                if (tag.Equals("Head"))
+                {
+                    damage = HeadDamage;
+                }
+                if (tag.Equals("Body"))
+                {
+                    damage = Damage;
+                }
+                if (!tag.Equals("Head") && !tag.Equals("Body"))
+                {
+                    return;
+                }
+                dm.causeDamage(enemy, damage);
+            }
         }
     }
 

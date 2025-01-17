@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SurCamera : MonoBehaviour {
+public class SurCamera : MonoBehaviourPun {
 
     private Transform cam;
     private Transform sur;
@@ -16,6 +16,10 @@ public class SurCamera : MonoBehaviour {
     }
 
     private void Awake() {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         sm = Camera.main.transform.parent.GetComponent<SoundManager>();
         sm.PlaySound("coward");
         playerCamera = Camera.main.gameObject;
@@ -28,6 +32,11 @@ public class SurCamera : MonoBehaviour {
     void Update() {
         
         cam = transform.GetChild(0).GetChild(0);
+        if (!photonView.IsMine)
+        {
+            cam.gameObject.SetActive(false);
+            return;
+        }
         sur = transform.GetChild(0);
         if (sur.gameObject.activeSelf) {
             float mouseX = Input.GetAxis("Mouse X");
@@ -75,7 +84,7 @@ public class SurCamera : MonoBehaviour {
     private void Destroy() {
         sur.gameObject.SetActive(false);
         playerCamera.SetActive(true);
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
       
     }
 }

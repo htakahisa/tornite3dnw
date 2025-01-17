@@ -1487,7 +1487,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4302966814250481279}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 2.156, z: 0}
+  m_LocalPosition: {x: 0, y: 6.234, z: 0}
   m_LocalScale: {x: 0.622006, y: 0.622006, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1769,6 +1769,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WallCheck: {fileID: 414235742477092293}
+  servicespeed: 1
   HitMask:
     serializedVersion: 2
     m_Bits: 32768
@@ -1778,7 +1779,6 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 32768
-  flash: {fileID: 5769905515425661358, guid: 7184873f4704bad4da7955ac7d15b1bb, type: 3}
   effectOffset: {x: 0, y: 1, z: 2}
   diable: {x: 0, y: 1, z: 2}
   foot: {fileID: 2425630165191655316}
@@ -1814,6 +1814,7 @@ MonoBehaviour:
   selfwalk: {fileID: 8300000, guid: f0c2b85380260b244bc9cd0b86058e49, type: 3}
   warp: {fileID: 8300000, guid: 52a7f2d58fe0e6d40a8c45600e66b35f, type: 3}
   defuse: {fileID: 8300000, guid: 7e42ad2eea30afa449fb39c1ac01ef21, type: 3}
+  wallclose: {fileID: 8300000, guid: 89e0296733d0a45449b04ab118c369e5, type: 3}
 --- !u!82 &4909231365802194501
 AudioSource:
   m_ObjectHideFlags: 0

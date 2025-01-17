@@ -41,14 +41,7 @@ public class PinManager : MonoBehaviour {
 
    
 
-    public void StrayChild() {
-
-        Map.SetActive(true);
-        Map.GetComponent<MapPin>().Stray();
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-
-    }
+ 
 
     public void BlueLight() {
 

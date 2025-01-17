@@ -44,7 +44,7 @@ public class Ability : MonoBehaviourPun {
         }
 
             if (cc.AbilityAble)
-        {
+            {
             if (Input.GetKeyDown(KeyCode.E) && number1 >= 1)
             {
                 Use(Able1);
@@ -54,7 +54,7 @@ public class Ability : MonoBehaviourPun {
             {
                 Use(Able2);
             }
-        }
+            }
 
 
     }

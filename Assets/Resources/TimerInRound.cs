@@ -50,14 +50,17 @@ public class TimerInRound : MonoBehaviourPun
                 return;
             }
 
-            if (PhotonNetwork.LocalPlayer.ActorNumber == 1) {
+            if (RoundManager.rm.GetSide().Equals("Leviathan"))
+            {
 
-                RoundManager.rm.RoundEnd((RoundManager.rm.GetSide() == "Leviathan") == RoundManager.rm.round < 13);
+                RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 1);
 
             }
-            else
+            if (RoundManager.rm.GetSide().Equals("Valkyrie"))
             {
-                RoundManager.rm.RoundEnd((RoundManager.rm.GetSide() == "Valkyrie") == RoundManager.rm.round < 13);
+
+                RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 2);
+
             }
         }
     }
