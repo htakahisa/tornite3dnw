@@ -95,10 +95,11 @@ public class CameraController : MonoBehaviourPunCallbacks {
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+
+            abilitycheck = GameObject.FindGameObjectWithTag("AbilityCheck");
+            abilitycheck.SetActive(false);
         }
 
-        abilitycheck = GameObject.FindGameObjectWithTag("AbilityCheck");
-        abilitycheck.SetActive(false);
 
         ability = GetComponent<Ability>();
         sm = GetComponent<SoundManager>();
