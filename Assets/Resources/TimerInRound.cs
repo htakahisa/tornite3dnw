@@ -37,7 +37,7 @@ public class TimerInRound : MonoBehaviourPun
 
         if(HasPlanting)
         {
-            TimerAfterPlant = Disturber.plantedTime;
+            TimerAfterPlant = PhotonNetwork.Time - Disturber.plantedTime;
             TimerText.text = "Detonation in : " + (30 - (int)TimerAfterPlant);
         }
         else
