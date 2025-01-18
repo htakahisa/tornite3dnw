@@ -87,4 +87,11 @@ public class SurCamera : MonoBehaviourPun {
         PhotonNetwork.Destroy(gameObject);
       
     }
+
+    private void OnDestroy()
+    {
+        sur.gameObject.SetActive(false);
+        playerCamera.SetActive(true);
+
+    }
 }
