@@ -12,7 +12,6 @@ public class RayController : MonoBehaviourPun {
     private PinManager pinmanager;
 
     public LayerMask hitMask;
-    public LayerMask wallHitMask;
 
     private GameObject pm;
     private PhaseManager pmc;
@@ -358,28 +357,26 @@ public class RayController : MonoBehaviourPun {
 
                     if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, range, hitMask))
                     {
-
-                        PhotonNetwork.Instantiate("DamageBlood", hit.point, Quaternion.identity);
-                        return hit.collider.gameObject;
-
-                    }
-
-
-
-
-
-                    if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, range, wallHitMask))
-                    {
-
-                        Debug.Log(hit.collider.gameObject.name);
-                        PhotonNetwork.Instantiate("WallHit", hit.point, Quaternion.identity);
-
-                        if(hit.collider.gameObject.tag == "Destructible")
+                        if (hit.collider.gameObject.tag == "Body" || hit.collider.gameObject.tag == "Head")
                         {
-                            return hit.collider.gameObject;
+                            PhotonNetwork.Instantiate("DamageBlood", hit.point, Quaternion.identity);
+                        } else
+                        {
+                            PhotonNetwork.Instantiate("WallHit", hit.point, Quaternion.identity);
                         }
+                            return hit.collider.gameObject;
 
                     }
+
+
+
+
+
+                    
+
+                      
+
+                    
                   
                 }
             }

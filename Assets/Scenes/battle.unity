@@ -131623,9 +131623,6 @@ MonoBehaviour:
   pinmanager: {fileID: 8967826902361199527}
   hitMask:
     serializedVersion: 2
-    m_Bits: 2048
-  wallHitMask:
-    serializedVersion: 2
     m_Bits: 51200
   range: 500
   CanShoot: 1

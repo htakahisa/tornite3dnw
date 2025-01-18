@@ -650,7 +650,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             abilitycheck.SetActive(true);
             abilitycheck.transform.position = hit.point;
             Vector3 abilityUnder = new Vector3(abilitycheck.transform.position.x, abilitycheck.transform.position.y+1, abilitycheck.transform.position.z); 
-            if (Physics.Raycast(abilityUnder, Vector3.down, 1f, GroundLayer))
+            if (Physics.Raycast(abilityUnder, Vector3.down, 1.5f, GroundLayer))
             {
                 
                 
