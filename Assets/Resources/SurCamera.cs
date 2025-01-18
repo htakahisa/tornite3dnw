@@ -90,6 +90,10 @@ public class SurCamera : MonoBehaviourPun {
 
     private void OnDestroy()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         sur.gameObject.SetActive(false);
         playerCamera.SetActive(true);
 
