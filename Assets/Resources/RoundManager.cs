@@ -374,6 +374,7 @@ public class RoundManager : MonoBehaviourPun {
         GetData();
         if (round == 13)
         {
+            streak = 0;
             sideRound = 1;
             Acoin = 700;
             Bcoin = 700;

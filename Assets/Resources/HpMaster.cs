@@ -48,7 +48,8 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
         } else if (rm.sideRound < 4) {
             this.shield = 0.8f;
             armer.armermanager.ArmerNo(2);
-        } else {
+        } else if (rm.sideRound > 3)
+        {
             this.shield = 0.67f;
             armer.armermanager.ArmerNo(3);
         }
@@ -57,7 +58,8 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
              {
                 this.shield = 0.67f;
                 armer.armermanager.ArmerNo(4);
-             }
+                rm.streak = 0;
+            }
         }
         if (rm.streak == 2)
         {
@@ -65,9 +67,10 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
             {
                 this.shield = 0.67f;
                 armer.armermanager.ArmerNo(4);
+                rm.streak = 0;
             }
         }
-        rm.streak = 0;
+        
     }
 
 
