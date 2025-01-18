@@ -7,13 +7,15 @@ using UnityEngine;
 public class TimerInRound : MonoBehaviourPun
 {
 
-    private float TimerBeforePlant = 45;
-    private float TimerAfterPlant = 30;
+    private double TimerAfterPlant = 30;
+    private double  TimerBeforePlant = 45;
     private Disturber Disturber;
 
     [SerializeField]
     private TextMeshProUGUI TimerText;
     private bool HasPlanting = false;
+
+    private double startTime = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,7 @@ public class TimerInRound : MonoBehaviourPun
 
         if (PhaseManager.pm.GetPhase().Equals("Buy"))
         {
+            startTime = PhotonNetwork.Time + TimerBeforePlant;
             return;
         }
 
@@ -34,13 +37,13 @@ public class TimerInRound : MonoBehaviourPun
 
         if(HasPlanting)
         {
-            TimerAfterPlant = Disturber.timer;
-            TimerText.text = "Detonation in : " + (30 - Mathf.FloorToInt(TimerAfterPlant));
+            TimerAfterPlant = Disturber.plantedTime;
+            TimerText.text = "Detonation in : " + (30 - (int)TimerAfterPlant);
         }
         else
         {
-            TimerBeforePlant -= Time.deltaTime;
-            TimerText.text = "Mission failure in : " + Mathf.FloorToInt(TimerBeforePlant);
+            TimerBeforePlant = PhotonNetwork.Time - startTime;
+            TimerText.text = "Mission failure in : " + (int)TimerBeforePlant;
         }
 
         if(TimerBeforePlant <= 0)

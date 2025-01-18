@@ -5,16 +5,11 @@ public class Disturber : MonoBehaviourPun
 {
     public float explosionTime = 30.0f;
 
-    public float timer = 0f;
+    public double plantedTime = 0f;
     private bool isPlanted = false;
     private bool hasExploded = false;
 
     private TimerInRound timerinround;
-
-    private void Start()
-    {
-         
-    }
 
     private void Update()
     {
@@ -23,40 +18,32 @@ public class Disturber : MonoBehaviourPun
             return;
         }
 
-
         if (isPlanted && !hasExploded)
         {
-            timer += Time.deltaTime;
-            //Physics.Simulate(0.02f);
+            double currentTime = PhotonNetwork.Time;
 
-            if (timer >= explosionTime)
+            if (currentTime >= plantedTime + explosionTime)
             {
                 Explode();
             }
         }
-   
     }
 
     public void Plant()
     {
         if (isPlanted) return;
 
-        photonView.RPC(nameof(StartPlanting), RpcTarget.All);
+        photonView.RPC(nameof(StartPlanting), RpcTarget.AllBuffered, PhotonNetwork.Time);
     }
 
     [PunRPC]
-    private void StartPlanting()
+    private void StartPlanting(double networkTime)
     {
         isPlanted = true;
-        timer = 0f;
+        plantedTime = networkTime;
         timerinround = GameObject.FindGameObjectWithTag("TimerText").GetComponent<TimerInRound>();
         timerinround.Planted(this);
     }
-
-
-
-
-
 
     private void Explode()
     {
@@ -71,10 +58,9 @@ public class Disturber : MonoBehaviourPun
 
     public void Defuse()
     {
-
         photonView.RPC(nameof(OnDefuse), RpcTarget.All);
-
     }
+
     [PunRPC]
     public void OnDefuse()
     {
@@ -83,45 +69,30 @@ public class Disturber : MonoBehaviourPun
             return;
         }
 
-
-
         if (RoundManager.rm.GetSide().Equals("Leviathan"))
         {
-
             RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 1);
-
         }
-        if (RoundManager.rm.GetSide().Equals("Valkyrie"))
+        else if (RoundManager.rm.GetSide().Equals("Valkyrie"))
         {
-
             RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 2);
-
         }
 
         Destroy(gameObject);
     }
 
-
-
     [PunRPC]
     private void OnExplode()
     {
         Debug.Log("Bomb exploded!");
-        
+
         if (RoundManager.rm.GetSide().Equals("Valkyrie"))
         {
-            
             RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 1);
-      
-                    
         }
-        if (RoundManager.rm.GetSide().Equals("Leviathan"))
+        else if (RoundManager.rm.GetSide().Equals("Leviathan"))
         {
-
             RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 2);
-
         }
     }
-
-  
 }
