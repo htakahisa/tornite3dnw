@@ -15,7 +15,7 @@ public class TimerInRound : MonoBehaviourPun
     private TextMeshProUGUI TimerText;
     private bool HasPlanting = false;
 
-    private double startTime = 0;
+    private double missionFailureTime = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +29,7 @@ public class TimerInRound : MonoBehaviourPun
 
         if (PhaseManager.pm.GetPhase().Equals("Buy"))
         {
-            startTime = PhotonNetwork.Time + TimerBeforePlant;
+            missionFailureTime = PhotonNetwork.Time + TimerBeforePlant;
             return;
         }
 
@@ -42,7 +42,7 @@ public class TimerInRound : MonoBehaviourPun
         }
         else
         {
-            TimerBeforePlant = PhotonNetwork.Time - startTime;
+            TimerBeforePlant = missionFailureTime - PhotonNetwork.Time;
             TimerText.text = "Mission failure in : " + (int)TimerBeforePlant;
         }
 
@@ -56,15 +56,10 @@ public class TimerInRound : MonoBehaviourPun
             if (RoundManager.rm.GetSide().Equals("Leviathan"))
             {
 
-                RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 1);
+                ResultSynchronizer.rs.SendResult(PhotonNetwork.LocalPlayer.ActorNumber);
 
             }
-            if (RoundManager.rm.GetSide().Equals("Valkyrie"))
-            {
-
-                RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 2);
-
-            }
+           
         }
     }
 

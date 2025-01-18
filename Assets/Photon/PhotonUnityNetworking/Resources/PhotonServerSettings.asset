@@ -63,6 +63,7 @@ MonoBehaviour:
   - StartPlanting
   - OnDefuse
   - Close
+  - SynchronizeResult
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

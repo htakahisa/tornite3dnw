@@ -121,11 +121,13 @@ public class CameraController : MonoBehaviourPunCallbacks {
             PlacePinAtClickPosition();
         }
 
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.L))
         {
              
-            // ability.number2 ++;
+             ability.number2 ++;
         }
+#endif
 
         if (katarina && AbilityAble)
         {

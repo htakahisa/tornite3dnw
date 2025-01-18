@@ -71,12 +71,9 @@ public class Disturber : MonoBehaviourPun
 
         if (RoundManager.rm.GetSide().Equals("Leviathan"))
         {
-            RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 1);
+            ResultSynchronizer.rs.SendResult(PhotonNetwork.LocalPlayer.ActorNumber);
         }
-        else if (RoundManager.rm.GetSide().Equals("Valkyrie"))
-        {
-            RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 2);
-        }
+      
 
         Destroy(gameObject);
     }
@@ -88,11 +85,8 @@ public class Disturber : MonoBehaviourPun
 
         if (RoundManager.rm.GetSide().Equals("Valkyrie"))
         {
-            RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 1);
+            ResultSynchronizer.rs.SendResult(PhotonNetwork.LocalPlayer.ActorNumber);
         }
-        else if (RoundManager.rm.GetSide().Equals("Leviathan"))
-        {
-            RoundManager.rm.RoundEnd(PhotonNetwork.LocalPlayer.ActorNumber == 2);
-        }
+       
     }
 }
