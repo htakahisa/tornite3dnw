@@ -19,6 +19,7 @@ public class C4 : MonoBehaviourPunCallbacks
         if (!photonView.IsMine)
         {
             gameObject.layer = LayerMask.NameToLayer("Me");
+            transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Me");
         }
     }
 
