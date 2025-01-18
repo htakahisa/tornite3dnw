@@ -7,7 +7,7 @@ using UnityEngine;
 public class TimerInRound : MonoBehaviourPun
 {
 
-    private float TimerBeforePlant = 60;
+    private float TimerBeforePlant = 45;
     private float TimerAfterPlant = 30;
     private Disturber Disturber;
 
