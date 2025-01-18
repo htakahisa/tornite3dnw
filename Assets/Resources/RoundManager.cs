@@ -55,7 +55,7 @@ public class RoundManager : MonoBehaviourPun {
 
     GameObject finisherManager;
 
-    List<string> finisherList = new List<string> { "wood", "fireaxe", "dummy", "blacknoir", "gridwhite", "liberation", "bloom", "snow"};
+    List<string> finisherList = new List<string> { "wood", "fireaxe", "dummy", "blacknoir", "gridwhite", "liberation", "bloom", "snow", "sweet"};
 
     public static RoundManager rm = null;
 
