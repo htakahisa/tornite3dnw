@@ -2,8 +2,8 @@ using Photon.Pun;
 using UnityEngine;
 
 public class Stradarts : MonoBehaviourPun {
-    private float speed = 9f;                // ダートの移動速度        
-    private float scanRadius = 10f;            // スキャン範囲
+    private float speed = 12f;                // ダートの移動速度        
+    private float scanRadius = 8f;            // スキャン範囲
     public LayerMask hitMask;                 // ヒット判定用のレイヤーマスク
 
     private Vector3 launchDirection;          // 発射方向

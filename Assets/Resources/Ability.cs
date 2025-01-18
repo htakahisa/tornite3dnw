@@ -43,8 +43,8 @@ public class Ability : MonoBehaviourPun {
             cc = gameObject.GetComponent<CameraController>();
         }
 
-            if (cc.AbilityAble)
-            {
+        if (cc.AbilityAble)
+        {
             if (Input.GetKeyDown(KeyCode.E) && number1 >= 1)
             {
                 Use(Able1);
@@ -54,10 +54,22 @@ public class Ability : MonoBehaviourPun {
             {
                 Use(Able2);
             }
+            if (Able2 == "Stray")
+            {
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    Use(Able2);
+                }
             }
+
+        }
+
+
 
 
     }
+
+
 
         public void Use(string able) {
 
@@ -76,13 +88,12 @@ public class Ability : MonoBehaviourPun {
             Spend(1, 1);
 
         }
-
-        if (able.Equals("Stray")) {
+        if (able.Equals("Stray"))
+        {
             cc.Stray();
-            Spend(2, 1);
+            
 
         }
-
         if (able.Equals("Whiteout")) {
             cc.Smoke();
             Spend(2, 1);

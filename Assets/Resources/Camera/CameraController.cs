@@ -39,7 +39,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private bool IsJump = false;
 
-    
+    private GameObject stray;
 
 
     private Ability ability;
@@ -136,7 +136,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 katarinaInterval += Time.deltaTime;
                 if (katarinaInterval >= 0.5f)
                 {
-                    ability.Collect(2, 1);
+                    ability.Collect(2, 2);
                     katarinaInterval = 0f;
                 }
                 if (Input.GetKeyDown(KeyCode.Q) && ability.number2 >= 10)
@@ -145,12 +145,12 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     ability.Spend(2, 10);
                 }
 
-                if (Input.GetKeyDown(KeyCode.F) && ability.number2 >= 20)
+                if (Input.GetKeyDown(KeyCode.F) && ability.number2 >= 30)
                 {
                     C4();
                     
                 }
-                if (Input.GetKeyDown(KeyCode.X) && ability.number2 >= 50)
+                if (Input.GetKeyDown(KeyCode.X) && ability.number2 >= 100)
                 {
                     Debug.Log("敵を検出");
                     BattleData.bd.Detect("enemy\ndetected");
@@ -688,6 +688,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
     }
 
 
+
+
     public void RireDuDiable() {
         if (photonView == null || !photonView.IsMine) {
             return;
@@ -744,16 +746,77 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
 
 
-    public void Stray() {
+    public void Stray()
+    {
 
-        if (photonView == null || !photonView.IsMine) {
+        if (photonView == null || !photonView.IsMine)
+        {
             return;
         }
-      
 
+        if (stray == null)
+        {
+            if (ability.number2 >= 1)
+            {
+
+
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, 5, AbilityHitMask))
+                {
+
+
+                    abilitycheck.SetActive(true);
+                    abilitycheck.transform.position = hit.point;
+                    Vector3 abilityUnder = new Vector3(abilitycheck.transform.position.x, abilitycheck.transform.position.y + 1, abilitycheck.transform.position.z);
+                    if (Physics.Raycast(abilityUnder, Vector3.down, 1.5f, GroundLayer))
+                    {
+
+
+                        // 既存のコルーチンがあれば停止
+                        if (currentCoroutine != null)
+                        {
+                            StopCoroutine(currentCoroutine);
+                        }
+
+                        // 新しいコルーチンを開始し、保持
+                        currentCoroutine = StartCoroutine(WaitStray(hit));
+
+
+
+
+                    }
+
+
+                }
+            }
+        }
+            else
+        {
+            controller.enabled = false;
+            transform.position = stray.transform.position;
+            transform.rotation = stray.transform.rotation;
+            controller.enabled = true;
+        }
+    }
+        IEnumerator WaitStray(RaycastHit hit)
+    {
+
+
+        Debug.Log("条件を待機中...");
+
+        // 条件が満たされるまで待機
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(3));
+        currentCoroutine = null;
+        abilitycheck.SetActive(false);
+        this.stray = PhotonNetwork.Instantiate("Stray", hit.point, Quaternion.identity);
+        ability.Spend(2, 1);
     }
 
-   
+
+
+
 
 
 

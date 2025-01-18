@@ -12,9 +12,14 @@ GameObject:
   - component: {fileID: 7451304899966151854}
   - component: {fileID: 5309897175339199818}
   - component: {fileID: 3777983410775897242}
-  m_Layer: 0
+  - component: {fileID: 5941631109427054136}
+  - component: {fileID: 8032517933488282203}
+  - component: {fileID: 1738000931113283877}
+  - component: {fileID: 9126160505315329980}
+  - component: {fileID: 29527242238492606}
+  m_Layer: 15
   m_Name: SurveillanceCamera
-  m_TagString: Untagged
+  m_TagString: Destructible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,9 +88,75 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5309897175339199818}
+  - {fileID: 29527242238492606}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!65 &5941631109427054136
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062110106910233106}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.084564224, y: 0.049917623, z: 0.24120879}
+  m_Center: {x: 0, y: 0.0039043436, z: 0.120604396}
+--- !u!65 &8032517933488282203
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062110106910233106}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.084564224, y: 0.17700548, z: 0.017759569}
+  m_Center: {x: 0, y: 0, z: 0.0088797845}
+--- !u!65 &1738000931113283877
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062110106910233106}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.109660074, y: 0.13075122, z: 0.39456427}
+  m_Center: {x: 0.00014360249, y: 0.12508516, z: 0.029882938}
+--- !u!65 &9126160505315329980
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062110106910233106}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.056918457, y: 0.04027164, z: 0.1462936}
+  m_Center: {x: -0.00062188506, y: 0.041136, z: -0.033175476}
+--- !u!114 &29527242238492606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062110106910233106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebe656353231e164a84d8cb09a74aac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hp: 50
 --- !u!1001 &8459881598717513197
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -149,7 +220,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Surveillance
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8524817046207077518, guid: 4bdbca58270ba1d44b4eed5d6b36a0aa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 724511443068656044, guid: 4bdbca58270ba1d44b4eed5d6b36a0aa, type: 3}
+    - {fileID: 1988782464301986411, guid: 4bdbca58270ba1d44b4eed5d6b36a0aa, type: 3}
+    - {fileID: 8496406418112486824, guid: 4bdbca58270ba1d44b4eed5d6b36a0aa, type: 3}
+    - {fileID: 8249233869975063973, guid: 4bdbca58270ba1d44b4eed5d6b36a0aa, type: 3}
+    - {fileID: 5088925925638130336, guid: 4bdbca58270ba1d44b4eed5d6b36a0aa, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4bdbca58270ba1d44b4eed5d6b36a0aa, type: 3}
 --- !u!4 &6643047056369618762 stripped
 Transform:

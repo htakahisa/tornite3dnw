@@ -70,6 +70,12 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
                 rm.streak = 0;
             }
         }
+        if (rm.sideRound < 2)
+        {
+            this.shield = 1;
+            armer.armermanager.ArmerNo(1);
+        }
+
         rm.streak = 0;
 
     }

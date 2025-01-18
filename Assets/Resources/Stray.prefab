@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 8137085456206649609}
   - component: {fileID: 6100740400772542467}
   - component: {fileID: 6049082649857346168}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Stray
-  m_TagString: Untagged
+  m_TagString: Destructible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe656353231e164a84d8cb09a74aac6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 50
+  Hp: 150
 --- !u!114 &6100740400772542467
 MonoBehaviour:
   m_ObjectHideFlags: 0
