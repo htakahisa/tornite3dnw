@@ -70,7 +70,8 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
                 rm.streak = 0;
             }
         }
-        
+        rm.streak = 0;
+
     }
 
 

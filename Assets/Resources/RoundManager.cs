@@ -372,24 +372,7 @@ public class RoundManager : MonoBehaviourPun {
         //}
      
         GetData();
-        if (round == 13)
-        {
-            streak = 0;
-            sideRound = 1;
-            Acoin = 700;
-            Bcoin = 700;
-            if (Side.Equals("Leviathan"))
-            {
-                Side = "Valkyrie";
-            }
-            else if (Side.Equals("Valkyrie"))
-            {
-                Side = "Leviathan";
-            }
-
-            
-
-        }
+    
 
         RoundProcessing = false;
 
@@ -406,6 +389,26 @@ public class RoundManager : MonoBehaviourPun {
         if (!WinnerIsA) {
             Bcoin += service;
         }
+
+        if (round == 13)
+        {
+            streak = 0;
+            sideRound = 1;
+            Acoin = 700;
+            Bcoin = 700;
+            if (Side.Equals("Leviathan"))
+            {
+                Side = "Valkyrie";
+            }
+            else if (Side.Equals("Valkyrie"))
+            {
+                Side = "Leviathan";
+            }
+
+
+
+        }
+
         Debug.Log("Acoin:" + Acoin + " Bcoin:" + Bcoin);
 
 
