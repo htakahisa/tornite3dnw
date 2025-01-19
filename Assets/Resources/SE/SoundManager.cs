@@ -24,6 +24,7 @@ public class SoundManager : MonoBehaviourPun {
     public AudioClip wallclose;
 
 
+
     void Awake() {
         
         // AudioSourceコンポーネントがアタッチされていない場合は自動取得
