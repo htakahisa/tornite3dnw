@@ -311,7 +311,7 @@ public class RoundManager : MonoBehaviourPun {
         }
         else
         {
-            StartLoadingScene("battle", winnerIsA);
+            StartLoadingScene(MapManager.mapmanager.GetMapName(), winnerIsA);
         }
       
 

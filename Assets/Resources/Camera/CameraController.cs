@@ -283,16 +283,14 @@ public class CameraController : MonoBehaviourPunCallbacks {
      * */
     private void StartClimbing()
     {
+        BarStatus barstatus = topBarTransform.GetComponent<BarStatus>();
+        climbSpeed = barstatus.GetSpeed();
         if (topBarTransform != null)
         {
             // 目標地点を上のシリンダーの上部に設定
-            targetPosition = topBarTransform.position + Vector3.up * (topBarTransform.localScale.y / 2);
+            targetPosition = topBarTransform.position + Vector3.up * (topBarTransform.localScale.y / climbSpeed);
             isClimbing = true;
-            // 歩きキーが押されている場合は音がしない。
-            if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
-            {
-                sm.PlaySound("barClimb");
-            }
+          
         }
     }
 
@@ -301,6 +299,11 @@ public class CameraController : MonoBehaviourPunCallbacks {
         float adjustedClimbSpeed = climbSpeed;
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftControl)) {
             adjustedClimbSpeed = adjustedClimbSpeed / 2;
+        }
+        // 歩きキーが押されている場合は音がしない。
+        if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
+        {
+            sm.PlaySound("barClimb");
         }
 
         // 現在の位置から目標地点に向かって徐々に移動

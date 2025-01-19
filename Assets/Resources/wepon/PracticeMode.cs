@@ -59,5 +59,9 @@ public class PracticeMode : MonoBehaviour {
     {
         SceneManager.LoadScene("lounge");
     }
+    public void MapSelect()
+    {
+        SceneManager.LoadScene("MapSelect");
+    }
 
 }
