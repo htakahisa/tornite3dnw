@@ -86,6 +86,15 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private Coroutine currentCoroutine = null;
 
+
+    /** 棒の上り下り */
+    private bool isNearBottomBar = false; // 下のシリンダーに触れているか
+    private Transform topBarTransform; // 上のシリンダーのTransform
+    private bool isClimbing = false; // 登っている最中か
+    private Vector3 targetPosition; // 目標地点
+    private float climbSpeed = 2.0f; // 登る速度
+
+
     // Start is called before the first frame update
     void Start() {
 
@@ -269,20 +278,104 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
 
 
-        private void FixedUpdate() {
+    /**
+     * 棒の上り下り
+     * */
+    private void StartClimbing()
+    {
+        if (topBarTransform != null)
+        {
+            // 目標地点を上のシリンダーの上部に設定
+            targetPosition = topBarTransform.position + Vector3.up * (topBarTransform.localScale.y / 2);
+            isClimbing = true;
+            // 歩きキーが押されている場合は音がしない。
+            if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
+            {
+                sm.PlaySound("barClimb");
+            }
+        }
+    }
+
+    private void MoveTowardsTarget()
+    {
+        float adjustedClimbSpeed = climbSpeed;
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftControl)) {
+            adjustedClimbSpeed = adjustedClimbSpeed / 2;
+        }
+
+        // 現在の位置から目標地点に向かって徐々に移動
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, adjustedClimbSpeed * Time.deltaTime);
+
+        // 目標地点に到達したら移動を停止
+        if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
+        {
+            isClimbing = false;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        // シリンダーに触れた場合
+        if (other.CompareTag("Bar"))
+        {
+
+            isNearBottomBar = true;
+
+            // 触れたのが下の場合
+            if (other.name == "bottom_bar")
+            {
+
+                // 親オブジェクト (bar) を取得
+                Transform barParent = other.transform.parent;
+
+                // barParent 内の top_bar を探す
+                topBarTransform = barParent.Find("top_bar");
+            }
+            else
+            {
+                
+
+                // 親オブジェクト (bar) を取得
+                Transform barParent = other.transform.parent;
+
+                // barParent 内の top_bar を探す
+                topBarTransform = barParent.Find("bottom_bar");
+            }
+        }
+    }
+
+
+
+
+    private void FixedUpdate() {
 
         if (photonView == null || !photonView.IsMine) {
             return;
         }
 
-    
+        
+        // バーが近く、Cキーを押した場合に登る
+        if (isNearBottomBar && Input.GetKey(KeyCode.C) && !isClimbing)
+        {
+            StartClimbing();
+            return;
+        }
 
-      
+        // 上り下りしている場合、移動処理を行う
+        if (isClimbing)
+        {
+            MoveTowardsTarget();
+            return;
+        }
+        else
+        {
+            isNearBottomBar = false;
+        }
 
-   
 
-            // 地面にいる場合、垂直速度をリセット
-            if (IsGrounded() && velocity.y < 0)
+
+        // 地面にいる場合、垂直速度をリセット
+        if (IsGrounded() && velocity.y < 0)
         {
             velocity.y = -2f; // 少し負の値にして地面に密着させる
             velocity.x = 0f;  // 水平方向の速度をリセット

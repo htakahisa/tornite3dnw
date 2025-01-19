@@ -1815,6 +1815,7 @@ MonoBehaviour:
   warp: {fileID: 8300000, guid: 52a7f2d58fe0e6d40a8c45600e66b35f, type: 3}
   defuse: {fileID: 8300000, guid: 7e42ad2eea30afa449fb39c1ac01ef21, type: 3}
   wallclose: {fileID: 8300000, guid: 89e0296733d0a45449b04ab118c369e5, type: 3}
+  barClimb: {fileID: 8300000, guid: 41c2cd022d6a7ad4d9f67d306031887d, type: 3}
 --- !u!82 &4909231365802194501
 AudioSource:
   m_ObjectHideFlags: 0

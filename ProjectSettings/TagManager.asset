@@ -25,6 +25,7 @@ TagManager:
   - TimerText
   - Destructible
   - AbilityCheck
+  - Bar
   layers:
   - Default
   - TransparentFX
