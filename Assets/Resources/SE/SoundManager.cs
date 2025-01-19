@@ -23,6 +23,7 @@ public class SoundManager : MonoBehaviourPun {
     public AudioClip defuse;
     public AudioClip wallclose;
 
+
     void Awake() {
         
         // AudioSourceコンポーネントがアタッチされていない場合は自動取得

@@ -794,6 +794,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         }
             else
         {
+            sm.PlaySound("stray");
             controller.enabled = false;
             transform.position = stray.transform.position;
             transform.rotation = stray.transform.rotation;

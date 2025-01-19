@@ -1804,7 +1804,7 @@ MonoBehaviour:
   reload: {fileID: 8300000, guid: c49204d56bf0aff48bfb20b7831f0fdf, type: 3}
   noarmo: {fileID: 8300000, guid: 538476d501baf7a4297b3633ad5b4e09, type: 3}
   phantom: {fileID: 8300000, guid: e9e565dfb998f634b925d7d74b279171, type: 3}
-  stray: {fileID: 8300000, guid: 3695fe3f50661314696fd76639ebb3df, type: 3}
+  stray: {fileID: 8300000, guid: 072f38f656fc6834b8db047e9ed984d3, type: 3}
   wolf: {fileID: 8300000, guid: 63a839dd7873c2e42bd77d5100a15eaa, type: 3}
   coward: {fileID: 8300000, guid: 0d36088b829e5ae468ccbc68c70de101, type: 3}
   flash: {fileID: 8300000, guid: 5f504773d6bf5514982981d513438d1d, type: 3}

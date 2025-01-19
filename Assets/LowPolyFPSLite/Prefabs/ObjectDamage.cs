@@ -22,7 +22,10 @@ public class ObjectDamage : MonoBehaviourPun, IPunObservable
 
     public void DamageCount(int damage)
     {
-
+        if(PhaseManager.pm.GetPhase() == "Buy")
+        {
+            return;
+        }
 
         Hp -= damage;
         photonView.RPC("SynchronizeHp", RpcTarget.All, Hp);
