@@ -92,7 +92,7 @@ public class SampleScene : MonoBehaviourPunCallbacks {
                     Debug.Log("You are Player " + PhotonNetwork.LocalPlayer.ActorNumber);
                 }
             }
-        } else if (MapManager.mapmanager.GetMapName() == "Abyss")
+        } else if (MapManager.mapmanager.GetMapName() == "Needless")
         {
             if (rm.round <= 12)
             {
