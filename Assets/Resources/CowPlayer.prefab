@@ -1816,6 +1816,7 @@ MonoBehaviour:
   defuse: {fileID: 8300000, guid: 7e42ad2eea30afa449fb39c1ac01ef21, type: 3}
   wallclose: {fileID: 8300000, guid: 89e0296733d0a45449b04ab118c369e5, type: 3}
   barClimb: {fileID: 8300000, guid: 41c2cd022d6a7ad4d9f67d306031887d, type: 3}
+  detect: {fileID: 8300000, guid: e3f3bb0a21e448743b637072cd70e8ed, type: 3}
 --- !u!82 &4909231365802194501
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1837,9 +1838,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 30
   Pan2D: 0
-  rolloffMode: 2
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1903,11 +1904,11 @@ AudioSource:
     - serializedVersion: 3
       time: 0.63150084
       value: 0
-      inSlope: -0.02442379
-      outSlope: -0.02442379
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.48126495
       outWeight: 0
     - serializedVersion: 3
       time: 1

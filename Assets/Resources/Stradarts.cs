@@ -47,7 +47,7 @@ public class Stradarts : MonoBehaviourPun
                     // 壁に当たった場合、スキャンを開始
                     isScanning = true;
                     transform.position = hit.point; // 壁の位置で止まる
-                    
+                    showSphere = true; // 球を表示
                     // スキャンを開始
                     StartCoroutine(Scan());
                 }
@@ -64,7 +64,8 @@ public class Stradarts : MonoBehaviourPun
     {
         // スキャンを行う
         yield return new WaitForSeconds(2f); // スキャン前の待機時間
-        showSphere = true; // 球を表示
+                                             // 球の非表示フラグをセット
+        showSphere = false;
         // スキャン範囲内の敵を検出
         Collider[] targets = Physics.OverlapSphere(transform.position, scanRadius, hitMask);
         foreach (Collider target in targets)
@@ -83,8 +84,7 @@ public class Stradarts : MonoBehaviourPun
 
     private void DestroyPun()
     {
-        // 球の非表示フラグをセット
-        showSphere = false;
+      
         BattleData.bd.DetectEnd();
         ScanCamera.sc.InActiveScan();
         PhotonNetwork.Destroy(gameObject);

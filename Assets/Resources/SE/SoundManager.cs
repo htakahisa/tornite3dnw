@@ -23,6 +23,7 @@ public class SoundManager : MonoBehaviourPun {
     public AudioClip defuse;
     public AudioClip wallclose;
     public AudioClip barClimb;
+    public AudioClip detect;
 
 
 
@@ -115,6 +116,10 @@ public class SoundManager : MonoBehaviourPun {
         {
             audioSource.PlayOneShot(barClimb);
         }
+        if (type.Equals("detect"))
+        {
+            audioSource.PlayOneShot(detect);
+        }
 
     }
 
@@ -177,6 +182,10 @@ public class SoundManager : MonoBehaviourPun {
         if (type.Equals("wallclose"))
         {
             audioSource.PlayOneShot(wallclose);
+        }
+        if (type.Equals("detect"))
+        {
+            audioSource.PlayOneShot(detect);
         }
 
     }

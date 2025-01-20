@@ -44,7 +44,7 @@ public class Molesta : MonoBehaviourPunCallbacks
             return;
         }
 
-            if (Input.GetMouseButton(3))
+            if (Input.GetMouseButtonDown(3))
         {
             IsMoving = !IsMoving;
         }

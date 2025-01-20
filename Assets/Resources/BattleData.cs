@@ -26,6 +26,7 @@ public class BattleData : MonoBehaviourPun
     public void Detect(string text)
     {
         battletext.text = text;
+        Camera.main.GetComponentInParent<SoundManager>().PlaySound("detect");
         if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
         {
             photonView.RPC("Detected", RpcTarget.Others, 2);

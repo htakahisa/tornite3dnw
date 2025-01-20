@@ -12,8 +12,8 @@ public class Ability : MonoBehaviourPun {
     CameraController cc;
     RayController rc;
 
-    string Able1 = "";
-    string Able2 = "";
+    private string Able1 = "";
+    private string Able2 = "";
     public int number1 = 0;
     public int number2 = 0;
 
@@ -191,6 +191,18 @@ public class Ability : MonoBehaviourPun {
         }
     }
 
+    public string GetAbility(int number)
+    {
+        if(number == 1)
+        {
+            return Able1;
+        }
+        if (number == 2)
+        {
+            return Able2;
+        }
+        return null;
+    }
 
 
     public void Buy(string item, int kind) {
@@ -216,12 +228,7 @@ public class Ability : MonoBehaviourPun {
                 return;
         }
 
-        if (item.Equals("Katarina"))
-        {
-            rc = RayController.rc;
-            cc = gameObject.GetComponent<CameraController>();
-            cc.Katarina();
-        }
+      
 
 
         if (kind == 1) {
