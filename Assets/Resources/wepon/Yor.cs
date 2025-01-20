@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class Yor : MonoBehaviour {
+public class Yor {
 
     float rate = 1f;
     int damage = 125;
     int headdamage = 179;
     int magazine = 3;
     bool auto = false;
-    float reloadtime = 2f;
+    float reloadtime = 1.5f;
     bool zoomable = false;
     float zoomratio = 1;
     bool accuracy = true;

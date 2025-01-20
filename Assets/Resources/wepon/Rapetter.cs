@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class Rapetter : MonoBehaviour
+public class Rapetter
 {
 
     float rate = 0.08f;
@@ -16,7 +16,7 @@ public class Rapetter : MonoBehaviour
     float zoomratio = 45;
     bool accuracy = false;
     float YRecoil = 0.5f;
-    float XRecoil = 1f;
+    float XRecoil = 2.5f;
     float PeekingSpeed = 0.8f;
 
     void Start()

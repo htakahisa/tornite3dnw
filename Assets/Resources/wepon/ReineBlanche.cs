@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class ReineBlanche : MonoBehaviour {
+public class ReineBlanche {
 
     float rate = 0.7f;
     int damage = 75;

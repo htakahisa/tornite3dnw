@@ -151,11 +151,22 @@ public class Ability : MonoBehaviourPun {
         if (able.Equals("Aqua"))
         {
             cc.Aqua();
-            
+           
+        }
+        if (able.Equals("Arte"))
+        {
+            cc.Arte();
+            Spend(1, 1);
+
+        }
+        if (able.Equals("Molesta"))
+        {
+            cc.Molesta();
+            Spend(1, 1);
 
         }
 
-       
+
     }
 
     public void Spend(int number, int cost) {

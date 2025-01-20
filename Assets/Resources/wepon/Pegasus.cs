@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class Pegasus : MonoBehaviour {
+public class Pegasus {
 
     float rate = 0.07f;
     int damage = 20;

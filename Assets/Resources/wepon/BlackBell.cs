@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class BlackBell : MonoBehaviour {
+public class BlackBell {
 
     float rate = 0.8f;
     int damage = 200;
     int headdamage = 380;
     int magazine = 5;
     bool auto = false;
-    float reloadtime = 3f;
+    float reloadtime = 2f;
     bool zoomable = true;
     float zoomratio = 30;
     bool accuracy = false;
-    float PeekingSpeed = 0.5f;
+    float PeekingSpeed = 0.35f;
 
     void Start() {
 

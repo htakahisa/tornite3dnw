@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class Duelist : MonoBehaviour {
+public class Duelist{
 
     float rate = 1;
     int damage = 150;

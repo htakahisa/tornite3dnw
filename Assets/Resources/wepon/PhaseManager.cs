@@ -16,6 +16,8 @@ public class PhaseManager : MonoBehaviourPun {
 
     public static PhaseManager  pm = null;
 
+    private AudioListener al;
+
     // Start is called before the first frame update
     void Start() {
 
@@ -23,12 +25,15 @@ public class PhaseManager : MonoBehaviourPun {
     }
     private void Awake() {
         pm = this;
+        al = GetComponentInParent<AudioListener>();
     }
 
     // Update is called once per frame
     void Update() {
         if (phase == "Buy")
         {
+           
+
             if (Input.GetKeyDown(KeyCode.B))
             {
                 if (Cursor.visible == false)
@@ -52,6 +57,7 @@ public class PhaseManager : MonoBehaviourPun {
         public void BuyPhase() {
 
         phase = "Buy";
+        al.enabled = false;
         buypanel.SetActive(true);
         wall.SetActive(true);
         // 15ïbå„Ç…CallMethodÇåƒÇ—èoÇ∑
@@ -66,6 +72,7 @@ public class PhaseManager : MonoBehaviourPun {
         wall.SetActive(false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        al.enabled = true;
 
     }
 

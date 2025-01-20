@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class Stella{
+public class mischief {
 
-    float rate = 0.09f;
-    int damage = 33;
-    int headdamage = 100;
-    int magazine = 17;
+    float rate = 0.085f;
+    int damage = 35;
+    int headdamage = 140;
+    int magazine = 25;
     bool auto = true;
-    float reloadtime = 1.5f;
+    float reloadtime = 1.2f;
     bool zoomable = true;
-    float zoomratio = 65;
+    float zoomratio = 50;
     bool accuracy = true;
-    float YRecoil = 1.5f;
-    float XRecoil = 0.5f;
-    int Burst = 3;
-    float BurstRate = 0.3f;
+    float YRecoil = 0.6f;
+    float XRecoil = 0.2f;
     float PeekingSpeed = 0.08f;
-    float punch = 1f;
+    float punch = 3f;
 
     void Start() {
 
@@ -71,16 +69,6 @@ public class Stella{
     {
         return XRecoil;
     }
-    public int GetBurst()
-    {
-        return Burst;
-    }
-
-    public float GetBurstRate()
-    {
-        return BurstRate;
-    }
-
     public float GetPeekingSpeed()
     {
         return PeekingSpeed;

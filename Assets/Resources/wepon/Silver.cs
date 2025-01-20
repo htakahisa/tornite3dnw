@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class Silver : MonoBehaviour {
+public class Silver {
 
     float rate = 0.45f;
     int damage = 60;

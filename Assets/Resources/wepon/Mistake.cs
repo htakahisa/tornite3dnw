@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class Mistake : MonoBehaviour {
+public class Mistake {
 
     float rate = 0.65f;
     int damage = 50;
     int headdamage = 125;
     int magazine = 6;
     bool auto = false;
-    float reloadtime = 1f;
+    float reloadtime = 0.9f;
     bool accuracy = true;
     float YRecoil = 5f;
     float punch = 4f;

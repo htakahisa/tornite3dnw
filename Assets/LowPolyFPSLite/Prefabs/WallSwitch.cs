@@ -6,7 +6,8 @@ using UnityEngine;
 public class WallSwitch : MonoBehaviourPun
 {
     [SerializeField]
-    private GameObject Wall;
+    // アクティブ化または非アクティブ化したいオブジェクトのリスト
+    private List<GameObject> objects = new List<GameObject>();
 
     [SerializeField]
     private AudioSource audioSource;
@@ -42,8 +43,15 @@ public class WallSwitch : MonoBehaviourPun
     [PunRPC]
     private void Close()
     {
-        
-        Wall.SetActive(true);
+        foreach (GameObject obj in objects)
+        {
+            if (obj != null) // オブジェクトがnullでないことを確認
+            {
+                obj.SetActive(true);
+            }
+        }
         audioSource.Play();
     }
+
+   
 }

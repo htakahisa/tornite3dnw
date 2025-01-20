@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 5769905515425661330}
   - component: {fileID: 5769905515425661331}
   - component: {fileID: 5769905515425661328}
-  - component: {fileID: 5769905515425661329}
   - component: {fileID: 7187995159589153754}
   - component: {fileID: 1041286211525689336}
   - component: {fileID: -5671670287193008446}
+  - component: {fileID: -2477314143758815470}
   m_Layer: 13
-  m_Name: Flash
+  m_Name: Arte
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,8 +31,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5769905515425661358}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.114, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalPosition: {x: 0, y: 2.0006, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.62684005, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 09adc4af150569a4cb996354c367b8c8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -101,19 +101,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5769905515425661329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5769905515425661358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f32fde9923da73c438da6f3668dfc2a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flashDuration: 2
 --- !u!54 &7187995159589153754
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -169,3 +156,21 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &-2477314143758815470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5769905515425661358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 789fa5b571824734b972775ab18a8b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radii:
+  - 2
+  - 3
+  - 4
+  damages: 1e000000140000000a000000
+  explosionDelay: 1

@@ -37,8 +37,8 @@ public class AquaTrick : MonoBehaviourPunCallbacks
         {
             Debug.Log("“G‚ğŒŸo: " + target.name);
             BattleData.bd.Detect("enemy\ndetected");
-  
 
+            target.GetComponentInParent<CameraController>().Stuned(1.5f, 0.1f);
 
         }
 

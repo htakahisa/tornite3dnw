@@ -87,9 +87,11 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private Coroutine currentCoroutine = null;
 
 
+
     /** 棒の上り下り */
     private bool isNearBottomBar = false; // 下のシリンダーに触れているか
     private Transform topBarTransform; // 上のシリンダーのTransform
+    private Transform BottomBarTransform; // 上のシリンダーのTransform
     private bool isClimbing = false; // 登っている最中か
     private Vector3 targetPosition; // 目標地点
     private float climbSpeed = 2.0f; // 登る速度
@@ -135,6 +137,11 @@ public class CameraController : MonoBehaviourPunCallbacks {
         {
              
              ability.number2 ++;
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+
+            Molesta();
         }
 #endif
 
@@ -283,12 +290,18 @@ public class CameraController : MonoBehaviourPunCallbacks {
      * */
     private void StartClimbing()
     {
+
+        if(PhaseManager.pm.GetPhase() == "Buy")
+        {
+            return;
+        }
+        transform.position = BottomBarTransform.position;
         BarStatus barstatus = topBarTransform.GetComponent<BarStatus>();
         climbSpeed = barstatus.GetSpeed();
         if (topBarTransform != null)
         {
             // 目標地点を上のシリンダーの上部に設定
-            targetPosition = topBarTransform.position + Vector3.up * (topBarTransform.localScale.y / climbSpeed);
+            targetPosition = topBarTransform.position + Vector3.up * (topBarTransform.localScale.y / 2);
             isClimbing = true;
           
         }
@@ -296,6 +309,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private void MoveTowardsTarget()
     {
+        
         float adjustedClimbSpeed = climbSpeed;
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftControl)) {
             adjustedClimbSpeed = adjustedClimbSpeed / 2;
@@ -333,6 +347,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
                 // barParent 内の top_bar を探す
                 topBarTransform = barParent.Find("top_bar");
+                BottomBarTransform = barParent.Find("bottom_bar");
             }
             else
             {
@@ -343,6 +358,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
                 // barParent 内の top_bar を探す
                 topBarTransform = barParent.Find("bottom_bar");
+                BottomBarTransform = barParent.Find("top_bar");
             }
         }
     }
@@ -702,6 +718,28 @@ public class CameraController : MonoBehaviourPunCallbacks {
         }
         Throw();
     }
+    public void Molesta()
+    {
+        if (photonView == null || !photonView.IsMine)
+        {
+            return;
+        }
+        Vector3 spawnDirection = Camera.main.transform.forward;
+        Vector3 spawnPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.3f;
+        PhotonNetwork.Instantiate("Molesta", spawnPosition, Quaternion.LookRotation(spawnDirection));
+    }
+
+    public void Arte()
+    {
+        if (photonView == null || !photonView.IsMine)
+        {
+            return;
+        }
+        Vector3 spawnDirection = Camera.main.transform.forward;
+        Vector3 spawnPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.2f;
+        PhotonNetwork.Instantiate("Arte", spawnPosition, Quaternion.LookRotation(spawnDirection));
+
+    }
     public void Smoke() {
         if (photonView == null || !photonView.IsMine) {
             return;
@@ -895,6 +933,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             transform.position = stray.transform.position;
             transform.rotation = stray.transform.rotation;
             controller.enabled = true;
+            StartCoroutine(Motionless(false, false, false, 1.5f));
         }
     }
         IEnumerator WaitStray(RaycastHit hit)
@@ -1000,19 +1039,36 @@ public class CameraController : MonoBehaviourPunCallbacks {
             velocity = new Vector3(0, 0, 0);
             IsJump = true;
             sm.PlaySound("boostio");
+          
             // グレネードに力を加える
             // 垂直方向のジャンプ速度
-            velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity);
-
+            velocity.y = Mathf.Sqrt(jumpPower * -2.5f * gravity);
             // 水平方向のブースト速度（前方向に移動）
             Vector3 boostDirection = transform.forward.normalized; // 前方向
-            velocity += boostDirection * 8f;
+            velocity += boostDirection * 10f;
+            StartCoroutine(Motionless(false, false, true, 1f));
             IsJump = false;
             ability.Spend(1, 1);
+
+
             
+
         }
 
     }
+
+    IEnumerator Motionless(bool walk, bool shoot, bool ability, float cooltime)
+    {
+        WalkAble = walk;
+        RayController.rc.CanShoot = shoot;
+        AbilityAble = ability;
+        yield return new WaitForSeconds(cooltime);
+        WalkAble = true;
+        RayController.rc.CanShoot = true;
+        AbilityAble = true;
+        yield break;
+    }
+
 
     public void Boost(float y, float x)
     {
@@ -1037,7 +1093,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
         RayController.rc.Classic();
-        StartCoroutine(ChangeServiceSpeed());
+        StartCoroutine(ChangeServiceSpeed(1.5f,15,1.3f));
 
     }
 
@@ -1055,15 +1111,17 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     }
 
-    IEnumerator ChangeServiceSpeed() {
-        // servicespeedを1.5に設定
-        servicespeed = 1.5f;
+    IEnumerator ChangeServiceSpeed(float speed, float duration, float jump) {
+        // servicespeedを設定
+        servicespeed = speed;
+        jumpPower = jump;
         IsKamaitachi = true;
-        // 10秒待機
-        yield return new WaitForSeconds(10f);
+        // ~秒待機
+        yield return new WaitForSeconds(duration);
 
         // servicespeedを1に戻す
-        servicespeed = 1.0f;
+        servicespeed = 0.9f;
+        jumpPower = 1;
         IsKamaitachi = false;
     }
 

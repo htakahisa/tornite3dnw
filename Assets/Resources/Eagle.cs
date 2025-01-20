@@ -75,7 +75,7 @@ public class Eagle : MonoBehaviourPun
 
         cam.transform.localEulerAngles = currentRotation;
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
 
             Destroy();

@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class JawKha : MonoBehaviour
+public class JawKha
 {
 
     float rate = 0.09f;
     int damage = 21;
     int headdamage = 40;
-    int magazine = 10;
+    int magazine = 13;
     bool auto = true;
-    float reloadtime = 1.5f;
+    float reloadtime = 0.8f;
     bool zoomable = false;
     float zoomratio = 1;
     bool accuracy = true;
-    float YRecoil = 2.0f;
+    float YRecoil = 1.8f;
     float XRecoil = 0.7f;
-    float punch = 2f;
+    float punch = 4f;
 
     void Start()
     {

@@ -27,6 +27,7 @@ public class RayController : MonoBehaviourPun {
     private Rapetter rapetter;
     private Duelist duelist;
     private ReineBlanche reine;
+    private mischief mischief;
     private Noel noel;
     private Silver silver;
     private Pegasus pegasus;
@@ -80,6 +81,8 @@ public class RayController : MonoBehaviourPun {
     private float PeekingSpeed = 0;
 
 
+
+
     // Start is called before the first frame update
     void Start() {
 
@@ -94,18 +97,20 @@ public class RayController : MonoBehaviourPun {
 
         mzt = mz.GetComponent<Text>();
         gc = GameObject.Find("GunController");
-        classic = gc.GetComponent<Classic>();
-        jawkha = gc.GetComponent<JawKha>();
-        mistake = gc.GetComponent<Mistake>();
-       silver = gc.GetComponent<Silver>();
-        pegasus = gc.GetComponent<Pegasus>();
-        stella = gc.GetComponent<Stella>();
-        rapetter = gc.GetComponent<Rapetter>();
-        noel = gc.GetComponent<Noel>();
-        reine = gc.GetComponent<ReineBlanche>();
-        duelist = gc.GetComponent<Duelist>();
-        yor = gc.GetComponent<Yor>();
-        blackbell = gc.GetComponent<BlackBell>();
+        classic = new Classic();
+        jawkha = new JawKha();
+        mistake = new Mistake();
+        silver = new Silver();
+        pegasus = new Pegasus();
+        stella = new Stella();
+        rapetter = new Rapetter();
+        mischief = new mischief();
+        noel = new Noel();
+        reine = new ReineBlanche();
+        duelist = new Duelist();
+        yor = new Yor();
+        blackbell = new BlackBell();
+        
     }
 
     private void Awake() {
@@ -119,12 +124,13 @@ public class RayController : MonoBehaviourPun {
         avatar = transform.parent.gameObject;
         sm = gameObject.GetComponentInParent<SoundManager>();
         camcon = avatar.GetComponent<CameraController>();
+       
     }
 
     // Update is called once per frame
     void Update() {
 
-
+      
 
         if (Input.GetKeyDown(KeyCode.R) && !UseWepon.Equals("")) {
             StartCoroutine(Reload());
@@ -611,8 +617,41 @@ public class RayController : MonoBehaviourPun {
 
     }
 
-    public void Noel() {
+    public void Mischief()
+    {
         currentWeaponIndex = 7;
+        SwitchWeapon(currentWeaponIndex);
+
+        Damage = mischief.GetDamage();
+        HeadDamage = mischief.GetHeadDamage();
+        RateDeltaTime = mischief.GetRate();
+        Magazinesize = mischief.GetMagazine();
+        MaxMagazine = Magazinesize;
+        ReloadTime = mischief.GetReloadTime();
+        yRecoil = mischief.GetYRecoil();
+        xRecoil = mischief.GetXRecoil();
+        punch = mischief.GetPunch();
+        burst = 0;
+        burstrate = 0;
+        PeekingSpeed = mischief.GetPeekingSpeed();
+
+
+        Auto = mischief.GetAuto();
+        ZoomAble = mischief.GetZoomAble();
+        ZoomRatio = mischief.GetZoomRatio();
+        UnZoomAccuracy = mischief.GetUnZoomAccuracy();
+
+        this.UseWepon = "mischief";
+        if (mzt != null)
+        {
+            mzt.text = "écíeêî " + Magazinesize;
+        }
+
+
+    }
+
+    public void Noel() {
+        currentWeaponIndex = 8;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = noel.GetDamage();
@@ -642,7 +681,7 @@ public class RayController : MonoBehaviourPun {
     }
 
     public void Reine() {
-        currentWeaponIndex = 8;
+        currentWeaponIndex = 9;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = reine.GetDamage();
@@ -672,7 +711,7 @@ public class RayController : MonoBehaviourPun {
     }
 
     public void Duelist() {
-        currentWeaponIndex = 9;
+        currentWeaponIndex = 10;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = duelist.GetDamage();
@@ -702,7 +741,7 @@ public class RayController : MonoBehaviourPun {
         }
     }
     public void Yor() {
-        currentWeaponIndex = 10;
+        currentWeaponIndex = 11;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = yor.GetDamage();
@@ -730,7 +769,7 @@ public class RayController : MonoBehaviourPun {
       
     }
     public void BlackBell() {
-        currentWeaponIndex = 11;
+        currentWeaponIndex = 12;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = blackbell.GetDamage();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class Noel : MonoBehaviour {
+public class Noel {
 
     float rate = 0.11f;
     int damage = 40;

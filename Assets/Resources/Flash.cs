@@ -8,7 +8,6 @@ public class Flash : MonoBehaviour
     public float flashDuration = 2f; // ƒtƒ‰ƒbƒVƒ…‚Ì‘±ŠÔ
 
     private float throwForce = 4f; // “Š‚°‚é—Í
-    private float upwardForce = 1.5f; // ãŒü‚«‚Ì—Í
 
     Rigidbody rb;
 
@@ -26,7 +25,7 @@ public class Flash : MonoBehaviour
         _renderer = GetComponent<Renderer>();
 
 
-        Invoke("Blast", 1f);
+        Invoke("Blast", 0.7f);
     }
 
     // Update is called once per frame
