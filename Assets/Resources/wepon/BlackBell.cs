@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class BlackBell {
 
-    float rate = 0.8f;
+    float rate = 0.6f;
     int damage = 200;
     int headdamage = 380;
     int magazine = 5;
@@ -14,7 +14,7 @@ public class BlackBell {
     bool zoomable = true;
     float zoomratio = 30;
     bool accuracy = false;
-    float PeekingSpeed = 0.35f;
+    float PeekingSpeed = 0.08f;
 
     void Start() {
 

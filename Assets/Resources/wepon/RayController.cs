@@ -311,7 +311,7 @@ public class RayController : MonoBehaviourPun {
         Debug.Log("Reloading...");
 
         CanShoot = false;
-
+        sm.PlaySound("reload");
         yield return new WaitForSeconds(ReloadTime);
 
         Magazinesize = MaxMagazine;

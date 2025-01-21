@@ -30,7 +30,10 @@ public class ObjectDamage : MonoBehaviourPun, IPunObservable
         Hp -= damage;
         photonView.RPC("SynchronizeHp", RpcTarget.All, Hp);
 
-
+        if(gameObject.name == "wood")
+        {
+            gameObject.transform.localScale += new Vector3(damage / 1000.00f, damage / 1000.00f, damage / 1000.00f);
+        }
     }
 
     [PunRPC]

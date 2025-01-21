@@ -62,6 +62,9 @@ public class Stradarts : MonoBehaviourPun
 
     private System.Collections.IEnumerator Scan()
     {
+
+        SoundManager sm = Camera.main.GetComponentInParent<SoundManager>();
+        sm.PlaySound("detectstart");
         // スキャンを行う
         yield return new WaitForSeconds(2f); // スキャン前の待機時間
                                              // 球の非表示フラグをセット
@@ -99,18 +102,29 @@ public class Stradarts : MonoBehaviourPun
 
     void OnRenderObject()
     {
+
+        
         // ゲーム中に球を描画
         if (showSphere && sphereMaterial != null)
         {
-            Graphics.DrawMesh(
+            photonView.RPC("Draw", RpcTarget.All);
+        }
+    }
+    [PunRPC]
+    private void Draw()
+    {
+        Graphics.DrawMesh(
                 MeshBuilder.CreateSphere(20, 20), // 球メッシュの作成
                 Matrix4x4.TRS(transform.position, Quaternion.identity, Vector3.one * scanRadius), // 正確なスケール
                 sphereMaterial,
                 0
             );
-        }
     }
+
 }
+
+
+
 
 // ヘルパークラス：球メッシュを作成
 public static class MeshBuilder

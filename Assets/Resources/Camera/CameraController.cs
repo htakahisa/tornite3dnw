@@ -95,7 +95,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private bool isClimbing = false; // 登っている最中か
     private Vector3 targetPosition; // 目標地点
     private float climbSpeed = 2.0f; // 登る速度
-
+    private float climbSoundInterval = 0.5f;
 
     // Start is called before the first frame update
     void Start() {
@@ -141,7 +141,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (Input.GetKeyDown(KeyCode.H))
         {
 
-            Wolf();
+            Arte();
         }
 #endif
 
@@ -293,6 +293,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
      * */
     private void StartClimbing()
     {
+        climbSoundInterval = 0;
 
         if(PhaseManager.pm.GetPhase() == "Buy")
         {
@@ -314,17 +315,22 @@ public class CameraController : MonoBehaviourPunCallbacks {
     {
         
         float adjustedClimbSpeed = climbSpeed;
+        climbSoundInterval -= Time.deltaTime;
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftControl)) {
             adjustedClimbSpeed = adjustedClimbSpeed / 2;
         }
         // 歩きキーが押されている場合は音がしない。
         if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
         {
-            sm.PlaySound("barClimb");
+            if (climbSoundInterval <= 0)
+            {
+                sm.PlaySound("barClimb");
+                climbSoundInterval = 0.1f;
+            }
         }
 
-        // 現在の位置から目標地点に向かって徐々に移動
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, adjustedClimbSpeed * Time.deltaTime);
+            // 現在の位置から目標地点に向かって徐々に移動
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, adjustedClimbSpeed * Time.deltaTime);
 
         // 目標地点に到達したら移動を停止
         if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
@@ -481,19 +487,19 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     }
                     if (Input.GetKey(KeyCode.LeftControl))
                     {
-                        ratio /= 1.5f;
+                        ratio /= 1.25f;
                         issnake = true;
                     }
                     if (Input.GetKey(KeyCode.LeftShift))
                     {
-                        ratio /= 3f;
+                        ratio /= 2f;
                         issnake = true;
 
                     }
 
                     if (Input.GetMouseButton(1))
                     {
-                        ratio /= 1.5f;
+                        ratio /= 1.25f;
                     }
                     if (z != 0 || x != 0)
                     {
@@ -529,12 +535,12 @@ public class CameraController : MonoBehaviourPunCallbacks {
                         //}
                         if (Input.GetKey(KeyCode.LeftControl))
                         {
-                            ratio /= 1.5f;
+                            ratio /= 1.25f;
                             issnake = true;
                         }
                         if (Input.GetKey(KeyCode.LeftShift))
                         {
-                            ratio /= 3f;
+                            ratio /= 2f;
                             issnake = true;
 
                         }
@@ -1182,7 +1188,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (animator.GetBool("crouching")) {
       //      return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.5f, hitMask);
         }
-        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance, HitMask);
+        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance, GroundLayer);
     }
 
 
@@ -1192,14 +1198,14 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         Vector3 wallcheckposition = WallCheck.transform.position;
 
-        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.6f, HitMask);
+        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.6f, GroundLayer);
     }
 
     public bool CheckCrouch(Vector3 movedirection)
     {
 
         Vector3 wallcheckposition = WallCheck.transform.position;
-        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.5f, HitMask);
+        return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.5f, GroundLayer);
         
         
     }

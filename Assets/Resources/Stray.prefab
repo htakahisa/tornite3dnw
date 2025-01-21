@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8137085456206649609}
   - component: {fileID: 6100740400772542467}
   - component: {fileID: 6049082649857346168}
-  m_Layer: 15
+  m_Layer: 18
   m_Name: Stray
   m_TagString: Destructible
   m_Icon: {fileID: 0}

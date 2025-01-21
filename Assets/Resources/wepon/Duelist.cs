@@ -14,7 +14,7 @@ public class Duelist{
     bool zoomable = true;
     float zoomratio = 40;
     bool accuracy = false;
-    float PeekingSpeed = 1f;
+    float PeekingSpeed = 0.7f;
     void Start() {
 
     }

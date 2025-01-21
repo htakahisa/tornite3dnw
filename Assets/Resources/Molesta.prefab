@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -6306316752608888384}
   - component: {fileID: 32669188232092264}
   - component: {fileID: 5007971318636202220}
-  m_Layer: 15
+  m_Layer: 18
   m_Name: Molesta
   m_TagString: Destructible
   m_Icon: {fileID: 0}

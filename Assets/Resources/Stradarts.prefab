@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4377840968798571576}
   - component: {fileID: 518265870860974844}
   - component: {fileID: 4301272996159586410}
-  m_Layer: 15
+  m_Layer: 18
   m_Name: Stradarts
   m_TagString: Destructible
   m_Icon: {fileID: 0}

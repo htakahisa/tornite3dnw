@@ -51,11 +51,12 @@ public class Wolf : MonoBehaviourPun {
 
     private void Damage() {
         if (!antirugcheck) {
-            GameObject body = target.transform.Find("Body").gameObject;
             // 指定した名前の子オブジェクトを取得        
             DamageCounter dc = target.GetComponentInChildren<DamageCounter>();
+            GameObject body = dc.gameObject;
             if (dc != null) {
                 dc.DamageCount(50, body);
+                body.GetComponentInParent<CameraController>().Stuned(1f,1);
                 Destroy();
                 antirugcheck = true;
             }
