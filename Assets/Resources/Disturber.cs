@@ -11,6 +11,9 @@ public class Disturber : MonoBehaviourPun
 
     private TimerInRound timerinround;
 
+    [SerializeField]
+    private GameObject explodedPref;
+
     private void Update()
     {
         if (!photonView.IsMine)
@@ -51,6 +54,10 @@ public class Disturber : MonoBehaviourPun
         {
             return;
         }
+
+        // 爆発エフェクト
+        Instantiate(explodedPref, transform.position, transform.rotation);
+
 
         hasExploded = true;
         photonView.RPC(nameof(OnExplode), RpcTarget.All);

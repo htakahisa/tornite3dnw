@@ -190,6 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionTime: 30
   plantedTime: 0
+  explodedPref: {fileID: 2341114065519818751, guid: cc7f421a376befb4fa85fa66b8d8afc5, type: 3}
 --- !u!114 &4492947342892652111
 MonoBehaviour:
   m_ObjectHideFlags: 0
