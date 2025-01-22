@@ -20,10 +20,10 @@ public class TimerInRound : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-        if (PhaseManager.pm.GetPhase().Equals("DuelLand"))
-        {
-            TimerBeforePlant = 5;
-        }
+       // if (PhaseManager.pm.GetPhase().Equals("DuelLand"))
+       // {
+       //     TimerBeforePlant = 5;
+       // }
     }
 
     // Update is called once per frame

@@ -20,17 +20,18 @@ public class PhaseManager : MonoBehaviourPun {
 
     // Start is called before the first frame update
     void Start() {
-   
-    }
-    private void Awake() {
         pm = this;
         al = GetComponentInParent<AudioListener>();
+        Invoke("BuyPhase", 3f);
+    }
+    private void Awake() {
+      
         if (MapManager.mapmanager.GetMapName() == "DuelLand")
         {
             phase = "Duel";
             return;
         }
-        Invoke("BuyPhase", 3f);
+        
     }
 
     // Update is called once per frame

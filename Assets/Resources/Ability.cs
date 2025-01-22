@@ -22,11 +22,7 @@ public class Ability : MonoBehaviourPun {
     // Start is called before the first frame update
     void Start() {
         
-        if(PhaseManager.pm.GetPhase() == "Duel")
-        {
-     //       Able1 = "Flash";
-     //     number1 = 1;
-        }
+   
 
     }
 
