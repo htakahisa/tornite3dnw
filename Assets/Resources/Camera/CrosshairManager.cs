@@ -9,7 +9,6 @@ public class CrosshairManager : MonoBehaviour {
 
     private static float crosshairAdjust = 150f;
     public static float crosshairsize = 1f * crosshairAdjust;
-    private GameObject customizebar;
     private GameObject crosshair;
     public TMP_InputField inputField;
     private float floatValue;

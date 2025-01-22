@@ -23,7 +23,7 @@ public class TargetManager : MonoBehaviour {
             ActivateRandomChildObject();
         }
         if (FlashIntervalCount >= FlashInterval) {
-            ActivateRandomFlash();
+           // ActivateRandomFlash();
         }
     }
     public void ActivateRandomFlash() {

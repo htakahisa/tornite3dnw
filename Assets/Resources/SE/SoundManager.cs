@@ -138,71 +138,85 @@ public class SoundManager : MonoBehaviourPun {
         // RPCで他のクライアントでも効果音を再生させる
         [PunRPC]
     void PlaySoundRPC(string type) {
-        if(PhaseManager.pm.GetPhase().Equals("Battle"))
-        
-            if (type.Equals("walk")) {
+        if (PhaseManager.pm.GetPhase().Equals("Battle"))
+        {
+
+            if (type.Equals("walk"))
+            {
                 audioSource.PlayOneShot(walk);
             }
-            if (type.Equals("jump")) {
+            if (type.Equals("jump"))
+            {
                 audioSource.PlayOneShot(jump);
             }
-            if (type.Equals("shoot")) {
+            if (type.Equals("shoot"))
+            {
                 audioSource.PlayOneShot(shoot);
             }
-            if (type.Equals("reload")) {
+            if (type.Equals("reload"))
+            {
                 audioSource.PlayOneShot(reload);
             }
-            if (type.Equals("noarmo")) {
+            if (type.Equals("noarmo"))
+            {
                 audioSource.PlayOneShot(noarmo);
             }
-            if (type.Equals("phantom")) {
+            if (type.Equals("phantom"))
+            {
                 audioSource.PlayOneShot(phantom);
             }
-            if (type.Equals("stray")) {
+            if (type.Equals("stray"))
+            {
                 audioSource.PlayOneShot(stray);
             }
-            if (type.Equals("wolf")) {
+            if (type.Equals("wolf"))
+            {
                 audioSource.PlayOneShot(wolf);
             }
-            if (type.Equals("coward")) {
-            audioSource.PlayOneShot(coward);
+            if (type.Equals("coward"))
+            {
+                audioSource.PlayOneShot(coward);
             }
-            if (type.Equals("flash")) {
-            audioSource.PlayOneShot(flash);
+            if (type.Equals("flash"))
+            {
+                audioSource.PlayOneShot(flash);
             }
-            if (type.Equals("boostio")) {
-            audioSource.PlayOneShot(boostio);
+            if (type.Equals("boostio"))
+            {
+                audioSource.PlayOneShot(boostio);
             }
-        if (type.Equals("beep")) {
-            audioSource.PlayOneShot(beep);
-        }
-        if (type.Equals("clapping"))
-        {
-            audioSource.PlayOneShot(clapping);
-        }
-        if (type.Equals("warp"))
-        {
-            audioSource.PlayOneShot(warp);
-        }
-        if (type.Equals("defuse"))
-        {
-            audioSource.PlayOneShot(defuse);
-        }
-        if (type.Equals("wallclose"))
-        {
-            audioSource.PlayOneShot(wallclose);
-        }
-        if (type.Equals("detect"))
-        {
-            audioSource.PlayOneShot(detect);
-        }
-        if (type.Equals("detectstart"))
-        {
-            audioSource.PlayOneShot(detectstart);
-        }
-        if (type.Equals("arte"))
-        {
-            audioSource.PlayOneShot(arte);
+            if (type.Equals("beep"))
+            {
+                audioSource.PlayOneShot(beep);
+            }
+            if (type.Equals("clapping"))
+            {
+                audioSource.PlayOneShot(clapping);
+            }
+            if (type.Equals("warp"))
+            {
+                audioSource.PlayOneShot(warp);
+            }
+            if (type.Equals("defuse"))
+            {
+                audioSource.PlayOneShot(defuse);
+            }
+            if (type.Equals("wallclose"))
+            {
+                audioSource.PlayOneShot(wallclose);
+            }
+            if (type.Equals("detect"))
+            {
+                audioSource.PlayOneShot(detect);
+            }
+            if (type.Equals("detectstart"))
+            {
+                audioSource.PlayOneShot(detectstart);
+            }
+            if (type.Equals("arte"))
+            {
+                audioSource.PlayOneShot(arte);
+            }
         }
 
     }

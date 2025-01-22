@@ -57,7 +57,6 @@ public class PhaseManager : MonoBehaviourPun {
         public void BuyPhase() {
 
         phase = "Buy";
-        al.enabled = false;
         buypanel.SetActive(true);
         wall.SetActive(true);
         // 15•bŒã‚ÉCallMethod‚ğŒÄ‚Ño‚·
@@ -72,7 +71,6 @@ public class PhaseManager : MonoBehaviourPun {
         wall.SetActive(false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        al.enabled = true;
 
     }
 

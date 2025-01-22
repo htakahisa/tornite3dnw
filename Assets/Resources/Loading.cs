@@ -7,7 +7,7 @@ using Photon.Realtime;
 
 public class Loading : MonoBehaviourPun
 {
-    private string MyMap = "";
+    private string MyMap = "Needless";
     private string OpponentMap = "";
 
     // Start is called before the first frame update

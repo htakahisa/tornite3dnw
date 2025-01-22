@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class PlantZone : MonoBehaviour
 {
+
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Body"))
         {
+          
+
             PlantAndDefuse defuse = other.GetComponentInParent<PlantAndDefuse>();
             defuse.CanPlant = true;
 
@@ -16,8 +21,11 @@ public class PlantZone : MonoBehaviour
     {
         if (other.CompareTag("Body"))
         {
+          
+
             PlantAndDefuse defuse = other.GetComponentInParent<PlantAndDefuse>();
             defuse.CanPlant = false;
         }
     }
+
 }

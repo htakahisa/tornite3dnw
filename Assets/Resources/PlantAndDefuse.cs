@@ -22,6 +22,12 @@ public class PlantAndDefuse : MonoBehaviourPun
     private SoundManager sm;
     private DisturberMeter meter;
 
+    private bool IsPlanting = false;
+    private bool IsDefusing = false;
+
+    private bool SpecialPermission = false;
+    private Vector3 PermissionPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,56 +48,63 @@ public class PlantAndDefuse : MonoBehaviourPun
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-
-            if (RoundManager.rm.GetSide().Equals("Leviathan") && CanDefuse)
+            if(PermissionPos == transform.position)
             {
-                sm.PlaySound("defuse");
+                SpecialPermission = true;
             }
-        }
-
-        if (Input.GetKey(KeyCode.Alpha4))
-        {
-
-             if (RoundManager.rm.GetSide().Equals("Leviathan") && CanDefuse)
-            
+            else
+            {
+                SpecialPermission = false;
+            }
+            if (RoundManager.rm.GetSide().Equals("Leviathan") && (CanDefuse || SpecialPermission))
             {
                 
-
-                DefuseTime -= Time.deltaTime;
-                meter.Defuse(DefuseTime);
-                Debug.Log(DefuseTime);
-                if (DefuseTime <= 3)
-                {
-                    IsHalf = true;
-                }
-
-                cc.WalkAble = false;
-                cc.AbilityAble = false;
-                rc.CanShoot = false;
-
-               
-
-
+                IsDefusing = true;                
+                PermissionPos = transform.position;
             }
-            else if (RoundManager.rm.GetSide().Equals("Valkyrie") && CanPlant && disturber == null)
-
+            else if (RoundManager.rm.GetSide().Equals("Valkyrie") && (CanPlant || SpecialPermission) && disturber == null)
             {
-
-                PlantTime -= Time.deltaTime;
-
-                meter.Plant(PlantTime);
-
-                cc.WalkAble = false;
-                cc.AbilityAble = false;
-                rc.CanShoot = false;
-
+                
+                IsPlanting = true;
+                PermissionPos = transform.position;
+               
             }
         }
+
+        if (IsPlanting)
+        {
+            PlantTime -= Time.deltaTime;
+
+            meter.Plant(PlantTime);
+
+            cc.WalkAble = false;
+            cc.AbilityAble = false;
+            rc.CanShoot = false;
+        }
+        if (IsDefusing)
+        {
+            sm.PlaySound("defuse");
+            DefuseTime -= Time.deltaTime;
+            meter.Defuse(DefuseTime);
+            Debug.Log(DefuseTime);
+            if (DefuseTime <= 3)
+            {
+                IsHalf = true;
+            }
+
+            cc.WalkAble = false;
+            cc.AbilityAble = false;
+            rc.CanShoot = false;
+        }
+
+       
         if (Input.GetKeyUp(KeyCode.Alpha4))
         {
             cc.WalkAble = true;
             cc.AbilityAble = true;
             rc.CanShoot = true;
+            IsPlanting = false;
+            IsDefusing = false; 
 
             if (IsHalf)
             {
@@ -139,4 +152,13 @@ public class PlantAndDefuse : MonoBehaviourPun
 
     
     }
+
+ 
+
+
+
+        
+    
+ 
+
 }
