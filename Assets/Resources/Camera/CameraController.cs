@@ -60,7 +60,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     RayController rc;
     private SoundManager sm;
-    private bool katarina = false;
+
 
     private float katarinaInterval = 0;
     public GameObject foot;
@@ -145,7 +145,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         }
 #endif
 
-        if (katarina && AbilityAble)
+        if (AbilityAble)
         {
             if (ability.GetAbility(2) == "Katarina") { 
 
@@ -994,12 +994,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     }
 
-    public void Katarina(bool Canuse)
-    {
-        
-        katarina = Canuse;
 
-    }
 
 
     void Throw() {
