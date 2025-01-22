@@ -135,9 +135,52 @@ public class SampleScene : MonoBehaviourPunCallbacks {
                 }
             }
         }
+        else if (MapManager.mapmanager.GetMapName() == "DuelLand")
+        {
+            if (rm.round <= 12)
+            {
+                // 自身のアバター（ネットワークオブジェクト）を生成する
+                if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                {
+                    Debug.Log("You are Player 1");
+                    // Player 1の初期化処理
+                    position = new Vector3(0f, 0f, 5);
+                }
+                else if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+                {
+                    Debug.Log("You are Player 2");
+                    // Player 2の初期化処理
+                    position = new Vector3(0f, 0f, -5f);
+                }
+                else
+                {
+                    Debug.Log("You are Player " + PhotonNetwork.LocalPlayer.ActorNumber);
+                }
+            }
+            else
+            {
+                // 自身のアバター（ネットワークオブジェクト）を生成する
+                if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                {
+                    Debug.Log("You are Player 1");
+                    // Player 1の初期化処理
+                    position = new Vector3(0f, 0f, -5f);
+                }
+                else if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+                {
+                    Debug.Log("You are Player 2");
+                    // Player 2の初期化処理
+                    position = new Vector3(0f, 0f, 5);
+                }
+                else
+                {
+                    Debug.Log("You are Player " + PhotonNetwork.LocalPlayer.ActorNumber);
+                }
+            }
+        }
 
 
-            GameObject avatar = PhotonNetwork.Instantiate("CowPlayer", position, Quaternion.identity);
+        GameObject avatar = PhotonNetwork.Instantiate("CowPlayer", position, Quaternion.identity);
         Camera camera = GetComponentInChildren<Camera>();
         var cameraPosition = avatar.transform.position;
         camera.transform.parent = avatar.transform;

@@ -13,13 +13,11 @@ public class RayController : MonoBehaviourPun {
 
     public LayerMask hitMask;
 
-    private GameObject pm;
-    private PhaseManager pmc;
+
     private RoundManager rmc;
 
     public float range = 200f; // Raycastの射程距離
     private float distanceToGround = 0.15f;
-    private GameObject gc;
     private Classic classic;
     private JawKha jawkha;
     private Mistake mistake;
@@ -87,8 +85,7 @@ public class RayController : MonoBehaviourPun {
     void Start() {
 
         cam = GetComponent<Camera>();
-        pm = GameObject.Find("PhaseManager");
-        pmc = pm.GetComponent<PhaseManager>();
+        
         rmc = GameObject.Find("Roundmanager").GetComponent<RoundManager>();
 
         // 最初の武器をアクティブにする
@@ -96,7 +93,6 @@ public class RayController : MonoBehaviourPun {
 
 
         mzt = mz.GetComponent<Text>();
-        gc = GameObject.Find("GunController");
         classic = new Classic();
         jawkha = new JawKha();
         mistake = new Mistake();
@@ -110,6 +106,23 @@ public class RayController : MonoBehaviourPun {
         duelist = new Duelist();
         yor = new Yor();
         blackbell = new BlackBell();
+
+        if(PhaseManager.pm.GetPhase() == "Duel")
+        {
+            if (RoundManager.rm.sideRound <= 13)
+            {
+                Noel();
+            }
+            if (RoundManager.rm.sideRound <= 5)
+            {
+                Silver();
+            }
+            if (RoundManager.rm.sideRound <= 1)
+            {
+                Classic();
+            }
+        }
+
         
     }
 

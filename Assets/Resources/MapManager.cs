@@ -9,7 +9,7 @@ public class MapManager : MonoBehaviour
     private static string mapName;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         mapmanager = this;
     }

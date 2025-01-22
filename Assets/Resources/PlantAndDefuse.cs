@@ -31,6 +31,10 @@ public class PlantAndDefuse : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
+        if(PhaseManager.pm.GetPhase() == "Duel")
+        {
+            return;
+        }
         cc = GetComponent<CameraController>();
         rc = Camera.main.GetComponent<RayController>();
         sm = GetComponent<SoundManager>();

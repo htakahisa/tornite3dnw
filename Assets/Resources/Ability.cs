@@ -20,8 +20,14 @@ public class Ability : MonoBehaviourPun {
     
 
     // Start is called before the first frame update
-    void Awake() {
+    void Start() {
         
+        if(PhaseManager.pm.GetPhase() == "Duel")
+        {
+     //       Able1 = "Flash";
+     //     number1 = 1;
+        }
+
     }
 
     // Update is called once per frame
@@ -29,7 +35,7 @@ public class Ability : MonoBehaviourPun {
 
         if (pm == null) {
             pmo = GameObject.FindWithTag("Manager");
-            pm = pmo.GetComponent<PhaseManager>();
+            pm = PhaseManager.pm;
         }
         if (pm.GetPhase() == null) {
             return;

@@ -34,9 +34,17 @@ public class Loading : MonoBehaviourPun
 
             }
         }
+#if UNITY_EDITOR
 
-            
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            SceneManager.LoadScene(MapManager.mapmanager.GetMapName());
+        }
+#endif
+
+
     }
+
 
     [PunRPC]
     private void GetOpponentMapName(string name)
