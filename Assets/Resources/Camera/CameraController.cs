@@ -141,7 +141,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (Input.GetKeyDown(KeyCode.H))
         {
 
-            Arte();
+            StraDarts();
         }
 #endif
 
@@ -640,15 +640,26 @@ public class CameraController : MonoBehaviourPunCallbacks {
     }
 
 
-  
 
-    [PunRPC]
-    public void Stuned(float duration, float magnitude) {
+    public void Recoiled(float duration, float magnitude)
+    {
 
-        StartCoroutine(Stun(duration,magnitude));
+        photonView.RPC("recoil", RpcTarget.Others, duration, magnitude);
 
     }
 
+    public void Stuned(float duration, float magnitude) {
+
+        photonView.RPC("PunStun", RpcTarget.Others, duration, magnitude);
+
+    }
+    [PunRPC]
+    private void PunStun(float duration, float magnitude)
+    {
+        StartCoroutine(Stun(duration, magnitude));
+    }
+
+    [PunRPC]
     public void recoil(float yRot, float xRot) {
 
         float xRandomRot = Random.Range(-xRot, xRot);

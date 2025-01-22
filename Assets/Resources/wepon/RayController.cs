@@ -238,7 +238,7 @@ public class RayController : MonoBehaviourPun {
 
             if (target.CompareTag("Head"))
             {
-                photonView.RPC("Stuned", RpcTarget.Others, punch, punch);
+                target.GetComponentInParent<CameraController>().Recoiled(punch,punch);
             }
 
             if (target.CompareTag("Destructible"))

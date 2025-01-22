@@ -66,6 +66,8 @@ MonoBehaviour:
   - SynchronizeResult
   - GetOpponentMapName
   - Draw
+  - PunStun
+  - recoil
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

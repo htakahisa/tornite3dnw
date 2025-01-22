@@ -22,8 +22,13 @@ public class Arte : MonoBehaviourPun
     private bool showExplosionRange = false; // 爆発範囲を表示するフラグ
     private int currentExplosionIndex = -1; // 現在の爆発インデックス
 
+    private GameObject materialmanager;
+    private Material sphereMaterial;
+
+
     private void Awake()
     {
+
         rb = gameObject.GetComponent<Rigidbody>();
         sm = Camera.main.transform.parent.GetComponent<SoundManager>();
         if (photonView.IsMine)
@@ -32,6 +37,15 @@ public class Arte : MonoBehaviourPun
             Vector3 throwDirection = transform.forward * 2;
             rb.AddForce(throwDirection * throwForce, ForceMode.VelocityChange);
         }
+
+        if (materialmanager == null)
+        {
+            materialmanager = GameObject.Find("materialmanager");
+        }
+
+        // マテリアルのセットアップ (カスタムダブルサイドシェーダーを使用)
+        sphereMaterial = new Material(materialmanager.GetComponent<MeshRenderer>().materials[1]);
+
     }
 
         private void OnCollisionEnter(Collision collision)
@@ -58,6 +72,8 @@ public class Arte : MonoBehaviourPun
     {
         for (int i = 0; i < radii.Length; i++)
         {
+            sm.PlaySound("arte");
+            damagedParents.Clear();
             currentExplosionIndex = i; // 現在の爆発インデックスを設定
             PerformExplosion(radii[i], damages[i]);
             yield return new WaitForSeconds(explosionDelay);
@@ -103,13 +119,11 @@ public class Arte : MonoBehaviourPun
 
     private void DrawExplosionRange(float radius)
     {
-        // 爆発範囲を球として描画
-        Material mat = new Material(Shader.Find("Unlit/Color"));
-        mat.color = new Color(1f, 0f, 0f, 0.3f); // 半透明の赤色
+      
 
         // スケールを反映した行列を作成
         Matrix4x4 matrix = Matrix4x4.TRS(transform.position, Quaternion.identity, Vector3.one * radius * 2);
-        Graphics.DrawMesh(CreateSphereMesh(), matrix, mat, 0);
+        Graphics.DrawMesh(CreateSphereMesh(), matrix, sphereMaterial, 0);
     }
 
     private Mesh CreateSphereMesh()

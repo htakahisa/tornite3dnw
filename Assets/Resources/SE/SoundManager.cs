@@ -25,6 +25,7 @@ public class SoundManager : MonoBehaviourPun {
     public AudioClip barClimb;
     public AudioClip detect;
     public AudioClip detectstart;
+    public AudioClip arte;
 
 
 
@@ -125,7 +126,10 @@ public class SoundManager : MonoBehaviourPun {
         {
             audioSource.PlayOneShot(detectstart);
         }
-
+        if (type.Equals("arte"))
+        {
+            audioSource.PlayOneShot(arte);
+        }
     }
 
     
@@ -195,6 +199,10 @@ public class SoundManager : MonoBehaviourPun {
         if (type.Equals("detectstart"))
         {
             audioSource.PlayOneShot(detectstart);
+        }
+        if (type.Equals("arte"))
+        {
+            audioSource.PlayOneShot(arte);
         }
 
     }

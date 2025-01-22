@@ -15,8 +15,7 @@ public class Stradarts : MonoBehaviourPun
 
     void Start()
     {
-        if (photonView.IsMine)
-        {
+        
             if(materialmanager == null)
             {
                 materialmanager = GameObject.Find("materialmanager");
@@ -25,16 +24,15 @@ public class Stradarts : MonoBehaviourPun
             launchDirection = transform.forward;
 
             // マテリアルのセットアップ (カスタムダブルサイドシェーダーを使用)
-            sphereMaterial = new Material(materialmanager.GetComponent<MeshRenderer>().material);
+            sphereMaterial = new Material(materialmanager.GetComponent<MeshRenderer>().materials[0]);
 
-            
-        }
+           
+        
     }
 
     void Update()
     {
-        if (photonView.IsMine)
-        {
+        
             // ダートを移動させる
             if (!isScanning)
             {
@@ -57,32 +55,38 @@ public class Stradarts : MonoBehaviourPun
                     transform.position += launchDirection * distanceToMove;
                 }
             }
-        }
+        
     }
 
     private System.Collections.IEnumerator Scan()
     {
-
-        SoundManager sm = Camera.main.GetComponentInParent<SoundManager>();
-        sm.PlaySound("detectstart");
-        // スキャンを行う
-        yield return new WaitForSeconds(2f); // スキャン前の待機時間
+        if (photonView.IsMine)
+        {
+            SoundManager sm = Camera.main.GetComponentInParent<SoundManager>();
+            sm.PlaySound("detectstart");
+        }
+            // スキャンを行う
+            yield return new WaitForSeconds(2f); // スキャン前の待機時間
                                              // 球の非表示フラグをセット
         showSphere = false;
-        // スキャン範囲内の敵を検出
-        Collider[] targets = Physics.OverlapSphere(transform.position, scanRadius, hitMask);
-        foreach (Collider target in targets)
+        if (photonView.IsMine)
         {
-            Debug.Log("敵を検出: " + target.name);
-            BattleData.bd.Detect("enemy\ndetected");
-            // 敵に対する処理をここに追加
-            ScanCamera.sc.ActiveScan();
+            // スキャン範囲内の敵を検出
+            Collider[] targets = Physics.OverlapSphere(transform.position, scanRadius, hitMask);
+            foreach (Collider target in targets)
+            {
+                Debug.Log("敵を検出: " + target.name);
+                BattleData.bd.Detect("enemy\ndetected");
+                // 敵に対する処理をここに追加
+                ScanCamera.sc.ActiveScan();
+            }
+
+
+
+
+            // スキャン後の処理（オブジェクトを破壊するなど）
+            Invoke("DestroyPun", 2f); // ダートを破壊
         }
-
-       
-
-        // スキャン後の処理（オブジェクトを破壊するなど）
-        Invoke("DestroyPun", 2f); // ダートを破壊
     }
 
     private void DestroyPun()
@@ -107,10 +111,10 @@ public class Stradarts : MonoBehaviourPun
         // ゲーム中に球を描画
         if (showSphere && sphereMaterial != null)
         {
-            photonView.RPC("Draw", RpcTarget.All);
+            Draw();
         }
     }
-    [PunRPC]
+  
     private void Draw()
     {
         Graphics.DrawMesh(

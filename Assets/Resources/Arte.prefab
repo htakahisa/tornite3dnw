@@ -267,8 +267,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radii:
-  - 0.3
-  - 0.5
-  - 0.7
-  damages: 280000001e00000014000000
+  - 1
+  - 1.5
+  - 2
+  damages: 1e000000140000000a000000
   explosionDelay: 0.5
