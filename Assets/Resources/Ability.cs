@@ -7,7 +7,7 @@ using UnityEngine;
 public class Ability : MonoBehaviourPun {
 
     private PhaseManager pm;
-    private GameObject pmo;
+
 
     CameraController cc;
     RayController rc;
@@ -29,24 +29,26 @@ public class Ability : MonoBehaviourPun {
     // Update is called once per frame
     void Update() {
 
-        if (pm == null) {
-            pmo = GameObject.FindWithTag("Manager");
-            pm = PhaseManager.pm;
-        }
-        if (pm.GetPhase() == null) {
-            return;
-        }
-
-        if (pm.GetPhase().Equals("Buy")) {
-            return;
-        }
-        if (cc == null)
+        if (PhaseManager.pm.GetPhase() != "Duel")
         {
-            cc = gameObject.GetComponent<CameraController>();
-        }
+            if (PhaseManager.pm.GetPhase() == null)
+            {
+                return;
+            }
 
-        if (cc.AbilityAble)
-        {
+            if (PhaseManager.pm.GetPhase().Equals("Buy"))
+            {
+                return;
+            }
+        }
+            if (cc == null)
+            {
+                cc = gameObject.GetComponent<CameraController>();
+            }
+        
+
+            if (cc.AbilityAble)
+            {
             if (Input.GetKeyDown(KeyCode.E) && number1 >= 1)
             {
                 Use(Able1);

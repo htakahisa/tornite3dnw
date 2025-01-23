@@ -72,7 +72,7 @@ public class Arte : MonoBehaviourPun
     {
         for (int i = 0; i < radii.Length; i++)
         {
-            sm.PlaySound("arte");
+            sm.PlayMySound("arte");
             damagedParents.Clear();
             currentExplosionIndex = i; // 現在の爆発インデックスを設定
             PerformExplosion(radii[i], damages[i]);

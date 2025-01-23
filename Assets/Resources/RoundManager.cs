@@ -194,6 +194,15 @@ public class RoundManager : MonoBehaviourPun {
             return;
         }
 
+        if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+        {
+            BattleLog.battlelog.ChangeText(HpMaster.hpmaster.GetHp(2));
+        }
+        else
+        {
+            BattleLog.battlelog.ChangeText(HpMaster.hpmaster.GetHp(1));
+        }
+
         RoundProcessing = true;
 
         winnerIsA = WinnerIsA;
@@ -289,14 +298,7 @@ public class RoundManager : MonoBehaviourPun {
             this.Acoin += 500 + sideRound * 300;
         }
 
-        if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
-        {
-            BattleLog.battlelog.ChangeText(HpMaster.hpmaster.GetHp(2));
-        }
-        else
-        {
-            BattleLog.battlelog.ChangeText(HpMaster.hpmaster.GetHp(1));
-        }
+    
 
 
         round += 1;

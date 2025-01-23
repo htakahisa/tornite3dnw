@@ -100,6 +100,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
     // Start is called before the first frame update
     void Start() {
 
+        if(PhaseManager.pm == null)
+        {
+            return;
+        }
         //rb = GetComponent<Rigidbody>();
         // ゲーム開始時にマウスを表示
         if (photonView.IsMine)
@@ -294,8 +298,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private void StartClimbing()
     {
         climbSoundInterval = 0;
-
-        if(PhaseManager.pm.GetPhase() == "Buy")
+        AbilityAble = false;
+        WalkAble = false;
+        rc.CanShoot = false;
+        if (PhaseManager.pm.GetPhase() == "Buy")
         {
             return;
         }
@@ -336,6 +342,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
         {
             isClimbing = false;
+            AbilityAble = true;
+            WalkAble = true;
+            rc.CanShoot = true;
         }
     }
 

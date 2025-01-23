@@ -107,7 +107,7 @@ public class RayController : MonoBehaviourPun {
         yor = new Yor();
         blackbell = new BlackBell();
 
-        if(PhaseManager.pm.GetPhase() == "Duel")
+        if (MapManager.mapmanager.GetMapName() == "DuelLand")
         {
             if (RoundManager.rm.sideRound <= 13)
             {
@@ -343,13 +343,13 @@ public class RayController : MonoBehaviourPun {
         
             if (CanShoot) {
 
-                    if (Magazinesize >= 1) {
+                if (Magazinesize >= 1) {
                 sm.PlaySound("shoot");
                 return true;
                         
-                    } else {
+                } else {
                         sm.PlaySound("noarmo");
-                    }
+                }
 
                 
             }

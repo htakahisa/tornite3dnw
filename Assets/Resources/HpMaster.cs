@@ -42,17 +42,7 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
         hp1 = 100;
         hp2 = 100;
         photonView.RPC("SynchronizeHp", RpcTarget.All, hp1, hp2);
-        if (rm.sideRound < 2) {
-            this.shield = 1;
-            armer.armermanager.ArmerNo(1);
-        } else if (rm.sideRound < 4) {
-            this.shield = 0.8f;
-            armer.armermanager.ArmerNo(2);
-        } else if (rm.sideRound > 3)
-        {
-            this.shield = 0.67f;
-            armer.armermanager.ArmerNo(3);
-        }
+      
         if (rm.streak == 1) {
              if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
              {
@@ -69,6 +59,16 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
                 armer.armermanager.ArmerNo(4);
                 rm.streak = 0;
             }
+        }
+        if (rm.sideRound > 3)
+        {
+            this.shield = 0.67f;
+            armer.armermanager.ArmerNo(3);
+        }
+        if (rm.sideRound < 4)
+        {
+            this.shield = 0.8f;
+            armer.armermanager.ArmerNo(2);
         }
         if (rm.sideRound < 2)
         {

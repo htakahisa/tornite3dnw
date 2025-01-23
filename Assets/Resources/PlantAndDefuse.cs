@@ -31,8 +31,9 @@ public class PlantAndDefuse : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-        if(PhaseManager.pm.GetPhase() == "Duel")
+        if (MapManager.mapmanager.GetMapName() == "DuelLand")
         {
+            
             return;
         }
         cc = GetComponent<CameraController>();
@@ -62,7 +63,7 @@ public class PlantAndDefuse : MonoBehaviourPun
             }
             if (RoundManager.rm.GetSide().Equals("Leviathan") && (CanDefuse || SpecialPermission))
             {
-                
+                 sm.PlaySound("defuse");
                 IsDefusing = true;                
                 PermissionPos = transform.position;
             }
@@ -87,7 +88,7 @@ public class PlantAndDefuse : MonoBehaviourPun
         }
         if (IsDefusing)
         {
-            sm.PlaySound("defuse");
+           
             DefuseTime -= Time.deltaTime;
             meter.Defuse(DefuseTime);
             Debug.Log(DefuseTime);

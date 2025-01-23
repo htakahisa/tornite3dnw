@@ -53,7 +53,7 @@ public class SoundManager : MonoBehaviourPun {
     }
 
 
-    private void PlayMySound(string type) {
+    public void PlayMySound(string type) {
 
         if (!photonView.IsMine) {
             return;
