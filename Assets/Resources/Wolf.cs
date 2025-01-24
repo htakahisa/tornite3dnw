@@ -30,7 +30,7 @@ public class Wolf : MonoBehaviourPun {
             stepTimer += Time.deltaTime;
             // 足音を0.5秒毎に再生
             if (stepTimer >= 0.5f) {
-                sm.PlaySound("wolf");
+                sm.PlayMySound("wolf");
                 stepTimer = 0f; // タイマーをリセット
             }
             agent.SetDestination(target.position);

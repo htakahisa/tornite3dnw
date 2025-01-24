@@ -20,10 +20,10 @@ public class TimerInRound : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-       // if (PhaseManager.pm.GetPhase().Equals("DuelLand"))
-       // {
-       //     TimerBeforePlant = 5;
-       // }
+        if (MapManager.mapmanager.GetMapName() == "DuelLand")
+        {
+            TimerBeforePlant = 5;
+        }
     }
 
     // Update is called once per frame
@@ -36,9 +36,14 @@ public class TimerInRound : MonoBehaviourPun
             return;
         }
 
-        
+        if (PhaseManager.pm.GetPhase().Equals("Duel"))
+        {
+            missionFailureTime = PhotonNetwork.Time + TimerBeforePlant;
+            return;
+        }
 
-        if(HasPlanting)
+
+        if (HasPlanting)
         {
             TimerAfterPlant = PhotonNetwork.Time - Disturber.plantedTime;
             TimerText.text = "Detonation in : " + (30 - (int)TimerAfterPlant);

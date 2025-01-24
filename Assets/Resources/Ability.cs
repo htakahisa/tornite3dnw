@@ -105,7 +105,7 @@ public class Ability : MonoBehaviourPun {
         }
         if (able.Equals("BlueLight")) {
             cc.BlueLight();
-            Spend(2, 1);
+            
 
         }
         if (able.Equals("Diable")) {

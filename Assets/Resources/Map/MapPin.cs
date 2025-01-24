@@ -16,6 +16,7 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
         player = Camera.main.transform.parent;
   
         if (CanSmoke) {
+            ability = Camera.main.transform.parent.GetComponent<Ability>();
             Vector3 screenPosition = Input.mousePosition;
             Vector2 localCursor;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -31,8 +32,9 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
             PhotonNetwork.Instantiate("BlueLightSmoke", to, Quaternion.identity);
             Debug.Log(screenPosition);
             CanSmoke = false;
-            pm = GetComponentInParent<PinManager>();
+            pm = GetComponentInParent<PinManager>();            
             pm.Hide();
+            ability.Spend(2, 1);
         }
         if (CanSetAqua)
         {
