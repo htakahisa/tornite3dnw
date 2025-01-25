@@ -14,6 +14,18 @@ public class Disturber : MonoBehaviourPun
     [SerializeField]
     private GameObject explodedPref;
 
+    [SerializeField]
+    private AudioClip startSe;
+    [SerializeField]
+    private AudioClip explodeSe;
+
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+
+    }
+
     private void Update()
     {
         if (!photonView.IsMine)
@@ -36,6 +48,10 @@ public class Disturber : MonoBehaviourPun
     {
         if (isPlanted) return;
 
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = startSe;
+        audioSource.volume = 0.3f;
+        audioSource.Play();
         photonView.RPC(nameof(StartPlanting), RpcTarget.AllBuffered, PhotonNetwork.Time);
     }
 
@@ -50,16 +66,17 @@ public class Disturber : MonoBehaviourPun
 
     private void Explode()
     {
+        audioSource.Stop();
+        audioSource.clip = explodeSe;
+        audioSource.Play();
+
+        // 爆発エフェクト
+        Instantiate(explodedPref, transform.position, transform.rotation);
+        hasExploded = true;
         if (RoundManager.rm.RoundProcessing)
         {
             return;
         }
-
-        // 爆発エフェクト
-        Instantiate(explodedPref, transform.position, transform.rotation);
-
-
-        hasExploded = true;
         photonView.RPC(nameof(OnExplode), RpcTarget.All);
     }
 
