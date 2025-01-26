@@ -26,6 +26,7 @@ public class SoundManager : MonoBehaviourPun {
     public AudioClip detect;
     public AudioClip detectstart;
     public AudioClip arte;
+    public AudioClip shoot_mischief;
 
 
 
@@ -69,6 +70,10 @@ public class SoundManager : MonoBehaviourPun {
         }
         if (type.Equals("shoot")) {
             audioSource.PlayOneShot(shoot);
+        }
+        if (type.Equals("shoot_mischief"))
+        {
+            audioSource.PlayOneShot(shoot_mischief);
         }
         if (type.Equals("reload")) {
             audioSource.PlayOneShot(reload);

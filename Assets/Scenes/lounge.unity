@@ -1327,6 +1327,7 @@ MonoBehaviour:
   uiSync: {fileID: 1168672960}
   userCountText: {fileID: 1461932810}
   pp: {fileID: 1168672961}
+  loungeBGM: {fileID: 8300000, guid: 2589a26fb598fe1409eb9054674e8741, type: 3}
 --- !u!114 &1108470647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3023,6 +3024,7 @@ MonoBehaviour:
   uiSync: {fileID: 1168672960}
   userCountText: {fileID: 1461932810}
   pp: {fileID: 1168672961}
+  loungeBGM: {fileID: 0}
 --- !u!1 &1948680229
 GameObject:
   m_ObjectHideFlags: 0

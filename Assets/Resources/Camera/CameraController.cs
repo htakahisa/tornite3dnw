@@ -151,7 +151,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         if (AbilityAble)
         {
-            if (ability.GetAbility(2) == "Katarina") { 
+            if (ability != null && ability.GetAbility(2) == "Katarina") { 
 
             if (PhaseManager.pm.GetPhase().Equals("Battle"))
                 {

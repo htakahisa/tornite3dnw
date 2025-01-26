@@ -50,6 +50,10 @@ public class PracticeMode : MonoBehaviour {
     {
         SceneManager.LoadScene("Noel");
     }
+    public void Mischief()
+    {
+        SceneManager.LoadScene("Mischief");
+    }
 
     public void Duelist()
     {

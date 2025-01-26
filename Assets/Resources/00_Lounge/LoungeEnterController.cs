@@ -16,10 +16,24 @@ public class LoungeEnterController : MonoBehaviourPunCallbacks
     [SerializeField]
     PublicProperty pp;
 
+    [SerializeField]
+    private AudioClip loungeBGM;
+
+    private static LoungeBgmManager bgmManagerInstance;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (bgmManagerInstance == null)
+        {
+            // 動的に GameObject を生成
+            GameObject bgmObject = new GameObject("LoungeBgmManager");
+
+            // 必要なコンポーネントを追加
+            bgmManagerInstance = bgmObject.AddComponent<LoungeBgmManager>();
+            // defaultBGM を設定
+            bgmManagerInstance.SetDefaultBGM(loungeBGM);
+        }
     }
 
     // Update is called once per frame

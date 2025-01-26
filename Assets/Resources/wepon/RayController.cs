@@ -341,18 +341,25 @@ public class RayController : MonoBehaviourPun {
         
 
         
-            if (CanShoot) {
+        if (CanShoot) {
 
-                if (Magazinesize >= 1) {
-                sm.PlaySound("shoot");
-                return true;
-                        
-                } else {
-                        sm.PlaySound("noarmo");
+            if (Magazinesize >= 1) {
+                // for Mischief
+                if (currentWeaponIndex == 7)
+                {
+                    sm.PlaySound("shoot_mischief");
                 }
+                else
+                {
+                    sm.PlaySound("shoot");
+                }
+                return true;        
+            } else {
+                    sm.PlaySound("noarmo");
+            }
 
                 
-            }
+        }
         
         return false;
     }
