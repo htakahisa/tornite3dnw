@@ -26,6 +26,10 @@ public class SkinManager : MonoBehaviour
         {
             currentWeaponIndex = weaponskin.GetNoel();
         }
+        if (usingWeapon.Equals("Mischief"))
+        {
+            currentWeaponIndex = weaponskin.GetMischief();
+        }
         if (usingWeapon.Equals("Yor"))
         {
             currentWeaponIndex = weaponskin.GetYor();

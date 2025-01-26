@@ -23,7 +23,10 @@ public class Disturber : MonoBehaviourPun
 
     private void Start()
     {
-
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = startSe;
+        audioSource.volume = 0.3f;
+        audioSource.Play();
     }
 
     private void Update()
@@ -48,10 +51,6 @@ public class Disturber : MonoBehaviourPun
     {
         if (isPlanted) return;
 
-        audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.clip = startSe;
-        audioSource.volume = 0.3f;
-        audioSource.Play();
         photonView.RPC(nameof(StartPlanting), RpcTarget.AllBuffered, PhotonNetwork.Time);
     }
 
@@ -64,14 +63,11 @@ public class Disturber : MonoBehaviourPun
         timerinround.Planted(this);
     }
 
+
     private void Explode()
     {
-        audioSource.Stop();
-        audioSource.clip = explodeSe;
-        audioSource.Play();
 
-        // 爆発エフェクト
-        Instantiate(explodedPref, transform.position, transform.rotation);
+
         hasExploded = true;
         if (RoundManager.rm.RoundProcessing)
         {
@@ -106,6 +102,13 @@ public class Disturber : MonoBehaviourPun
     private void OnExplode()
     {
         Debug.Log("Bomb exploded!");
+
+
+        // 爆発エフェクト
+        Instantiate(explodedPref, transform.position, transform.rotation);
+        audioSource.Stop();
+        audioSource.clip = explodeSe;
+        audioSource.Play();
 
         if (RoundManager.rm.GetSide().Equals("Valkyrie"))
         {

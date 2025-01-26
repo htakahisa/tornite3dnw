@@ -158,6 +158,10 @@ public class SoundManager : MonoBehaviourPun {
             {
                 audioSource.PlayOneShot(shoot);
             }
+            if (type.Equals("shoot_mischief"))
+            {
+                audioSource.PlayOneShot(shoot);
+            }
             if (type.Equals("reload"))
             {
                 audioSource.PlayOneShot(reload);
