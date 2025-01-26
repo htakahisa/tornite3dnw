@@ -128,31 +128,27 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
         {
             return;
         }
-            if (this.hp1 <= 0)
+        if (this.hp1 <= 0)
+        {
+            if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
             {
                 HasKill = true;
-                if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                {
                 ResultSynchronizer.rs.SendResult(2);
                 Camera.main.transform.parent.GetComponent<CameraController>().Dead();
-                }
-                
             }
-            else if (this.hp2 <= 0)
+                
+        }
+        else if (this.hp2 <= 0)
+        {
+            if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
             {
                 HasKill = true;
-            
-                if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
-                {
                 ResultSynchronizer.rs.SendResult(1);
                 Camera.main.transform.parent.GetComponent<CameraController>().Dead();
                     
             }
                 
-            }
-        
-
-
+        }
     }
 
 
