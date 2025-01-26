@@ -260,7 +260,7 @@ public class RoundManager : MonoBehaviourPun {
                 this.Acoin -= 1500;
                 this.streak -= 1;
                 this.Bscore -= 1;
-                this.Bcoin -= 1000 + sideRound * 500;
+                this.Bcoin -= 1000 + sideRound * 600;
                 this.Acoin -= 500 + sideRound * 300;
             }
             else
@@ -269,7 +269,7 @@ public class RoundManager : MonoBehaviourPun {
                 this.Bcoin -= 1500;
                 this.streak -= 1;
                 this.Ascore -= 1;
-                this.Acoin -= 1000 + sideRound * 500;
+                this.Acoin -= 1000 + sideRound * 600;
                 this.Bcoin -= 500 + sideRound * 300;
             }
             winnerIsA = PhotonNetwork.LocalPlayer.ActorNumber == 2;
@@ -294,7 +294,7 @@ public class RoundManager : MonoBehaviourPun {
 
             this.Awin = true;
             this.Ascore += 1;
-            this.Acoin += 1000 + sideRound * 500;
+            this.Acoin += 1000 + sideRound * 600;
             this.Bcoin += 500 + sideRound * 300;
 
 
@@ -304,7 +304,7 @@ public class RoundManager : MonoBehaviourPun {
 
             this.Bwin = true;
             this.Bscore += 1;
-            this.Bcoin += 1000 + sideRound * 500;
+            this.Bcoin += 1000 + sideRound * 600;
             this.Acoin += 500 + sideRound * 300;
         }
 

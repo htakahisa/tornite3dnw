@@ -54,9 +54,11 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
                 out localCursor);
 
 
-            
+
+
             Vector3 to = new Vector3((screenPosition.x - 917.5f) / 30f, 12f, (screenPosition.y - 544.275f) / 32f);
-            PhotonNetwork.Instantiate("Aquaring", to, Quaternion.identity);
+            Vector3 position = Position(to);
+            PhotonNetwork.Instantiate("Aquaring", position, Quaternion.identity);
             Debug.Log(screenPosition);
             CanSetAqua = false;
             pm = GetComponentInParent<PinManager>();

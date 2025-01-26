@@ -14,7 +14,6 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
 
     private float shield = 1f;
     
-    GameObject rmo;
 
     RoundManager rm;
 
@@ -22,8 +21,8 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
 
     void Awake() {
         hpmaster = this;
- 
-        Invoke("SetArmer", 0.01f);
+
+        SetArmer();
     }
 
     // Start is called before the first frame update
@@ -37,12 +36,11 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
     }
 
     private void SetArmer() {
-        rmo = GameObject.Find("Roundmanager");
-        rm = rmo.GetComponent<RoundManager>();
+
+        rm = RoundManager.rm;
         hp1 = 100;
         hp2 = 100;
-        photonView.RPC("SynchronizeHp", RpcTarget.All, hp1, hp2);
-      
+
         if (rm.streak == 1) {
              if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
              {
