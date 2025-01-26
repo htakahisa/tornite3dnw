@@ -246,24 +246,35 @@ public class RoundManager : MonoBehaviourPun {
         Debug.Log(winnerIsA);
 
 
+        // ラウンド数よりも多い場合は2回目の処理が走ってしまっている。
+        // 1回目の処理を取り消し、常にプレイヤー2を勝者とする。
+        if (this.Ascore + this.Bscore + 1 > round)
+        {
+            // 取り消し
+            round -= 1;
+            sideRound -= 1;
 
-
-
-
-
-
-
-   
-
-
-        // RPC��B���\�b�h��Ăяo���A���ׂẴN���C�A���g�ɓ���
-        //photonView.RPC("InstanceAvatar", RpcTarget.All);
-
-
-
-
-
-
+            if (winnerIsA)
+            {
+                // 最初のBの分を取り消す
+                this.Acoin -= 1500;
+                this.streak -= 1;
+                this.Bscore -= 1;
+                this.Bcoin -= 1000 + sideRound * 500;
+                this.Acoin -= 500 + sideRound * 300;
+            }
+            else
+            {
+                // 最初のAの分を取り消す
+                this.Bcoin -= 1500;
+                this.streak -= 1;
+                this.Ascore -= 1;
+                this.Acoin -= 1000 + sideRound * 500;
+                this.Bcoin -= 500 + sideRound * 300;
+            }
+            winnerIsA = PhotonNetwork.LocalPlayer.ActorNumber == 2;
+        }
+        // その後もともとの処理を流す
 
 
         if (Awin && winnerIsA)
@@ -283,7 +294,6 @@ public class RoundManager : MonoBehaviourPun {
 
             this.Awin = true;
             this.Ascore += 1;
-
             this.Acoin += 1000 + sideRound * 500;
             this.Bcoin += 500 + sideRound * 300;
 
@@ -315,18 +325,7 @@ public class RoundManager : MonoBehaviourPun {
         {
             StartLoadingScene(MapManager.mapmanager.GetMapName(), winnerIsA);
         }
-      
-
-            //if (pmc != null) {
-            //    pmc.Method("Scene");
-            //}
-
-            //if (SceneManager.GetActiveScene().name.Equals("battle")) {
-            //    SceneManager.LoadScene("battle2");
-            //} else {
-            //    SceneManager.LoadScene("battle");
-            //}
-        }
+    }
 
 
 
