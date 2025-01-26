@@ -275,7 +275,7 @@ public class RoundManager : MonoBehaviourPun {
         // その後もともとの処理を流す
 
 
-        if (winnerIsA == (PhotonNetwork.LocalPlayer.ActorNumber == 1))
+        if (winnerIsA)
         {
             judgec.Win();
         }
