@@ -11,6 +11,11 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
     private PinManager pm;
     private Ability ability;
     private SoundManager sm;
+
+    [SerializeField]
+    private LayerMask mapobject;
+
+
     public void OnPointerClick(PointerEventData eventData) {
         sm = Camera.main.transform.parent.GetComponent<SoundManager>();
         player = Camera.main.transform.parent;
@@ -28,8 +33,9 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
 
             
 
-            Vector3 to = new Vector3((screenPosition.x - 917.5f) / 30f, 10f, (screenPosition.y - 544.275f) / 32f);
-            PhotonNetwork.Instantiate("BlueLightSmoke", to, Quaternion.identity);
+            Vector3 to = new Vector3((screenPosition.x - 917.5f) / 30f, 12f, (screenPosition.y - 544.275f) / 32f);
+            Vector3 position = Position(to);
+            PhotonNetwork.Instantiate("BlueLightSmoke", position, Quaternion.identity);
             Debug.Log(screenPosition);
             CanSmoke = false;
             pm = GetComponentInParent<PinManager>();            
@@ -49,7 +55,7 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
 
 
             
-            Vector3 to = new Vector3((screenPosition.x - 917.5f) / 30f, 10f, (screenPosition.y - 544.275f) / 32f);
+            Vector3 to = new Vector3((screenPosition.x - 917.5f) / 30f, 12f, (screenPosition.y - 544.275f) / 32f);
             PhotonNetwork.Instantiate("Aquaring", to, Quaternion.identity);
             Debug.Log(screenPosition);
             CanSetAqua = false;
@@ -60,8 +66,13 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
     }
 
 
+    private Vector3 Position(Vector3 to)
+    {
+        RaycastHit hit;
+        Physics.Raycast(to, Vector3.down, out hit, mapobject);
+        return hit.point;
+    }
 
- 
 
     public void BlueLight() {
 

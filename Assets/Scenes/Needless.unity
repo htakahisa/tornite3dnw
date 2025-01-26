@@ -72019,7 +72019,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9051960803295690142, guid: 06e40c0b4555acb4eadd88bfaeffe3e9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.0559
+      value: 1.2878158
       objectReference: {fileID: 0}
     - target: {fileID: 9051960803295690142, guid: 06e40c0b4555acb4eadd88bfaeffe3e9, type: 3}
       propertyPath: m_LocalScale.z
@@ -133533,7 +133533,7 @@ MonoBehaviour:
   pinmanager: {fileID: 8967826902361199527}
   hitMask:
     serializedVersion: 2
-    m_Bits: 313344
+    m_Bits: 296960
   range: 500
   CanShoot: 1
   mz: {fileID: 8967826901161098036}
@@ -139709,6 +139709,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimapCamera: {fileID: 879411262}
+  mapobject:
+    serializedVersion: 2
+    m_Bits: 32768
 --- !u!114 &8967826902335085988
 MonoBehaviour:
   m_ObjectHideFlags: 0
