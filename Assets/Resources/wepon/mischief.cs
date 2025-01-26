@@ -11,12 +11,12 @@ public class mischief {
     int magazine = 25;
     bool auto = true;
     float reloadtime = 1.2f;
-    bool zoomable = true;
-    float zoomratio = 50;
+    bool zoomable = false;
+    float zoomratio = 80;
     bool accuracy = true;
-    float YRecoil = 0.6f;
-    float XRecoil = 0.2f;
-    float PeekingSpeed = 0.08f;
+    float YRecoil = 0.5f;
+    float XRecoil = 0.17f;
+    float PeekingSpeed = 0f;
     float punch = 3f;
 
     void Start() {
