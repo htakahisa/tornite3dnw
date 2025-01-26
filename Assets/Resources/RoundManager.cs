@@ -193,6 +193,10 @@ public class RoundManager : MonoBehaviourPun {
         {
             return;
         }
+        if (recklesstime <= 2)
+        {
+            return;
+        }
 
         if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
         {
