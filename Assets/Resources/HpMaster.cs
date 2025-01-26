@@ -22,12 +22,12 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
     void Awake() {
         hpmaster = this;
 
-        SetArmer();
+       
     }
 
     // Start is called before the first frame update
     void Start() {
-        
+        SetArmer();
     }
 
     // Update is called once per frame
