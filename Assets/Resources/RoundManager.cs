@@ -211,14 +211,7 @@ public class RoundManager : MonoBehaviourPun {
 
         winnerIsA = WinnerIsA;
 
-        if (winnerIsA == (PhotonNetwork.LocalPlayer.ActorNumber == 1))
-        {
-            judgec.Win();
-        }
-        else
-        {
-            judgec.Lose();
-        }
+
 
 
 
@@ -251,7 +244,7 @@ public class RoundManager : MonoBehaviourPun {
 
 
         // ラウンド数よりも多い場合は2回目の処理が走ってしまっている。
-        // 1回目の処理を取り消し、常にプレイヤー2を勝者とする。
+       
         if (this.Ascore + this.Bscore + 1 > round)
         {
             // 取り消し
@@ -276,9 +269,20 @@ public class RoundManager : MonoBehaviourPun {
                 this.Acoin -= 1000 + sideRound * 600;
                 this.Bcoin -= 500 + sideRound * 300;
             }
-            winnerIsA = PhotonNetwork.LocalPlayer.ActorNumber == 2;
+            // 常にプレイヤー2を勝者とする。
+            winnerIsA = false;
         }
         // その後もともとの処理を流す
+
+
+        if (winnerIsA == (PhotonNetwork.LocalPlayer.ActorNumber == 1))
+        {
+            judgec.Win();
+        }
+        else
+        {
+            judgec.Lose();
+        }
 
 
         if (Awin && winnerIsA)
