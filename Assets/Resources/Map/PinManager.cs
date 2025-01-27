@@ -5,24 +5,21 @@ public class PinManager : MonoBehaviour {
 
     public static PinManager pm = null;
 
+    [SerializeField]
     private GameObject Map;
-    Transform map;
+    [SerializeField]
+    private GameObject AbilityMap;
 
 
 
-    private void Start() {
 
-        map = gameObject.transform.GetChild(0); // 0は子オブジェクトのインデックス
-        Map = map.gameObject;
-        Map.SetActive(false);
 
-    }
 
     private void Awake() {
 
-        map = gameObject.transform.GetChild(0); // 0は子オブジェクトのインデックス
-        Map = map.gameObject;
+
         Map.SetActive(false);
+        AbilityMap.SetActive(false);
         pm = this;
     }
 
@@ -30,7 +27,9 @@ public class PinManager : MonoBehaviour {
 
 
         if (Input.GetKeyDown(KeyCode.Tab)) {
+
             Map.SetActive(!Map.activeSelf);
+            AbilityMap.SetActive(false);
         }
 
        
@@ -46,9 +45,9 @@ public class PinManager : MonoBehaviour {
     public void BlueLight() {
 
         Map.SetActive(true);
+        AbilityMap.SetActive(true);
         Map.GetComponent<MapPin>().BlueLight();
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+
 
     }
 
@@ -56,9 +55,9 @@ public class PinManager : MonoBehaviour {
     {
 
         Map.SetActive(true);
+        AbilityMap.SetActive(true);
         Map.GetComponent<MapPin>().Aqua();
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+
 
     }
 
@@ -66,8 +65,8 @@ public class PinManager : MonoBehaviour {
     public void Hide() {
 
         Map.SetActive(false);
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        AbilityMap.SetActive(false);
+
 
     }
 }

@@ -8,10 +8,10 @@ public class JawKha
 
     float rate = 0.09f;
     int damage = 21;
-    int headdamage = 40;
+    int headdamage = 50;
     int magazine = 13;
     bool auto = true;
-    float reloadtime = 0.8f;
+    float reloadtime = 0.7f;
     bool zoomable = false;
     float zoomratio = 1;
     bool accuracy = true;

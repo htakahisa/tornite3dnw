@@ -8,8 +8,8 @@ public class PlantAndDefuse : MonoBehaviourPun
 {
 
     public bool CanPlant = false;
-    private float PlantTime = 4f;
-    private float DefuseTime = 6f;
+    private float PlantTime = 5f;
+    private float DefuseTime = 4f;
     private bool IsHalf = false;
 
     public bool CanDefuse = false;

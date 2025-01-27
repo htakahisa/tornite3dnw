@@ -164,7 +164,7 @@ public class SampleScene : MonoBehaviourPunCallbacks {
                 {
                     Debug.Log("You are Player 1");
                     // Player 1‚Ì‰Šú‰»ˆ—
-                    position = new Vector3(0f, 0f, -5f);
+                    position = new Vector3(6.362605f, 2.437766f, -5.436756f);
                 }
                 else if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
                 {

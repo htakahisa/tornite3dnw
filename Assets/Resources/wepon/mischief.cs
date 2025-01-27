@@ -6,7 +6,7 @@ using Photon.Pun;
 public class mischief {
 
     float rate = 0.085f;
-    int damage = 35;
+    int damage = 25;
     int headdamage = 140;
     int magazine = 25;
     bool auto = true;

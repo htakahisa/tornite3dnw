@@ -8,7 +8,7 @@ public class Noel {
     float rate = 0.11f;
     int damage = 40;
     int headdamage = 150;
-    int magazine = 25;
+    int magazine = 30;
     bool auto = true;
     float reloadtime = 1.5f;
     bool zoomable = true;

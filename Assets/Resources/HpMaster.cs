@@ -11,13 +11,14 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
     private float hp2 = 100;
 
     public static HpMaster hpmaster = null;
-
     private float shield = 1f;
-    
+
 
     RoundManager rm;
 
     private bool HasKill = false;
+
+    private int LastCost = 0;
 
     void Awake() {
         hpmaster = this;
@@ -27,59 +28,37 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
 
     // Start is called before the first frame update
     void Start() {
-        SetArmer();
+        ResetHp();
     }
 
     // Update is called once per frame
-    void Update() {
-    
+    void Update()
+    {
+
     }
 
-    private void SetArmer() {
+    public void LastCostChange(int number)
+    {
+        LastCost = number;
+    }
 
-        rm = RoundManager.rm;
+    public int GetLastCost()
+    {
+        return LastCost;
+    }
+
+    private void ResetHp()
+    {
         hp1 = 100;
         hp2 = 100;
-
-        if (rm.streak == 1) {
-             if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
-             {
-                this.shield = 0.67f;
-                armer.armermanager.ArmerNo(4);
-                rm.streak = 0;
-            }
-        }
-        if (rm.streak == 2)
-        {
-            if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
-            {
-                this.shield = 0.67f;
-                armer.armermanager.ArmerNo(4);
-                rm.streak = 0;
-            }
-        }
-        if (rm.sideRound > 3)
-        {
-            this.shield = 0.67f;
-            armer.armermanager.ArmerNo(3);
-        }
-        if (rm.sideRound < 4)
-        {
-            this.shield = 0.8f;
-            armer.armermanager.ArmerNo(2);
-        }
-        if (rm.sideRound < 2)
-        {
-            this.shield = 1;
-            armer.armermanager.ArmerNo(1);
-        }
-
-        rm.streak = 0;
-
     }
 
 
-    
+    public void SetShield(float Shield)
+    {
+        shield = Shield;
+    }
+
     public void SetHp(float damage, int player) {
 
         damage *= shield;

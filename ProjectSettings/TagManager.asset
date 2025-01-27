@@ -26,6 +26,7 @@ TagManager:
   - Destructible
   - AbilityCheck
   - Bar
+  - Arte
   layers:
   - Default
   - TransparentFX
@@ -46,8 +47,8 @@ TagManager:
   - PlantCollider
   - lack of vision
   - Ability
-  - 
-  - 
+  - Arte
+  - MapabilityCamera
   - 
   - 
   - 

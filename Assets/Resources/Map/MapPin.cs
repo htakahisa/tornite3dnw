@@ -2,7 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MapPin : MonoBehaviourPun, IPointerClickHandler {
+public class MapPin : MonoBehaviourPun {
     public Camera minimapCamera;
     private Transform player;
 
@@ -12,74 +12,68 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
     private Ability ability;
     private SoundManager sm;
 
+
+
     [SerializeField]
-    private LayerMask mapobject;
+    private MapAbility ma;
 
 
-    public void OnPointerClick(PointerEventData eventData) {
-        sm = Camera.main.transform.parent.GetComponent<SoundManager>();
-        player = Camera.main.transform.parent;
-  
-        if (CanSmoke) {
-            ability = Camera.main.transform.parent.GetComponent<Ability>();
-            Vector3 screenPosition = Input.mousePosition;
-            Vector2 localCursor;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                GetComponent<RectTransform>(),
-                eventData.position,
-                eventData.pressEventCamera,
-                out localCursor);
+    private void Update(){
+      
+            sm = Camera.main.transform.parent.GetComponent<SoundManager>();
+            player = Camera.main.transform.parent;
+
+            if (CanSmoke)
+            {
+                ability = Camera.main.transform.parent.GetComponent<Ability>();
 
 
-            
 
-            Vector3 to = new Vector3((screenPosition.x - 917.5f) / 30f, 12f, (screenPosition.y - 544.275f) / 32f);
-            Vector3 position = Position(to);
-            PhotonNetwork.Instantiate("BlueLightSmoke", position, Quaternion.identity);
-            Debug.Log(screenPosition);
-            CanSmoke = false;
-            pm = GetComponentInParent<PinManager>();            
-            pm.Hide();
-            ability.Spend(2, 1);
-        }
-        if (CanSetAqua)
-        {
-            ability = Camera.main.transform.parent.GetComponent<Ability>();
-            Vector3 screenPosition = Input.mousePosition;
-            Vector2 localCursor;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                GetComponent<RectTransform>(),
-                eventData.position,
-                eventData.pressEventCamera,
-                out localCursor);
+                Vector3 position = ma.Position();
+            if (Input.GetMouseButtonDown(0))
+            {
+                PhotonNetwork.Instantiate("BlueLightSmoke", position, Quaternion.identity);
+                CanSmoke = false;
+                pm = GetComponentInParent<PinManager>();
+                pm.Hide();
+                ma.EndAbility();
+                ability.Spend(2, 1);
+            }
+
+
+            }
+            if (CanSetAqua)
+            {
+                ability = Camera.main.transform.parent.GetComponent<Ability>();
 
 
 
 
-            Vector3 to = new Vector3((screenPosition.x - 917.5f) / 30f, 12f, (screenPosition.y - 544.275f) / 32f);
-            Vector3 position = Position(to);
-            PhotonNetwork.Instantiate("Aquaring", position, Quaternion.identity);
-            Debug.Log(screenPosition);
-            CanSetAqua = false;
-            pm = GetComponentInParent<PinManager>();
-            pm.Hide();
-            ability.Spend(2, 1);
-        }
+
+                Vector3 position = ma.Position();
+            if (Input.GetMouseButtonDown(0))
+            {
+                PhotonNetwork.Instantiate("Aquaring", position, Quaternion.identity);
+
+                CanSetAqua = false;
+                pm = GetComponentInParent<PinManager>();
+                pm.Hide();
+                ma.EndAbility();
+                ability.Spend(2, 1);
+            }
+            }
+
     }
 
 
-    private Vector3 Position(Vector3 to)
-    {
-        RaycastHit hit;
-        Physics.Raycast(to, Vector3.down, out hit, mapobject);
-        return hit.point;
-    }
 
 
-    public void BlueLight() {
+
+
+        public void BlueLight() {
 
         CanSmoke = true;
-
+        ma.transform.position = new Vector3(0, 80000, 0);
 
     }
 
@@ -87,7 +81,7 @@ public class MapPin : MonoBehaviourPun, IPointerClickHandler {
     {
 
         CanSetAqua = true;
-
+        ma.transform.position = new Vector3(0, 80000, 0);
 
     }
 

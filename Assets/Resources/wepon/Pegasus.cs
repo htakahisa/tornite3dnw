@@ -8,7 +8,7 @@ public class Pegasus {
     float rate = 0.07f;
     int damage = 20;
     int headdamage = 45;
-    int magazine = 15;
+    int magazine = 20;
     bool auto = true;
     float reloadtime = 1.8f;
     bool zoomable = true;

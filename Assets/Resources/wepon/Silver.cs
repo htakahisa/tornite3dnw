@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class Silver {
 
-    float rate = 0.45f;
+    float rate = 0.55f;
     int damage = 60;
     int headdamage = 163;
     int magazine = 6;

@@ -145,7 +145,12 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (Input.GetKeyDown(KeyCode.H))
         {
 
-            StraDarts();
+            Flash();
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+
+            Arte();
         }
 #endif
 

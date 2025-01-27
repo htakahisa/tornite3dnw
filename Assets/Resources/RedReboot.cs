@@ -76,7 +76,7 @@ public class RedReboot : MonoBehaviourPun
     {
 
         DamageManager dm = new DamageManager();
-        dm.causeDamage(target.transform.gameObject, 10);
+        dm.causeDamage(target.transform.gameObject, 5);
 
     }
 }

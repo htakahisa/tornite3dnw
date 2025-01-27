@@ -3,7 +3,7 @@ using Photon.Pun;
 
 public class Disturber : MonoBehaviourPun
 {
-    public float explosionTime = 30.0f;
+    public float explosionTime = 40.0f;
 
     public double plantedTime = 0f;
     private bool isPlanted = false;

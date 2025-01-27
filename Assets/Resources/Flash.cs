@@ -7,7 +7,7 @@ public class Flash : MonoBehaviour
     private GameObject flashEffect; // フラッシュエフェクトのプレハブ
     public float flashDuration = 2f; // フラッシュの持続時間
 
-    private float throwForce = 4f; // 投げる力
+    private float throwForce = 9f; // 投げる力
 
     Rigidbody rb;
 
