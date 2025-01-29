@@ -9,7 +9,12 @@ public class CameraSetting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Screen.SetResolution(1920, 1080, FullScreenMode.ExclusiveFullScreen, 144);
+#if UNITY_EDITOR
+        // window
+#else
+        //Screen.SetResolution(1920, 1080, FullScreenMode.ExclusiveFullScreen, 144);
+#endif
+
     }
 
     // Update is called once per frame

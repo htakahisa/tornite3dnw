@@ -103,6 +103,11 @@ public class Ability : MonoBehaviourPun {
             Spend(2, 1);
 
         }
+        if (able.Equals("Cat"))
+        {
+            cc.Cat();
+            Spend(1, 1);
+        }
         if (able.Equals("BlueLight")) {
             cc.BlueLight();
             
@@ -135,6 +140,12 @@ public class Ability : MonoBehaviourPun {
         }
         if (able.Equals("Wolf")) {
             cc.Wolf();
+            Spend(1, 1);
+
+        }
+        if (able.Equals("Cat"))
+        {
+            cc.Cat();
             Spend(1, 1);
 
         }

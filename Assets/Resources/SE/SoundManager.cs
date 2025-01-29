@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviourPun {
 
-    public AudioSource audioSource;  // Œø‰Ê‰¹‚ğÄ¶‚·‚éAudioSource
+    public AudioSource audioSource;  // ï¿½ï¿½ï¿½Ê‰ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½AudioSource
     public AudioClip walk;
     public AudioClip jump;
     public AudioClip shoot;
@@ -29,12 +29,16 @@ public class SoundManager : MonoBehaviourPun {
     public AudioClip shoot_mischief;
     public AudioClip shoot_noel;
     public AudioClip wolfbark;
+    public AudioClip cat1;
+    public AudioClip cat2;
+    public AudioClip cat3;
+    public AudioClip cat4;
 
 
 
     void Awake() {
         
-        // AudioSourceƒRƒ“ƒ|[ƒlƒ“ƒg‚ªƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Í©“®æ“¾
+        // AudioSourceï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Aï¿½^ï¿½bï¿½`ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½Íï¿½ï¿½ï¿½ï¿½æ“¾
         if (audioSource == null) {
             audioSource = GetComponent<AudioSource>();
         }
@@ -96,6 +100,22 @@ public class SoundManager : MonoBehaviourPun {
         if (type.Equals("wolf")) {
             audioSource.PlayOneShot(wolf);
         }
+        if (type.Equals("cat1"))
+        {
+            audioSource.PlayOneShot(cat1);
+        }
+        if (type.Equals("cat2"))
+        {
+            audioSource.PlayOneShot(cat2);
+        }
+        if (type.Equals("cat3"))
+        {
+            audioSource.PlayOneShot(cat3);
+        }
+        if (type.Equals("cat4"))
+        {
+            audioSource.PlayOneShot(cat4);
+        }
         if (type.Equals("coward")) {
             audioSource.PlayOneShot(coward);
         }
@@ -150,7 +170,7 @@ public class SoundManager : MonoBehaviourPun {
     
 
 
-        // RPC‚Å‘¼‚ÌƒNƒ‰ƒCƒAƒ“ƒg‚Å‚àŒø‰Ê‰¹‚ğÄ¶‚³‚¹‚é
+        // RPCï¿½Å‘ï¿½ï¿½ÌƒNï¿½ï¿½ï¿½Cï¿½Aï¿½ï¿½ï¿½gï¿½Å‚ï¿½ï¿½ï¿½Ê‰ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         [PunRPC]
     void PlaySoundRPC(string type) {
         if (PhaseManager.pm.GetPhase().Equals("Battle"))
@@ -195,6 +215,22 @@ public class SoundManager : MonoBehaviourPun {
             if (type.Equals("wolf"))
             {
                 audioSource.PlayOneShot(wolf);
+            }
+            if (type.Equals("cat1"))
+            {
+                audioSource.PlayOneShot(cat1);
+            }
+            if (type.Equals("cat2"))
+            {
+                audioSource.PlayOneShot(cat2);
+            }
+            if (type.Equals("cat3"))
+            {
+                audioSource.PlayOneShot(cat3);
+            }
+            if (type.Equals("cat4"))
+            {
+                audioSource.PlayOneShot(cat4);
             }
             if (type.Equals("coward"))
             {

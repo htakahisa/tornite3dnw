@@ -1822,6 +1822,10 @@ MonoBehaviour:
   shoot_mischief: {fileID: 8300000, guid: 77ed3016cda16ee4381d3c5c81c5e891, type: 3}
   shoot_noel: {fileID: 8300000, guid: 38fadb69d55ae7044b27953e35e746d6, type: 3}
   wolfbark: {fileID: 8300000, guid: e2ed3403102e1d04b8af932c28d72e4b, type: 3}
+  cat1: {fileID: 8300000, guid: 52d117eeb75edb946a2598d23b5c8e9e, type: 3}
+  cat2: {fileID: 8300000, guid: be045c8fe7967144991e2aa19b8d70d2, type: 3}
+  cat3: {fileID: 8300000, guid: d179f2c7fddffc84caaa6dbde3b54a41, type: 3}
+  cat4: {fileID: 8300000, guid: 83be1ce8a6efa4f42bed71249581fa72, type: 3}
 --- !u!82 &4909231365802194501
 AudioSource:
   m_ObjectHideFlags: 0
