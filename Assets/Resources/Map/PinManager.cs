@@ -26,7 +26,7 @@ public class PinManager : MonoBehaviour {
     void Update() {
 
 
-        if (Input.GetKeyDown(KeyCode.Tab)) {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
 
             Map.SetActive(!Map.activeSelf);
             AbilityMap.SetActive(false);

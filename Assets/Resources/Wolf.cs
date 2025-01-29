@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class Wolf : MonoBehaviourPun {
     private Transform target;  // プレイヤーなどのターゲット
     private NavMeshAgent agent;
-    public float attackDistance = 0.1f; // 攻撃を行う距離（ここでは0に近い距離）
+    public float attackDistance = 0.01f; // 攻撃を行う距離（ここでは0に近い距離）
     private bool antirugcheck = false;
     private float stepTimer = 0f;
 
@@ -20,7 +20,7 @@ public class Wolf : MonoBehaviourPun {
             target = enemy.transform;  // ターゲットを設定
         }
 
-        Invoke("Destroy", 10f);
+        Invoke("Destroy", 7f);
 
     }
 
@@ -40,12 +40,19 @@ public class Wolf : MonoBehaviourPun {
             // 距離が指定した攻撃距離以内になった場合
             if (distance <= attackDistance) {
                 Damage(); // Damageメソッドを呼び出す
+                sm.PlayMySound("wolfbark");
             }
         }
     }
 
     private void Destroy() {
+
         PhotonNetwork.Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        PhotonNetwork.Instantiate("WolfCollect", transform.position, transform.rotation);
     }
 
 

@@ -255,7 +255,7 @@ public class RoundManager : MonoBehaviourPun {
             {
                 // 最初のBの分を取り消す
                 this.Acoin -= 1500;
-                this.streak -= 1;
+                this.streak = 0;
                 this.Bscore -= 1;
                 this.Bcoin -= 1000 + sideRound * 800;
                 this.Acoin -= 500 + sideRound * 400;
@@ -264,7 +264,7 @@ public class RoundManager : MonoBehaviourPun {
             {
                 // 最初のAの分を取り消す
                 this.Bcoin -= 1500;
-                this.streak -= 1;
+                this.streak = 0;
                 this.Ascore -= 1;
                 this.Acoin -= 1000 + sideRound * 800;
                 this.Bcoin -= 500 + sideRound * 400;
@@ -390,7 +390,7 @@ public class RoundManager : MonoBehaviourPun {
 
         RoundProcessing = false;
 
-        RayController.rc.Classic();
+        
 
         Aloadout = 0;
         Bloadout = 0;
@@ -424,7 +424,7 @@ public class RoundManager : MonoBehaviourPun {
         }
 
         Debug.Log("Acoin:" + Acoin + " Bcoin:" + Bcoin);
-
+        RayController.rc.Classic();
 
     }
 

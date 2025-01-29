@@ -6,6 +6,7 @@ public class ResourceManager : MonoBehaviour
 {
 
     public static ResourceManager resourcemanager = null;
+
     private GameObject ArteBomb;
 
     // Start is called before the first frame update
@@ -17,6 +18,7 @@ public class ResourceManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
         }
+       
         else
         {
             Destroy(gameObject);
@@ -30,6 +32,7 @@ public class ResourceManager : MonoBehaviour
         {
             ArteBomb = Resources.Load<GameObject>("ArteBomb");
         }
+      
     }
 
     public GameObject GetObject(string name)
@@ -37,9 +40,11 @@ public class ResourceManager : MonoBehaviour
         if (name == "ArteBomb") {
             return ArteBomb;
         }
+       
 
         return null;
         
     }
+
 
 }

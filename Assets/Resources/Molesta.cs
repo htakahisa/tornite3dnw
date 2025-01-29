@@ -6,7 +6,7 @@ using Photon.Realtime;
 
 public class Molesta : MonoBehaviourPunCallbacks
 {
-    public float speed = 1.0f; // 壁の前進速度
+    public float speed = 2.0f; // 壁の前進速度
 
     private bool IsMoving = true;
 

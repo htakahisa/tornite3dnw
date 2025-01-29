@@ -15,6 +15,8 @@ public class BuyWeponManager : MonoBehaviourPunCallbacks {
     GameObject rmo;
     RoundManager rmc;
 
+    
+
 
     // Start is called before the first frame update
     void Awake() {

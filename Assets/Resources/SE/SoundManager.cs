@@ -27,6 +27,8 @@ public class SoundManager : MonoBehaviourPun {
     public AudioClip detectstart;
     public AudioClip arte;
     public AudioClip shoot_mischief;
+    public AudioClip shoot_noel;
+    public AudioClip wolfbark;
 
 
 
@@ -74,6 +76,10 @@ public class SoundManager : MonoBehaviourPun {
         if (type.Equals("shoot_mischief"))
         {
             audioSource.PlayOneShot(shoot_mischief);
+        }
+        if (type.Equals("shoot_noel"))
+        {
+            audioSource.PlayOneShot(shoot_noel);
         }
         if (type.Equals("reload")) {
             audioSource.PlayOneShot(reload);
@@ -135,6 +141,10 @@ public class SoundManager : MonoBehaviourPun {
         {
             audioSource.PlayOneShot(arte);
         }
+        if (type.Equals("wolfbark"))
+        {
+            audioSource.PlayOneShot(wolfbark);
+        }
     }
 
     
@@ -160,7 +170,11 @@ public class SoundManager : MonoBehaviourPun {
             }
             if (type.Equals("shoot_mischief"))
             {
-                audioSource.PlayOneShot(shoot);
+                audioSource.PlayOneShot(shoot_mischief);
+            }
+            if (type.Equals("shoot_noel"))
+            {
+                audioSource.PlayOneShot(shoot_noel);
             }
             if (type.Equals("reload"))
             {
@@ -225,6 +239,10 @@ public class SoundManager : MonoBehaviourPun {
             if (type.Equals("arte"))
             {
                 audioSource.PlayOneShot(arte);
+            }
+            if (type.Equals("wolfbark"))
+            {
+                audioSource.PlayOneShot(wolfbark);
             }
         }
 

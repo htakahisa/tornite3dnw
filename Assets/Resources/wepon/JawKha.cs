@@ -12,12 +12,15 @@ public class JawKha
     int magazine = 13;
     bool auto = true;
     float reloadtime = 0.7f;
-    bool zoomable = false;
-    float zoomratio = 1;
+    bool zoomable = true;
+    float zoomratio = 80;
     bool accuracy = true;
     float YRecoil = 1.8f;
     float XRecoil = 0.7f;
     float punch = 4f;
+    int Burst = 1;
+    float BurstRate = 0.1f;
+    float PeekingSpeed = 0f;
 
     void Start()
     {
@@ -83,6 +86,20 @@ public class JawKha
     public float GetPunch()
     {
         return punch;
+    }
+    public int GetBurst()
+    {
+        return Burst;
+    }
+
+    public float GetBurstRate()
+    {
+        return BurstRate;
+    }
+
+    public float GetPeekingSpeed()
+    {
+        return PeekingSpeed;
     }
     public void GetStatus()
     {

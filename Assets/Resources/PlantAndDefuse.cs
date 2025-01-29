@@ -12,8 +12,6 @@ public class PlantAndDefuse : MonoBehaviourPun
     private float DefuseTime = 4f;
     private bool IsHalf = false;
 
-    public bool CanDefuse = false;
-
     Disturber disturber = null;
     private bool HasDefuse = false;
 
@@ -22,11 +20,8 @@ public class PlantAndDefuse : MonoBehaviourPun
     private SoundManager sm;
     private DisturberMeter meter;
 
-    private bool IsPlanting = false;
-    private bool IsDefusing = false;
 
-    private bool SpecialPermission = false;
-    private Vector3 PermissionPos;
+
 
     // Start is called before the first frame update
     void Start()
@@ -47,80 +42,74 @@ public class PlantAndDefuse : MonoBehaviourPun
     void Update()
     {
 
+      
+
         if (!photonView.IsMine)
         {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+        if (Input.GetKey(KeyCode.Alpha4))
         {
-            if(PermissionPos == transform.position)
+
+            if (RoundManager.rm.GetSide().Equals("Leviathan"))
             {
-                SpecialPermission = true;
+                disturber = GameObject.Find("Disturber(Clone)").GetComponent<Disturber>();
+                float distance = Vector3.Distance(transform.position, disturber.transform.position);
+                if (distance <= 2) { 
+                sm.PlaySound("defuse");
+                    DefuseTime -= Time.deltaTime;
+                    meter.Defuse(DefuseTime);
+                    Debug.Log(DefuseTime);
+                    if (DefuseTime <= 2)
+                    {
+                        IsHalf = true;
+                    }
+
+                    cc.WalkAble = false;
+                    cc.AbilityAble = false;
+                    rc.CanShoot = false;
+
+
+
+                   
+                }
+
             }
-            else
+            else if (RoundManager.rm.GetSide().Equals("Valkyrie") && CanPlant && disturber == null)
             {
-                SpecialPermission = false;
-            }
-            if (RoundManager.rm.GetSide().Equals("Leviathan") && (CanDefuse || SpecialPermission))
-            {
-                 sm.PlaySound("defuse");
-                IsDefusing = true;                
-                PermissionPos = transform.position;
-            }
-            else if (RoundManager.rm.GetSide().Equals("Valkyrie") && (CanPlant || SpecialPermission) && disturber == null)
-            {
-                
-                IsPlanting = true;
-                PermissionPos = transform.position;
-               
+
+                PlantTime -= Time.deltaTime;
+
+
+
+                meter.Plant(PlantTime);
+
+                cc.WalkAble = false;
+                cc.AbilityAble = false;
+                rc.CanShoot = false;
+
             }
         }
 
-        if (IsPlanting)
-        {
-            PlantTime -= Time.deltaTime;
-
-            meter.Plant(PlantTime);
-
-            cc.WalkAble = false;
-            cc.AbilityAble = false;
-            rc.CanShoot = false;
-        }
-        if (IsDefusing)
-        {
-           
-            DefuseTime -= Time.deltaTime;
-            meter.Defuse(DefuseTime);
-            Debug.Log(DefuseTime);
-            if (DefuseTime <= 3)
-            {
-                IsHalf = true;
-            }
-
-            cc.WalkAble = false;
-            cc.AbilityAble = false;
-            rc.CanShoot = false;
-        }
-
+    
        
         if (Input.GetKeyUp(KeyCode.Alpha4))
         {
             cc.WalkAble = true;
             cc.AbilityAble = true;
             rc.CanShoot = true;
-            IsPlanting = false;
-            IsDefusing = false; 
+  
 
             if (IsHalf)
             {
-                DefuseTime = 3;
+                DefuseTime = 2;
             }
             else if (!IsHalf)
             {
-                DefuseTime = 6;
+                DefuseTime = 4;
             }
 
-            PlantTime = 4;
+            PlantTime = 5;
 
             meter.MeterInactive();
 
@@ -131,7 +120,7 @@ public class PlantAndDefuse : MonoBehaviourPun
             if (DefuseTime <= 0)
             {
 
-                disturber = GameObject.Find("Disturber(Clone)").GetComponent<Disturber>();
+                
                 disturber.Defuse();
                 meter.MeterInactive();
                 HasDefuse = true;

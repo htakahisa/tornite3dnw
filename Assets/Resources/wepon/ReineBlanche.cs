@@ -6,7 +6,7 @@ using Photon.Pun;
 public class ReineBlanche {
 
     float rate = 0.7f;
-    int damage = 75;
+    int damage = 105;
     int headdamage = 155;
     int magazine = 6;
     bool auto = false;
@@ -14,7 +14,7 @@ public class ReineBlanche {
     bool zoomable = true;
     float zoomratio = 50;
     bool accuracy = true;
-    float PeekingSpeed = 0.3f;
+    float PeekingSpeed = 0.2f;
     void Start() {
 
     }

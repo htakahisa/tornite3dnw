@@ -87,6 +87,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private Coroutine currentCoroutine = null;
 
 
+    private float weaponspeed = 1;
 
     /** 棒の上り下り */
     private bool isNearBottomBar = false; // 下のシリンダーに触れているか
@@ -135,9 +136,20 @@ public class CameraController : MonoBehaviourPunCallbacks {
         {
             PlacePinAtClickPosition();
         }
+        if (rc != null)
+        {
+            if (rc.GetWeaponNumber() == 13)
+            {
+                weaponspeed = 1.5f;
+            }
+            else
+            {
+                weaponspeed = 1f;
+            }
+        }
 
 #if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.L))
+            if (Input.GetKeyDown(KeyCode.L))
         {
              
              ability.number2 ++;
@@ -397,7 +409,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         
         // バーが近く、Cキーを押した場合に登る
-        if (isNearBottomBar && Input.GetKey(KeyCode.C) && !isClimbing)
+        if (isNearBottomBar && Input.GetMouseButton(3) && !isClimbing)
         {
             StartClimbing();
             return;
@@ -528,7 +540,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                             }
                         }
                         //rb.velocity = new Vector3(0, rb.velocity.y, 0);  // 速度リセット
-                        this.speed = 0.04f * ratio * servicespeed;
+                        this.speed = 0.04f * ratio * servicespeed * weaponspeed;
                         hasAppliedAirMove = 0;
                         lastMoveInput = Vector3.zero;
 
@@ -573,7 +585,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                                 }
                             }
                             //rb.velocity = new Vector3(0, rb.velocity.y, 0);  // 速度リセット
-                            this.speed = 0.04f * ratio * servicespeed;
+                            this.speed = 0.04f * ratio * servicespeed * weaponspeed;
                             lastMoveInput = moveInput;
                         }
                         //// 修正後の移動方向でキャラクターを移動
@@ -1122,7 +1134,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
         RayController.rc.Classic();
-        StartCoroutine(ChangeServiceSpeed(1.5f,15,1.3f));
+        StartCoroutine(ChangeServiceSpeed(2.0f,15,1.3f));
 
     }
 
@@ -1149,8 +1161,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
         yield return new WaitForSeconds(duration);
 
         // servicespeedを1に戻す
-        servicespeed = 0.9f;
-        jumpPower = 1;
+        servicespeed = 1f;
+        jumpPower = 0.9f;
         IsKamaitachi = false;
     }
 

@@ -96,9 +96,7 @@ GameObject:
   - component: {fileID: 4562964003885551995}
   - component: {fileID: 7300227330080908876}
   - component: {fileID: -6625064257015239715}
-  - component: {fileID: 4492947342892652111}
   - component: {fileID: -8068356604257844262}
-  - component: {fileID: 3326510880818402835}
   - component: {fileID: 135232163139387656}
   - component: {fileID: -3336425344243634317}
   m_Layer: 13
@@ -192,18 +190,6 @@ MonoBehaviour:
   explodedPref: {fileID: 2341114065519818751, guid: cc7f421a376befb4fa85fa66b8d8afc5, type: 3}
   startSe: {fileID: 8300000, guid: 57cc14618fc320742a8a4e6c8b60f6a0, type: 3}
   explodeSe: {fileID: 8300000, guid: 7d2fbf2f210a55142955f6b3c7323979, type: 3}
---- !u!114 &4492947342892652111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5598690574410042504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0520b5e80e0a1c94ba31c6b5cbdde900, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-8068356604257844262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,19 +206,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!65 &3326510880818402835
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5598690574410042504}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 1.2804981, z: 2}
-  m_Center: {x: 0, y: 0.14024907, z: 0}
 --- !u!54 &135232163139387656
 Rigidbody:
   m_ObjectHideFlags: 0

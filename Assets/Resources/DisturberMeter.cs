@@ -25,14 +25,21 @@ public class DisturberMeter : MonoBehaviour
     public void Defuse(float DefuseTime)
     {
         meter.SetActive(true);
-        meterslider.value = (6 - DefuseTime) / 6;
+        meterslider.value = (4 - DefuseTime) / 4;
         
     }
     public void Plant(float PlantTime)
     {
         meter.SetActive(true);
-        meterslider.value = (4 - PlantTime) / 4;
+        meterslider.value = (5 - PlantTime) / 5;
         
+    }
+
+    public void Collect(float CollectTime, float AllTime)
+    {
+        meter.SetActive(true);
+        meterslider.value =  CollectTime / AllTime;
+
     }
 
     public void MeterInactive()

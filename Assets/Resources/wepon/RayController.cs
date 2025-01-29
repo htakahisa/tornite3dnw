@@ -78,8 +78,10 @@ public class RayController : MonoBehaviourPun {
 
     private float PeekingSpeed = 0;
 
+    private int SaveMagazine;
+    private int SaveAbilityMagazine;
 
-
+    private string UseAbilityWeapon = "";
 
     // Start is called before the first frame update
     void Start() {
@@ -106,6 +108,7 @@ public class RayController : MonoBehaviourPun {
         duelist = new Duelist();
         yor = new Yor();
         blackbell = new BlackBell();
+       
 
         if (MapManager.mapmanager.GetMapName() == "DuelLand")
         {
@@ -151,6 +154,70 @@ public class RayController : MonoBehaviourPun {
 
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+
+            if (!CanShoot)
+            {
+                return;
+            }
+            if (currentWeaponIndex == 11 || currentWeaponIndex == 12)
+            {
+                SaveAbilityMagazine = Magazinesize;
+            }
+            else
+            {
+                SaveMagazine = Magazinesize;
+            }
+            cam.fieldOfView = 80;
+            IsZooming = false;
+            Knife();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (!CanShoot)
+            {
+                return;
+            }
+
+            if(UseAbilityWeapon == "")
+            {
+                return;
+            }
+
+            if (currentWeaponIndex == 11 || currentWeaponIndex == 12)
+            {
+                SaveAbilityMagazine = Magazinesize;
+            }
+            else
+            {
+                SaveMagazine = Magazinesize;
+            }
+            cam.fieldOfView = 80;
+            Invoke(UseAbilityWeapon, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (!CanShoot)
+            {
+                return;
+            }
+
+   
+            if (currentWeaponIndex == 11 || currentWeaponIndex == 12)
+            {
+                SaveAbilityMagazine = Magazinesize;
+            }
+            else
+            {
+                SaveMagazine = Magazinesize;
+            }
+            Debug.Log(UseWepon);
+            cam.fieldOfView = 80;
+            Invoke(UseWepon,0);
+        }
 
 
         if (ZoomAble)
@@ -179,6 +246,10 @@ public class RayController : MonoBehaviourPun {
 
         if ((Auto && HullAuto()) || (!Auto && SemiAuto())) {
 
+            if(currentWeaponIndex == 13)
+            {
+                return;
+            }
 
             Fire();
 
@@ -201,17 +272,20 @@ public class RayController : MonoBehaviourPun {
 
     private IEnumerator Zoom()
     {
+        CanShoot = false;
         for (float zoom = 80 - ZoomRatio; ZoomRatio < cam.fieldOfView;)
         {
             if (!Input.GetMouseButton(1))
             {
                 cam.fieldOfView = 80;
+                CanShoot = true;
                 yield break;
             }
             cam.fieldOfView -= 1;
             yield return new WaitForSeconds(PeekingSpeed / zoom);
         }
-            IsZooming = true;
+        CanShoot = true;
+        IsZooming = true;
     }
 
         private void Fire()
@@ -229,7 +303,7 @@ public class RayController : MonoBehaviourPun {
                 mzt.text = "écíeêî " + Magazinesize;
             }
 
-            if(UseWepon.Equals("yor"))
+            if(currentWeaponIndex == 11)
             {
                 camcon.Boost(0.5f, -5);
             }
@@ -344,12 +418,19 @@ public class RayController : MonoBehaviourPun {
         if (CanShoot) {
 
             if (Magazinesize >= 1) {
+                bool sound = false;
                 // for Mischief
                 if (currentWeaponIndex == 7)
                 {
                     sm.PlaySound("shoot_mischief");
+                    sound = true;
                 }
-                else
+                if (currentWeaponIndex == 8)
+                {
+                    sm.PlaySound("shoot_noel");
+                    sound = true;
+                }
+                if(sound == false)
                 {
                     sm.PlaySound("shoot");
                 }
@@ -423,8 +504,8 @@ public class RayController : MonoBehaviourPun {
         Damage = classic.GetDamage();
         HeadDamage = classic.GetHeadDamage();
         RateDeltaTime = classic.GetRate();
-        Magazinesize = classic.GetMagazine();
-        MaxMagazine = Magazinesize;
+        Magazinesize =  SaveMagazine;
+        MaxMagazine = classic.GetMagazine();
         ReloadTime = classic.GetReloadTime();
         yRecoil = classic.GetYRecoil();
         xRecoil = 0;
@@ -432,12 +513,17 @@ public class RayController : MonoBehaviourPun {
         burst = 0;
         burstrate = 0;
 
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            Magazinesize = classic.GetMagazine();
+        }
+
         Auto = classic.GetAuto();
         ZoomAble = false;
         UnZoomAccuracy = classic.GetUnZoomAccuracy();
 
 
-        this.UseWepon = "classic";
+        this.UseWepon = "Classic";
         if (mzt != null) {
             mzt.text = "écíeêî " + Magazinesize;
         }
@@ -454,22 +540,27 @@ public class RayController : MonoBehaviourPun {
         Damage = jawkha.GetDamage();
         HeadDamage = jawkha.GetHeadDamage();
         RateDeltaTime = jawkha.GetRate();
-        Magazinesize = jawkha.GetMagazine();
-        MaxMagazine = Magazinesize;
+        Magazinesize =  SaveMagazine;
+        MaxMagazine = jawkha.GetMagazine();
         ReloadTime = jawkha.GetReloadTime();
         yRecoil = jawkha.GetYRecoil();
         xRecoil = jawkha.GetXRecoil();
         punch = jawkha.GetPunch();
-        burst = 0;
-        burstrate = 0;
-        PeekingSpeed = 0;
+        burst = jawkha.GetBurst();
+        burstrate = jawkha.GetBurstRate();
+        PeekingSpeed = jawkha.GetPeekingSpeed();
+
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            Magazinesize = jawkha.GetMagazine();
+        }
 
         Auto = jawkha.GetAuto();
         ZoomAble = jawkha.GetZoomAble();
         ZoomRatio = jawkha.GetZoomRatio();
         UnZoomAccuracy = jawkha.GetUnZoomAccuracy();
 
-        this.UseWepon = "jawkha";
+        this.UseWepon = "JawKha";
         if (mzt != null)
         {
             mzt.text = "écíeêî " + Magazinesize;
@@ -487,8 +578,8 @@ public class RayController : MonoBehaviourPun {
         Damage = mistake.GetDamage();
         HeadDamage = mistake.GetHeadDamage();
         RateDeltaTime = mistake.GetRate();
-        Magazinesize = mistake.GetMagazine();
-        MaxMagazine = Magazinesize;
+        Magazinesize =  SaveMagazine;
+        MaxMagazine = mistake.GetMagazine();
         ReloadTime = mistake.GetReloadTime();
         yRecoil = mistake.GetYRecoil();
         xRecoil = 0;
@@ -497,11 +588,16 @@ public class RayController : MonoBehaviourPun {
         burstrate = 0;
         PeekingSpeed = 0;
 
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            Magazinesize = mistake.GetMagazine();
+        }
+
         Auto = mistake.GetAuto();
         ZoomAble = false;
         UnZoomAccuracy = mistake.GetUnZoomAccuracy();
 
-        this.UseWepon = "mistake";
+        this.UseWepon = "Mistake";
         if (mzt != null) {
             mzt.text = "écíeêî " + Magazinesize;
         }
@@ -517,8 +613,8 @@ public class RayController : MonoBehaviourPun {
         Damage = silver.GetDamage();
         HeadDamage = silver.GetHeadDamage();
         RateDeltaTime = silver.GetRate();
-        Magazinesize = silver.GetMagazine();
-        MaxMagazine = Magazinesize;
+        Magazinesize =  SaveMagazine;
+        MaxMagazine = silver.GetMagazine();
         ReloadTime = silver.GetReloadTime();
         yRecoil = silver.GetYRecoil();
         xRecoil = 0;
@@ -531,7 +627,12 @@ public class RayController : MonoBehaviourPun {
         ZoomAble = false;
         UnZoomAccuracy = silver.GetUnZoomAccuracy();
 
-        this.UseWepon = "silver";
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            Magazinesize = silver.GetMagazine();
+        }
+
+        this.UseWepon = "Silver";
         if (mzt != null) {
             mzt.text = "écíeêî " + Magazinesize;
         }
@@ -548,8 +649,8 @@ public class RayController : MonoBehaviourPun {
         Damage = pegasus.GetDamage();
         HeadDamage = pegasus.GetHeadDamage();
         RateDeltaTime = pegasus.GetRate();
-        Magazinesize = pegasus.GetMagazine();
-        MaxMagazine = Magazinesize;
+        Magazinesize =  SaveMagazine;
+        MaxMagazine = pegasus.GetMagazine();
         ReloadTime = pegasus.GetReloadTime();
         yRecoil = pegasus.GetYRecoil();
         xRecoil = pegasus.GetXRecoil();
@@ -563,7 +664,12 @@ public class RayController : MonoBehaviourPun {
         ZoomRatio = pegasus.GetZoomRatio();
         UnZoomAccuracy = pegasus.GetUnZoomAccuracy();
 
-        this.UseWepon = "pegasus";
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            Magazinesize = pegasus.GetMagazine();
+        }
+
+        this.UseWepon = "Pegasus";
         if (mzt != null) {
             mzt.text = "écíeêî " + Magazinesize;
         }
@@ -580,8 +686,8 @@ public class RayController : MonoBehaviourPun {
         Damage = stella.GetDamage();
         HeadDamage = stella.GetHeadDamage();
         RateDeltaTime = stella.GetRate();
-        Magazinesize = stella.GetMagazine();
-        MaxMagazine = Magazinesize;
+        Magazinesize =  SaveMagazine;
+        MaxMagazine = stella.GetMagazine();
         ReloadTime = stella.GetReloadTime();
         yRecoil = stella.GetYRecoil();
         xRecoil = stella.GetXRecoil();
@@ -595,7 +701,12 @@ public class RayController : MonoBehaviourPun {
         ZoomRatio = stella.GetZoomRatio();
         UnZoomAccuracy = stella.GetUnZoomAccuracy();
 
-        this.UseWepon = "stella";
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            Magazinesize = stella.GetMagazine();
+        }
+
+        this.UseWepon = "Stella";
         if (mzt != null) {
             mzt.text = "écíeêî " + Magazinesize;
         }
@@ -613,8 +724,8 @@ public class RayController : MonoBehaviourPun {
         Damage = rapetter.GetDamage();
         HeadDamage = rapetter.GetHeadDamage();
         RateDeltaTime = rapetter.GetRate();
-        Magazinesize = rapetter.GetMagazine();
-        MaxMagazine = Magazinesize;
+        Magazinesize =  SaveMagazine;
+        MaxMagazine = rapetter.GetMagazine();
         ReloadTime = rapetter.GetReloadTime();
         yRecoil = rapetter.GetYRecoil();
         xRecoil = rapetter.GetXRecoil();
@@ -628,7 +739,12 @@ public class RayController : MonoBehaviourPun {
         ZoomRatio = rapetter.GetZoomRatio();
         UnZoomAccuracy = rapetter.GetUnZoomAccuracy();
 
-        this.UseWepon = "rapetter";
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            Magazinesize = rapetter.GetMagazine();
+        }
+
+        this.UseWepon = "Rapetter";
         if (mzt != null)
         {
             mzt.text = "écíeêî " + Magazinesize;
@@ -645,8 +761,8 @@ public class RayController : MonoBehaviourPun {
         Damage = mischief.GetDamage();
         HeadDamage = mischief.GetHeadDamage();
         RateDeltaTime = mischief.GetRate();
-        Magazinesize = mischief.GetMagazine();
-        MaxMagazine = Magazinesize;
+        Magazinesize =  SaveMagazine;
+        MaxMagazine = mischief.GetMagazine();
         ReloadTime = mischief.GetReloadTime();
         yRecoil = mischief.GetYRecoil();
         xRecoil = mischief.GetXRecoil();
@@ -661,7 +777,12 @@ public class RayController : MonoBehaviourPun {
         ZoomRatio = mischief.GetZoomRatio();
         UnZoomAccuracy = mischief.GetUnZoomAccuracy();
 
-        this.UseWepon = "mischief";
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            Magazinesize = mischief.GetMagazine();
+        }
+
+        this.UseWepon = "Mischief";
         if (mzt != null)
         {
             mzt.text = "écíeêî " + Magazinesize;
@@ -677,8 +798,8 @@ public class RayController : MonoBehaviourPun {
         Damage = noel.GetDamage();
         HeadDamage = noel.GetHeadDamage();
         RateDeltaTime = noel.GetRate();
-        Magazinesize = noel.GetMagazine();
-        MaxMagazine = Magazinesize;
+        Magazinesize = SaveMagazine;
+        MaxMagazine = noel.GetMagazine(); 
         ReloadTime = noel.GetReloadTime();
         yRecoil = noel.GetYRecoil();
         xRecoil = noel.GetXRecoil();
@@ -692,7 +813,12 @@ public class RayController : MonoBehaviourPun {
         ZoomRatio = noel.GetZoomRatio();
         UnZoomAccuracy = noel.GetUnZoomAccuracy();
 
-        this.UseWepon = "noel";
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            Magazinesize = noel.GetMagazine();
+        }
+
+        this.UseWepon = "Noel";
         if (mzt != null) {
             mzt.text = "écíeêî " + Magazinesize;
         }
@@ -707,10 +833,10 @@ public class RayController : MonoBehaviourPun {
         Damage = reine.GetDamage();
         HeadDamage = reine.GetHeadDamage();
         RateDeltaTime = reine.GetRate();
-        Magazinesize = reine.GetMagazine();
-        MaxMagazine = Magazinesize;
+        Magazinesize =  SaveMagazine;
+        MaxMagazine = reine.GetMagazine();
         ReloadTime = reine.GetReloadTime();
-        yRecoil = 0;
+        yRecoil = 5;
         xRecoil = 0;
         punch = 0;
         burst = 0;
@@ -722,7 +848,12 @@ public class RayController : MonoBehaviourPun {
         ZoomRatio = reine.GetZoomRatio();
         UnZoomAccuracy = reine.GetUnZoomAccuracy();
 
-        this.UseWepon = "reineblanche";
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            Magazinesize = reine.GetMagazine();
+        }
+
+        this.UseWepon = "Reine";
         if (mzt != null) {
             mzt.text = "écíeêî " + Magazinesize;
         }
@@ -737,22 +868,27 @@ public class RayController : MonoBehaviourPun {
         Damage = duelist.GetDamage();
         HeadDamage = duelist.GetHeadDamage();
         RateDeltaTime = duelist.GetRate();
-        Magazinesize = duelist.GetMagazine();
-        MaxMagazine = Magazinesize;
+        Magazinesize = SaveMagazine;
+        MaxMagazine = duelist.GetMagazine();
         ReloadTime = duelist.GetReloadTime();
-        yRecoil = 0;
+        yRecoil = 8;
         xRecoil = 0;
         punch = 0;
         burst = 0;
         burstrate = 0;
         PeekingSpeed = duelist.GetPeekingSpeed();
 
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            Magazinesize = duelist.GetMagazine();
+        }
+
         Auto = duelist.GetAuto();
         ZoomAble = duelist.GetZoomAble();
         ZoomRatio = duelist.GetZoomRatio();
         UnZoomAccuracy = duelist.GetUnZoomAccuracy();
 
-        this.UseWepon = "duelist";
+        this.UseWepon = "Duelist";
         if (mzt != null) {
             mzt.text = "écíeêî " + Magazinesize;
         }
@@ -767,8 +903,8 @@ public class RayController : MonoBehaviourPun {
         Damage = yor.GetDamage();
         HeadDamage = yor.GetHeadDamage();
         RateDeltaTime = yor.GetRate();
-        Magazinesize = yor.GetMagazine();
-        MaxMagazine = Magazinesize;
+        Magazinesize = SaveAbilityMagazine;
+        MaxMagazine = yor.GetMagazine();
         ReloadTime = yor.GetReloadTime();
         yRecoil = yor.GetYRecoil();
         xRecoil = 0;
@@ -777,42 +913,81 @@ public class RayController : MonoBehaviourPun {
         burstrate = 0;
         PeekingSpeed = 0;
 
+        if (UseAbilityWeapon == "")
+        {
+            Magazinesize = yor.GetMagazine();
+        }
+
         Auto = yor.GetAuto();
         ZoomAble = yor.GetZoomAble();
         ZoomRatio = yor.GetZoomRatio();
         UnZoomAccuracy = yor.GetUnZoomAccuracy();
 
-        this.UseWepon = "yor";
+
+        this.UseAbilityWeapon = "Yor";
         if (mzt != null) {
             mzt.text = "écíeêî " + Magazinesize;
         }
       
     }
     public void BlackBell() {
+       
         currentWeaponIndex = 12;
         SwitchWeapon(currentWeaponIndex);
 
         Damage = blackbell.GetDamage();
         HeadDamage = blackbell.GetHeadDamage();
         RateDeltaTime = blackbell.GetRate();
-        Magazinesize = blackbell.GetMagazine();
-        MaxMagazine = Magazinesize;
+        Magazinesize =  SaveAbilityMagazine;
+        MaxMagazine = blackbell.GetMagazine();
         ReloadTime = blackbell.GetReloadTime();
-        yRecoil = 0;
+        yRecoil = 5;
         xRecoil = 0;
         punch = 0;
         burst = 0;
         burstrate = 0;
         PeekingSpeed = blackbell.GetPeekingSpeed();
 
+        if (UseAbilityWeapon == "")
+        {
+            Magazinesize = blackbell.GetMagazine();
+        }
+
         Auto = blackbell.GetAuto();
         ZoomAble = blackbell.GetZoomAble();
         ZoomRatio = blackbell.GetZoomRatio();
         UnZoomAccuracy = blackbell.GetUnZoomAccuracy();
 
-        this.UseWepon = "blackbell";
+        this.UseAbilityWeapon = "BlackBell";
         if (mzt != null) {
             mzt.text = "écíeêî " + Magazinesize;
+        }
+
+    }
+    public void Knife()
+    {
+        currentWeaponIndex = 13;
+        SwitchWeapon(currentWeaponIndex);
+
+        Damage = 0;
+        HeadDamage = 0;
+        RateDeltaTime = 0;
+        ReloadTime = 0;
+        yRecoil = 0;
+        xRecoil = 0;
+        punch = 0;
+        burst = 0;
+        burstrate = 0;
+        PeekingSpeed = 0;
+
+        Auto = false;
+        ZoomAble = false;
+        ZoomRatio = 0;
+        UnZoomAccuracy = false;
+
+        if (mzt != null)
+        {
+            mzt.text = "Knife";
         }
 
     }
@@ -829,7 +1004,10 @@ public class RayController : MonoBehaviourPun {
     }
 
 
-
+    public int GetWeaponNumber()
+    {
+        return currentWeaponIndex;
+    }
 
 
 

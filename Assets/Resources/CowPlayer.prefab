@@ -1819,7 +1819,9 @@ MonoBehaviour:
   detect: {fileID: 8300000, guid: e3f3bb0a21e448743b637072cd70e8ed, type: 3}
   detectstart: {fileID: 8300000, guid: a2da33802337be34388134616d92873e, type: 3}
   arte: {fileID: 8300000, guid: df29ad84ccdb2304ca452f7ba312a754, type: 3}
-  shoot_mischief: {fileID: 8300000, guid: 38fadb69d55ae7044b27953e35e746d6, type: 3}
+  shoot_mischief: {fileID: 8300000, guid: 77ed3016cda16ee4381d3c5c81c5e891, type: 3}
+  shoot_noel: {fileID: 8300000, guid: 38fadb69d55ae7044b27953e35e746d6, type: 3}
+  wolfbark: {fileID: 8300000, guid: e2ed3403102e1d04b8af932c28d72e4b, type: 3}
 --- !u!82 &4909231365802194501
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2022,7 +2024,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanPlant: 0
-  CanDefuse: 0
 --- !u!1 &4665059870376447102
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ public class mischief {
     bool zoomable = false;
     float zoomratio = 80;
     bool accuracy = true;
-    float YRecoil = 0.5f;
+    float YRecoil = 0.6f;
     float XRecoil = 0.17f;
     float PeekingSpeed = 0f;
     float punch = 3f;
