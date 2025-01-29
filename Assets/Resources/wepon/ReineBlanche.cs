@@ -14,7 +14,7 @@ public class ReineBlanche {
     bool zoomable = true;
     float zoomratio = 50;
     bool accuracy = true;
-    float PeekingSpeed = 0.2f;
+    float PeekingSpeed = 0.15f;
     void Start() {
 
     }

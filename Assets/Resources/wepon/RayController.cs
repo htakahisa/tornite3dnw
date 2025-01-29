@@ -395,6 +395,10 @@ public class RayController : MonoBehaviourPun {
         {
             yield break;
         }
+        if(currentWeaponIndex == 13)
+        {
+            yield break;
+        }
         Debug.Log("Reloading...");
 
         CanShoot = false;
