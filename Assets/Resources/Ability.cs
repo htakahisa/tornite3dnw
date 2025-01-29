@@ -143,12 +143,7 @@ public class Ability : MonoBehaviourPun {
             Spend(1, 1);
 
         }
-        if (able.Equals("Cat"))
-        {
-            cc.Cat();
-            Spend(1, 1);
-
-        }
+    
         if (able.Equals("Eagle")) {
             cc.Eagle();
             Spend(2, 1);
