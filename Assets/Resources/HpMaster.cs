@@ -34,9 +34,7 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
     // Update is called once per frame
     void Update()
     {
-        
 
-    
     }
 
     public void LastCostChange(int number)
@@ -53,6 +51,7 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
     {
         hp1 = 100;
         hp2 = 100;
+        rm = RoundManager.rm;
     }
 
 
@@ -71,7 +70,7 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
             hp2 -= damage;
         }
 
-        Debug.Log(damage);
+
 
         photonView.RPC("SynchronizeHp", RpcTarget.All, hp1, hp2);
 
@@ -79,10 +78,7 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
 
 
 
-        //Debug.Log(damage);
-        //rmo = GameObject.Find("Roundmanager");
-
-        //rm = rmo.GetComponent<RoundManager>();
+     
 
 
 
@@ -115,7 +111,7 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
                 ResultSynchronizer.rs.SendResult(2);
                 Camera.main.transform.parent.GetComponent<CameraController>().Dead();
             }
-
+                
         }
         else if (this.hp2 <= 0)
         {
@@ -124,11 +120,10 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
                 HasKill = true;
                 ResultSynchronizer.rs.SendResult(1);
                 Camera.main.transform.parent.GetComponent<CameraController>().Dead();
-
+                    
             }
-
+                
         }
-
     }
 
 
