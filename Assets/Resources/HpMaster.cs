@@ -129,7 +129,7 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
 
 
 
-        public float GetHp(int player) {
+    public float GetHp(int player) {
         if (player == 1) {
             return hp1;
         } else if (player == 2) {

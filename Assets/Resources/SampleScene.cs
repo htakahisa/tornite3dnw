@@ -14,6 +14,10 @@ public class SampleScene : MonoBehaviourPunCallbacks {
     RoundManager rm;
 
     private void Start() {
+
+        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "jp"; // 日本リージョンを固定
+        PhotonNetwork.ConnectUsingSettings();
+
         // PhotonServerSettingsの設定内容を使ってマスターサーバーへ接続する
         PhotonNetwork.ConnectUsingSettings();
         Invoke("InstanceAvatar", 2f);
@@ -22,6 +26,8 @@ public class SampleScene : MonoBehaviourPunCallbacks {
     private void Awake() {
         
     }
+
+
 
     // マスターサーバーへの接続が成功した時に呼ばれるコールバック
     public override void OnConnectedToMaster() {
@@ -36,6 +42,17 @@ public class SampleScene : MonoBehaviourPunCallbacks {
         //InstanceAvatar();
 
 
+    }
+
+    public void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.Log("Disconnected due to: " + cause);
+
+        if (cause == DisconnectCause.ClientTimeout)
+        {
+            Debug.Log("Trying to reconnect...");
+            PhotonNetwork.Reconnect(); // 自動的に再接続
+        }
     }
 
     [PunRPC]

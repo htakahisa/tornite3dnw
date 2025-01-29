@@ -12,8 +12,6 @@ public class CatEffect : MonoBehaviour {
     [SerializeField]
     private GameObject effect3;
 
-    [SerializeField]
-    private GameObject stun;
 
     private Image image;
 
@@ -28,7 +26,7 @@ public class CatEffect : MonoBehaviour {
 
     private void Awake() {
         
-        image = stun.GetComponent<Image>();
+
         pfe = this;
     }
 
