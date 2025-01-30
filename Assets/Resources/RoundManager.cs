@@ -326,7 +326,7 @@ public class RoundManager : MonoBehaviourPun {
         {
 
             //GameEnd();
-            StartLoadingScene("lounge", winnerIsA);
+            StartLoadingScene("Needless_ending", winnerIsA);
 
         }
         else
