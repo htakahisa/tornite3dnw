@@ -7,7 +7,7 @@ public class PracticeShoot : MonoBehaviour
     public LayerMask hitMask;
     public int Point = 0;
     static float NormalSensityvity = 1f;
-    float Xsensitivity = 1.5f, Ysensitivity = 1.5f;
+    float Xsensitivity = 0.5f, Ysensitivity = 0.5f;
 
     [SerializeField]
     private Camera camera;
