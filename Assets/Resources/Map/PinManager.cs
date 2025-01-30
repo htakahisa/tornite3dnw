@@ -11,13 +11,14 @@ public class PinManager : MonoBehaviour {
     private GameObject AbilityMap;
 
 
+    private KeyCode mapKey;
 
 
 
 
     private void Awake() {
 
-
+        mapKey = KeyController.Instance.Settings.MapKey;
         Map.SetActive(false);
         AbilityMap.SetActive(false);
         pm = this;
@@ -26,16 +27,17 @@ public class PinManager : MonoBehaviour {
     void Update() {
 
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (Input.GetKeyDown(mapKey))
+        {
 
             Map.SetActive(!Map.activeSelf);
             AbilityMap.SetActive(false);
         }
 
-       
 
 
-       
+
+
     }
 
    
