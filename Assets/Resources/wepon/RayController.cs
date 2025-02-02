@@ -17,6 +17,7 @@ public class RayController : MonoBehaviourPun {
     private RoundManager rmc;
 
     public float range = 200f; // Raycast‚ÌŽË’ö‹——£
+    public float kniferange = 2f; // Raycast‚ÌŽË’ö‹——£
     private float distanceToGround = 0.15f;
     private Classic classic;
     private JawKha jawkha;
@@ -43,6 +44,7 @@ public class RayController : MonoBehaviourPun {
     private float ReloadTime = 0f;
     private Camera cam;
     public bool CanShoot = true;
+    public bool MapOpening = true;
 
     private bool ZoomAble = false;
     private float ZoomRatio = 0f;
@@ -252,13 +254,17 @@ public class RayController : MonoBehaviourPun {
 
         if ((Auto && HullAuto()) || (!Auto && SemiAuto())) {
 
-            if(currentWeaponIndex == 13)
+            if(currentWeaponIndex != 13)
             {
-                return;
+                Fire();
             }
 
-            Fire();
+            
 
+        }
+        if(currentWeaponIndex == 13 && SemiAuto())
+        {
+            Stab();
         }
         if (Input.GetMouseButtonDown(0))
         {
@@ -294,8 +300,58 @@ public class RayController : MonoBehaviourPun {
         IsZooming = true;
     }
 
-        private void Fire()
+    private void Stab()
+    {
+
+        if (MapOpening)
         {
+            return;
+        }
+        if (!CanShoot)
+        {
+            return;
+        }
+
+
+
+            GameObject target = StabHit();
+
+
+            if (target.CompareTag("Body") || target.CompareTag("Head"))
+            {
+
+
+
+
+                shoot(target, target.tag);
+
+
+
+            }
+
+            if (target.CompareTag("Head"))
+            {
+                target.GetComponentInParent<CameraController>().Recoiled(punch, punch);
+            }
+
+            if (target.CompareTag("Destructible"))
+            {
+                shoot(target, target.tag);
+            }
+
+
+
+        
+    }
+
+    private void Fire()
+    {
+
+        if (MapOpening)
+        {
+            return;
+        }
+
         if (Shootable())
         {
             //SoundManager.sm.PlaySound("shoot");
@@ -502,6 +558,37 @@ public class RayController : MonoBehaviourPun {
 
         }
         return gameObject;
+
+    }
+
+    public GameObject StabHit()
+    {
+        RaycastHit hit;
+       
+      
+
+
+
+             if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, kniferange, hitMask))
+             {
+                        if (hit.collider.gameObject.tag == "Body" || hit.collider.gameObject.tag == "Head")
+                        {
+                            PhotonNetwork.Instantiate("DamageBlood", hit.point, Quaternion.identity);
+                        }
+                        else
+                        {
+                            PhotonNetwork.Instantiate("WallHit", hit.point, Quaternion.identity);
+                        }
+                        return hit.collider.gameObject;
+
+             }
+
+
+
+        
+            
+
+       return gameObject;
 
     }
 
@@ -979,9 +1066,9 @@ public class RayController : MonoBehaviourPun {
         currentWeaponIndex = 13;
         SwitchWeapon(currentWeaponIndex);
 
-        Damage = 0;
-        HeadDamage = 0;
-        RateDeltaTime = 0;
+        Damage = 100;
+        HeadDamage = 150;
+        RateDeltaTime = 1;
         ReloadTime = 0;
         yRecoil = 0;
         xRecoil = 0;

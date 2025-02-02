@@ -52,6 +52,10 @@ public class Wolf : MonoBehaviourPun {
 
     private void OnDestroy()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         PhotonNetwork.Instantiate("WolfCollect", transform.position, transform.rotation);
     }
 

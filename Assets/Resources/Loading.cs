@@ -21,7 +21,6 @@ public class Loading : MonoBehaviourPun
     {
         if (PhotonNetwork.InRoom)
         {
-            Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
             if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
             {
                 MyMap = MapManager.mapmanager.GetMapName();

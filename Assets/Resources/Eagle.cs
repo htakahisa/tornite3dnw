@@ -43,9 +43,10 @@ public class Eagle : MonoBehaviourPun
         {
             cam.gameObject.SetActive(false);
             playerCamera.SetActive(true);
+            PhotonNetwork.Instantiate("EagleCollect", transform.position, transform.rotation);
+            PhotonNetwork.Destroy(gameObject);
         }
-        PhotonNetwork.Instantiate("EagleCollect", transform.position, transform.rotation);
-        PhotonNetwork.Destroy(gameObject);
+     
     }
 
     void Update()

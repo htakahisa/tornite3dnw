@@ -12,7 +12,7 @@ public class PinManager : MonoBehaviour {
 
 
     private KeyCode mapKey;
-
+    private MapAbility ma;
 
 
 
@@ -34,7 +34,9 @@ public class PinManager : MonoBehaviour {
             AbilityMap.SetActive(false);
         }
 
-
+            RayController.rc.MapOpening = Map.activeSelf;
+        
+        
 
 
 
@@ -66,9 +68,14 @@ public class PinManager : MonoBehaviour {
 
     public void Hide() {
 
+        ma = Map.GetComponent<MapPin>().ma;
         Map.SetActive(false);
         AbilityMap.SetActive(false);
-
+        Map.GetComponent<MapPin>().CanSmoke = false;
+        Map.GetComponent<MapPin>().CanSetAqua = false;
+        pm = GetComponentInParent<PinManager>();
+        pm.Hide();
+        ma.EndAbility();
 
     }
 }

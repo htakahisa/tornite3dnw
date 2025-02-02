@@ -9,7 +9,8 @@ public class CatController : MonoBehaviour
     private NavMeshAgent agent;
     private float stepTimer = 1.1f;
 
-    //private float attackDistance = 0.2f;
+    public float attackDistance = 0.01f; // 攻撃を行う距離（ここでは0に近い距離）
+    private bool antirugcheck = false;
     //private CatEffect catEffect;
 
     private float flashDuration = 2.5f; // フラッシュの持続時間
@@ -53,32 +54,29 @@ public class CatController : MonoBehaviour
             // ターゲットに向かって移動
             agent.SetDestination(target.position);
 
-            //// ターゲットとの距離を計算
-            //float distance = Vector3.Distance(transform.position, target.position);
+            // ターゲットとの距離を計算
+            float distance = Vector3.Distance(transform.position, target.position);
 
-            
-            //// 攻撃距離以内の場合
-            //if (distance <= attackDistance)
-            //{
-            //    //Hug();
-            //}
+            // 攻撃距離以内の場合
+            if (distance <= attackDistance)
+            {
+                Hug();
+            }
         }
 
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void Hug()
     {
-        if (!collision.gameObject.tag.Equals("Me")) {
+
+        if (antirugcheck)
+        {
             return;
         }
 
-        // 衝突相手の GameObject から CatEffect を取得
-        Transform mainCamera = collision.gameObject.transform.Find("Main Camera");
-        if (mainCamera == null) {
-            return;
-        }
+        antirugcheck = true;
 
-        CatEffect targetCatEffect = mainCamera.Find("Canvas/Cat").GetComponent<CatEffect>();
+        CatEffect targetCatEffect = target.GetComponentInChildren<CatEffect>();
 
         if (targetCatEffect != null)
         {

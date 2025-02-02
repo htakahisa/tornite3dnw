@@ -1158,7 +1158,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (photonView == null || !photonView.IsMine) {
             return;
         }
-        RayController.rc.Classic();
+        RayController.rc.Knife();
         StartCoroutine(ChangeServiceSpeed(2.0f,15,1.3f));
 
     }

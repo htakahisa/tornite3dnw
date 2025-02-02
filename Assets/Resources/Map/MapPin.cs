@@ -6,8 +6,8 @@ public class MapPin : MonoBehaviourPun {
     public Camera minimapCamera;
     private Transform player;
 
-    private bool CanSmoke = false;
-    private bool CanSetAqua = false;
+    public bool CanSmoke = false;
+    public bool CanSetAqua = false;
     private PinManager pm;
     private Ability ability;
     private SoundManager sm;
@@ -15,7 +15,7 @@ public class MapPin : MonoBehaviourPun {
 
 
     [SerializeField]
-    private MapAbility ma;
+    public MapAbility ma;
 
 
     private void Update(){
@@ -30,13 +30,10 @@ public class MapPin : MonoBehaviourPun {
 
 
                 Vector3 position = ma.Position();
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && ability.number2 >= 1)
             {
                 PhotonNetwork.Instantiate("BlueLightSmoke", position, Quaternion.identity);
-                CanSmoke = false;
-                pm = GetComponentInParent<PinManager>();
-                pm.Hide();
-                ma.EndAbility();
+              
                 ability.Spend(2, 1);
             }
 
@@ -51,14 +48,12 @@ public class MapPin : MonoBehaviourPun {
 
 
                 Vector3 position = ma.Position();
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && ability.number2 >= 1)
             {
                 PhotonNetwork.Instantiate("Aquaring", position, Quaternion.identity);
 
-                CanSetAqua = false;
-                pm = GetComponentInParent<PinManager>();
-                pm.Hide();
-                ma.EndAbility();
+              
+               
                 ability.Spend(2, 1);
             }
             }
@@ -70,7 +65,7 @@ public class MapPin : MonoBehaviourPun {
 
 
 
-        public void BlueLight() {
+    public void BlueLight() {
 
         CanSmoke = true;
         ma.transform.position = new Vector3(0, 80000, 0);
