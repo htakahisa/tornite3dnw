@@ -627,6 +627,9 @@ public class RayController : MonoBehaviourPun {
 
 
     }
+
+    
+
     public void JawKha()
     {
 

@@ -18,7 +18,7 @@ public class Stella{
     float XRecoil = 0.5f;
     int Burst = 3;
     float BurstRate = 0.3f;
-    float PeekingSpeed = 0.08f;
+    float PeekingSpeed = 0.07f;
     float punch = 1f;
 
     void Start() {

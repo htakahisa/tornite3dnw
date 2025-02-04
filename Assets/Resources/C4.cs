@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class C4 : MonoBehaviourPunCallbacks
 {
-
+    private GameObject enemy;
     private GameObject instantiatedPrefab;
     // Start is called before the first frame update
     void Start()
     {
-        
+        enemy = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -20,6 +20,11 @@ public class C4 : MonoBehaviourPunCallbacks
         {
             gameObject.layer = LayerMask.NameToLayer("Me");
             transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Me");
+        }
+        float distance = Vector3.Distance(transform.position, enemy.transform.position);
+        if(distance <= 0.5)
+        {
+            OnActive();
         }
     }
 

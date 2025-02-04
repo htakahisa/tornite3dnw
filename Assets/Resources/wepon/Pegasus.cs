@@ -16,7 +16,7 @@ public class Pegasus {
     bool accuracy = true;
     float YRecoil = 2f;
     float XRecoil = 2f;
-    float PeekingSpeed = 0.06f;
+    float PeekingSpeed = 0.04f;
     void Start() {
 
     }

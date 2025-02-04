@@ -170,37 +170,25 @@ public class CameraController : MonoBehaviourPunCallbacks {
         {
             if (ability != null && ability.GetAbility(2) == "Katarina") { 
 
-            if (PhaseManager.pm.GetPhase().Equals("Battle"))
+                if (PhaseManager.pm.GetPhase().Equals("Battle"))
                 {
                     katarinaInterval += Time.deltaTime;
-                    if (katarinaInterval >= 0.5f)
+                    if (katarinaInterval >= 1f)
                     {
-                        ability.Collect(2, 2);
+                        ability.Collect(2, 1);
                         katarinaInterval = 0f;
                     }
-                    if (Input.GetKeyDown(KeyCode.Q) && ability.number2 >= 10)
-                    {
-                        KatarinaSmoke();
-                        ability.Spend(2, 10);
-                    }
+                   
 
-                    if (Input.GetKeyDown(KeyCode.F) && ability.number2 >= 30)
+                    if (Input.GetKeyDown(KeyCode.Q) && ability.number2 >= 10)
                     {
                         C4();
 
                     }
-                    if (Input.GetKeyDown(KeyCode.X) && ability.number2 >= 100)
-                    {
-                        Debug.Log("敵を検出");
-                        BattleData.bd.Detect("enemy\ndetected");
-                        // 敵に対する処理をここに追加
-                        ScanCamera.sc.ActiveScan();
-                        ability.Spend(2, 50);
-                        Invoke("DestroyPun", 5f);
-                    }
+                 
                 }
+            }
         }
-    }
 
 
         // Escapeキーでマウスのロックと表示を切り替える
@@ -864,7 +852,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         currentCoroutine = null;
         abilitycheck.SetActive(false);
         PhotonNetwork.Instantiate("C4", hit.point, Quaternion.identity);
-        ability.Spend(2, 20);
+        ability.Spend(2, 10);
     }
 
 

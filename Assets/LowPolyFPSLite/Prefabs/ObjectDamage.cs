@@ -32,7 +32,7 @@ public class ObjectDamage : MonoBehaviourPun, IPunObservable
 
         if(gameObject.name == "wood")
         {
-            gameObject.transform.localScale += new Vector3(damage / 300.00f, damage / 300.00f, damage / 300.00f);
+            gameObject.transform.localScale += new Vector3(damage / 100.00f, damage / 100.00f, damage / 100.00f);
         }
     }
 

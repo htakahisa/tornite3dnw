@@ -44,7 +44,7 @@ public class Wolf : MonoBehaviourPun {
             }
         }
     }
-
+    
     private void Destroy() {
 
         PhotonNetwork.Destroy(gameObject);

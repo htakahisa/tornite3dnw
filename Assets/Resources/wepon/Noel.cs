@@ -16,7 +16,7 @@ public class Noel {
     bool accuracy = true;
     float YRecoil = 1.8f;
     float XRecoil = 0.8f;
-    float PeekingSpeed = 0.1f;
+    float PeekingSpeed = 0.08f;
 
     void Start() {
 
