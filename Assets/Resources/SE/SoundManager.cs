@@ -62,10 +62,7 @@ public class SoundManager : MonoBehaviourPun {
     [PunRPC]
     public void PlayMySound(string type) {
 
-        if (!photonView.IsMine) {
-            return;
-        }
-        
+       
         
 
         if (type.Equals("walk")) {
