@@ -30,7 +30,7 @@ public class Molesta : MonoBehaviourPunCallbacks
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Head") && photonView.IsMine)
+        if (other.gameObject.CompareTag("Head"))
         {
             other.gameObject.GetComponentInParent<CameraController>().Stuned(1, 0.1f);
             Debug.Log($"Player {other.gameObject.name} touched the wall!");

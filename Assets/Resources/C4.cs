@@ -11,6 +11,7 @@ public class C4 : MonoBehaviourPunCallbacks
     void Start()
     {
         enemy = GameObject.FindGameObjectWithTag("Player");
+        //enemy = GameObject.FindGameObjectWithTag("Me");
     }
 
     // Update is called once per frame
@@ -18,11 +19,12 @@ public class C4 : MonoBehaviourPunCallbacks
     {
         if (!photonView.IsMine)
         {
-            gameObject.layer = LayerMask.NameToLayer("Me");
-            transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Me");
+            gameObject.layer = LayerMask.NameToLayer("Ability");
+            transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Ability");
         }
         float distance = Vector3.Distance(transform.position, enemy.transform.position);
-        if(distance <= 0.5)
+        //Debug.Log(distance);
+        if(distance <= 1)
         {
             OnActive();
         }
@@ -42,8 +44,14 @@ public class C4 : MonoBehaviourPunCallbacks
         
     }
 
-  
 
+    private void OnDestroy()
+    {
+        if (photonView.IsMine)
+        {
+            Camera.main.GetComponentInParent<SoundManager>().PlayMySound("collect");
+        }
+    }
 
 
     void OnMouseOver()
@@ -56,10 +64,6 @@ public class C4 : MonoBehaviourPunCallbacks
             OnActive();
         }
 
-        // 右クリックにつき回収
-       //   if (Input.GetMouseButtonDown(1))
-      //  {
-      //      OnCancel();
-       // }
+   
     }
 }

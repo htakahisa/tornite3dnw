@@ -65,4 +65,9 @@ public class ObjectDamage : MonoBehaviourPun, IPunObservable
         }
     }
 
+    public int GetHp()
+    {
+        return Hp;
+    }
+
 }

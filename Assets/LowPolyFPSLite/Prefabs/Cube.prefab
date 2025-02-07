@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2193043890304311934}
   - component: {fileID: 2193043890304311935}
   - component: {fileID: 2193043890304311872}
+  - component: {fileID: 319016665069189813}
   m_Layer: 15
   m_Name: Cube
   m_TagString: Destructible
@@ -135,3 +136,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hp: 100
+--- !u!114 &319016665069189813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2193043890304311873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4cdee815d123b540a16f7ed2a39b06d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokense: {fileID: 8300000, guid: 15385bd87be6bee4eb6221205a0f0189, type: 3}

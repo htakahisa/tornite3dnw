@@ -38,7 +38,7 @@ public class RayController : MonoBehaviourPun {
     private int HeadDamage = 0;
     private float RateDeltaTime = 0f;
     private int Magazinesize = 0;
-    private string UseWepon = "";
+    public string UseWepon = "";
     private bool Auto = false;
     private int MaxMagazine;
     private float ReloadTime = 0f;
@@ -75,6 +75,7 @@ public class RayController : MonoBehaviourPun {
     private float punch = 0f;
     private int burst = 0;
     private float burstrate = 0;
+    private float burstingrate = 0;
 
     private float RecoilService = 1;
 
@@ -749,14 +750,15 @@ public class RayController : MonoBehaviourPun {
         Damage = pegasus.GetDamage();
         HeadDamage = pegasus.GetHeadDamage();
         RateDeltaTime = pegasus.GetRate();
+        burstingrate = pegasus.GetBurstingRate();
         Magazinesize =  SaveMagazine;
         MaxMagazine = pegasus.GetMagazine();
         ReloadTime = pegasus.GetReloadTime();
         yRecoil = pegasus.GetYRecoil();
         xRecoil = pegasus.GetXRecoil();
         punch = 0;
-        burst = 0;
-        burstrate = 0;
+        burst = pegasus.GetBurst();
+        burstrate = pegasus.GetBurstRate();
         PeekingSpeed = pegasus.GetPeekingSpeed();
 
         Auto = pegasus.GetAuto();
@@ -786,6 +788,7 @@ public class RayController : MonoBehaviourPun {
         Damage = stella.GetDamage();
         HeadDamage = stella.GetHeadDamage();
         RateDeltaTime = stella.GetRate();
+        burstingrate = stella.GetBurstingRate();
         Magazinesize =  SaveMagazine;
         MaxMagazine = stella.GetMagazine();
         ReloadTime = stella.GetReloadTime();
@@ -1176,11 +1179,11 @@ public class RayController : MonoBehaviourPun {
     {
 
        
-            for (int i = 0; i < burst; i++)
-            {
-            Fire();
-            yield return new WaitForSeconds(RateDeltaTime);
-            }
+           for (int i = 0; i < burst; i++)
+           {
+              Fire();
+              yield return new WaitForSeconds(burstingrate);
+           }
             
 
     }

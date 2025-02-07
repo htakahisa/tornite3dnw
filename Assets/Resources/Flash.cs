@@ -47,7 +47,7 @@ public class Flash : MonoBehaviour
     private void Blast()
     {
 
-        sm.PlaySound("flash");
+        sm.PlayMySound("flash");
         if (IsVisibleFrom(_renderer, Camera.main))
         {
             // レイキャストで障害物をチェック

@@ -17,6 +17,7 @@ public class Stella{
     float YRecoil = 1.5f;
     float XRecoil = 0.5f;
     int Burst = 3;
+    float BurstingRate = 0.05f;
     float BurstRate = 0.3f;
     float PeekingSpeed = 0.07f;
     float punch = 1f;
@@ -80,7 +81,10 @@ public class Stella{
     {
         return BurstRate;
     }
-
+    public float GetBurstingRate()
+    {
+        return BurstingRate;
+    }
     public float GetPeekingSpeed()
     {
         return PeekingSpeed;

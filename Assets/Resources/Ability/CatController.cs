@@ -9,7 +9,7 @@ public class CatController : MonoBehaviour
     private NavMeshAgent agent;
     private float stepTimer = 1.1f;
 
-    public float attackDistance = 0.01f; // 攻撃を行う距離（ここでは0に近い距離）
+    public float attackDistance = 0.3f; // 攻撃を行う距離（ここでは0に近い距離）
     private bool antirugcheck = false;
     //private CatEffect catEffect;
 
@@ -31,7 +31,7 @@ public class CatController : MonoBehaviour
 
         }
 
-        Invoke("Destroy", 10f);
+        Invoke("Destroy", 5f);
     }
 
     void Update()
@@ -56,7 +56,7 @@ public class CatController : MonoBehaviour
 
             // ターゲットとの距離を計算
             float distance = Vector3.Distance(transform.position, target.position);
-
+            Debug.Log(distance);
             // 攻撃距離以内の場合
             if (distance <= attackDistance)
             {

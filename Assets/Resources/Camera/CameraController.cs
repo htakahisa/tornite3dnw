@@ -664,7 +664,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     public void Stuned(float duration, float magnitude) {
 
-        photonView.RPC("PunStun", RpcTarget.Others, duration, magnitude);
+        photonView.RPC("PunStun", RpcTarget.All, duration, magnitude);
 
     }
     [PunRPC]
@@ -1065,26 +1065,19 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     public void Cat()
     {
-        Vector3 spawnPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.2f;
+        
         if (photonView == null || !photonView.IsMine)
         {
             return;
         }
 
-        // カメラの位置を取得
-        Vector3 cameraPosition = Camera.main.transform.position;
-
-        // カメラの向いている方向を取得
-        Vector3 spawnDirection = Camera.main.transform.forward;
-
-        // 基準となるスポーン位置（カメラの少し前方）
-        Vector3 baseSpawnPosition = cameraPosition + spawnDirection * 3.2f;
+        Vector3 spawnDirection = transform.position;
 
         // オブジェクトを生成
         for (int i = 0; i < 4; i++)
         {
             Vector3 offset = spawnDirection * (0.4f * i); // 前方方向に i に応じたオフセットを加える
-            PhotonNetwork.Instantiate("cat_pref", baseSpawnPosition + offset, Quaternion.LookRotation(spawnDirection));
+            PhotonNetwork.Instantiate("cat_pref", spawnDirection + offset, Quaternion.LookRotation(spawnDirection));
         }
     }
 
@@ -1147,6 +1140,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
         RayController.rc.Knife();
+        RayController.rc.UseWepon = "";
         StartCoroutine(ChangeServiceSpeed(2.0f,15,1.3f));
 
     }
@@ -1154,9 +1148,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
     void WallKickAction() {
 
         // プレイヤーの反対方向に壁キックの力を加える
-        Vector3 kickDirection = -transform.forward * 5f;
+        Vector3 kickDirection = -transform.forward * 3f;
         // 垂直方向のジャンプ速度
-        velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity);
+        velocity.y = Mathf.Sqrt(jumpPower * -1.5f * gravity);
 
         velocity += kickDirection;
         //修正

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class Mistake {
 
-    float rate = 0.65f;
+    float rate = 0.55f;
     int damage = 50;
     int headdamage = 125;
     int magazine = 6;

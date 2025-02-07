@@ -1826,6 +1826,7 @@ MonoBehaviour:
   cat2: {fileID: 8300000, guid: be045c8fe7967144991e2aa19b8d70d2, type: 3}
   cat3: {fileID: 8300000, guid: d179f2c7fddffc84caaa6dbde3b54a41, type: 3}
   cat4: {fileID: 8300000, guid: 83be1ce8a6efa4f42bed71249581fa72, type: 3}
+  collect: {fileID: 8300000, guid: 7f95f14beec6da647a8abd078b91addd, type: 3}
 --- !u!82 &4909231365802194501
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1838,7 +1839,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.466
+  m_Volume: 0.228
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1847,9 +1848,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 20
+  MaxDistance: 30
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

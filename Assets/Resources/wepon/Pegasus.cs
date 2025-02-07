@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class Pegasus {
 
-    float rate = 0.07f;
+    float rate = 0.06f;
     int damage = 20;
     int headdamage = 45;
     int magazine = 20;
@@ -15,7 +15,10 @@ public class Pegasus {
     float zoomratio = 70;
     bool accuracy = true;
     float YRecoil = 2f;
-    float XRecoil = 2f;
+    float XRecoil = 1.6f;
+    int Burst = 5;
+    float BurstingRate = 0.05f;
+    float BurstRate = 0.2f;
     float PeekingSpeed = 0.04f;
     void Start() {
 
@@ -71,6 +74,20 @@ public class Pegasus {
     public float GetPeekingSpeed()
     {
         return PeekingSpeed;
+    }
+
+    public int GetBurst()
+    {
+        return Burst;
+    }
+    public float GetBurstRate()
+    {
+        return BurstRate;
+    }
+
+    public float GetBurstingRate()
+    {
+        return BurstingRate;
     }
     public void GetStatus() {
 

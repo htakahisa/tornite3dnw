@@ -8,6 +8,7 @@ public class ResourceManager : MonoBehaviour
     public static ResourceManager resourcemanager = null;
 
     private GameObject ArteBomb;
+    private GameObject BrokenSoundManager;
 
     // Start is called before the first frame update
     void Awake()
@@ -18,7 +19,8 @@ public class ResourceManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
         }
-       
+   
+
         else
         {
             Destroy(gameObject);
@@ -32,7 +34,11 @@ public class ResourceManager : MonoBehaviour
         {
             ArteBomb = Resources.Load<GameObject>("ArteBomb");
         }
-      
+        if (BrokenSoundManager == null)
+        {
+            BrokenSoundManager = Resources.Load<GameObject>("BrokenSoundManager");
+        }
+
     }
 
     public GameObject GetObject(string name)
@@ -40,7 +46,10 @@ public class ResourceManager : MonoBehaviour
         if (name == "ArteBomb") {
             return ArteBomb;
         }
-       
+        if (name == "BrokenSoundManager")
+        {
+            return BrokenSoundManager;
+        }
 
         return null;
         

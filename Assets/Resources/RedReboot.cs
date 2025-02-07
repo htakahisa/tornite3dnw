@@ -33,17 +33,9 @@ public class RedReboot : MonoBehaviourPun
 
         if (other.CompareTag("Body") || other.CompareTag("Feet"))
         {
-            PhotonView targetPhotonView = other.gameObject.GetComponent<PhotonView>();
-
-        if (!targetPhotonView.IsMine)
-        {
-            return;
-        }
-
-
-       
+      
             GameObject HitCharacter = GetTopmostParent(other.gameObject);
-            HitCharacter.GetComponent<CameraController>().Stuned(0.05f, 0.05f);
+            HitCharacter.GetComponent<CameraController>().Stuned(0.05f, 0.2f);
 
             time += Time.deltaTime;
             if (time >= 0.5f)

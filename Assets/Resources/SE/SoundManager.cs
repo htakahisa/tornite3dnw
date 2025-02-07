@@ -33,7 +33,7 @@ public class SoundManager : MonoBehaviourPun {
     public AudioClip cat2;
     public AudioClip cat3;
     public AudioClip cat4;
-
+    public AudioClip collect;
 
 
     void Awake() {
@@ -59,7 +59,7 @@ public class SoundManager : MonoBehaviourPun {
         PlayMySound(type);
     }
 
-
+    [PunRPC]
     public void PlayMySound(string type) {
 
         if (!photonView.IsMine) {
@@ -165,121 +165,22 @@ public class SoundManager : MonoBehaviourPun {
         {
             audioSource.PlayOneShot(wolfbark);
         }
+        if (type.Equals("collect"))
+        {
+            audioSource.PlayOneShot(collect);
+        }
     }
 
     
 
 
         // RPC�ő��̃N���C�A���g�ł���ʉ���Đ�������
-        [PunRPC]
+    [PunRPC]
     void PlaySoundRPC(string type) {
         if (PhaseManager.pm.GetPhase().Equals("Battle"))
         {
-
-            if (type.Equals("walk"))
-            {
-                audioSource.PlayOneShot(walk);
-            }
-            if (type.Equals("jump"))
-            {
-                audioSource.PlayOneShot(jump);
-            }
-            if (type.Equals("shoot"))
-            {
-                audioSource.PlayOneShot(shoot);
-            }
-            if (type.Equals("shoot_mischief"))
-            {
-                audioSource.PlayOneShot(shoot_mischief);
-            }
-            if (type.Equals("shoot_noel"))
-            {
-                audioSource.PlayOneShot(shoot_noel);
-            }
-            if (type.Equals("reload"))
-            {
-                audioSource.PlayOneShot(reload);
-            }
-            if (type.Equals("noarmo"))
-            {
-                audioSource.PlayOneShot(noarmo);
-            }
-            if (type.Equals("phantom"))
-            {
-                audioSource.PlayOneShot(phantom);
-            }
-            if (type.Equals("stray"))
-            {
-                audioSource.PlayOneShot(stray);
-            }
-            if (type.Equals("wolf"))
-            {
-                audioSource.PlayOneShot(wolf);
-            }
-            if (type.Equals("cat1"))
-            {
-                audioSource.PlayOneShot(cat1);
-            }
-            if (type.Equals("cat2"))
-            {
-                audioSource.PlayOneShot(cat2);
-            }
-            if (type.Equals("cat3"))
-            {
-                audioSource.PlayOneShot(cat3);
-            }
-            if (type.Equals("cat4"))
-            {
-                audioSource.PlayOneShot(cat4);
-            }
-            if (type.Equals("coward"))
-            {
-                audioSource.PlayOneShot(coward);
-            }
-            if (type.Equals("flash"))
-            {
-                audioSource.PlayOneShot(flash);
-            }
-            if (type.Equals("boostio"))
-            {
-                audioSource.PlayOneShot(boostio);
-            }
-            if (type.Equals("beep"))
-            {
-                audioSource.PlayOneShot(beep);
-            }
-            if (type.Equals("clapping"))
-            {
-                audioSource.PlayOneShot(clapping);
-            }
-            if (type.Equals("warp"))
-            {
-                audioSource.PlayOneShot(warp);
-            }
-            if (type.Equals("defuse"))
-            {
-                audioSource.PlayOneShot(defuse);
-            }
-            if (type.Equals("wallclose"))
-            {
-                audioSource.PlayOneShot(wallclose);
-            }
-            if (type.Equals("detect"))
-            {
-                audioSource.PlayOneShot(detect);
-            }
-            if (type.Equals("detectstart"))
-            {
-                audioSource.PlayOneShot(detectstart);
-            }
-            if (type.Equals("arte"))
-            {
-                audioSource.PlayOneShot(arte);
-            }
-            if (type.Equals("wolfbark"))
-            {
-                audioSource.PlayOneShot(wolfbark);
-            }
+            PlayMySound(type);
+            
         }
 
     }
