@@ -6,7 +6,7 @@ using Photon.Pun;
 
 public class CameraController : MonoBehaviourPunCallbacks {
     float x, z;
-    float speed = 0.05f;
+    float speed = 0.04f;
 
     private float stepTimer = 0f;
     private float wallDetectionDistance = 0.17f;
@@ -140,7 +140,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         {
             if (rc.GetWeaponNumber() == 13)
             {
-                weaponspeed = 1.5f;
+                weaponspeed = 1.3f;
             }
             else
             {

@@ -17,7 +17,7 @@ public class RayController : MonoBehaviourPun {
     private RoundManager rmc;
 
     public float range = 200f; // Raycast‚ÌŽË’ö‹——£
-    public float kniferange = 2f; // Raycast‚ÌŽË’ö‹——£
+    public float kniferange = 1f; // Raycast‚ÌŽË’ö‹——£
     private float distanceToGround = 0.15f;
     private Classic classic;
     private JawKha jawkha;
