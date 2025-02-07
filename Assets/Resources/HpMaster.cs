@@ -57,6 +57,12 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
 
     public void SetShield(float Shield)
     {
+        photonView.RPC("SynchroShield", RpcTarget.Others, Shield);
+    }
+
+    [PunRPC]
+    private void SynchroShield(float Shield)
+    {
         shield = Shield;
     }
 
@@ -168,11 +174,13 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
             stream.SendNext(hp1);
             stream.SendNext(hp2);
             stream.SendNext(HasKill);
+            stream.SendNext(shield);
         } else {
             // データを受信
             hp1 = (float)stream.ReceiveNext();
             hp2 = (float)stream.ReceiveNext();
             HasKill = (bool)stream.ReceiveNext();
+            shield = (float)stream.ReceiveNext();
         }
     }
 }

@@ -1141,7 +1141,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         }
         RayController.rc.Knife();
         RayController.rc.UseWepon = "";
-        StartCoroutine(ChangeServiceSpeed(2.0f,15,1.3f));
+        StartCoroutine(ChangeServiceSpeed(1.5f,5,1.3f));
 
     }
 
