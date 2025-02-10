@@ -50,7 +50,7 @@ public class LoungeBgmManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // 停止したいシーン名の条件をチェック
-        if (scene.name == "Needless" || scene.name == "DuelLand" || scene.name == "Secondhouse")
+        if (scene.name == "Needless" || scene.name == "DuelLand" || scene.name == "Secondhouse" || scene.name == "Whisper")
         {
             StopBGM();
         }
