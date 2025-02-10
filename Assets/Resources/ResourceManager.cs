@@ -50,7 +50,8 @@ public class ResourceManager : MonoBehaviour
             BrokenSoundManager = Resources.Load<GameObject>("BrokenSoundManager");
             LoadedGameObjects.Add("BrokenSoundManager");
         }
-        if(AllGameObjects == LoadedGameObjects)
+        // 二つのリストの要素が一致しているかを確認
+        if (AreListsEqual(AllGameObjects, LoadedGameObjects))
         {
             HasLoadedAll = true;
         }
@@ -70,6 +71,23 @@ public class ResourceManager : MonoBehaviour
         return null;
         
     }
+    // リストの比較を行うメソッド
+    bool AreListsEqual(List<string> list1, List<string> list2)
+    {
+        // リストのサイズが異なれば一致しない
+        if (list1.Count != list2.Count)
+            return false;
 
+        // 要素ごとに一致しているかを確認
+        for (int i = 0; i < list1.Count; i++)
+        {
+            if (!list1[i].Equals(list2[i]))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 }
