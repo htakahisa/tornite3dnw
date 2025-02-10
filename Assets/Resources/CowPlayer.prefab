@@ -1744,6 +1744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   number1: 0
   number2: 0
+  CanAbility: 1
 --- !u!114 &2009880871071656543
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -32,19 +32,23 @@ public class PinManager : MonoBehaviour {
 
             Map.SetActive(!Map.activeSelf);
             AbilityMap.SetActive(false);
+            Map.GetComponent<MapPin>().CanSmoke = false;
+            Map.GetComponent<MapPin>().CanSetAqua = false;
+            Map.GetComponent<MapPin>().CanCat = false;
+            ma.EndAbility();
         }
 
-            RayController.rc.MapOpening = Map.activeSelf;
-        
-        
+        RayController.rc.MapOpening = Map.activeSelf;
 
+        Camera.main.GetComponentInParent<Ability>().CanAbility = !Map.activeSelf;
+        
 
 
     }
 
-   
 
- 
+
+
 
     public void BlueLight() {
 
@@ -64,7 +68,15 @@ public class PinManager : MonoBehaviour {
 
 
     }
+    public void Cat()
+    {
 
+        Map.SetActive(true);
+        AbilityMap.SetActive(true);
+        Map.GetComponent<MapPin>().Cat();
+
+
+    }
 
     public void Hide() {
 
@@ -73,8 +85,8 @@ public class PinManager : MonoBehaviour {
         AbilityMap.SetActive(false);
         Map.GetComponent<MapPin>().CanSmoke = false;
         Map.GetComponent<MapPin>().CanSetAqua = false;
+        Map.GetComponent<MapPin>().CanCat = false;
         pm = GetComponentInParent<PinManager>();
-        pm.Hide();
         ma.EndAbility();
 
     }

@@ -18,12 +18,16 @@ public class CatController : MonoBehaviour
     private SoundManager sm;
     private int randomValue = 0;
 
+    private bool HasDetected = false;
+
+    private Vector3 targetpos;
+
     void Start()
     {
         GameObject enemy = GameObject.FindGameObjectWithTag("Player");
         sm = Camera.main.transform.parent.GetComponent<SoundManager>();
 
-
+        agent.SetDestination(targetpos);
         if (enemy != null)
         {
             agent = GetComponent<NavMeshAgent>();
@@ -31,7 +35,7 @@ public class CatController : MonoBehaviour
 
         }
 
-        Invoke("Destroy", 5f);
+        Invoke("Destroy", 20f);
     }
 
     void Update()
@@ -51,12 +55,21 @@ public class CatController : MonoBehaviour
         {
             stepTimer += Time.deltaTime;
 
-            // ターゲットに向かって移動
-            agent.SetDestination(target.position);
+           
 
             // ターゲットとの距離を計算
             float distance = Vector3.Distance(transform.position, target.position);
             Debug.Log(distance);
+            if (distance <= 3)
+            {
+                HasDetected = true;
+            }
+
+            if (HasDetected)
+            {
+                agent.SetDestination(target.position);
+            }
+
             // 攻撃距離以内の場合
             if (distance <= attackDistance)
             {
@@ -64,6 +77,11 @@ public class CatController : MonoBehaviour
             }
         }
 
+    }
+
+    public void SetTarget(Vector3 position)
+    {
+        targetpos = position;
     }
 
     private void Hug()

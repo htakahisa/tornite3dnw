@@ -257,8 +257,8 @@ public class RoundManager : MonoBehaviourPun {
                 this.Acoin -= 1500;
                 this.streak = 0;
                 this.Bscore -= 1;
-                this.Bcoin -= 1000 + sideRound * 800;
-                this.Acoin -= 500 + sideRound * 400;
+                this.Bcoin -= 1500 + sideRound * 500;
+                this.Acoin -= 1000 + sideRound * 300;
             }
             else
             {
@@ -266,8 +266,8 @@ public class RoundManager : MonoBehaviourPun {
                 this.Bcoin -= 1500;
                 this.streak = 0;
                 this.Ascore -= 1;
-                this.Acoin -= 1000 + sideRound * 800;
-                this.Bcoin -= 500 + sideRound * 400;
+                this.Acoin -= 1500 + sideRound * 500;
+                this.Bcoin -= 1000 + sideRound * 300;
             }
             // 常にプレイヤー2を勝者とする。
             winnerIsA = false;
@@ -302,8 +302,8 @@ public class RoundManager : MonoBehaviourPun {
 
             this.Awin = true;
             this.Ascore += 1;
-            this.Acoin += 1000 + sideRound * 800;
-            this.Bcoin += 500 + sideRound * 400;
+            this.Acoin += 1500 + sideRound * 500;
+            this.Bcoin += 1000 + sideRound * 300;
 
 
         }
@@ -312,8 +312,8 @@ public class RoundManager : MonoBehaviourPun {
 
             this.Bwin = true;
             this.Bscore += 1;
-            this.Bcoin += 1000 + sideRound * 800;
-            this.Acoin += 500 + sideRound * 400;
+            this.Bcoin += 1500 + sideRound * 500;
+            this.Acoin += 1000 + sideRound * 300;
         }
 
     

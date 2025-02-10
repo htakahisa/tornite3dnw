@@ -9,6 +9,7 @@ public class Loading : MonoBehaviourPun
 {
     private string MyMap = "Needless";
     private string OpponentMap = "";
+    private bool hasload = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,12 @@ public class Loading : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
+        if (hasload)
+        {
+            return;
+        }
+
+
         if (PhotonNetwork.InRoom)
         {
             if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
@@ -28,7 +35,12 @@ public class Loading : MonoBehaviourPun
 
                 if (MyMap == OpponentMap)
                 {
+                    if (!ResourceManager.resourcemanager.HasLoadedAll)
+                    {
+                        return;
+                    }
                     SceneManager.LoadScene(MapManager.mapmanager.GetMapName());
+                    hasload = true;
                 }
 
             }

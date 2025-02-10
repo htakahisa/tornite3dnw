@@ -17,7 +17,7 @@ public class RayController : MonoBehaviourPun {
     private RoundManager rmc;
 
     public float range = 200f; // Raycast‚ÌŽË’ö‹——£
-    public float kniferange = 1f; // Raycast‚ÌŽË’ö‹——£
+    public float kniferange = 0.1f; // Raycast‚ÌŽË’ö‹——£
     private float distanceToGround = 0.15f;
     private Classic classic;
     private JawKha jawkha;
@@ -314,8 +314,8 @@ public class RayController : MonoBehaviourPun {
         }
 
 
-
-            GameObject target = StabHit();
+        deltaTimeSum = 0;
+        GameObject target = StabHit();
 
 
             if (target.CompareTag("Body") || target.CompareTag("Head"))
@@ -398,7 +398,7 @@ public class RayController : MonoBehaviourPun {
 
 
 
-                if (IsZooming)
+            if (IsZooming)
             {
                 RecoilService += 1.5f;
             }

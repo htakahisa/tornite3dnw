@@ -20,7 +20,7 @@ public class Wolf : MonoBehaviourPun {
             target = enemy.transform;  // ターゲットを設定
         }
 
-        Invoke("Destroy", 10f);
+        Invoke("Destroy", 8f);
 
     }
 

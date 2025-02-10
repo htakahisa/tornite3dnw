@@ -24,13 +24,17 @@ public class C4 : MonoBehaviourPunCallbacks
         }
         float distance = Vector3.Distance(transform.position, enemy.transform.position);
         //Debug.Log(distance);
-        if(distance <= 1)
+        if(distance <= 2)
         {
             OnActive();
         }
     }
 
     private void OnActive() {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         // 生成したプレファブが存在しない場合に生成
         if (instantiatedPrefab == null)
         {

@@ -57,37 +57,37 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
 
     public void SetShield(float Shield)
     {
-        photonView.RPC("SynchroShield", RpcTarget.Others, Shield);
-    }
-
-    [PunRPC]
-    private void SynchroShield(float Shield)
-    {
         shield = Shield;
     }
 
+
+
     public void SetHp(float damage, int player) {
+
+
+        photonView.RPC("Calculate", RpcTarget.All, damage, player);
+
+
+    }
+    [PunRPC]
+    private void Calculate(float damage, int player)
+    {
+        if(player != PhotonNetwork.LocalPlayer.ActorNumber)
+        {
+            return;
+        }
 
         damage *= shield;
 
-        if (player == 1) {
+        if (player == 1)
+        {
             hp1 -= damage;
-        } else if (player == 2) {
+        }
+        else if (player == 2)
+        {
             hp2 -= damage;
         }
-
-
-
         photonView.RPC("SynchronizeHp", RpcTarget.All, hp1, hp2);
-
-
-
-
-
-     
-
-
-
     }
 
 
@@ -174,13 +174,11 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
             stream.SendNext(hp1);
             stream.SendNext(hp2);
             stream.SendNext(HasKill);
-            stream.SendNext(shield);
         } else {
             // データを受信
             hp1 = (float)stream.ReceiveNext();
             hp2 = (float)stream.ReceiveNext();
             HasKill = (bool)stream.ReceiveNext();
-            shield = (float)stream.ReceiveNext();
         }
     }
 }

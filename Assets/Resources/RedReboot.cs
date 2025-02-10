@@ -31,12 +31,21 @@ public class RedReboot : MonoBehaviourPun
     void OnTriggerStay(Collider other)
     {
 
+
         if (other.CompareTag("Body") || other.CompareTag("Feet"))
         {
+            
       
             GameObject HitCharacter = GetTopmostParent(other.gameObject);
-            HitCharacter.GetComponent<CameraController>().Stuned(0.05f, 0.2f);
+     
 
+            PhotonView hitphotonview = HitCharacter.GetComponent<PhotonView>();
+
+            if (!hitphotonview.IsMine)
+            {
+                return;
+            }
+            HitCharacter.GetComponent<CameraController>().Stuned(0.05f, 0.2f);
             time += Time.deltaTime;
             if (time >= 0.5f)
             {

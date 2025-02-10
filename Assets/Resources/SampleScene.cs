@@ -195,6 +195,49 @@ public class SampleScene : MonoBehaviourPunCallbacks {
                 }
             }
         }
+        else if (MapManager.mapmanager.GetMapName() == "Whisper")
+        {
+            if (rm.round <= 12)
+            {
+                // 自身のアバター（ネットワークオブジェクト）を生成する
+                if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                {
+                    Debug.Log("You are Player 1");
+                    // Player 1の初期化処理
+                    position = new Vector3(-5.871117f, -3.515372f, -15.65266f);
+                }
+                else if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+                {
+                    Debug.Log("You are Player 2");
+                    // Player 2の初期化処理
+                    position = new Vector3(-3.7f, -2.428032f, 18.02f);
+                }
+                else
+                {
+                    Debug.Log("You are Player " + PhotonNetwork.LocalPlayer.ActorNumber);
+                }
+            }
+            else
+            {
+                // 自身のアバター（ネットワークオブジェクト）を生成する
+                if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                {
+                    Debug.Log("You are Player 1");
+                    // Player 1の初期化処理
+                    position = new Vector3(-3.7f, -2.428032f, 18.02f);
+                }
+                else if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+                {
+                    Debug.Log("You are Player 2");
+                    // Player 2の初期化処理
+                    position = new Vector3(-5.871117f, -3.515372f, -15.65266f);
+                }
+                else
+                {
+                    Debug.Log("You are Player " + PhotonNetwork.LocalPlayer.ActorNumber);
+                }
+            }
+        }
 
 
         GameObject avatar = PhotonNetwork.Instantiate("CowPlayer", position, Quaternion.identity);

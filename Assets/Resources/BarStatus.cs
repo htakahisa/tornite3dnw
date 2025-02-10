@@ -8,6 +8,9 @@ public class BarStatus : MonoBehaviour
     [SerializeField]
     private float Speed;
 
+    [SerializeField]
+    private bool CanBuyPhase;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,4 +28,8 @@ public class BarStatus : MonoBehaviour
         return Speed;
     }
 
+    public bool GetCanBuyPhase()
+    {
+        return CanBuyPhase;
+    }
 }

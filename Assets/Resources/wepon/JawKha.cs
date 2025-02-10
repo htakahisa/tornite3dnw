@@ -8,7 +8,7 @@ public class JawKha
 
     float rate = 0.09f;
     int damage = 21;
-    int headdamage = 50;
+    int headdamage = 90;
     int magazine = 13;
     bool auto = true;
     float reloadtime = 0.7f;

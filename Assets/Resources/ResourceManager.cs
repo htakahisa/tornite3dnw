@@ -10,6 +10,16 @@ public class ResourceManager : MonoBehaviour
     private GameObject ArteBomb;
     private GameObject BrokenSoundManager;
 
+    // ゲームオブジェクトのリストを宣言時に初期化
+    public List<string> AllGameObjects = new List<string> { "ArteBomb", "BrokenSoundManager" };
+
+    // ゲームオブジェクトのリストを宣言時に初期化
+    public List<string> LoadedGameObjects = new List<string>();
+
+
+
+    public bool HasLoadedAll = false;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -33,10 +43,16 @@ public class ResourceManager : MonoBehaviour
         if(ArteBomb == null)
         {
             ArteBomb = Resources.Load<GameObject>("ArteBomb");
+            LoadedGameObjects.Add("ArteBomb");
         }
         if (BrokenSoundManager == null)
         {
             BrokenSoundManager = Resources.Load<GameObject>("BrokenSoundManager");
+            LoadedGameObjects.Add("BrokenSoundManager");
+        }
+        if(AllGameObjects == LoadedGameObjects)
+        {
+            HasLoadedAll = true;
         }
 
     }

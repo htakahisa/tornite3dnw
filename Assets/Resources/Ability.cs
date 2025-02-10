@@ -16,13 +16,12 @@ public class Ability : MonoBehaviourPun {
     private string Able2 = "";
     public int number1 = 0;
     public int number2 = 0;
-
-    
+    public bool CanAbility = true;
 
     // Start is called before the first frame update
     void Start() {
         
-   
+        
 
     }
 
@@ -41,6 +40,12 @@ public class Ability : MonoBehaviourPun {
                 return;
             }
         }
+
+        if (!CanAbility)
+        {
+            return;
+        }
+
             if (cc == null)
             {
                 cc = gameObject.GetComponent<CameraController>();
@@ -106,7 +111,7 @@ public class Ability : MonoBehaviourPun {
         if (able.Equals("Cat"))
         {
             cc.Cat();
-            Spend(1, 1);
+           
         }
         if (able.Equals("BlueLight")) {
             cc.BlueLight();

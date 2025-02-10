@@ -6,7 +6,7 @@ using Photon.Pun;
 
 public class CameraController : MonoBehaviourPunCallbacks {
     float x, z;
-    float speed = 0.04f;
+    float speed = 0.03f;
 
     private float stepTimer = 0f;
     private float wallDetectionDistance = 0.17f;
@@ -140,7 +140,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         {
             if (rc.GetWeaponNumber() == 13)
             {
-                weaponspeed = 1.3f;
+                weaponspeed = 1.4f;
             }
             else
             {
@@ -302,16 +302,22 @@ public class CameraController : MonoBehaviourPunCallbacks {
      * */
     private void StartClimbing()
     {
+        
+        BarStatus barstatus = topBarTransform.GetComponent<BarStatus>();
+
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            if (!barstatus.GetCanBuyPhase())
+            {
+                return;
+            }
+        }
         climbSoundInterval = 0;
+        transform.position = BottomBarTransform.position;
         AbilityAble = false;
         WalkAble = false;
         rc.CanShoot = false;
-        if (PhaseManager.pm.GetPhase() == "Buy")
-        {
-            return;
-        }
-        transform.position = BottomBarTransform.position;
-        BarStatus barstatus = topBarTransform.GetComponent<BarStatus>();
+
         climbSpeed = barstatus.GetSpeed();
         if (topBarTransform != null)
         {
@@ -813,7 +819,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
      
-        if (Physics.Raycast(ray, out hit, 5, AbilityHitMask))
+        if (Physics.Raycast(ray, out hit, 8, AbilityHitMask))
         {
 
 
@@ -1065,20 +1071,14 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     public void Cat()
     {
-        
+
         if (photonView == null || !photonView.IsMine)
         {
             return;
         }
+        PinManager.pm.Cat();
 
-        Vector3 spawnDirection = transform.position;
-
-        // オブジェクトを生成
-        for (int i = 0; i < 4; i++)
-        {
-            Vector3 offset = spawnDirection * (0.4f * i); // 前方方向に i に応じたオフセットを加える
-            PhotonNetwork.Instantiate("cat_pref", spawnDirection + offset, Quaternion.LookRotation(spawnDirection));
-        }
+    
     }
 
     public void Boostio() {

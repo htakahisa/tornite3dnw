@@ -24,7 +24,7 @@ public class SmokeManager : MonoBehaviourPun {
         }
         if (gameObject.name.Equals("BlueLightSmoke(Clone)")) {
        
-            Invoke("Destroy", 10f);
+            Invoke("Destroy", 15f);
         }
         if (gameObject.name.Equals("KatarinaSmoke(Clone)"))
         {

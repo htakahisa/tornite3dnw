@@ -48,6 +48,9 @@ EditorBuildSettings:
     path: Assets/Scenes/DuelLand.unity
     guid: a39a804fe3053b347bf8c98c37affeb6
   - enabled: 1
+    path: Assets/Scenes/Whisper.unity
+    guid: 7d3f9d28603d1b24a8c2bb013ef8ebb6
+  - enabled: 1
     path: Assets/Scenes/Mischief.unity
     guid: 6887b05351fb47e42b7a743c5a235f0e
   - enabled: 1

@@ -36,12 +36,12 @@ public class VideoCamera : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            secondCamera.SetActive(true);
+            //secondCamera.SetActive(true);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            camera.SetActive(false);
+            //camera.SetActive(false);
 
         }
 #endif
