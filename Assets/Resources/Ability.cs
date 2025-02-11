@@ -18,9 +18,11 @@ public class Ability : MonoBehaviourPun {
     public int number2 = 0;
     public bool CanAbility = true;
 
+    private KeyCode aquaCloseMap;
+
     // Start is called before the first frame update
     void Start() {
-        
+        aquaCloseMap = KeyController.Instance.Settings.AquaCloseMap;
         
 
     }
@@ -51,7 +53,7 @@ public class Ability : MonoBehaviourPun {
         {
 
             // aqua などマップを開くものは閉じる
-            if (Able2 == "Aqua" && Input.GetKeyDown(KeyCode.Q))
+            if (Able2 == "Aqua" && Input.GetKeyDown(aquaCloseMap))
             {
                 Use(Able2);
             }

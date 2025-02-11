@@ -9,16 +9,18 @@ public class KeySettings
     public KeyCode MapKey = KeyCode.Alpha1;
     public KeyCode MainWeaponKey = KeyCode.Tab;
     public KeyCode SubWeaponKey = KeyCode.Tab;
+    public KeyCode AquaCloseMap = KeyCode.Q;
 }
 
 // 🔹 JSON で文字列として保存するためのクラス
 [Serializable]
-public class KeySettingsData
+public class JsonSettingsData
 {
     public string KnifeKey;
     public string MapKey;
     public string MainWeaponKey;
     public string SubWeaponKey;
+    public string AquaCloseMap;
 }
 
 public class KeyController : MonoBehaviour
@@ -39,7 +41,7 @@ public class KeyController : MonoBehaviour
     }
 
     private const string FILE_NAME = "keysettings.json";
-    private KeySettings keySettings;
+    private KeySettings keySettings = new KeySettings();
 
     public KeySettings Settings => keySettings; // 🔹 他のスクリプトからアクセスできる
 
@@ -63,15 +65,14 @@ public class KeyController : MonoBehaviour
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            KeySettingsData data = JsonUtility.FromJson<KeySettingsData>(json);
+            JsonSettingsData data = JsonUtility.FromJson<JsonSettingsData>(json);
 
-            keySettings = new KeySettings
-            {
-                KnifeKey = Enum.Parse<KeyCode>(data.KnifeKey),
-                MapKey = Enum.Parse<KeyCode>(data.MapKey),
-                MainWeaponKey = Enum.Parse<KeyCode>(data.MainWeaponKey),
-                SubWeaponKey = Enum.Parse<KeyCode>(data.SubWeaponKey),
-            };
+            keySettings.KnifeKey = data.KnifeKey == null ? keySettings.KnifeKey : Enum.Parse<KeyCode>(data.KnifeKey);
+            keySettings.MapKey = data.MapKey == null ? keySettings.MapKey : Enum.Parse<KeyCode>(data.MapKey);
+            keySettings.MainWeaponKey = data.MainWeaponKey == null ? keySettings.MainWeaponKey : Enum.Parse<KeyCode>(data.MainWeaponKey);
+            keySettings.SubWeaponKey = data.SubWeaponKey == null ? keySettings.SubWeaponKey : Enum.Parse<KeyCode>(data.SubWeaponKey);
+            keySettings.AquaCloseMap = data.AquaCloseMap == null ? keySettings.AquaCloseMap : Enum.Parse<KeyCode>(data.AquaCloseMap);
+
         }
         else
         {
@@ -82,12 +83,13 @@ public class KeyController : MonoBehaviour
 
     private void SaveSettings()
     {
-        KeySettingsData data = new KeySettingsData
+        JsonSettingsData data = new JsonSettingsData
         {
             KnifeKey = keySettings.KnifeKey.ToString(),
             MapKey = keySettings.MapKey.ToString(),
             MainWeaponKey = keySettings.MainWeaponKey.ToString(),
             SubWeaponKey = keySettings.SubWeaponKey.ToString(),
+            AquaCloseMap = keySettings.AquaCloseMap.ToString(),
         };
 
         string json = JsonUtility.ToJson(data, true);
