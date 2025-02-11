@@ -108,6 +108,12 @@ public class AquaTrick : MonoBehaviourPunCallbacks
 
     void OnMouseOver()
     {
+
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+
         // ¶ƒNƒŠƒbƒN‚³‚ê‚½‚Æ‚«
         if (Input.GetKeyDown(KeyCode.F))
         {
