@@ -88,6 +88,7 @@ public class RayController : MonoBehaviourPun {
 
     private KeyCode knifeKey;
     private KeyCode mainWeponKey;
+    private KeyCode subWeponKey;
 
     // Start is called before the first frame update
     void Start() {
@@ -134,6 +135,7 @@ public class RayController : MonoBehaviourPun {
 
         knifeKey = KeyController.Instance.Settings.KnifeKey;
         mainWeponKey = KeyController.Instance.Settings.MainWeaponKey;
+        subWeponKey = KeyController.Instance.Settings.SubWeaponKey;
 
 
     }
@@ -207,7 +209,7 @@ public class RayController : MonoBehaviourPun {
             Invoke(UseAbilityWeapon, 0);
         }
 
-        if (Input.GetKeyDown(mainWeponKey))
+        if (Input.GetKeyDown(mainWeponKey) || Input.GetKeyDown(subWeponKey))
         {
             if (!CanShoot)
             {

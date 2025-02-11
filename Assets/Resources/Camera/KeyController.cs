@@ -8,6 +8,7 @@ public class KeySettings
     public KeyCode KnifeKey = KeyCode.Alpha3;
     public KeyCode MapKey = KeyCode.Alpha1;
     public KeyCode MainWeaponKey = KeyCode.Tab;
+    public KeyCode SubWeaponKey = KeyCode.Tab;
 }
 
 // 🔹 JSON で文字列として保存するためのクラス
@@ -17,6 +18,7 @@ public class KeySettingsData
     public string KnifeKey;
     public string MapKey;
     public string MainWeaponKey;
+    public string SubWeaponKey;
 }
 
 public class KeyController : MonoBehaviour
@@ -67,7 +69,8 @@ public class KeyController : MonoBehaviour
             {
                 KnifeKey = Enum.Parse<KeyCode>(data.KnifeKey),
                 MapKey = Enum.Parse<KeyCode>(data.MapKey),
-                MainWeaponKey = Enum.Parse<KeyCode>(data.MainWeaponKey)
+                MainWeaponKey = Enum.Parse<KeyCode>(data.MainWeaponKey),
+                SubWeaponKey = Enum.Parse<KeyCode>(data.SubWeaponKey),
             };
         }
         else
@@ -83,7 +86,8 @@ public class KeyController : MonoBehaviour
         {
             KnifeKey = keySettings.KnifeKey.ToString(),
             MapKey = keySettings.MapKey.ToString(),
-            MainWeaponKey = keySettings.MainWeaponKey.ToString()
+            MainWeaponKey = keySettings.MainWeaponKey.ToString(),
+            SubWeaponKey = keySettings.SubWeaponKey.ToString(),
         };
 
         string json = JsonUtility.ToJson(data, true);

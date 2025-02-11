@@ -41,15 +41,25 @@ public class Ability : MonoBehaviourPun {
             }
         }
 
+        if (cc == null)
+        {
+            cc = gameObject.GetComponent<CameraController>();
+        }
+
+
         if (!CanAbility)
         {
+
+            // aqua などマップを開くものは閉じる
+            if (Able2 == "Aqua" && Input.GetKeyDown(KeyCode.Q))
+            {
+                Use(Able2);
+            }
+
             return;
         }
 
-            if (cc == null)
-            {
-                cc = gameObject.GetComponent<CameraController>();
-            }
+
         
 
             if (cc.AbilityAble)

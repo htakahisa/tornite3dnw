@@ -62,8 +62,9 @@ public class PinManager : MonoBehaviour {
     public void Aqua()
     {
 
-        Map.SetActive(true);
-        AbilityMap.SetActive(true);
+        
+        Map.SetActive(!Map.activeSelf);
+        AbilityMap.SetActive(!AbilityMap.activeSelf);
         Map.GetComponent<MapPin>().Aqua();
 
 
