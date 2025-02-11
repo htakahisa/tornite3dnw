@@ -1139,8 +1139,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (photonView == null || !photonView.IsMine) {
             return;
         }
-        RayController.rc.Knife();
-        RayController.rc.UseWepon = "";
+        RayController.rc.Knife();        
         StartCoroutine(ChangeServiceSpeed(1.5f,5,1.3f));
 
     }
@@ -1164,9 +1163,11 @@ public class CameraController : MonoBehaviourPunCallbacks {
         servicespeed = speed;
         jumpPower = jump;
         IsKamaitachi = true;
+        string weapon = RayController.rc.UseWepon;
+        RayController.rc.UseWepon = "";
         // ~•b‘Ò‹@
         yield return new WaitForSeconds(duration);
-
+        RayController.rc.Invoke(weapon, 0);
         // servicespeed‚ð1‚É–ß‚·
         servicespeed = 1f;
         jumpPower = 0.9f;
