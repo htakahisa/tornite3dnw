@@ -13,6 +13,11 @@ public class RedReboot : MonoBehaviourPun
     void Awake()
     {
         Invoke("DestroyPun", 10f);
+        if (!photonView.IsMine)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Ability");
+            transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Ability");
+        }
     }
 
     // Update is called once per frame

@@ -5,19 +5,22 @@ using UnityEngine;
 public class MapAbility : MonoBehaviour
 {
 
-    [SerializeField]
-    private LayerMask mapobject;
+    public LayerMask mapobject;
 
     [SerializeField]
     private GameObject mappointer;
 
     public float speed = 10f; // オブジェクトの移動速度
 
+    [SerializeField]
+    private Sprite clear;
+    [SerializeField]
+    private Sprite ng;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     void Update()
@@ -36,14 +39,30 @@ public class MapAbility : MonoBehaviour
 
     public Vector3 Position()
     {
+        
 
         Vector3 down = new Vector3(transform.position.x, 15, transform.position.z);
 
         RaycastHit hit;
-        Physics.Raycast(down, transform.forward, out hit, mapobject);
-        mappointer.SetActive(true);
-        mappointer.transform.position = hit.point += new Vector3 (0,1,0);
+        Physics.Raycast(down, transform.forward, out hit, Mathf.Infinity ,mapobject);
+        
+            mappointer.SetActive(true);
+            Debug.Log("smoke :" + hit.collider.gameObject);
+            if (hit.transform == null)
+            {
+                mappointer.GetComponent<SpriteRenderer>().sprite = ng;
+
+            }
+            else
+            {
+                mappointer.GetComponent<SpriteRenderer>().sprite = clear;
+                mappointer.transform.position = hit.point += new Vector3(0, 1, 0);
+                
+            }
+
         return hit.point;
+
+
     }
 
     private void OnDrawGizmos()
