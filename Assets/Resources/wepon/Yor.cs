@@ -14,8 +14,8 @@ public class Yor {
     bool zoomable = false;
     float zoomratio = 1;
     bool accuracy = true;
-    float YRecoil = 10f;
-
+    float YRecoil = 8f;
+    float RecoilDuration = 0.1f;
     void Start() {
 
     }
@@ -62,6 +62,10 @@ public class Yor {
         return YRecoil;
     }
 
+    public float GetRecoilDuration()
+    {
+        return RecoilDuration;
+    }
     public void GetStatus() {
 
     }

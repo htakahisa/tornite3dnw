@@ -15,6 +15,9 @@ public class ReineBlanche {
     float zoomratio = 40;
     bool accuracy = true;
     float PeekingSpeed = 0.15f;
+    float YRecoil = 8;
+    float RecoilDuration = 0.05f;
+
     void Start() {
 
     }
@@ -60,6 +63,15 @@ public class ReineBlanche {
         return PeekingSpeed;
     }
 
+    public float GetYRecoil()
+    {
+        return YRecoil;
+    }
+
+    public float GetRecoilDuration()
+    {
+        return RecoilDuration;
+    }
     public void GetStatus() {
 
     }

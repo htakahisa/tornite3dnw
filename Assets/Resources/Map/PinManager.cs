@@ -22,6 +22,7 @@ public class PinManager : MonoBehaviour {
         Map.SetActive(false);
         AbilityMap.SetActive(false);
         pm = this;
+        Invoke("GetCamera", 3f);
     }
 
     void Update() {
@@ -40,13 +41,18 @@ public class PinManager : MonoBehaviour {
 
         RayController.rc.MapOpening = Map.activeSelf;
 
-        Camera.main.GetComponentInParent<Ability>().CanAbility = !Map.activeSelf;
+       
+        
         
 
 
     }
 
+    private void GetCamera()
+    {
+        Camera.main.GetComponentInParent<Ability>().CanAbility = !Map.activeSelf;
 
+    }
 
 
 

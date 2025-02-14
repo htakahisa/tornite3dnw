@@ -72,14 +72,10 @@ public class MapPin : MonoBehaviourPun {
 
                 Vector3 spawnDirection = Camera.main.transform.parent.position;
 
-                // オブジェクトを生成
-                for (int i = 0; i < 4; i++)
-                {
-                    Vector3 offset = spawnDirection * (0.3f * i); // 前方方向に i に応じたオフセットを加える
-                    GameObject cat = PhotonNetwork.Instantiate("cat_pref", spawnDirection + offset, Quaternion.LookRotation(spawnDirection));
+                    GameObject cat = PhotonNetwork.Instantiate("cat_pref", spawnDirection, Quaternion.LookRotation(spawnDirection));
                     CatController cc = cat.GetComponent<CatController>();
                     cc.SetTarget(position);
-                }
+                
 
 
                 ability.Spend(1, 1);

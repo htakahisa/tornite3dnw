@@ -86,6 +86,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private Coroutine currentCoroutine = null;
 
+    private int multikatarina = 0;
 
     private float weaponspeed = 1;
 
@@ -148,6 +149,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
             }
         }
 
+      
+
+
 #if UNITY_EDITOR
             if (Input.GetKeyDown(KeyCode.L))
         {
@@ -168,14 +172,22 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         if (AbilityAble)
         {
-            if (ability != null && ability.GetAbility(2) == "Katarina") { 
+            if (ability != null && ability.GetAbility(2) == "Katarina") {
+
+               
 
                 if (PhaseManager.pm.GetPhase().Equals("Battle"))
                 {
+
+                    if (multikatarina == 0)
+                    {
+                        multikatarina = ability.number2;
+                    }
+
                     katarinaInterval += Time.deltaTime;
                     if (katarinaInterval >= 1f)
                     {
-                        ability.Collect(2, 1);
+                        ability.Collect(2, multikatarina);
                         katarinaInterval = 0f;
                     }
                    
@@ -215,7 +227,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 cam = GetComponentInChildren<Camera>().gameObject;
                 cameraRot = cam.transform.localRotation;
                 characterRot = transform.localRotation;
-                this.rc = cam.GetComponent<RayController>();
+                this.rc = RayController.rc;
             }
 
             move();
@@ -271,7 +283,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         while (elapsed < duration) {
 
-            recoil(Random.Range(-1, 2) * magnitude, magnitude);
+            StartCoroutine(recoil(Random.Range(-1, 2) * magnitude, magnitude, 0.1f));
 
             elapsed += Time.deltaTime;
 
@@ -680,19 +692,26 @@ public class CameraController : MonoBehaviourPunCallbacks {
     }
 
     [PunRPC]
-    public void recoil(float yRot, float xRot) {
+    public IEnumerator recoil(float yRot, float xRot, float duration) {
 
         float xRandomRot = Random.Range(-xRot, xRot);
 
-        cameraRot *= Quaternion.Euler(-yRot, 0, 0);
-        characterRot *= Quaternion.Euler(0, xRandomRot, 0);
+        for (int count = 0; count < 10; count ++)
+        {
+            cameraRot *= Quaternion.Euler(-yRot / (10 - count), 0, 0);
+            characterRot *= Quaternion.Euler(0, xRandomRot / (10 - count), 0);
 
-        //Update‚Ì’†‚Åì¬‚µ‚½ŠÖ”‚ðŒÄ‚Ô
-        cameraRot = ClampRotation(cameraRot);
+            //Update‚Ì’†‚Åì¬‚µ‚½ŠÖ”‚ðŒÄ‚Ô
+            cameraRot = ClampRotation(cameraRot);
 
-        cam.transform.localRotation = cameraRot;
-        transform.localRotation = characterRot;
+            cam.transform.localRotation = cameraRot;
+            transform.localRotation = characterRot;
+            yield return new WaitForSeconds(duration / 9);
+        }
+
     }
+
+ 
 
     private void jump() {
 
@@ -865,13 +884,18 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
 
     public void RireDuDiable() {
-        if (photonView == null || !photonView.IsMine) {
+        if (photonView == null || !photonView.IsMine)
+        {
             return;
         }
 
-               
-            PhotonNetwork.Instantiate("Diable", gameObject.transform.position, Quaternion.identity);
-        
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100, AbilityHitMask))
+        {
+            PhotonNetwork.Instantiate("Diable", hit.point, Quaternion.identity);
+        }
+     
 
     }
     public void Coward()

@@ -45,6 +45,7 @@ public class RayController : MonoBehaviourPun {
     private Camera cam;
     public bool CanShoot = true;
     public bool MapOpening = true;
+    public bool BuyPanelOpening = true;
 
     private bool ZoomAble = false;
     private float ZoomRatio = 0f;
@@ -86,9 +87,14 @@ public class RayController : MonoBehaviourPun {
 
     private string UseAbilityWeapon = "";
 
+    private float RecoilDuration = 0;
+
     private KeyCode knifeKey;
     private KeyCode mainWeponKey;
     private KeyCode subWeponKey;
+
+    private float RecoilBounce = 0;
+    Coroutine recoilbounce;
 
     // Start is called before the first frame update
     void Start() {
@@ -157,7 +163,8 @@ public class RayController : MonoBehaviourPun {
     // Update is called once per frame
     void Update() {
 
-      
+
+     
 
         if (Input.GetKeyDown(KeyCode.R) && !UseWepon.Equals("")) {
             StartCoroutine(Reload());
@@ -284,6 +291,16 @@ public class RayController : MonoBehaviourPun {
 
     }
 
+    private IEnumerator Recoilbounce(float yRot, float duration)
+    {
+
+        yield return new WaitForSeconds((0.3f - duration) * 1.5f);
+
+        StartCoroutine(camcon.recoil(-yRot, 0, duration));
+        RecoilBounce = 0;
+
+    }
+
 
     private IEnumerator Zoom()
     {
@@ -303,10 +320,16 @@ public class RayController : MonoBehaviourPun {
         IsZooming = true;
     }
 
+
+
     private void Stab()
     {
 
         if (MapOpening)
+        {
+            return;
+        }
+        if (BuyPanelOpening)
         {
             return;
         }
@@ -349,8 +372,17 @@ public class RayController : MonoBehaviourPun {
 
     private void Fire()
     {
+        
+        if (recoilbounce != null)
+        {
+            StopCoroutine(recoilbounce);
+        }
 
         if (MapOpening)
+        {
+            return;
+        }
+        if (BuyPanelOpening)
         {
             return;
         }
@@ -406,7 +438,9 @@ public class RayController : MonoBehaviourPun {
             }
            
 
-            camcon.recoil(yRecoil / RecoilService, xRecoil / RecoilService);
+            StartCoroutine(camcon.recoil(yRecoil / RecoilService, xRecoil / RecoilService, RecoilDuration));
+
+            recoilbounce = StartCoroutine(Recoilbounce(yRecoil / RecoilService, RecoilDuration));
 
             RecoilService = 1;
 
@@ -482,12 +516,12 @@ public class RayController : MonoBehaviourPun {
 
     public bool Shootable() {
         
-
+   
         
         if (CanShoot) {
-
+            bool sound = false;
             if (Magazinesize >= 1) {
-                bool sound = false;
+               
                 // for Mischief
                 if (currentWeaponIndex == 7)
                 {
@@ -505,7 +539,7 @@ public class RayController : MonoBehaviourPun {
                 }
                 return true;        
             } else {
-                    sm.PlaySound("noarmo");
+                //sm.PlaySound("noarmo");
             }
 
                 
@@ -612,6 +646,7 @@ public class RayController : MonoBehaviourPun {
         punch = 0;
         burst = 0;
         burstrate = 0;
+        RecoilDuration = classic.GetRecoilDuration();
 
         if (PhaseManager.pm.GetPhase() == "Buy")
         {
@@ -652,6 +687,7 @@ public class RayController : MonoBehaviourPun {
         burst = jawkha.GetBurst();
         burstrate = jawkha.GetBurstRate();
         PeekingSpeed = jawkha.GetPeekingSpeed();
+        RecoilDuration = jawkha.GetRecoilDuration();
 
         if (PhaseManager.pm.GetPhase() == "Buy")
         {
@@ -690,6 +726,7 @@ public class RayController : MonoBehaviourPun {
         burst = 0;
         burstrate = 0;
         PeekingSpeed = 0;
+        RecoilDuration = mistake.GetRecoilDuration();
 
         if (PhaseManager.pm.GetPhase() == "Buy")
         {
@@ -725,6 +762,7 @@ public class RayController : MonoBehaviourPun {
         burst = 0;
         burstrate = 0;
         PeekingSpeed = 0;
+        RecoilDuration = silver.GetRecoilDuration();
 
         Auto = silver.GetAuto();
         ZoomAble = false;
@@ -758,10 +796,11 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = pegasus.GetReloadTime();
         yRecoil = pegasus.GetYRecoil();
         xRecoil = pegasus.GetXRecoil();
-        punch = 0;
+        punch = pegasus.GetPunch();
         burst = pegasus.GetBurst();
         burstrate = pegasus.GetBurstRate();
         PeekingSpeed = pegasus.GetPeekingSpeed();
+        RecoilDuration = pegasus.GetRecoilDuration();
 
         Auto = pegasus.GetAuto();
         ZoomAble = pegasus.GetZoomAble();
@@ -800,6 +839,7 @@ public class RayController : MonoBehaviourPun {
         burst = stella.GetBurst();
         burstrate = stella.GetBurstRate();
         PeekingSpeed = stella.GetPeekingSpeed();
+        RecoilDuration = stella.GetRecoilDuration();
 
         Auto = stella.GetAuto();
         ZoomAble = stella.GetZoomAble();
@@ -838,6 +878,7 @@ public class RayController : MonoBehaviourPun {
         burst = 0;
         burstrate = 0;
         PeekingSpeed = rapetter.GetPeekingSpeed();
+        RecoilDuration = rapetter.GetRecoilDuration();
 
         Auto = rapetter.GetAuto();
         ZoomAble = rapetter.GetZoomAble();
@@ -875,6 +916,7 @@ public class RayController : MonoBehaviourPun {
         burst = 0;
         burstrate = 0;
         PeekingSpeed = mischief.GetPeekingSpeed();
+        RecoilDuration = mischief.GetRecoilDuration();
 
 
         Auto = mischief.GetAuto();
@@ -912,6 +954,7 @@ public class RayController : MonoBehaviourPun {
         burst = 0;
         burstrate = 0;
         PeekingSpeed = noel.GetPeekingSpeed();
+        RecoilDuration = noel.GetRecoilDuration();
 
         Auto = noel.GetAuto();
         ZoomAble = noel.GetZoomAble();
@@ -941,12 +984,13 @@ public class RayController : MonoBehaviourPun {
         Magazinesize =  SaveMagazine;
         MaxMagazine = reine.GetMagazine();
         ReloadTime = reine.GetReloadTime();
-        yRecoil = 5;
+        yRecoil = reine.GetYRecoil();
         xRecoil = 0;
         punch = 0;
         burst = 0;
         burstrate = 0;
         PeekingSpeed = reine.GetPeekingSpeed();
+        RecoilDuration = reine.GetRecoilDuration();
 
         Auto = reine.GetAuto();
         ZoomAble = reine.GetZoomAble();
@@ -976,12 +1020,13 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = SaveMagazine;
         MaxMagazine = duelist.GetMagazine();
         ReloadTime = duelist.GetReloadTime();
-        yRecoil = 8;
+        yRecoil = duelist.GetYRecoil();
         xRecoil = 0;
         punch = 0;
         burst = 0;
         burstrate = 0;
         PeekingSpeed = duelist.GetPeekingSpeed();
+        RecoilDuration = duelist.GetRecoilDuration();
 
         if (PhaseManager.pm.GetPhase() == "Buy")
         {
@@ -1017,6 +1062,7 @@ public class RayController : MonoBehaviourPun {
         burst = 0;
         burstrate = 0;
         PeekingSpeed = 0;
+        RecoilDuration = yor.GetRecoilDuration();
 
         if (UseAbilityWeapon == "")
         {
@@ -1052,6 +1098,7 @@ public class RayController : MonoBehaviourPun {
         burst = 0;
         burstrate = 0;
         PeekingSpeed = blackbell.GetPeekingSpeed();
+        RecoilDuration = blackbell.GetRecoilDuration();
 
         if (UseAbilityWeapon == "")
         {

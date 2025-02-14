@@ -15,6 +15,8 @@ public class Duelist{
     float zoomratio = 40;
     bool accuracy = false;
     float PeekingSpeed = 0.2f;
+    float YRecoil = 13;
+    float RecoilDuration = 0.08f;
     void Start() {
 
     }
@@ -59,6 +61,15 @@ public class Duelist{
     public float GetPeekingSpeed()
     {
         return PeekingSpeed;
+    }
+
+    public float GetRecoilDuration()
+    {
+        return RecoilDuration;
+    }
+    public float GetYRecoil()
+    {
+        return YRecoil;
     }
 
     public void GetStatus() {

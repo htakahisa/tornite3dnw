@@ -75,7 +75,7 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
         if(player != PhotonNetwork.LocalPlayer.ActorNumber)
         {
             return;
-        }
+        }     
 
         damage *= shield;
 
@@ -87,6 +87,14 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
         {
             hp2 -= damage;
         }
+
+        if (shield == 0)
+        {
+            shield = 1;
+            armer.armermanager.ArmerNo(1);
+        }
+        
+
         photonView.RPC("SynchronizeHp", RpcTarget.All, hp1, hp2);
     }
 

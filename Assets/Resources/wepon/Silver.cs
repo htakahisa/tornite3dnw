@@ -12,7 +12,8 @@ public class Silver {
     bool auto = false;
     float reloadtime = 0.5f;
     bool accuracy = true;
-    float YRecoil = 1f;
+    float YRecoil = 4f;
+    float RecoilDuration = 0.04f;
 
     void Start() {
 
@@ -53,6 +54,10 @@ public class Silver {
         return YRecoil;
     }
 
+    public float GetRecoilDuration()
+    {
+        return RecoilDuration;
+    }
     public void GetStatus() {
 
     }

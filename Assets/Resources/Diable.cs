@@ -16,7 +16,7 @@ public class Diable : MonoBehaviourPun {
     // Start is called before the first frame update
     void Awake() {
         gameObject.SetActive(true);
-        StartCoroutine(ScaleWidthOverTime());
+
         
 
        
@@ -47,7 +47,7 @@ public class Diable : MonoBehaviourPun {
                 Damage(other.gameObject);
                 time = 0;
             }
-            cc.servicespeed = 0.8f;
+            cc.servicespeed = 0.5f;
             al.enabled = false;
         }
 
@@ -73,21 +73,12 @@ public class Diable : MonoBehaviourPun {
 
 
 
-        public void Damage(GameObject target) {
+    public void Damage(GameObject target) {
 
         DamageManager dm = new DamageManager();
         dm.causeDamage(target.transform.gameObject, 2);
 
     }
 
-    IEnumerator ScaleWidthOverTime() {
-    
-        while (true) {
-            Vector3 scale = transform.localScale;
-            scale.x += 0.15f;
-            scale.z += 0.15f;
-            transform.localScale = scale;
-            yield return new WaitForSeconds(0.1f); // 0.1•b‘Ò‚Â
-        }
-    }
+
 }

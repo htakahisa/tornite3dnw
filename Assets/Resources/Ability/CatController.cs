@@ -27,12 +27,12 @@ public class CatController : MonoBehaviour
         GameObject enemy = GameObject.FindGameObjectWithTag("Player");
         sm = Camera.main.transform.parent.GetComponent<SoundManager>();
 
-        agent.SetDestination(targetpos);
+        
         if (enemy != null)
         {
             agent = GetComponent<NavMeshAgent>();
             target = enemy.transform;
-
+            agent.SetDestination(targetpos);
         }
 
         Invoke("Destroy", 20f);
@@ -60,7 +60,7 @@ public class CatController : MonoBehaviour
             // ターゲットとの距離を計算
             float distance = Vector3.Distance(transform.position, target.position);
             Debug.Log(distance);
-            if (distance <= 3)
+            if (distance <= 2)
             {
                 HasDetected = true;
             }

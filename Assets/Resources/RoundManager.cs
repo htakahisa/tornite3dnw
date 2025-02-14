@@ -137,9 +137,9 @@ public class RoundManager : MonoBehaviourPun {
             recklesstime += Time.deltaTime;
         if (mont != null) {           
             if (PhotonNetwork.LocalPlayer.ActorNumber == 1) {
-                mont.text = Acoin + " platinum";
+                mont.text = Acoin + " PLATINUM";
             } else {
-                mont.text = Bcoin + " platinum";
+                mont.text = Bcoin + " PLATINUM";
                 }
             }
             if (scoretext != null)
@@ -492,8 +492,36 @@ public class RoundManager : MonoBehaviourPun {
     }
 
  
+    public int GetNextMin()
+    {
+        int nowmoney;
 
+        if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+        {
+            nowmoney = Acoin;
+        }
+        else
+        {
+            nowmoney = Bcoin;
+        }
 
+        return  nowmoney + 1000 + sideRound * 300;
+    }
 
+    public int GetNextMax()
+    {
+        int nowmoney;
+
+        if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+        {
+            nowmoney = Acoin;
+        }
+        else
+        {
+            nowmoney = Bcoin;
+        }
+
+        return nowmoney + 1500 + sideRound * 500;
+    }
 
 }

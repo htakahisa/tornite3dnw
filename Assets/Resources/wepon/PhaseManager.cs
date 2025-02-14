@@ -44,7 +44,7 @@ public class PhaseManager : MonoBehaviourPun {
         {
             return;
         }
-            if (phase == "Buy")
+        if (phase == "Buy")
         {
            
 
@@ -61,7 +61,7 @@ public class PhaseManager : MonoBehaviourPun {
                     Cursor.lockState = CursorLockMode.Locked;
                 }
                 buypanel.SetActive(!buypanel.activeSelf);
-
+                RayController.rc.BuyPanelOpening = buypanel.activeSelf;
             }
         }
 
@@ -83,6 +83,7 @@ public class PhaseManager : MonoBehaviourPun {
         phase = "Battle";
         buypanel.SetActive(false);
         wall.SetActive(false);
+        RayController.rc.BuyPanelOpening = buypanel.activeSelf;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 

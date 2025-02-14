@@ -13,7 +13,7 @@ public class Classic {
     float reloadtime = 0.7f;
     bool accuracy = true;
     float YRecoil = 1.5f;
-
+    float RecoilDuration = 0.08f;
 
     void Start() {
 
@@ -53,6 +53,10 @@ public class Classic {
         return YRecoil;
     }
 
+    public float GetRecoilDuration()
+    {
+        return RecoilDuration;
+    }
 
 
     public void GetStatus() { 

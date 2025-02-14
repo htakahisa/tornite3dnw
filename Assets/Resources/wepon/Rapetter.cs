@@ -16,8 +16,9 @@ public class Rapetter
     float zoomratio = 45;
     bool accuracy = false;
     float YRecoil = 0.5f;
-    float XRecoil = 2.5f;
+    float XRecoil = 0.7f;
     float PeekingSpeed = 0.8f;
+    float RecoilDuration = 0.25f;
 
     void Start()
     {
@@ -84,6 +85,11 @@ public class Rapetter
     public float GetPeekingSpeed()
     {
         return PeekingSpeed;
+    }
+
+    public float GetRecoilDuration()
+    {
+        return RecoilDuration;
     }
     public void GetStatus()
     {

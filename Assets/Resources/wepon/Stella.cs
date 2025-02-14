@@ -5,8 +5,8 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class Stella{
 
-    float rate = 0.09f;
-    int damage = 34;
+    float rate = 0.095f;
+    int damage = 42;
     int headdamage = 100;
     int magazine = 17;
     bool auto = true;
@@ -14,13 +14,14 @@ public class Stella{
     bool zoomable = true;
     float zoomratio = 65;
     bool accuracy = true;
-    float YRecoil = 1.5f;
-    float XRecoil = 0.5f;
+    float YRecoil = 0.9f;
+    float XRecoil = 0.25f;
     int Burst = 3;
-    float BurstingRate = 0.05f;
+    float BurstingRate = 0.08f;
     float BurstRate = 0.3f;
     float PeekingSpeed = 0.07f;
-    float punch = 1f;
+    float punch = 2f;
+    float RecoilDuration = 0.15f;
 
     void Start() {
 
@@ -92,6 +93,11 @@ public class Stella{
     public float GetPunch()
     {
         return punch;
+    }
+
+    public float GetRecoilDuration()
+    {
+        return RecoilDuration;
     }
 
     public void GetStatus() {

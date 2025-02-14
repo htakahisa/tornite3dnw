@@ -20,7 +20,7 @@ public class PlantAndDefuse : MonoBehaviourPun
     private SoundManager sm;
     private DisturberMeter meter;
 
-
+    private bool IsDefusing = false;
 
 
     // Start is called before the first frame update
@@ -48,6 +48,7 @@ public class PlantAndDefuse : MonoBehaviourPun
         {
             return;
         }
+     
         if (Input.GetKey(KeyCode.Alpha4))
         {
 
@@ -55,8 +56,13 @@ public class PlantAndDefuse : MonoBehaviourPun
             {
                 disturber = GameObject.Find("Disturber(Clone)").GetComponent<Disturber>();
                 float distance = Vector3.Distance(transform.position, disturber.transform.position);
-                if (distance <= 2) { 
-                sm.PlaySound("defuse");
+                if (distance <= 3) {
+                    if (!IsDefusing)
+                    {
+                        sm.PlaySound("defuse");
+                    }
+                    IsDefusing = true;
+                   
                     DefuseTime -= Time.deltaTime;
                     meter.Defuse(DefuseTime);
                     Debug.Log(DefuseTime);
@@ -98,7 +104,8 @@ public class PlantAndDefuse : MonoBehaviourPun
             cc.WalkAble = true;
             cc.AbilityAble = true;
             rc.CanShoot = true;
-  
+
+            IsDefusing = false;
 
             if (IsHalf)
             {

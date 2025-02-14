@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class Noel {
 
-    float rate = 0.11f;
+    float rate = 0.09f;
     int damage = 40;
     int headdamage = 150;
     int magazine = 30;
@@ -14,9 +14,10 @@ public class Noel {
     bool zoomable = true;
     float zoomratio = 50;
     bool accuracy = true;
-    float YRecoil = 1.8f;
-    float XRecoil = 0.8f;
+    float YRecoil = 0.7f;
+    float XRecoil = 0.3f;
     float PeekingSpeed = 0.08f;
+    float RecoilDuration = 0.2f;
 
     void Start() {
 
@@ -73,6 +74,10 @@ public class Noel {
         return PeekingSpeed;
     }
 
+    public float GetRecoilDuration()
+    {
+        return RecoilDuration;
+    }
     public void GetStatus() {
 
     }

@@ -6,21 +6,22 @@ using Photon.Pun;
 public class JawKha
 {
 
-    float rate = 0.09f;
+    float rate = 0.07f;
     int damage = 21;
-    int headdamage = 90;
+    int headdamage = 65;
     int magazine = 13;
     bool auto = true;
     float reloadtime = 0.7f;
     bool zoomable = true;
     float zoomratio = 80;
     bool accuracy = true;
-    float YRecoil = 1f;
-    float XRecoil = 0.7f;
+    float YRecoil = 0.6f;
+    float XRecoil = 0.3f;
     float punch = 4f;
     int Burst = 1;
     float BurstRate = 0.1f;
     float PeekingSpeed = 0f;
+    float RecoilDuration = 0.1f;
 
     void Start()
     {
@@ -100,6 +101,11 @@ public class JawKha
     public float GetPeekingSpeed()
     {
         return PeekingSpeed;
+    }
+
+    public float GetRecoilDuration()
+    {
+        return RecoilDuration;
     }
     public void GetStatus()
     {

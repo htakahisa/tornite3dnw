@@ -15,6 +15,7 @@ public class BlackBell {
     float zoomratio = 30;
     bool accuracy = false;
     float PeekingSpeed = 0.08f;
+    float RecoilDuration = 0.08f;
 
     void Start() {
 
@@ -61,7 +62,10 @@ public class BlackBell {
     {
         return PeekingSpeed;
     }
-
+    public float GetRecoilDuration()
+    {
+        return RecoilDuration;
+    }
     public void GetStatus() {
 
     }

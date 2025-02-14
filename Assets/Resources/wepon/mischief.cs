@@ -14,10 +14,11 @@ public class mischief {
     bool zoomable = false;
     float zoomratio = 80;
     bool accuracy = true;
-    float YRecoil = 0.9f;
-    float XRecoil = 0.17f;
+    float YRecoil = 0.4f;
+    float XRecoil = 0.08f;
     float PeekingSpeed = 0f;
     float punch = 3f;
+    float RecoilDuration = 0.25f;
 
     void Start() {
 
@@ -78,6 +79,10 @@ public class mischief {
         return punch;
     }
 
+    public float GetRecoilDuration()
+    {
+        return RecoilDuration;
+    }
     public void GetStatus() {
 
     }

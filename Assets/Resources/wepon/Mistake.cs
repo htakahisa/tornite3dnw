@@ -12,9 +12,9 @@ public class Mistake {
     bool auto = false;
     float reloadtime = 0.9f;
     bool accuracy = true;
-    float YRecoil = 5f;
+    float YRecoil = 6f;
     float punch = 4f;
-
+    float RecoilDuration = 0.06f;
 
     void Start() {
 
@@ -59,7 +59,10 @@ public class Mistake {
     {
         return punch;
     }
-
+    public float GetRecoilDuration()
+    {
+        return RecoilDuration;
+    }
     public void GetStatus() {
 
     }

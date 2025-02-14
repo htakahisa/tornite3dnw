@@ -41,6 +41,10 @@ public class armer : MonoBehaviour
         if (armerlevel == 4) {
             image.color = Color.white;
         }
+        if (armerlevel == 5)
+        {
+            image.color = Color.cyan;
+        }
     }
    
 }

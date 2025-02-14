@@ -50,7 +50,7 @@ public class RedReboot : MonoBehaviourPun
             {
                 return;
             }
-            HitCharacter.GetComponent<CameraController>().Stuned(0.05f, 0.2f);
+            HitCharacter.GetComponent<CameraController>().Stuned(0.05f, 0.05f);
             time += Time.deltaTime;
             if (time >= 0.5f)
             {
