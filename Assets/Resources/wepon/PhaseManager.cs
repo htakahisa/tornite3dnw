@@ -74,7 +74,7 @@ public class PhaseManager : MonoBehaviourPun {
         buypanel.SetActive(true);
         wall.SetActive(true);
         // 15•bŒã‚ÉCallMethod‚ğŒÄ‚Ño‚·
-        Invoke(nameof(EndBuyPhase), 10.0f);
+        Invoke(nameof(EndBuyPhase), 20.0f);
 
     }
 
