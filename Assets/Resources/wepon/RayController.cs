@@ -96,6 +96,8 @@ public class RayController : MonoBehaviourPun {
     private float RecoilBounce = 0;
     Coroutine recoilbounce;
 
+    private bool HavingOnibi = false;
+
     // Start is called before the first frame update
     void Start() {
 
@@ -189,6 +191,10 @@ public class RayController : MonoBehaviourPun {
             }
             cam.fieldOfView = 80;
             IsZooming = false;
+            if (camcon.IsKamaitachi)
+            {
+                camcon.StopKamaitachi();
+            }
             Knife();
         }
 
@@ -222,9 +228,12 @@ public class RayController : MonoBehaviourPun {
             {
                 return;
             }
+            if (camcon.IsKamaitachi)
+            {
+                camcon.StopKamaitachi();
+            }
 
-   
-            if (currentWeaponIndex == 11 || currentWeaponIndex == 12)
+                if (currentWeaponIndex == 11 || currentWeaponIndex == 12)
             {
                 SaveAbilityMagazine = Magazinesize;
             }
@@ -264,7 +273,7 @@ public class RayController : MonoBehaviourPun {
 
         if ((Auto && HullAuto()) || (!Auto && SemiAuto())) {
 
-            if(currentWeaponIndex != 13)
+            if(currentWeaponIndex != 13 && currentWeaponIndex != 14)
             {
                 Fire();
             }
@@ -275,6 +284,10 @@ public class RayController : MonoBehaviourPun {
         if(currentWeaponIndex == 13 && SemiAuto())
         {
             Stab();
+        }
+        if (CanOnibi())
+        {
+            FireOnibi();
         }
         if (Input.GetMouseButtonDown(0))
         {
@@ -561,16 +574,23 @@ public class RayController : MonoBehaviourPun {
                    
 
 
-
-
-
-
                     if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, range, hitMask))
                     {
                         if (hit.collider.gameObject.tag == "Body" || hit.collider.gameObject.tag == "Head")
                         {
                             PhotonNetwork.Instantiate("DamageBlood", hit.point, Quaternion.identity);
-                        } else
+                            if (hit.collider.gameObject.tag == "Body")
+                            {
+                                RoundManager.rm.HitEnemy(false);
+                            }
+                            else
+                            {
+                                RoundManager.rm.HitEnemy(true);
+                            }
+
+
+                        }
+                            else
                         {
                             PhotonNetwork.Instantiate("WallHit", hit.point, Quaternion.identity);
                         }
@@ -627,6 +647,32 @@ public class RayController : MonoBehaviourPun {
 
        return gameObject;
 
+    }
+
+
+    public void FireOnibi()
+    {
+        RaycastHit hit;
+
+        // カメラの位置と向きを取得
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null) return;
+
+        // カメラの5m先の位置を計算
+        Vector3 spawnPosition;
+
+        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, 5, hitMask))
+        {
+            spawnPosition = hit.point;
+        }
+        else
+        {
+            spawnPosition = mainCamera.transform.position + mainCamera.transform.forward * 5f;
+        }
+
+            // オブジェクトを生成
+            PhotonNetwork.Instantiate("Onibi", spawnPosition, Quaternion.identity);
+            camcon.kamaitachi -= 20;
     }
 
     public void Classic() {
@@ -1116,6 +1162,9 @@ public class RayController : MonoBehaviourPun {
         }
 
     }
+
+
+
     public void Knife()
     {
         currentWeaponIndex = 13;
@@ -1143,6 +1192,23 @@ public class RayController : MonoBehaviourPun {
         }
 
     }
+
+    public void Onibi()
+    {
+
+        currentWeaponIndex = 14;
+        SwitchWeapon(currentWeaponIndex);
+
+        if (mzt != null)
+        {
+            mzt.text = "Onibi";
+        }
+
+        this.UseAbilityWeapon = "Onibi";
+        HavingOnibi = true;
+
+    }
+
 
 
     [PunRPC]
@@ -1223,6 +1289,14 @@ public class RayController : MonoBehaviourPun {
         return Input.GetKeyDown(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked;
 
     }
+
+    private bool CanOnibi()
+    {
+
+        return Input.GetKeyDown(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked && currentWeaponIndex == 14 && HavingOnibi && camcon.kamaitachi >= 20;
+
+    }
+
 
     private IEnumerator Burst()
     {

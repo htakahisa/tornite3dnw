@@ -15,11 +15,7 @@ public class Diable : MonoBehaviourPun {
 
     // Start is called before the first frame update
     void Awake() {
-        gameObject.SetActive(true);
-
-        
-
-       
+        Invoke("DestroyPhoton", 10f);
     }
 
     // Update is called once per frame
@@ -27,11 +23,14 @@ public class Diable : MonoBehaviourPun {
 
     }
 
-
+    private void DestroyPhoton()
+    {
+        PhotonNetwork.Destroy(gameObject);
+    }
 
     private void OnTriggerStay(Collider other) {
 
-        PhotonView targetPhotonView = other.gameObject.GetComponent<PhotonView>();
+        PhotonView targetPhotonView = other.gameObject.GetComponentInParent<PhotonView>();
  
         if (targetPhotonView == null || !targetPhotonView.IsMine)
         {
@@ -56,7 +55,7 @@ public class Diable : MonoBehaviourPun {
 
     private void OnTriggerExit(Collider other)
     {
-        PhotonView targetPhotonView = other.gameObject.GetComponent<PhotonView>();
+        PhotonView targetPhotonView = other.gameObject.GetComponentInParent<PhotonView>();
 
         if (targetPhotonView == null || !targetPhotonView.IsMine)
         {

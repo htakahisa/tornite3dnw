@@ -22,16 +22,17 @@ public class CatController : MonoBehaviour
 
     private Vector3 targetpos;
 
+    private GameObject enemy;
+
     void Start()
     {
-        GameObject enemy = GameObject.FindGameObjectWithTag("Player");
+        enemy = GameObject.FindGameObjectWithTag("Me");
         sm = Camera.main.transform.parent.GetComponent<SoundManager>();
 
         
         if (enemy != null)
         {
             agent = GetComponent<NavMeshAgent>();
-            target = enemy.transform;
             agent.SetDestination(targetpos);
         }
 
@@ -55,7 +56,7 @@ public class CatController : MonoBehaviour
         {
             stepTimer += Time.deltaTime;
 
-           
+            target = enemy.transform;
 
             // ターゲットとの距離を計算
             float distance = Vector3.Distance(transform.position, target.position);

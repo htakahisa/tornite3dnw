@@ -9,7 +9,8 @@ public class NextPlatinums : MonoBehaviour
     Text mintext;
     [SerializeField]
     Text maxtext;
-
+    [SerializeField]
+    Text moneytext;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,5 +22,6 @@ public class NextPlatinums : MonoBehaviour
     {
         mintext.text = "IF YOU LOSE : " + RoundManager.rm.GetNextMin();
         maxtext.text = "IF YOU WIN : " + RoundManager.rm.GetNextMax();
+        moneytext.text = "PLATINUMS : " + RoundManager.rm.GetMoney();
     }
 }

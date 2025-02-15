@@ -34,10 +34,6 @@ public class RoundManager : MonoBehaviourPun {
 
     private Judge judgec;
 
-    private Text mont;
-
-    private GameObject money;
-
     private Text scoretext;
 
     private GameObject score;
@@ -55,9 +51,13 @@ public class RoundManager : MonoBehaviourPun {
 
     GameObject finisherManager;
 
-    List<string> finisherList = new List<string> { "wood", "fireaxe", "dummy", "blacknoir", "gridwhite", "liberation", "bloom", "snow", "sweet"};
+    List<string> finisherList = new List<string> { "wood", "fireaxe", "dummy", "blacknoir", "gridwhite", "liberation", "bloom", "snow", "sweet", "bloodrose" };
 
     public static RoundManager rm = null;
+
+
+    private int BodyShots = 0;
+    private int HeadShots = 0;
 
     // Start is called before the first frame update
     void Start() {
@@ -107,7 +107,10 @@ public class RoundManager : MonoBehaviourPun {
         if (rm == null) {
             rm = this;
             DontDestroyOnLoad(gameObject);
-           
+
+            BodyShots = PlayerPrefs.GetInt("Bodyshots");
+            HeadShots = PlayerPrefs.GetInt("Headshots");
+
         } else {
             Destroy(gameObject);
         }
@@ -135,13 +138,8 @@ public class RoundManager : MonoBehaviourPun {
             }
         }
             recklesstime += Time.deltaTime;
-        if (mont != null) {           
-            if (PhotonNetwork.LocalPlayer.ActorNumber == 1) {
-                mont.text = Acoin + " PLATINUM";
-            } else {
-                mont.text = Bcoin + " PLATINUM";
-                }
-            }
+              
+          
             if (scoretext != null)
             {
                 if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
@@ -172,10 +170,6 @@ public class RoundManager : MonoBehaviourPun {
 
         judget = GameObject.FindWithTag("Judge");
 
-        money = GameObject.FindWithTag("Money");
-
-        mont = money.GetComponent<Text>();
-
         score = GameObject.FindWithTag("Score");
 
         scoretext = score.GetComponent<Text>();
@@ -197,6 +191,8 @@ public class RoundManager : MonoBehaviourPun {
         {
             return;
         }
+
+        RoundScoreSet();
 
         if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
         {
@@ -229,10 +225,29 @@ public class RoundManager : MonoBehaviourPun {
 
 
     }
-  
-    
+
+    private void RoundScoreSet()
+    {
+
+        SaveNumber savenumber = new SaveNumber();
+        savenumber.SaveScore("int", "Bodyshots", BodyShots.ToString());
+        savenumber.SaveScore("int", "Headshots", HeadShots.ToString());
+
+    }
 
 
+
+    public void HitEnemy(bool head)
+    {
+        if (head)
+        {
+            HeadShots++;
+        }
+        else
+        {
+            BodyShots++;
+        }
+    }
 
     private void RoundProcess()
     {
@@ -524,4 +539,17 @@ public class RoundManager : MonoBehaviourPun {
         return nowmoney + 1500 + sideRound * 500;
     }
 
+    public int GetMoney()
+    {
+        if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+        {
+            return Acoin;
+        }
+        else
+        {
+            return Bcoin;
+        }
+    }
 }
+
+

@@ -108,10 +108,10 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: de2549b7af7082a4cadf5cfdf58239dc, type: 2}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.08104053
-  m_Height: 0.23689944
+  m_Radius: 0.11071752
+  m_Height: 0.26172185
   m_Direction: 1
-  m_Center: {x: -0.0010142128, y: 0.07327032, z: 0.014611542}
+  m_Center: {x: 0.0024573428, y: 0.07095957, z: 0.0046208436}
 --- !u!114 &1397582880125767645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1783,10 +1783,12 @@ MonoBehaviour:
     m_Bits: 32768
   effectOffset: {x: 0, y: 1, z: 2}
   diable: {x: 0, y: 1, z: 2}
+  IsKamaitachi: 0
   foot: {fileID: 2425630165191655316}
   pinPrefab: {fileID: 3396055247076033621, guid: b8b0bdb21c67d604eb104d784c447c05, type: 3}
   WalkAble: 1
   AbilityAble: 1
+  kamaitachi: 0
 --- !u!114 &6223386477289434817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2789,6 +2791,51 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!1 &7008490428709833042
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3016846478829510896}
+  - component: {fileID: 7339963735683545062}
+  m_Layer: 23
+  m_Name: headback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3016846478829510896
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7008490428709833042}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.008, y: 0.142, z: 0.024}
+  m_LocalScale: {x: 1.0000001, y: 0.9999999, z: 1.0000002}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8060959370290634699}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7339963735683545062
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7008490428709833042}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3, y: 0.3, z: 0.02243642}
+  m_Center: {x: -0.000000054884666, y: 0.000000004028415, z: -0.094354995}
 --- !u!1 &7209506410213505618
 GameObject:
   m_ObjectHideFlags: 0
@@ -2818,6 +2865,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7236882385537743322}
+  - {fileID: 3016846478829510896}
   m_Father: {fileID: 5880674773710582826}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

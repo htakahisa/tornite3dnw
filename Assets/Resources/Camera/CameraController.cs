@@ -41,6 +41,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private GameObject stray;
 
+    private float approach = 0.4f;
 
     private Ability ability;
 
@@ -50,7 +51,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     // エフェクトが生成される位置のオフセット
     public Vector3 diable = new Vector3(0, 1, 2);
 
-    private bool IsKamaitachi = false;  
+    public bool IsKamaitachi = false;  
 
     //　通常のジャンプ力
 
@@ -99,6 +100,12 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private float climbSpeed = 2.0f; // 登る速度
     private float climbSoundInterval = 0.5f;
 
+    private string weapon;
+
+    public int kamaitachi = 0;
+
+    private float kamaitachiInterval = 0;
+
     // Start is called before the first frame update
     void Start() {
 
@@ -106,6 +113,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
         {
             return;
         }
+
+       
+
         //rb = GetComponent<Rigidbody>();
         // ゲーム開始時にマウスを表示
         if (photonView.IsMine)
@@ -199,6 +209,40 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     }
                  
                 }
+            }
+            if (ability != null && ability.GetAbility(1) == "Kamaitachi")
+            {
+
+                if (PhaseManager.pm.GetPhase().Equals("Battle"))
+                {
+                    
+                    kamaitachiInterval += Time.deltaTime;
+
+                    if (kamaitachiInterval >= 0.3f)
+                    {
+                        if (IsKamaitachi)
+                        {
+                            kamaitachi--;
+                        }
+                        if (!IsKamaitachi)
+                        {
+                            kamaitachi++;
+                        }
+                        kamaitachiInterval = 0f;
+                    }
+
+                    if(kamaitachi <= 0)
+                    {
+                        StopKamaitachi();
+                        kamaitachi = 0;
+                    }
+
+                    AbilityMeter.abilitymeter.SetValue(kamaitachi);
+
+                }
+
+               
+
             }
         }
 
@@ -512,10 +556,11 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     z = Input.GetAxisRaw("Vertical") * speed;
                     float ratio = 1f;
                     bool issnake = false;
-
+                   
                     if (z != 0 && x != 0)
                     {
                         ratio /= 2;
+                      
                     }
                     if (Input.GetKey(KeyCode.LeftControl))
                     {
@@ -538,11 +583,16 @@ public class CameraController : MonoBehaviourPunCallbacks {
                         if (!issnake)
                         {
                             stepTimer += Time.fixedDeltaTime;
+                            approach -= Time.fixedDeltaTime;
                             // 足音を0.5秒毎に再生
-                            if (stepTimer >= 0.5f && sm != null)
+                            if (stepTimer >= 0.4f && sm != null)
                             {
                                 sm.PlaySound("walk");
                                 stepTimer = 0f; // タイマーをリセット
+                            }
+                            if (approach >= 0)
+                            {
+                                ratio /= 2f;
                             }
                         }
                         //rb.velocity = new Vector3(0, rb.velocity.y, 0);  // 速度リセット
@@ -584,7 +634,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                             {
                                 stepTimer += Time.fixedDeltaTime;
                                 // 足音を0.5秒毎に再生
-                                if (stepTimer >= 0.5f)
+                                if (stepTimer >= 0.4f)
                                 {
                                     sm.PlaySound("walk");
                                     stepTimer = 0f; // タイマーをリセット
@@ -640,11 +690,15 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 }
 
             }
+            else
+            {
+                stepTimer = 0f;
+                approach = 0.4f;
+                animator.SetBool("walking", false);
+            }
+           
         }
-        else
-        {
-            animator.SetBool("walking", false);
-        }
+      
 
 
     
@@ -1000,7 +1054,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             StartCoroutine(Motionless(false, false, false, 1.5f));
         }
     }
-        IEnumerator WaitStray(RaycastHit hit)
+    IEnumerator WaitStray(RaycastHit hit)
     {
 
 
@@ -1163,10 +1217,36 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (photonView == null || !photonView.IsMine) {
             return;
         }
-        RayController.rc.Knife();        
-        StartCoroutine(ChangeServiceSpeed(1.5f,5,1.3f));
+
+        if (IsKamaitachi)
+        {
+            StopKamaitachi();
+        }
+        else if(kamaitachi >= 5)
+        {
+            StartKamaitachi();
+        }
+            
 
     }
+
+    public void StartKamaitachi()
+    {
+       
+        IsKamaitachi = true;
+        weapon = rc.UseWepon;
+        rc.Onibi();
+        servicespeed = 1.5f;
+        kamaitachi -= 5;
+    }
+
+    public void StopKamaitachi()
+    {
+        IsKamaitachi = false;
+        RayController.rc.Invoke(weapon, 0);
+        servicespeed = 1f;
+    }
+
 
     void WallKickAction() {
 
@@ -1186,16 +1266,13 @@ public class CameraController : MonoBehaviourPunCallbacks {
         // servicespeedを設定
         servicespeed = speed;
         jumpPower = jump;
-        IsKamaitachi = true;
-        string weapon = RayController.rc.UseWepon;
-        RayController.rc.UseWepon = "";
+
         // ~秒待機
         yield return new WaitForSeconds(duration);
-        RayController.rc.Invoke(weapon, 0);
+        
         // servicespeedを1に戻す
         servicespeed = 1f;
         jumpPower = 0.9f;
-        IsKamaitachi = false;
     }
 
 

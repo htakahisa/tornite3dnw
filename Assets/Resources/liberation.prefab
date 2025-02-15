@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68de7d2f94ff4b545a75ddd14d309fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delay: 3.5
   moveSpeed: 10
   moveOffset: {x: 0, y: 3, z: 0}
 --- !u!1 &7820163090865202156
@@ -160,7 +161,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2d40a49bdd31faf4682fcfce04d96443, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.306
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0

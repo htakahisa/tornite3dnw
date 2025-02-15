@@ -15,10 +15,10 @@ public class SensityvityController : MonoBehaviour
     void Start()
     {
 
-        
+        FindObjectOfType<CameraController>().SensityvityChange(PlayerPrefs.GetFloat("Crosshairsize"));
 
     }
-      void Update() {
+    void Update() {
 
     }
 
@@ -33,6 +33,8 @@ public class SensityvityController : MonoBehaviour
             
             float sensi = floatValue;
             FindObjectOfType<CameraController>().SensityvityChange(sensi);
+            SaveNumber savenumber = new SaveNumber();
+            savenumber.SaveScore("float", "Sensitivity", floatValue.ToString());
         }
     }
 

@@ -28,7 +28,7 @@ public class LoungeBgmManager : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "lounge")
         {
-            PlayBGM(defaultBGM, 0.25f);
+            PlayBGM(defaultBGM, 0.1f);
         }
     }
 

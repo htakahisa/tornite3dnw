@@ -17,7 +17,14 @@ public class BuyArmer : MonoBehaviourPun
     [SerializeField]
     private string discription = "";
 
+    [SerializeField]
+    private string armername = "";
+
     HpMaster hm;
+
+    [SerializeField]
+    private BuyPanelManager bpm;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,9 +69,9 @@ public class BuyArmer : MonoBehaviourPun
             hm.LastCostChange(platinum);
             hm.SetShield(shield);
             armer.armermanager.ArmerNo(level);
-            
 
-            
+            bpm.AdjustSpriteOpacity(armername);
+
 
         }
       

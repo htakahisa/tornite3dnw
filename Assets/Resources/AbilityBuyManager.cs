@@ -19,7 +19,8 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks
     GameObject rmo;
     RoundManager rmc;
 
-
+    [SerializeField]
+    private BuyPanelManager bpm;
 
     // Start is called before the first frame update
     void Awake()
@@ -100,6 +101,7 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks
                     nowability = Ability;
             }
         }
+                bpm.AdjustSpriteOpacity(nowability);
     }
 
 

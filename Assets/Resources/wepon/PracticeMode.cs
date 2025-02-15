@@ -67,5 +67,9 @@ public class PracticeMode : MonoBehaviour {
     {
         SceneManager.LoadScene("MapSelect");
     }
+    public void CombatData()
+    {
+        SceneManager.LoadScene("CombatData");
+    }
 
 }

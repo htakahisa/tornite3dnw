@@ -32,7 +32,7 @@ public class Molesta : MonoBehaviourPunCallbacks
     {
         if (other.gameObject.CompareTag("Head"))
         {
-            other.gameObject.GetComponentInParent<CameraController>().Stuned(1, 0.1f);
+            other.gameObject.GetComponentInParent<CameraController>().Stuned(2, 0.1f);
             Debug.Log($"Player {other.gameObject.name} touched the wall!");
         }
     }

@@ -24,6 +24,7 @@ public class Flash : MonoBehaviour
         flashEffect = GameObject.FindWithTag("Flash");
         _renderer = GetComponent<Renderer>();
 
+        
 
         Invoke("Blast", 0.7f);
     }
@@ -38,29 +39,24 @@ public class Flash : MonoBehaviour
     }
 
 
-    bool IsVisibleFrom(Renderer renderer, Camera camera)
-    {
-        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
-        return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
-    }
-
     private void Blast()
     {
-
         sm.PlayMySound("flash");
-        if (IsVisibleFrom(_renderer, Camera.main))
-        {
-            // レイキャストで障害物をチェック
-            Vector3 directionToPlayer = Camera.main.transform.position - transform.position;
-            RaycastHit hit;
-            if (!Physics.Raycast(transform.position, directionToPlayer, out hit, directionToPlayer.magnitude)
-                || hit.collider.gameObject.name == "head.x")
-            {
 
-                flashEffect.GetComponent<PlayerFlashEffect>().ApplyFlash(flashDuration);
-                Debug.Log("フラッシュ");
-            }
+        int layerMask = LayerMask.GetMask("MapObject", "BackHead");
+
+        Vector3 direction = (Camera.main.transform.position - transform.position).normalized;
+        RaycastHit hit;
+        float distance = Vector3.Distance(transform.position, Camera.main.transform.position);
+        if (!Physics.Raycast(transform.position, direction, out hit, distance, layerMask))
+        {
+            flashEffect.GetComponent<PlayerFlashEffect>().ApplyFlash(flashDuration);
+            Debug.Log("フラッシュ");
+
         }
+
+        Debug.Log(hit.collider);
+        Debug.DrawRay(transform.position, direction * 100, Color.green);
 
 
 

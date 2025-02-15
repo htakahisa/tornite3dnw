@@ -64,24 +64,19 @@ public class Ability : MonoBehaviourPun {
 
         
 
-            if (cc.AbilityAble)
+        if (cc.AbilityAble)
             {
-            if (Input.GetKeyDown(KeyCode.E) && number1 >= 1)
+            if (Input.GetKeyDown(KeyCode.E) && (number1 >= 1 || Able1 == "Kamaitachi"))
             {
                 Use(Able1);
             }
 
-            if (Input.GetKeyDown(KeyCode.Q) && number2 >= 1)
+            if (Input.GetKeyDown(KeyCode.Q) && (number2 >= 1 || Able2 == "Stray"))
             {
                 Use(Able2);
             }
-            if (Able2 == "Stray")
-            {
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    Use(Able2);
-                }
-            }
+         
+
 
         }
 
@@ -92,7 +87,7 @@ public class Ability : MonoBehaviourPun {
 
 
 
-        public void Use(string able) {
+    public void Use(string able) {
 
 
 
@@ -140,6 +135,12 @@ public class Ability : MonoBehaviourPun {
             
 
         }
+        if (able.Equals("Kamaitachi"))
+        {
+            cc.Kamaitachi();
+
+
+        }
         if (able.Equals("Yor")) {
             rc.Yor();
             Spend(1,1);
@@ -169,11 +170,6 @@ public class Ability : MonoBehaviourPun {
         if (able.Equals("Boostio")) {
             cc.Boostio();
            
-        }
-        if (able.Equals("Kamaitachi")) {
-            cc.Kamaitachi();
-            Spend(1, 1);
-
         }
         if (able.Equals("Aqua"))
         {

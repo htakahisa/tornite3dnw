@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Silver.unity
     guid: 8dc0c6f44e00c6748b5e6c1af7c08a93
   - enabled: 1
+    path: Assets/Scenes/CombatData.unity
+    guid: c470afea43a3b09419c28d8499e437ce
+  - enabled: 1
     path: Assets/Scenes/Yor.unity
     guid: 49218bf20c894074f85ad48adf0ae3ee
   - enabled: 1

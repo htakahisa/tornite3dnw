@@ -17,7 +17,7 @@ public class CrosshairManager : MonoBehaviour {
     // Start is called before the first frame update
     void Awake() {
         crosshair = GameObject.FindGameObjectWithTag("Crosshair");
-        
+        floatValue = PlayerPrefs.GetFloat("Crosshairsize");
     }
 
     // Update is called once per frame
@@ -36,6 +36,8 @@ public class CrosshairManager : MonoBehaviour {
         {
             Debug.Log("”’l‚É•ÏŠ·¬Œ÷: " + floatValue);
             crosshairsize = floatValue * crosshairAdjust;
+            SaveNumber savenumber = new SaveNumber();
+            savenumber.SaveScore("float", "Crosshairsize", floatValue.ToString());
         }
         else
         {

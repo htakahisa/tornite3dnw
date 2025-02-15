@@ -15,7 +15,8 @@ public class BuyWeponManager : MonoBehaviourPunCallbacks {
     GameObject rmo;
     RoundManager rmc;
 
-    
+    [SerializeField]
+    private BuyPanelManager bpm;
 
 
     // Start is called before the first frame update
@@ -47,6 +48,7 @@ public class BuyWeponManager : MonoBehaviourPunCallbacks {
         Pay(cost);
         rc.Invoke(weapon, 0);
         nowweponcost = cost;
+        bpm.AdjustSpriteOpacity(weapon);
 
         }
     }
