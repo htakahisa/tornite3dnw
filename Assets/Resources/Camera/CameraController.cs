@@ -127,6 +127,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             abilitycheck.SetActive(false);
         }
 
+        NormalSensityvity = PlayerPrefs.GetFloat("Sensitivity");
 
         ability = GetComponent<Ability>();
         sm = GetComponent<SoundManager>();
