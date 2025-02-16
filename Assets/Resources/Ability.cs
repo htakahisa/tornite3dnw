@@ -127,7 +127,7 @@ public class Ability : MonoBehaviourPun {
         }
         if (able.Equals("Diable")) {
             cc.RireDuDiable();
-            Spend(1, 1);
+            Spend(2, 1);
 
         }
         if (able.Equals("Coward")) {

@@ -12,8 +12,8 @@ public class Classic {
     bool auto = false;
     float reloadtime = 0.7f;
     bool accuracy = true;
-    float YRecoil = 1.5f;
-    float RecoilDuration = 0.08f;
+    float YRecoil = 0.8f;
+    float RecoilDuration = 0.06f;
 
     void Start() {
 
