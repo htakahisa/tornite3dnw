@@ -26,7 +26,7 @@ public class CatController : MonoBehaviour
 
     void Start()
     {
-        enemy = GameObject.FindGameObjectWithTag("Me");
+        enemy = EnemyTag.enemytag.gameObject;
         sm = Camera.main.transform.parent.GetComponent<SoundManager>();
 
         
@@ -101,7 +101,7 @@ public class CatController : MonoBehaviour
         {
             // 相手の CatEffect に対してエフェクトを有効化
             targetCatEffect.ApplyFlash(flashDuration);
-            PhotonNetwork.Destroy(gameObject);
+            Destroy();
         }
     }
 
@@ -110,4 +110,10 @@ public class CatController : MonoBehaviour
     {
         PhotonNetwork.Destroy(gameObject);
     }
+
+    private void OnDestroy()
+    {
+        PhotonNetwork.Instantiate("CatCollect", transform.position, Quaternion.identity);
+    }
+
 }

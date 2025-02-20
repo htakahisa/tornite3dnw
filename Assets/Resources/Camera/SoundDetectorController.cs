@@ -22,15 +22,15 @@ public class SoundDetectorController : MonoBehaviour
     {
         if (opponent == null)
         {
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            if (players.Length > 0 && GameObject.FindGameObjectWithTag("Me") != null )
+            GameObject players = EnemyTag.enemytag.gameObject;
+            if (players != null)
             {
-                opponent = players[0].transform;
+                opponent = players.transform;
             }
         }
         if (player == null)
         {
-            GameObject p = GameObject.FindGameObjectWithTag("Me");
+            GameObject p = MyTag.mytag.gameObject;
             if (p != null)
             {
                 player = p.transform;

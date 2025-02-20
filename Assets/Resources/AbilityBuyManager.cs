@@ -27,14 +27,6 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks
     {
 
 
-
-
-
-
-
-        rmo = GameObject.Find("Roundmanager");
-        rmc = rmo.GetComponent<RoundManager>();
-
     }
 
     // Update is called once per frame
@@ -110,7 +102,7 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks
     {
 
 
-        return (rmc.IsCanBuy(cost, PhotonNetwork.LocalPlayer.ActorNumber));
+        return (RoundManager.rm.IsCanBuy(cost, PhotonNetwork.LocalPlayer.ActorNumber));
 
 
     }
@@ -123,15 +115,15 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks
 
 
 
-        rmc.ChangeCoin(cost * -1, PhotonNetwork.LocalPlayer.ActorNumber);
-        rmc.AddOutLoad(cost, PhotonNetwork.LocalPlayer.ActorNumber);
+        RoundManager.rm.ChangeCoin(cost * -1, PhotonNetwork.LocalPlayer.ActorNumber);
+        RoundManager.rm.AddOutLoad(cost, PhotonNetwork.LocalPlayer.ActorNumber);
     }
 
     public void Return(int cost)
     {
 
-        rmc.ChangeCoin(cost, PhotonNetwork.LocalPlayer.ActorNumber);
-        rmc.AddOutLoad(-1 * cost, PhotonNetwork.LocalPlayer.ActorNumber);
+        RoundManager.rm.ChangeCoin(cost, PhotonNetwork.LocalPlayer.ActorNumber);
+        RoundManager.rm.AddOutLoad(-1 * cost, PhotonNetwork.LocalPlayer.ActorNumber);
 
     }
 

@@ -25,7 +25,7 @@ public class FallManager : MonoBehaviourPun
         {
             return;
         }
-        if(transform.position.y <= -20)
+        if(transform.position.y <= -30)
         {
             HasKill = true;
             if (PhotonNetwork.LocalPlayer.ActorNumber == 2)

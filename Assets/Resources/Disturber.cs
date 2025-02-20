@@ -21,6 +21,14 @@ public class Disturber : MonoBehaviourPun
 
     private AudioSource audioSource;
 
+    public static Disturber disturber;
+
+    private void Awake()
+    {
+        disturber = this;
+    }
+
+
     private void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
@@ -59,7 +67,7 @@ public class Disturber : MonoBehaviourPun
     {
         isPlanted = true;
         plantedTime = networkTime;
-        timerinround = GameObject.FindGameObjectWithTag("TimerText").GetComponent<TimerInRound>();
+        timerinround = TimerInRound.TIR;
         timerinround.Planted(this);
     }
 

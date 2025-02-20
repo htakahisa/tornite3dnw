@@ -26,7 +26,7 @@ public class ArteBomb : MonoBehaviourPun
 
         if (materialmanager == null)
         {
-            materialmanager = GameObject.Find("materialmanager");
+            materialmanager = MaterialManager.mm.gameObject;
         }
         // マテリアルのセットアップ (カスタムダブルサイドシェーダーを使用)
         sphereMaterial = new Material(materialmanager.GetComponent<MeshRenderer>().materials[1]);

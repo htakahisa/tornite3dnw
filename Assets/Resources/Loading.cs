@@ -4,18 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
 
-public class Loading : MonoBehaviourPun
+public class Loading : MonoBehaviourPunCallbacks
 {
-    private string MyMap = "Needless";
-    private string OpponentMap = "";
+
     private bool hasload = false;
 
+    private const byte MyMapEventCode = 1; // 任意のイベントコード
+
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
+
+
+
+
 
     // Update is called once per frame
     void Update()
@@ -24,27 +27,32 @@ public class Loading : MonoBehaviourPun
         {
             return;
         }
+        if (MapManager.mapmanager.GetMapName() == "DuelLand")
+        {
+            SceneManager.LoadScene(MapManager.mapmanager.GetMapName());
+            hasload = true;
+        }
+
 
 
         if (PhotonNetwork.InRoom)
         {
-            if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+            if (ResourceManager.resourcemanager.HasLoadedAll)
             {
-                MyMap = MapManager.mapmanager.GetMapName();
-                photonView.RPC("GetOpponentMapName", RpcTarget.Others, MyMap);
-
-                if (MyMap == OpponentMap)
+                if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
                 {
-                    if (!ResourceManager.resourcemanager.HasLoadedAll)
-                    {
-                        return;
-                    }
                     SceneManager.LoadScene(MapManager.mapmanager.GetMapName());
                     hasload = true;
                 }
-
             }
         }
+
+        
+
+
+
+
+
 #if UNITY_EDITOR
 
         if (Input.GetKeyDown(KeyCode.P))
@@ -57,10 +65,9 @@ public class Loading : MonoBehaviourPun
     }
 
 
-    [PunRPC]
-    private void GetOpponentMapName(string name)
-    {
-        OpponentMap = name;
-    }
+
+
+
+
 
 }

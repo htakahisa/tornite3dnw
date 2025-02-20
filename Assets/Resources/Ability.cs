@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class Ability : MonoBehaviourPun {
 
-    private PhaseManager pm;
-
 
     CameraController cc;
     RayController rc;
@@ -22,8 +20,8 @@ public class Ability : MonoBehaviourPun {
 
     // Start is called before the first frame update
     void Start() {
+
         aquaCloseMap = KeyController.Instance.Settings.AquaCloseMap;
-        
 
     }
 
@@ -175,6 +173,11 @@ public class Ability : MonoBehaviourPun {
         {
             cc.Aqua();
            
+        }
+        if (able.Equals("Katarina"))
+        {
+            cc.C4();
+
         }
         if (able.Equals("Arte"))
         {

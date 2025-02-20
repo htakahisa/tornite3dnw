@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HpMaster : MonoBehaviourPun, IPunObservable {
 
@@ -13,6 +14,7 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
     public static HpMaster hpmaster = null;
     private float shield = 1f;
 
+    private float aiShield = 1f;
 
     RoundManager rm;
 
@@ -60,16 +62,74 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
         shield = Shield;
     }
 
+    public void SetAIShield(float Shield)
+    {
+        aiShield = Shield;
+    }
+
+    IEnumerator DelayAiSpawn()
+    {
+        yield return new WaitForSeconds(2f);
+        SampleScene.ss.InstanceAi();
+    }
 
 
     public void SetHp(float damage, int player) {
 
+        
+      
+        if (SceneManager.GetActiveScene().name.Equals("DuelLand"))
+        {
+            if (player == 2)
+            {
+                damage *= aiShield;
 
-        photonView.RPC("Calculate", RpcTarget.All, damage, player);
+                if (aiShield == 0)
+                {
+                    aiShield = 1;
+
+                }
+
+                hp2 -= damage;
+                if (hp2 <= 0)
+                {
+                    Destroy(EnemyTag.enemytag.gameObject);
+                    hp2 = 100;
+                    StartCoroutine(DelayAiSpawn());
+                }
+            }
+            else
+            {
+               
+                damage *= shield;
+
+                if (shield == 0)
+                {
+                    shield = 1;
+                    armer.armermanager.ArmerNo(1);
+                }
+
+                hp1 -= damage;
+                if (hp1 <= 0)
+                {
+                    Destroy(MyTag.mytag.gameObject);
+                    SceneManager.LoadScene("DuelLand");
+                }
+            }
+            
+
+
+
+
+        }
+        else
+        {
+            photonView.RPC("Calculate", RpcTarget.All, damage, player);
+        }
 
 
     }
-    [PunRPC]
+        [PunRPC]
     private void Calculate(float damage, int player)
     {
         if(player != PhotonNetwork.LocalPlayer.ActorNumber)
@@ -124,8 +184,14 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
                 HasKill = true;
                 ResultSynchronizer.rs.SendResult(2);
                 Camera.main.transform.parent.GetComponent<CameraController>().Dead();
+                PlayerPrefs.SetInt("Shootinglose", PlayerPrefs.GetInt("Shootinglose") + 1);
             }
-                
+            else
+            {
+                PlayerPrefs.SetInt("Shootingwin", PlayerPrefs.GetInt("Shootingwin") + 1);
+            }
+            PlayerPrefs.Save();
+
         }
         else if (this.hp2 <= 0)
         {
@@ -134,9 +200,13 @@ public class HpMaster : MonoBehaviourPun, IPunObservable {
                 HasKill = true;
                 ResultSynchronizer.rs.SendResult(1);
                 Camera.main.transform.parent.GetComponent<CameraController>().Dead();
-                    
+                PlayerPrefs.SetInt("Shootinglose", PlayerPrefs.GetInt("Shootinglose") + 1);
             }
-                
+            else
+            {
+                PlayerPrefs.SetInt("Shootingwin", PlayerPrefs.GetInt("Shootingwin") + 1);
+            }
+            PlayerPrefs.Save();
         }
     }
 

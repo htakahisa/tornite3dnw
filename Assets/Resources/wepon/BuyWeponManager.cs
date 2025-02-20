@@ -12,7 +12,6 @@ public class BuyWeponManager : MonoBehaviourPunCallbacks {
 
     RayController rc;
 
-    GameObject rmo;
     RoundManager rmc;
 
     [SerializeField]
@@ -22,15 +21,13 @@ public class BuyWeponManager : MonoBehaviourPunCallbacks {
     // Start is called before the first frame update
     void Awake() {
 
-  
-        rmo = GameObject.Find("Roundmanager");
-        rmc = rmo.GetComponent<RoundManager>();
+
         
     }
 
     // Update is called once per frame
     void Update() {
-
+     
     }
 
 
@@ -65,20 +62,20 @@ public class BuyWeponManager : MonoBehaviourPunCallbacks {
             Back(nowweponcost);
         }
         having = true;
-            rmc.ChangeCoin(cost * -1, PhotonNetwork.LocalPlayer.ActorNumber);
-        rmc.AddOutLoad(cost, PhotonNetwork.LocalPlayer.ActorNumber);
+        RoundManager.rm.ChangeCoin(cost * -1, PhotonNetwork.LocalPlayer.ActorNumber);
+        RoundManager.rm.AddOutLoad(cost, PhotonNetwork.LocalPlayer.ActorNumber);
     }
 
     public void Back(int back) {
 
 
-        rmc.ChangeCoin(back, PhotonNetwork.LocalPlayer.ActorNumber);
-        rmc.AddOutLoad(-1 * back, PhotonNetwork.LocalPlayer.ActorNumber);
+        RoundManager.rm.ChangeCoin(back, PhotonNetwork.LocalPlayer.ActorNumber);
+        RoundManager.rm.AddOutLoad(-1 * back, PhotonNetwork.LocalPlayer.ActorNumber);
     }
 
     public bool CanBuy(int cost) {
 
-        return (rmc.IsCanBuy(cost - nowweponcost, PhotonNetwork.LocalPlayer.ActorNumber));
+        return (RoundManager.rm.IsCanBuy(cost - nowweponcost, PhotonNetwork.LocalPlayer.ActorNumber));
 
 
     }

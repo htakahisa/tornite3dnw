@@ -12,7 +12,7 @@ public class Classic {
     bool auto = false;
     float reloadtime = 0.7f;
     bool accuracy = true;
-    float YRecoil = 0.8f;
+    float YRecoil = 0.4f;
     float RecoilDuration = 0.06f;
 
     void Start() {

@@ -25,7 +25,7 @@ public class WarpGate : MonoBehaviour
     {
         SoundManager sm = Camera.main.transform.parent.GetComponent<SoundManager>();
         sm.PlaySound("warp");
-        GameObject character = GameObject.FindGameObjectWithTag("Me");
+        GameObject character = MyTag.mytag.gameObject;
         character.GetComponent<CharacterController>().enabled = false;
         character.transform.position = warpposition;
         character.transform.rotation = warprotation;

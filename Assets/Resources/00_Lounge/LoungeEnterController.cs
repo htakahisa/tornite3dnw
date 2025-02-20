@@ -53,4 +53,10 @@ public class LoungeEnterController : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("Loading");
 
     }
+
+    public void Custom()
+    {
+        SceneManager.LoadScene("Custom");
+    }
+
 }

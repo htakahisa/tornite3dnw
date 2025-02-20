@@ -56,8 +56,13 @@ public class RoundManager : MonoBehaviourPun {
     public static RoundManager rm = null;
 
 
-    private int BodyShots = 0;
-    private int HeadShots = 0;
+    public int BodyShots = 0;
+    public int HeadShots = 0;
+
+    public int LeviathanWin = 0;
+    public int ValkyrieWin = 0;
+
+    private bool HasPrefs = false;
 
     // Start is called before the first frame update
     void Start() {
@@ -108,8 +113,7 @@ public class RoundManager : MonoBehaviourPun {
             rm = this;
             DontDestroyOnLoad(gameObject);
 
-            BodyShots = PlayerPrefs.GetInt("Bodyshots");
-            HeadShots = PlayerPrefs.GetInt("Headshots");
+
 
         } else {
             Destroy(gameObject);
@@ -138,50 +142,50 @@ public class RoundManager : MonoBehaviourPun {
             }
         }
             recklesstime += Time.deltaTime;
-              
-          
-            if (scoretext != null)
-            {
-                if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                {
-                    scoretext.text = Ascore + " - " + Bscore;
-                }
-                else
-                {
-                    scoretext.text = Bscore + " - " + Ascore;
-                }
 
-            }
+        if (!HasPrefs)
+        {
+            BodyShots = PlayerPrefs.GetInt("Bodyshots");
+            HeadShots = PlayerPrefs.GetInt("Headshots");
+            LeviathanWin = PlayerPrefs.GetInt(MapManager.mapmanager.GetMapName() + "LeviathanWin");
+            ValkyrieWin = PlayerPrefs.GetInt(MapManager.mapmanager.GetMapName() + "ValkyrieWin");
+            HasPrefs = true;
+        }
 
 
 
-            if (Input.GetKeyDown(KeyCode.I)) {
+
+        if (Input.GetKeyDown(KeyCode.I)) {
             RoundEnd(false);
 
         }
 
     }
 
+    public string GetScoreText()
+    {
+        if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+        {
+            return Ascore + " - " + Bscore;
+        }
+        else
+        {
+            return Bscore + " - " + Ascore;
+        }
+    }
+
 
     private void GetData() {
-
-
-        
-
-        judget = GameObject.FindWithTag("Judge");
-
-        score = GameObject.FindWithTag("Score");
-
-        scoretext = score.GetComponent<Text>();
 
         //pmc = pm.GetComponent<PhotonMethod>();
         bwm = gameObject.GetComponent<BuyWeponManager>();
         
-        judgec = judget.GetComponent<Judge>();
     }
 
 
     public void RoundEnd(bool WinnerIsA) {
+
+        judgec = Judge.judge;
 
         if (RoundProcessing)
         {
@@ -207,8 +211,8 @@ public class RoundManager : MonoBehaviourPun {
 
         winnerIsA = WinnerIsA;
 
-
-
+  
+        
 
 
 
@@ -218,8 +222,10 @@ public class RoundManager : MonoBehaviourPun {
             service += 500;
         }
         StartCoroutine(judgec.TextChange());
+#if !UNITY_EDITOR
 
         Finisher();
+#endif
 
         Invoke("RoundProcess", 5.0f);
 
@@ -228,11 +234,10 @@ public class RoundManager : MonoBehaviourPun {
 
     private void RoundScoreSet()
     {
-
-        SaveNumber savenumber = new SaveNumber();
-        savenumber.SaveScore("int", "Bodyshots", BodyShots.ToString());
-        savenumber.SaveScore("int", "Headshots", HeadShots.ToString());
-
+        PlayerPrefs.SetInt("Bodyshots", BodyShots);
+        PlayerPrefs.SetInt("Headshots", HeadShots);
+        PlayerPrefs.SetInt(MapManager.mapmanager.GetMapName() + "LeviathanWin", LeviathanWin);
+        PlayerPrefs.SetInt(MapManager.mapmanager.GetMapName() + "ValkyrieWin", ValkyrieWin);
     }
 
 
@@ -290,13 +295,29 @@ public class RoundManager : MonoBehaviourPun {
         // その後もともとの処理を流す
 
 
-        if (winnerIsA)
+        if (winnerIsA == (PhotonNetwork.LocalPlayer.ActorNumber == 1))
         {
             judgec.Win();
+            if (Side == "Leviathan")
+            {
+                LeviathanWin++;
+            }
+            else
+            {
+                ValkyrieWin++;
+            }
         }
         else
         {
             judgec.Lose();
+            if (Side == "Valkyrie")
+            {
+                LeviathanWin++;
+            }
+            else
+            {
+                ValkyrieWin++;
+            }
         }
 
 
@@ -339,13 +360,12 @@ public class RoundManager : MonoBehaviourPun {
 
         if (Ascore > 12 || Bscore > 12)
         {
-
-            //GameEnd();
+            
             StartLoadingScene("Needless_ending", winnerIsA);
 
         }
         else
-        {
+        {         
             StartLoadingScene(MapManager.mapmanager.GetMapName(), winnerIsA);
         }
     }
@@ -354,12 +374,13 @@ public class RoundManager : MonoBehaviourPun {
 
     private void Finisher()
     {
-        GameObject loser = GameObject.FindGameObjectWithTag("Player");
+
+        GameObject loser = EnemyTag.enemytag.gameObject;
 
         if (PhotonNetwork.LocalPlayer.ActorNumber == 1 == winnerIsA)
         {
             // finisher �̖��O�𕐊킩��擾
-            GameObject winner = GameObject.FindGameObjectWithTag("MainCamera");
+            GameObject winner = Camera.main.gameObject;
             RayController ray = winner.GetComponent<RayController>();
 
            if (IsFinisher(ray.getSkinName()))
@@ -369,8 +390,8 @@ public class RoundManager : MonoBehaviourPun {
         }
         else
         {
-            GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
-            Vector3 loserPosition = GameObject.FindGameObjectWithTag("Me").transform.position; // 負けた側の位置
+            GameObject camera = Camera.main.gameObject;
+            Vector3 loserPosition = MyTag.mytag.transform.position; // 負けた側の位置
             Vector3 offset = new Vector3(0, 4, -4); // カメラの位置を調整（斜め上に移動）
             camera.transform.position = loserPosition + offset; // カメラを新しい位置に移動
 
@@ -437,7 +458,6 @@ public class RoundManager : MonoBehaviourPun {
 
 
         }
-
         Debug.Log("Acoin:" + Acoin + " Bcoin:" + Bcoin);
         RayController.rc.Classic();
 

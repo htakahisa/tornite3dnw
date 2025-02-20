@@ -1775,6 +1775,7 @@ MonoBehaviour:
   WalkAble: 1
   AbilityAble: 1
   kamaitachi: 0
+  boxSize: {x: 0.5, y: 0.1, z: 0.5}
 --- !u!114 &6223386477289434817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2000,7 +2001,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.5
-  m_Radius: 0.01
+  m_Radius: 0.3
   m_SlopeLimit: 30
   m_StepOffset: 0.4
   m_SkinWidth: 0.08

@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class Stella{
+public class Stella : ScriptableObject
+{
 
     float rate = 0.095f;
     int damage = 42;
     int headdamage = 100;
-    int magazine = 17;
+    int magazine = 15;
     bool auto = true;
     float reloadtime = 1.5f;
     bool zoomable = true;
     float zoomratio = 65;
     bool accuracy = true;
-    float YRecoil = 0.9f;
-    float XRecoil = 0.25f;
+    float YRecoil = 0.7f;
+    float XRecoil = 0.23f;
     int Burst = 3;
     float BurstingRate = 0.08f;
     float BurstRate = 0.3f;

@@ -8,7 +8,15 @@ public class DisturberMeter : MonoBehaviour
 
     public GameObject meter;
     private Slider meterslider;
-         
+
+    public static DisturberMeter disturbermeter;
+
+
+    private void Awake()
+    {
+        disturbermeter = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

@@ -27,12 +27,11 @@ public class PhaseManager : MonoBehaviourPun {
             al = GetComponentInParent<AudioListener>();
         }
         else
-        {
-            
+        {            
             Invoke("BuyPhase", 3f);
         }
     }
-        private void Awake() {
+    private void Awake() {
       
       
         
@@ -40,11 +39,8 @@ public class PhaseManager : MonoBehaviourPun {
 
     // Update is called once per frame
     void Update() {
-        if (phase == "Duel")
-        {
-            return;
-        }
-        if (phase == "Buy")
+ 
+        if (phase == "Buy" || phase == "Duel")
         {
            
 
@@ -74,7 +70,7 @@ public class PhaseManager : MonoBehaviourPun {
         buypanel.SetActive(true);
         wall.SetActive(true);
         // 15ïbå„Ç…CallMethodÇåƒÇ—èoÇ∑
-        Invoke(nameof(EndBuyPhase), 20.0f);
+        Invoke(nameof(EndBuyPhase), 5.0f);
 
     }
 

@@ -93,7 +93,7 @@ public class CollectAbility : MonoBehaviourPun
         }
         if (meter == null)
         {
-            meter = GameObject.FindGameObjectWithTag("Meter").GetComponent<DisturberMeter>();
+            meter = DisturberMeter.disturbermeter;
         }
         if(cc == null)
         {

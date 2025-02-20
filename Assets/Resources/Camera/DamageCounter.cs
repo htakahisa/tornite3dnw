@@ -12,8 +12,8 @@ public class DamageCounter : MonoBehaviour {
     
     // Start is called before the first frame update
     void Awake() {
-        hmo = GameObject.Find("HpMasterO");
-        hmc = hmo.GetComponent<HpMaster>();
+
+        hmc = HpMaster.hpmaster;
         cc = GetComponentInParent<CameraController>();
     }
 
@@ -35,6 +35,13 @@ public class DamageCounter : MonoBehaviour {
 
     }
 
-  
+    public void AiDamageCount(int damage)
+    {
+            hmc.SetHp(damage, 2);
+        
+
+    }
+
+
 
 }

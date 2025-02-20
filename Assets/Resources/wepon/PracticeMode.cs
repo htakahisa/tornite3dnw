@@ -72,4 +72,6 @@ public class PracticeMode : MonoBehaviour {
         SceneManager.LoadScene("CombatData");
     }
 
+
+
 }

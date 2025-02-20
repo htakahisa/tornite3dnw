@@ -5,28 +5,25 @@ using UnityEngine;
 public class SaveNumber
 {
 
-
-    public void SaveScore(string type, string name, string score)
-    {
-        if (type == "string")
-        {
-            PlayerPrefs.SetString(name, score);
-        }
-        else if (type == "float")
-        {
-            PlayerPrefs.SetFloat(name, float.Parse(score));
-        }
-        else if (type == "int")
-        {
-            PlayerPrefs.SetFloat(name, int.Parse(score));
-        }
-        PlayerPrefs.Save();
-    }
-
     public float GetHeadRatio()
     {
+        return ((PlayerPrefs.GetInt("Headshots") * 100.00f) / (PlayerPrefs.GetInt("Bodyshots") + PlayerPrefs.GetInt("Headshots")));
+    }
 
-        return PlayerPrefs.GetInt("Headshots") / (PlayerPrefs.GetInt("Bodyshots") + PlayerPrefs.GetInt("Headshots")) * 100;
+    public float GetShootingWinRate()
+    {
+        return ((PlayerPrefs.GetInt("Shootinglose") * 100.00f) / (PlayerPrefs.GetInt("Shootinglose") + PlayerPrefs.GetInt("Shootingwin")));
+    }
+
+    public float GetLeviathanWinRate(string map)
+    {
+        return ((PlayerPrefs.GetInt(map+ "LeviathanWin") * 100.00f) / (PlayerPrefs.GetInt(map+ "LeviathanWin") + PlayerPrefs.GetInt(map+ "ValkyrieWin")));
+    }
+
+    public float GetValkyrieWinRate(string map)
+    {
+        Debug.Log(PlayerPrefs.GetInt("WhisperValkyrieWin"));
+        return ((PlayerPrefs.GetInt(map+ "ValkyrieWin") * 100.00f) / (PlayerPrefs.GetInt(map+ "ValkyrieWin") + PlayerPrefs.GetInt(map+ "LeviathanWin")));
     }
 
 }

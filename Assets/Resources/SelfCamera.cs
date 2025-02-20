@@ -20,7 +20,7 @@ public class SelfCamera : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        if (gameObject.layer.Equals("Enemy") || (transform.parent.gameObject.tag.Equals("Me"))) {
+        if (LayerMask.LayerToName(gameObject.layer).Equals("Enemy") || (transform.parent.gameObject.tag.Equals("Me"))) {
             return;
         }
 
@@ -28,7 +28,9 @@ public class SelfCamera : MonoBehaviour
             // É^ÉOÇïœçX
             gameObject.layer = LayerMask.NameToLayer("Me");
             transform.parent.gameObject.tag = "Me";
-        } else {
+            transform.parent.gameObject.AddComponent<MyTag>();
+
+        } if(!photonView.IsMine || transform.parent.name == "CowAi(Clone)") {
 
             gameObject.layer = LayerMask.NameToLayer("Enemy");
 
@@ -50,8 +52,10 @@ public class SelfCamera : MonoBehaviour
 
 
             Plane.layer = LayerMask.NameToLayer("Me");
-                    
+            transform.parent.gameObject.AddComponent<EnemyTag>();
+
         }
+
             
 
     }

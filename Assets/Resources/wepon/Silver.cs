@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class Silver {
+public class Silver : ScriptableObject
+{
 
     float rate = 0.3f;
     int damage = 60;

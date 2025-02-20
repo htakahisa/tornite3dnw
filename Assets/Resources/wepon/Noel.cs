@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class Noel {
+public class Noel : ScriptableObject
+{
 
     float rate = 0.09f;
     int damage = 40;
@@ -14,10 +15,10 @@ public class Noel {
     bool zoomable = true;
     float zoomratio = 50;
     bool accuracy = true;
-    float YRecoil = 0.7f;
+    float YRecoil = 0.4f;
     float XRecoil = 0.3f;
     float PeekingSpeed = 0.08f;
-    float RecoilDuration = 0.2f;
+    float RecoilDuration = 0.15f;
 
     void Start() {
 

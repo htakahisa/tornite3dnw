@@ -6,7 +6,7 @@ public class MapManager : MonoBehaviour
 {
 
     public static MapManager mapmanager;
-    private static string mapName;
+    private static string mapName = "Whisper";
 
     // Start is called before the first frame update
     void Awake()

@@ -9,9 +9,12 @@ public class ResourceManager : MonoBehaviour
 
     private GameObject ArteBomb;
     private GameObject BrokenSoundManager;
+    private GameObject AbilityCheck;
+    private GameObject AbilityCheckCircle;
+    private GameObject Ai;
 
     // ゲームオブジェクトのリストを宣言時に初期化
-    public List<string> AllGameObjects = new List<string> { "ArteBomb", "BrokenSoundManager" };
+    public List<string> AllGameObjects = new List<string> { "ArteBomb", "BrokenSoundManager", "AbilityCheck", "AbilityCheckCircle", "Ai" };
 
     // ゲームオブジェクトのリストを宣言時に初期化
     public List<string> LoadedGameObjects = new List<string>();
@@ -50,6 +53,21 @@ public class ResourceManager : MonoBehaviour
             BrokenSoundManager = Resources.Load<GameObject>("BrokenSoundManager");
             LoadedGameObjects.Add("BrokenSoundManager");
         }
+        if (AbilityCheck == null)
+        {
+            AbilityCheck = Resources.Load<GameObject>("AbilityCheck");
+            LoadedGameObjects.Add("AbilityCheck");
+        }
+        if (AbilityCheckCircle == null)
+        {
+            AbilityCheckCircle = Resources.Load<GameObject>("AbilityCheckCircle");
+            LoadedGameObjects.Add("AbilityCheckCircle");
+        }
+        if (Ai == null)
+        {
+            Ai = Resources.Load<GameObject>("CowAi");
+            LoadedGameObjects.Add("Ai");
+        }
         // 二つのリストの要素が一致しているかを確認
         if (AreListsEqual(AllGameObjects, LoadedGameObjects))
         {
@@ -66,6 +84,18 @@ public class ResourceManager : MonoBehaviour
         if (name == "BrokenSoundManager")
         {
             return BrokenSoundManager;
+        }
+        if (name == "AbilityCheck")
+        {
+            return AbilityCheck;
+        }
+        if (name == "AbilityCheckCircle")
+        {
+            return AbilityCheckCircle;
+        }
+        if (name == "Ai")
+        {
+            return Ai;
         }
 
         return null;

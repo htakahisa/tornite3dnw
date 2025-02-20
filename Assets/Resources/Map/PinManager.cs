@@ -50,8 +50,9 @@ public class PinManager : MonoBehaviour {
 
     private void GetCamera()
     {
+        Debug.Log(Camera.main.GetComponentInParent<Ability>());
         Camera.main.GetComponentInParent<Ability>().CanAbility = !Map.activeSelf;
-
+       
     }
 
 

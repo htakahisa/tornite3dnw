@@ -25,7 +25,7 @@ public class SurCamera : MonoBehaviourPun {
         playerCamera = Camera.main.gameObject;
         playerCamera.SetActive(false);
         gameObject.SetActive(true);        
-        Invoke("Destroy", 30f);
+
     }
 
     // Update is called once per frame

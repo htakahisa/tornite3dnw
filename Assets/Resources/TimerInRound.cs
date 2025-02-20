@@ -17,6 +17,14 @@ public class TimerInRound : MonoBehaviourPun
 
     private double missionFailureTime = 0;
 
+    public static TimerInRound TIR;
+
+
+    private void Awake()
+    {
+        TIR = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

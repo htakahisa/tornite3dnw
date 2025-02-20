@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -7306864539961876960}
   - component: {fileID: -161394137097551238}
   - component: {fileID: 8856804038934638571}
-  m_Layer: 18
+  m_Layer: 13
   m_Name: Diable
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -34,9 +34,7 @@ public class HpBarController : MonoBehaviourPun {
     // Start is called before the first frame update
     void Start() {
 
-        hmo = GameObject.Find("HpMasterO");
-
-        hmc = hmo.GetComponent<HpMaster>();
+        hmc = HpMaster.hpmaster;
 
         slider = GetComponent<Slider>();
 

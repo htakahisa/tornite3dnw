@@ -4,7 +4,6 @@ public class Flash : MonoBehaviour
 {
     private Renderer _renderer;
 
-    private GameObject flashEffect; // フラッシュエフェクトのプレハブ
     public float flashDuration = 2f; // フラッシュの持続時間
 
     private float throwForce = 9f; // 投げる力
@@ -21,7 +20,6 @@ public class Flash : MonoBehaviour
         // グレネードに力を加える
         Vector3 throwDirection = transform.forward * 2;
         rb.AddForce(throwDirection * throwForce, ForceMode.VelocityChange);
-        flashEffect = GameObject.FindWithTag("Flash");
         _renderer = GetComponent<Renderer>();
 
         
@@ -50,7 +48,7 @@ public class Flash : MonoBehaviour
         float distance = Vector3.Distance(transform.position, Camera.main.transform.position);
         if (!Physics.Raycast(transform.position, direction, out hit, distance, layerMask))
         {
-            flashEffect.GetComponent<PlayerFlashEffect>().ApplyFlash(flashDuration);
+            PlayerFlashEffect.pfe.ApplyFlash(flashDuration);
             Debug.Log("フラッシュ");
 
         }

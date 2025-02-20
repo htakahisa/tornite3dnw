@@ -9,6 +9,14 @@ public class Judge : MonoBehaviour {
     Text text;
     static string judgement;
 
+    public static Judge judge;
+
+    private void Awake()
+    {
+        judge = this;
+    }
+
+
     // Start is called before the first frame update
     void Start() {
 

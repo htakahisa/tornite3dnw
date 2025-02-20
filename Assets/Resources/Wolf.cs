@@ -12,7 +12,7 @@ public class Wolf : MonoBehaviourPun {
     private SoundManager sm;
 
     void Start() {
-        GameObject enemy = GameObject.FindGameObjectWithTag("Player");
+        GameObject enemy = EnemyTag.enemytag.gameObject;
         sm = Camera.main.transform.parent.GetComponent<SoundManager>();
         if (enemy != null) {
             // NavMeshAgentコンポーネントの取得

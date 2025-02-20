@@ -34,7 +34,7 @@ public class PlantAndDefuse : MonoBehaviourPun
         cc = GetComponent<CameraController>();
         rc = Camera.main.GetComponent<RayController>();
         sm = GetComponent<SoundManager>();
-        meter = GameObject.FindGameObjectWithTag("Meter").GetComponent<DisturberMeter>();
+        meter = DisturberMeter.disturbermeter;
 
     }
 
@@ -54,7 +54,7 @@ public class PlantAndDefuse : MonoBehaviourPun
 
             if (RoundManager.rm.GetSide().Equals("Leviathan"))
             {
-                disturber = GameObject.Find("Disturber(Clone)").GetComponent<Disturber>();
+                disturber = Disturber.disturber;
                 float distance = Vector3.Distance(transform.position, disturber.transform.position);
                 if (distance <= 3) {
                     if (!IsDefusing)

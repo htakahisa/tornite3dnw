@@ -9,25 +9,29 @@ public class CrosshairManager : MonoBehaviour {
 
     private static float crosshairAdjust = 150f;
     public static float crosshairsize = 1f * crosshairAdjust;
-    private GameObject crosshair;
     public TMP_InputField inputField;
     private float floatValue;
-
+    public static CrosshairManager crshrM;
 
     // Start is called before the first frame update
     void Awake() {
-        crosshair = GameObject.FindGameObjectWithTag("Crosshair");
+        crshrM = this;
         floatValue = PlayerPrefs.GetFloat("Crosshairsize");
+        crosshairsize = floatValue * crosshairAdjust;
     }
 
     // Update is called once per frame
     void Update() {
        
-        if (crosshair != null) {
-            crosshair.transform.localScale = new Vector3(crosshairsize, crosshairsize, crosshairsize);
-        }
+        
+         
+        
     }
 
+    public float GetSize()
+    {
+        return crosshairsize;
+    }
  
     public void OnValueChanged()
     {
@@ -36,8 +40,8 @@ public class CrosshairManager : MonoBehaviour {
         {
             Debug.Log("êîílÇ…ïœä∑ê¨å˜: " + floatValue);
             crosshairsize = floatValue * crosshairAdjust;
-            SaveNumber savenumber = new SaveNumber();
-            savenumber.SaveScore("float", "Crosshairsize", floatValue.ToString());
+
+            PlayerPrefs.SetFloat("Crosshairsize", floatValue);
         }
         else
         {

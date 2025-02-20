@@ -15,7 +15,7 @@ public class Diable : MonoBehaviourPun {
 
     // Start is called before the first frame update
     void Awake() {
-        Invoke("DestroyPhoton", 10f);
+        Invoke("DestroyPhoton", 30f);
     }
 
     // Update is called once per frame

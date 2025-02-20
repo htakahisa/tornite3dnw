@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using ExitGames.Client.Photon;
+using UnityEngine.SceneManagement;
 
 
 // MonoBehaviourPunCallbacksを継承して、PUNのコールバックを受け取れるようにする
@@ -9,40 +10,50 @@ public class SampleScene : MonoBehaviourPunCallbacks {
 
     public int playerNo = 1;
 
-    GameObject rmo;
 
     RoundManager rm;
+
+    public static SampleScene ss;
 
     private void Start() {
 
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "jp"; // 日本リージョンを固定
-        PhotonNetwork.ConnectUsingSettings();
 
         // PhotonServerSettingsの設定内容を使ってマスターサーバーへ接続する
         PhotonNetwork.ConnectUsingSettings();
-        Invoke("InstanceAvatar", 2f);
 
     }
-    private void Awake() {
+    private void Awake()
+    {
+        ss = this;
+        if (!SceneManager.GetActiveScene().name.Equals("Loading"))
+        {
+            Invoke("InstanceAvatar", 2);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        if (SceneManager.GetActiveScene().name.Equals("DuelLand"))
+        {
+            Invoke("InstanceAi", 2);
+
+        }
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        InRoom();
+    }
+    
         
-    }
 
 
-
-    // マスターサーバーへの接続が成功した時に呼ばれるコールバック
-    public override void OnConnectedToMaster() {
+    public void InRoom()
+    {
+        RoomOptions options = new RoomOptions { MaxPlayers = 2 }; // 最大2人のルーム
         // "Room"という名前のルームに参加する（ルームが存在しなければ作成して参加する）
-        PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions(), TypedLobby.Default);
+        PhotonNetwork.JoinOrCreateRoom(Custom.password + "," + MapManager.mapmanager.GetMapName(), options, TypedLobby.Default);
     }
 
-    // ゲームサーバーへの接続が成功した時に呼ばれるコールバック
-    public override void OnJoinedRoom() {
-
-
-        //InstanceAvatar();
-
-
-    }
 
     public void OnDisconnected(DisconnectCause cause)
     {
@@ -55,17 +66,20 @@ public class SampleScene : MonoBehaviourPunCallbacks {
         }
     }
 
-    [PunRPC]
+    public void InstanceAi()
+    {
+        SpawnPossManager spm = SpawnPossManager.spm;
+        GameObject Ai = ResourceManager.resourcemanager.GetObject("Ai");
+        Instantiate(Ai, spm.GetSpawnPos(), Quaternion.identity);
+    }
 
-    public void InstanceAvatar() {
+
+        public void InstanceAvatar() {
+        SpawnPossManager spm = SpawnPossManager.spm;
         var position = new Vector3(0, 0, 0);
 
-        rmo = GameObject.Find("Roundmanager");
-        if (rmo == null)
-        {
-            return;
-        }
-        rm = rmo.GetComponent<RoundManager>();
+
+        rm = RoundManager.rm;
 
         if (MapManager.mapmanager.GetMapName() == "Secondhouse")
         {
@@ -161,13 +175,13 @@ public class SampleScene : MonoBehaviourPunCallbacks {
                 {
                     Debug.Log("You are Player 1");
                     // Player 1の初期化処理
-                    position = new Vector3(0f, 0f, 5);
+                    position = spm.GetSpawnPos();
                 }
                 else if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
                 {
                     Debug.Log("You are Player 2");
                     // Player 2の初期化処理
-                    position = new Vector3(0f, 0f, -5f);
+                    position = spm.GetSpawnPos();
                 }
                 else
                 {
@@ -181,13 +195,13 @@ public class SampleScene : MonoBehaviourPunCallbacks {
                 {
                     Debug.Log("You are Player 1");
                     // Player 1の初期化処理
-                    position = new Vector3(6.362605f, 2.437766f, -5.436756f);
+                    position = spm.GetSpawnPos();
                 }
                 else if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
                 {
                     Debug.Log("You are Player 2");
                     // Player 2の初期化処理
-                    position = new Vector3(0f, 0f, 5);
+                    position = spm.GetSpawnPos();
                 }
                 else
                 {
@@ -210,7 +224,7 @@ public class SampleScene : MonoBehaviourPunCallbacks {
                 {
                     Debug.Log("You are Player 2");
                     // Player 2の初期化処理
-                    position = new Vector3(-3.7f, -2.428032f, 18.02f);
+                    position = new Vector3(-3.7f, -2.428032f, 16f);
                 }
                 else
                 {
@@ -224,7 +238,7 @@ public class SampleScene : MonoBehaviourPunCallbacks {
                 {
                     Debug.Log("You are Player 1");
                     // Player 1の初期化処理
-                    position = new Vector3(-3.7f, -2.428032f, 18.02f);
+                    position = new Vector3(-3.7f, -2.428032f, 16f);
                 }
                 else if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
                 {
@@ -241,7 +255,7 @@ public class SampleScene : MonoBehaviourPunCallbacks {
 
 
         GameObject avatar = PhotonNetwork.Instantiate("CowPlayer", position, Quaternion.identity);
-        Camera camera = GetComponentInChildren<Camera>();
+        Camera camera = Camera.main;
         var cameraPosition = avatar.transform.position;
         camera.transform.parent = avatar.transform;
         camera.transform.position = new Vector3(cameraPosition.x, cameraPosition.y + 1.582f, cameraPosition.z);

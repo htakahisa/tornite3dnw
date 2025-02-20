@@ -45,7 +45,7 @@ public class RayController : MonoBehaviourPun {
     private Camera cam;
     public bool CanShoot = true;
     public bool MapOpening = true;
-    public bool BuyPanelOpening = true;
+    public bool BuyPanelOpening = false;
 
     private bool ZoomAble = false;
     private float ZoomRatio = 0f;
@@ -98,12 +98,17 @@ public class RayController : MonoBehaviourPun {
 
     private bool HavingOnibi = false;
 
+    private float OnibiInterval = 1f;
+
+    private GameObject AbilityCheck;
+
+    private bool HasGetLand = false;
+
     // Start is called before the first frame update
     void Start() {
 
         cam = GetComponent<Camera>();
-        
-        rmc = GameObject.Find("Roundmanager").GetComponent<RoundManager>();
+       
 
         // 最初の武器をアクティブにする
         SwitchWeapon(currentWeaponIndex);
@@ -123,23 +128,9 @@ public class RayController : MonoBehaviourPun {
         duelist = new Duelist();
         yor = new Yor();
         blackbell = new BlackBell();
-       
 
-        if (MapManager.mapmanager.GetMapName() == "DuelLand")
-        {
-            if (RoundManager.rm.sideRound <= 13)
-            {
-                Noel();
-            }
-            if (RoundManager.rm.sideRound <= 5)
-            {
-                Silver();
-            }
-            if (RoundManager.rm.sideRound <= 1)
-            {
-                Classic();
-            }
-        }
+
+   
 
         knifeKey = KeyController.Instance.Settings.KnifeKey;
         mainWeponKey = KeyController.Instance.Settings.MainWeaponKey;
@@ -151,7 +142,7 @@ public class RayController : MonoBehaviourPun {
     private void Awake() {
 
         rc = this;
-        Invoke("DelayGet", 3.1f);
+        Invoke("DelayGet", 2.1f);
     }
 
     private void DelayGet() {
@@ -165,8 +156,11 @@ public class RayController : MonoBehaviourPun {
     // Update is called once per frame
     void Update() {
 
-
-     
+        OnibiInterval -= Time.deltaTime;
+        if (MapManager.mapmanager != null && !HasGetLand)
+        {
+      
+        }
 
         if (Input.GetKeyDown(KeyCode.R) && !UseWepon.Equals("")) {
             StartCoroutine(Reload());
@@ -233,7 +227,7 @@ public class RayController : MonoBehaviourPun {
                 camcon.StopKamaitachi();
             }
 
-                if (currentWeaponIndex == 11 || currentWeaponIndex == 12)
+            if (currentWeaponIndex == 11 || currentWeaponIndex == 12)
             {
                 SaveAbilityMagazine = Magazinesize;
             }
@@ -285,9 +279,14 @@ public class RayController : MonoBehaviourPun {
         {
             Stab();
         }
-        if (CanOnibi())
+        if (CanCheckOnibi())
         {
-            FireOnibi();
+            CheckOnibi();
+         
+        }
+        if (CanFireOnibi())
+        {
+            FireOnibi(CheckOnibi());
         }
         if (Input.GetMouseButtonDown(0))
         {
@@ -370,7 +369,7 @@ public class RayController : MonoBehaviourPun {
 
             if (target.CompareTag("Head"))
             {
-                target.GetComponentInParent<CameraController>().Recoiled(punch, punch);
+                target.GetComponentInParent<CameraController>().Recoiled(punch, punch, 0);
             }
 
             if (target.CompareTag("Destructible"))
@@ -395,7 +394,7 @@ public class RayController : MonoBehaviourPun {
         {
             return;
         }
-        if (BuyPanelOpening)
+        if (BuyPanelOpening && PhaseManager.pm.GetPhase() != "Duel")
         {
             return;
         }
@@ -435,7 +434,7 @@ public class RayController : MonoBehaviourPun {
 
             if (target.CompareTag("Head"))
             {
-                target.GetComponentInParent<CameraController>().Recoiled(punch,punch);
+                target.GetComponentInParent<CameraController>().Recoiled(punch, punch, 0);
             }
 
             if (target.CompareTag("Destructible"))
@@ -649,30 +648,52 @@ public class RayController : MonoBehaviourPun {
 
     }
 
-
-    public void FireOnibi()
+    public void DestroyAbilityCheck()
     {
+        if(AbilityCheck == null)
+        {
+            return;
+        }
+        Destroy(AbilityCheck);
+    }
+
+
+    public Vector3 CheckOnibi()
+    {
+        DestroyAbilityCheck();
         RaycastHit hit;
 
         // カメラの位置と向きを取得
         Camera mainCamera = Camera.main;
-        if (mainCamera == null) return;
 
-        // カメラの5m先の位置を計算
+        // カメラの4m先の位置を計算
         Vector3 spawnPosition;
 
-        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, 5, hitMask))
+        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, 4, hitMask))
         {
-            spawnPosition = hit.point;
+            float distance = Vector3.Distance(mainCamera.transform.position, hit.point);
+            Debug.Log(distance);
+            spawnPosition = mainCamera.transform.position + mainCamera.transform.forward * (distance - 0.3f);
         }
         else
         {
-            spawnPosition = mainCamera.transform.position + mainCamera.transform.forward * 5f;
+            spawnPosition = mainCamera.transform.position + mainCamera.transform.forward * 4f;
         }
+        GameObject abilitycheck = ResourceManager.resourcemanager.GetObject("AbilityCheckCircle");
+        AbilityCheck = Instantiate(abilitycheck, spawnPosition, Quaternion.identity);
+        return spawnPosition;
 
-            // オブジェクトを生成
-            PhotonNetwork.Instantiate("Onibi", spawnPosition, Quaternion.identity);
-            camcon.kamaitachi -= 20;
+    }
+
+    public void FireOnibi(Vector3 spawnPosition)
+    {
+        OnibiInterval = 1;
+   
+            
+        // オブジェクトを生成
+        PhotonNetwork.Instantiate("Onibi", spawnPosition, Quaternion.identity);
+        camcon.kamaitachi -= 30;
+        DestroyAbilityCheck();
     }
 
     public void Classic() {
@@ -697,6 +718,10 @@ public class RayController : MonoBehaviourPun {
         if (PhaseManager.pm.GetPhase() == "Buy")
         {
             Magazinesize = classic.GetMagazine();
+        }
+        if (PhaseManager.pm.GetPhase() == "Duel")
+        {
+            Magazinesize = 999999;
         }
 
         Auto = classic.GetAuto();
@@ -739,6 +764,10 @@ public class RayController : MonoBehaviourPun {
         {
             Magazinesize = jawkha.GetMagazine();
         }
+        if (PhaseManager.pm.GetPhase() == "Duel")
+        {
+            Magazinesize = 999999;
+        }
 
         Auto = jawkha.GetAuto();
         ZoomAble = jawkha.GetZoomAble();
@@ -778,6 +807,10 @@ public class RayController : MonoBehaviourPun {
         {
             Magazinesize = mistake.GetMagazine();
         }
+        if (PhaseManager.pm.GetPhase() == "Duel")
+        {
+            Magazinesize = 999999;
+        }
 
         Auto = mistake.GetAuto();
         ZoomAble = false;
@@ -816,7 +849,11 @@ public class RayController : MonoBehaviourPun {
 
         if (PhaseManager.pm.GetPhase() == "Buy")
         {
-            Magazinesize = silver.GetMagazine();
+            Magazinesize = noel.GetMagazine();
+        }
+        if (PhaseManager.pm.GetPhase() == "Duel")
+        {
+            Magazinesize = 999999;
         }
 
         this.UseWepon = "Silver";
@@ -857,6 +894,10 @@ public class RayController : MonoBehaviourPun {
         {
             Magazinesize = pegasus.GetMagazine();
         }
+        if (PhaseManager.pm.GetPhase() == "Duel")
+        {
+            Magazinesize = 999999;
+        }
 
         this.UseWepon = "Pegasus";
         if (mzt != null) {
@@ -895,6 +936,10 @@ public class RayController : MonoBehaviourPun {
         if (PhaseManager.pm.GetPhase() == "Buy")
         {
             Magazinesize = stella.GetMagazine();
+        }
+        if (PhaseManager.pm.GetPhase() == "Duel")
+        {
+            Magazinesize = 999999;
         }
 
         this.UseWepon = "Stella";
@@ -935,6 +980,10 @@ public class RayController : MonoBehaviourPun {
         {
             Magazinesize = rapetter.GetMagazine();
         }
+        if (PhaseManager.pm.GetPhase() == "Duel")
+        {
+            Magazinesize = 999999;
+        }
 
         this.UseWepon = "Rapetter";
         if (mzt != null)
@@ -974,6 +1023,10 @@ public class RayController : MonoBehaviourPun {
         {
             Magazinesize = mischief.GetMagazine();
         }
+        if (PhaseManager.pm.GetPhase() == "Duel")
+        {
+            Magazinesize = 999999;
+        }
 
         this.UseWepon = "Mischief";
         if (mzt != null)
@@ -1011,6 +1064,10 @@ public class RayController : MonoBehaviourPun {
         {
             Magazinesize = noel.GetMagazine();
         }
+        if (PhaseManager.pm.GetPhase() == "Duel")
+        {
+            Magazinesize = 999999;
+        }
 
         this.UseWepon = "Noel";
         if (mzt != null) {
@@ -1047,6 +1104,10 @@ public class RayController : MonoBehaviourPun {
         {
             Magazinesize = reine.GetMagazine();
         }
+        if (PhaseManager.pm.GetPhase() == "Duel")
+        {
+            Magazinesize = 999999;
+        }
 
         this.UseWepon = "Reine";
         if (mzt != null) {
@@ -1077,6 +1138,10 @@ public class RayController : MonoBehaviourPun {
         if (PhaseManager.pm.GetPhase() == "Buy")
         {
             Magazinesize = duelist.GetMagazine();
+        }
+        if (PhaseManager.pm.GetPhase() == "Duel")
+        {
+            Magazinesize = 999999;
         }
 
         Auto = duelist.GetAuto();
@@ -1114,6 +1179,10 @@ public class RayController : MonoBehaviourPun {
         {
             Magazinesize = yor.GetMagazine();
         }
+        if (PhaseManager.pm.GetPhase() == "Duel")
+        {
+            Magazinesize = 999999;
+        }
 
         Auto = yor.GetAuto();
         ZoomAble = yor.GetZoomAble();
@@ -1149,6 +1218,10 @@ public class RayController : MonoBehaviourPun {
         if (UseAbilityWeapon == "")
         {
             Magazinesize = blackbell.GetMagazine();
+        }
+        if (PhaseManager.pm.GetPhase() == "Duel")
+        {
+            Magazinesize = 999999;
         }
 
         Auto = blackbell.GetAuto();
@@ -1235,7 +1308,28 @@ public class RayController : MonoBehaviourPun {
         if (SceneManager.GetActiveScene().Equals("Practice")) {
             
 
-        } else {
+        }
+        Debug.Log(SceneManager.GetActiveScene().name);
+        if (SceneManager.GetActiveScene().name.Equals("DuelLand"))
+        {
+            DamageManager dm = new DamageManager();
+            int damage = 0;
+            if (tag.Equals("Head"))
+            {
+                damage = HeadDamage;
+            }
+            if (tag.Equals("Body"))
+            {
+                damage = Damage;
+            }
+            if (!tag.Equals("Head") && !tag.Equals("Body"))
+            {
+                return;
+            }
+            dm.causeAiDamage(enemy, damage);
+        }
+        else
+        {
             if (tag.Equals("Destructible"))
             {
                 DamageManager dm = new DamageManager();
@@ -1293,7 +1387,21 @@ public class RayController : MonoBehaviourPun {
     private bool CanOnibi()
     {
 
-        return Input.GetKeyDown(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked && currentWeaponIndex == 14 && HavingOnibi && camcon.kamaitachi >= 20;
+        return currentWeaponIndex == 14 && HavingOnibi && camcon.kamaitachi >= 30 && OnibiInterval <= 0;
+
+    }
+
+    private bool CanCheckOnibi()
+    {
+
+        return Input.GetKey(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked && currentWeaponIndex == 14 && HavingOnibi && camcon.kamaitachi >= 30 && OnibiInterval <= 0;
+
+    }
+
+    private bool CanFireOnibi()
+    {
+
+        return Input.GetKeyUp(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked && currentWeaponIndex == 14 && HavingOnibi && camcon.kamaitachi >= 30 && OnibiInterval <= 0;
 
     }
 

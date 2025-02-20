@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-public class mischief {
+public class mischief : ScriptableObject
+{
 
     float rate = 0.085f;
     int damage = 25;
@@ -14,11 +15,11 @@ public class mischief {
     bool zoomable = false;
     float zoomratio = 80;
     bool accuracy = true;
-    float YRecoil = 0.4f;
-    float XRecoil = 0.08f;
+    float YRecoil = 0.3f;
+    float XRecoil = 0.09f;
     float PeekingSpeed = 0f;
     float punch = 3f;
-    float RecoilDuration = 0.25f;
+    float RecoilDuration = 0.1f;
 
     void Start() {
 

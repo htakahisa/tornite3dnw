@@ -15,6 +15,21 @@ public class DamageManager {
         
 
     }
+
+    public void causeAiDamage(GameObject enemy, int damage)
+    {
+
+        DamageCounter dmc = enemy.GetComponent<DamageCounter>();
+        if (dmc != null)
+        {
+            dmc.AiDamageCount(damage);
+        }
+
+
+
+    }
+
+
     public void damageToObj(GameObject enemy, int damage)
     {
 
