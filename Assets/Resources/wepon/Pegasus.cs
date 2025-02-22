@@ -14,8 +14,8 @@ public class Pegasus {
     bool zoomable = true;
     float zoomratio = 70;
     bool accuracy = true;
-    float YRecoil = 1f;
-    float XRecoil = 0.8f;
+    float YRecoil = 0.8f;
+    float XRecoil = 0.6f;
     int Burst = 5;
     float Punch = 0.5f;
     float BurstingRate = 0.05f;

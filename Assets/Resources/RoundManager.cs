@@ -82,6 +82,10 @@ public class RoundManager : MonoBehaviourPun {
 
     private void FirstWeapon()
     {
+        if(MapManager.mapmanager.GetMapName() == "DuelLand")
+        {
+            return;
+        }
         RayController.rc.Classic();
 
     }
@@ -166,11 +170,11 @@ public class RoundManager : MonoBehaviourPun {
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
         {
-            return Ascore + " - " + Bscore;
+            return Ascore + "-" + Bscore;
         }
         else
         {
-            return Bscore + " - " + Ascore;
+            return Bscore + "-" + Ascore;
         }
     }
 
@@ -459,11 +463,14 @@ public class RoundManager : MonoBehaviourPun {
 
         }
         Debug.Log("Acoin:" + Acoin + " Bcoin:" + Bcoin);
-        RayController.rc.Classic();
+        if (MapManager.mapmanager.GetMapName() != "DuelLand")
+        {
+            RayController.rc.Classic();
+        }
 
     }
 
-    // �V�[���ǂݍ��݂�J�n���郁�\�b�h
+        // �V�[���ǂݍ��݂�J�n���郁�\�b�h
     public void StartLoadingScene(string sceneName, bool WinnerIsA) {
         StartCoroutine(LoadYourScene(sceneName, WinnerIsA));
     }

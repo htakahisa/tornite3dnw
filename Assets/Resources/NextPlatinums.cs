@@ -20,8 +20,8 @@ public class NextPlatinums : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mintext.text = "IF YOU LOSE : " + RoundManager.rm.GetNextMin();
-        maxtext.text = "IF YOU WIN : " + RoundManager.rm.GetNextMax();
-        moneytext.text = "PLATINUMS : " + RoundManager.rm.GetMoney();
+        mintext.text = "IF YOU LOSE:" + RoundManager.rm.GetNextMin();
+        maxtext.text = "IF YOU WIN:" + RoundManager.rm.GetNextMax();
+        moneytext.text = "PLATINUMS:" + RoundManager.rm.GetMoney();
     }
 }

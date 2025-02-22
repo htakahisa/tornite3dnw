@@ -16,6 +16,10 @@ public class FallManager : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
+        if(photonView == null)
+        {
+            return;
+        }
         if (!photonView.IsMine)
         {
             return;

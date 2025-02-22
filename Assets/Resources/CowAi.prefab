@@ -1639,8 +1639,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3911173708075252437}
-  - component: {fileID: 5431393268508542067}
-  - component: {fileID: 6558904924784487304}
   - component: {fileID: 2009880871071656543}
   - component: {fileID: -4792546256271761457}
   - component: {fileID: 6223386477289434817}
@@ -1679,45 +1677,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5431393268508542067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4399057441147084911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 6558904924784487304}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &6558904924784487304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4399057441147084911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &2009880871071656543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1816,7 +1775,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.461
+  m_Volume: 0.099
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2026,6 +1985,11 @@ MonoBehaviour:
   HitMask:
     serializedVersion: 2
     m_Bits: 32776
+  rotationSpeed: 5
+  obstacleDetectionDistance: 1.5
+  sideDetectionDistance: 1
+  avoidanceForce: 5
+  characterWidth: 0.5
 --- !u!114 &-5997940725063707501
 MonoBehaviour:
   m_ObjectHideFlags: 0

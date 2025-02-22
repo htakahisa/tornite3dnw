@@ -54,12 +54,12 @@ public class TimerInRound : MonoBehaviourPun
         if (HasPlanting)
         {
             TimerAfterPlant = PhotonNetwork.Time - Disturber.plantedTime;
-            TimerText.text = "Detonation in : " + (30 - (int)TimerAfterPlant);
+            TimerText.text = "Defuse in \n" + (30 - (int)TimerAfterPlant);
         }
         else
         {
             TimerBeforePlant = missionFailureTime - PhotonNetwork.Time;
-            TimerText.text = "Mission failure in : " + (int)TimerBeforePlant;
+            TimerText.text = "TimeUp in\n" + (int)TimerBeforePlant;
         }
 
         if(TimerBeforePlant <= 0)

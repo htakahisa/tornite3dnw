@@ -6,7 +6,9 @@ using Photon.Pun;
 
 public class CameraController : MonoBehaviourPunCallbacks {
     float x, z;
-    float speed = 0.03f;
+    float speed = 1.8f;
+
+    float OriginalSpeed = 1.8f;
 
     private float stepTimer = 0f;
     private float wallDetectionDistance = 0.17f;
@@ -120,15 +122,18 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         //rb = GetComponent<Rigidbody>();
         // ゲーム開始時にマウスを表示
-        if (photonView.IsMine)
+        if (photonView != null)
         {
-           
-            if (!Application.isEditor)
+            if (photonView.IsMine)
             {
-                abilitycheck = Instantiate(ResourceManager.resourcemanager.GetObject("AbilityCheck"), new Vector3(0, -100, 0), Quaternion.identity);
-                abilitycheck.SetActive(false);
-            }
 
+                if (!Application.isEditor)
+                {
+                    abilitycheck = Instantiate(ResourceManager.resourcemanager.GetObject("AbilityCheck"), new Vector3(0, -100, 0), Quaternion.identity);
+                    abilitycheck.SetActive(false);
+                }
+
+            }
         }
 
         NormalSensityvity = PlayerPrefs.GetFloat("Sensitivity");
@@ -144,6 +149,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         SetCursorState(isCursorLocked);
 
     }
+
 
     void OnDrawGizmos()
     {
@@ -533,7 +539,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         if (!IsGrounded())
         {
-            this.speed = 0.04f * servicespeed * weaponspeed;
+            this.speed = OriginalSpeed * servicespeed * weaponspeed;
             Move();
         }
 
@@ -606,7 +612,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                        
 
                         //rb.velocity = new Vector3(0, rb.velocity.y, 0);  // 速度リセット
-                        this.speed = 0.04f * ratio * servicespeed * weaponspeed;
+                        this.speed = OriginalSpeed * ratio * servicespeed * weaponspeed;
                         
 
                     }
@@ -655,7 +661,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                             }
                         }
 
-                        this.speed = 0.04f * ratio * servicespeed * weaponspeed;
+                        this.speed = OriginalSpeed * ratio * servicespeed * weaponspeed;
                         lastMoveInput = moveInput;
                         // 空中での移動を一度だけ設定
                         hasAppliedAirMove++;
@@ -713,7 +719,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     public void AIWalk(Vector3 inputDirection)
     {
-        float ratio = 1;
+            float ratio = 1;
 
        
             stepTimer += Time.fixedDeltaTime;
@@ -726,15 +732,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 
                 
             }
-            if (approach >= 0)
-            {
-                ratio /= 2f;
-                approach = 0.4f;
-            }
 
        
 
-        this.speed = 0.04f * ratio * servicespeed * weaponspeed;
+        this.speed = OriginalSpeed * ratio * servicespeed * weaponspeed;
         // カメラのY軸回転を基準に回転を計算
         Quaternion cameraRotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
         // 入力をカメラの回転に基づいて回転
@@ -756,7 +757,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             // 移動処理
             //transform.position += moveDirection * speed;
             // キャラクターを移動
-            controller.Move(moveDirection * speed);
+            controller.Move(moveDirection * speed * Time.deltaTime);
 
         }
     }
@@ -767,7 +768,6 @@ public class CameraController : MonoBehaviourPunCallbacks {
     {
         if (cam != null)
         {
-
             // カメラのY軸回転を基準に回転を計算
             Quaternion cameraRotation = Quaternion.Euler(0, cam.transform.eulerAngles.y, 0);
 
@@ -794,7 +794,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 // 移動処理
                 //transform.position += moveDirection * speed;
                 // キャラクターを移動
-                controller.Move(moveDirection * speed);
+                controller.Move(moveDirection * speed * Time.deltaTime);
 
             }
         }
@@ -855,7 +855,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             IsJump = false;
         } else
 
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() && !IsJump) {
+        if(Input.GetKeyDown(KeyCode.Space) && IsGrounded() && !IsJump) {
             
            
             IsJump = true;
@@ -1401,9 +1401,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
     {
 
         Vector3 wallcheckposition = WallCheck.transform.position;
-        if (animator.GetBool("crouching")) {
+        //if (animator.GetBool("crouching")) {
       //      return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance + 0.5f, hitMask);
-        }
+       // }
         return !Physics.Raycast(wallcheckposition, movedirection, wallDetectionDistance, GroundLayer);
     }
 

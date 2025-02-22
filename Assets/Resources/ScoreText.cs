@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreText : MonoBehaviour
 {
     [SerializeField]
-    Text text;
+    TextMeshProUGUI text;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,10 @@ public class ScoreText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(MapManager.mapmanager.GetMapName() == "DuelLand")
+        {
+            return;
+        }
         text.text = RoundManager.rm.GetScoreText();
     }
 }

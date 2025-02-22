@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class AIManager : MonoBehaviour
 {
     public AIState currentState = AIState.Chase;
-    private Transform target; // ƒvƒŒƒCƒ„[
+    private Transform target; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
     private CameraController cc;
 
     public Transform point;
@@ -18,12 +18,12 @@ public class AIManager : MonoBehaviour
 
     private Vector3 lastPosition;
     private float stuckTime;
-    private const float stuckThreshold = 1.0f; // 1•bˆÈã“®‚©‚È‚¢‚ÆƒXƒ^ƒbƒN”»’è
+    private const float stuckThreshold = 1f; // 1ç§’ä»¥ä¸Šå‹•ã‹ãªã„ã¨ã‚¹ã‚¿ãƒƒã‚¯åˆ¤å®š
 
     PlayTransformSound pts;
     private float RunInterval = 0.4f;
 
-    private float delayreflect = 0.3f;
+    private float delayreflect = 0f;
 
     private int HeadDamage = 0;
     private int BodyDamage = 0;
@@ -32,18 +32,26 @@ public class AIManager : MonoBehaviour
 
     private Object weapon;
 
-    public float duration = 0.1f; // ‰ñ“]‚É‚©‚¯‚éŠÔ
+    private float duration = 0.1f; // å›è»¢ã«ã‹ã‘ã‚‹æ™‚é–“
+
+    public float rotationSpeed = 5f;
+    public float obstacleDetectionDistance = 2f;
+    public float sideDetectionDistance = 1.5f;
+    public float avoidanceForce = 3f;
+    public float characterWidth = 1.0f;
+
+    private float rayOffset = 0.3f; //  ãƒ¬ã‚¤ã®ç™ºå°„ä½ç½®ã‚’å°‘ã—å‰ã«ãšã‚‰ã™
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        delayreflect = GetRandomDelay();
         int range = Random.Range(1, 5);
         if (range == 1)
         {
             weapon = new Silver();
-            // SilverŒ^‚ÉƒLƒƒƒXƒg
+            // Silverå‹ã«ã‚­ãƒ£ã‚¹ãƒˆ
             Silver silverWeapon = weapon as Silver;
             FirstDelayShoot = silverWeapon.GetRate();
             HeadDamage = silverWeapon.GetHeadDamage();
@@ -86,7 +94,7 @@ public class AIManager : MonoBehaviour
         }
         cc = GetComponent<CameraController>();
         pts = GetComponent<PlayTransformSound>();
-
+        Debug.Log(weapon);
     }
 
     // Update is called once per frame
@@ -100,13 +108,17 @@ public class AIManager : MonoBehaviour
             case AIState.Chase:
                 Chase();
                 break;
-
             case AIState.Attack:
                 DelayShoot -= Time.deltaTime;
                 Attack();
                 break;
+            case AIState.Avoid:
+                DelayShoot -= Time.deltaTime;
+                Attack();
+                break;
         }
-        Debug.DrawRay(point.position, point.forward * 100, Color.red);
+        Vector3 direction = (target.position - point.position).normalized;
+        Debug.DrawRay(point.position, direction * 100, Color.red);
 
         RunInterval -= Time.deltaTime;
 
@@ -114,40 +126,164 @@ public class AIManager : MonoBehaviour
 
     public enum AIState
     {
-        Chase,   // ’ÇÕiƒvƒŒƒCƒ„[‚É‹ß‚Ã‚­j
-        Aim,     // ƒGƒCƒ€iÆ€ˆÚ“®j
-        Attack   // UŒ‚iËŒ‚j
-        
+        Chase,   // è¿½è·¡ï¼ˆãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è¿‘ã¥ãï¼‰
+        Aim,     // ã‚¨ã‚¤ãƒ ï¼ˆç…§æº–ç§»å‹•ï¼‰
+        Attack,   // æ”»æ’ƒï¼ˆå°„æ’ƒï¼‰
+        Avoid
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Vector3 basePos = transform.position + transform.forward * rayOffset;
+        Vector3 rightStart = basePos + transform.right * (characterWidth / 2);
+        Vector3 leftStart = basePos - transform.right * (characterWidth / 2);
+
+        Gizmos.DrawRay(basePos, transform.forward * obstacleDetectionDistance);
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(rightStart, transform.forward * obstacleDetectionDistance);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(leftStart, transform.forward * obstacleDetectionDistance);
+    }
+
+
+    Vector3 AvoidObstacle()
+    {
+
+
+        Vector3 avoidance = Vector3.zero;
+
+        Vector3 basePos = transform.position + transform.forward * rayOffset;
+        Vector3 rightPos = basePos + transform.right * (characterWidth / 2);
+        Vector3 leftPos = basePos - transform.right * (characterWidth / 2);
+
+        bool frontBlocked = Physics.Raycast(basePos, transform.forward, obstacleDetectionDistance);
+        bool rightBlocked = Physics.Raycast(rightPos, transform.forward, obstacleDetectionDistance);
+        bool leftBlocked = Physics.Raycast(leftPos, transform.forward, obstacleDetectionDistance);
+
+        // éšœå®³ç‰©ãŒæ¤œå‡ºã•ã‚ŒãŸå ´åˆã€å›é¿è¡Œå‹•ã‚’é–‹å§‹
+        if (frontBlocked || rightBlocked || leftBlocked)
+        {
+
+            Vector3 rightDir = transform.right;
+            Vector3 leftDir = -transform.right;
+
+            bool rightClear = !Physics.Raycast(transform.position, rightDir, sideDetectionDistance);
+            bool leftClear = !Physics.Raycast(transform.position, leftDir, sideDetectionDistance);
+
+            if (rightBlocked && !leftBlocked)
+                avoidance = leftDir;
+            else if (leftBlocked && !rightBlocked)
+                avoidance = rightDir;
+            else if (rightClear && !leftClear)
+                avoidance = rightDir;
+            else if (!rightClear && leftClear)
+                avoidance = leftDir;
+            //else
+            //    avoidance = rightDir;
+
+            avoidance *= avoidanceForce;
+
+        }
+
+        return avoidance;
     }
 
     public void Chase()
     {
-        Debug.Log("Chase");
+        
+
+
         target = MyTag.mytag.transform;
-        Vector3 direction = target.position - transform.position;
+        // ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¸ã®åŸºæœ¬çš„ãªè¿½è·¡æ–¹å‘
+        Vector3 direction = (target.position - point.position).normalized;
+        Vector3 avoidance = AvoidObstacle();
 
-        RaycastHit hit;
-        Vector3 moveDirection = GetAdaptiveDirection(transform, target);
-        if (RunInterval <= 0)
-        {
-           pts.PlayTransSound("walk");
-           RunInterval = 0.4f;
-        }
-        float distance = Vector3.Distance(point.position, target.position);
+        // å›é¿æ–¹å‘ã¨ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ–¹å‘ã‚’åˆæˆ
+        Vector3 finalDirection;
 
-        if (Physics.Raycast(point.position, direction, distance, WallHitMask))
+        if (avoidance == Vector3.zero)
         {
-            if (moveDirection != Vector3.zero)
-            {
-                cc.AIWalk(moveDirection * 0.5f);
-                
-            }
-            
+            finalDirection = (direction + avoidance).normalized;
         }
         else
         {
-            DelayReflect();
+            // å›é¿æ–¹å‘ã¨ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ–¹å‘ã‚’åˆæˆ
+            finalDirection = (avoidance).normalized;
+            Debug.Log(finalDirection);
         }
+            finalDirection.y = 0;
+
+        // æœ€çµ‚çš„ãªé€²è¡Œæ–¹å‘ãŒååˆ†ã§ã‚ã‚Œã°ã€å›è»¢ã¨ç§»å‹•ã‚’è¡Œã†
+        if (finalDirection.magnitude > 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(finalDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+            Vector3 walkdirection = finalDirection;
+            
+
+            cc.AIWalk(transform.forward);
+            if (RunInterval <= 0)
+            {
+                    pts.PlayTransSound("walk");
+                    RunInterval = 0.4f;
+            }
+                
+        }
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(point.position, direction, out hit, 100, HitMask))
+        {
+            
+            if(hit.collider != null)
+            {
+                if(hit.collider.gameObject.tag == "Body" || hit.collider.gameObject.tag == "Head")
+                {
+                    DelayReflect();
+                }
+            }    
+              
+            
+            
+        }
+
+
+
+    }
+
+    public void Avoid()
+    {
+
+
+        Debug.Log("Avoid");
+        target = MyTag.mytag.transform;
+        Vector3 direction = target.position - point.position;
+
+        Vector3 moveDirection = Vector3.right;
+
+        direction.y = 0;
+        float distance = Vector3.Distance(point.position, target.position);
+        
+        if (Physics.Raycast(point.position, direction, distance, WallHitMask))
+        {
+            while (Physics.Raycast(point.position, direction, distance, WallHitMask))
+            {
+                cc.AIWalk(-moveDirection / 2);
+                if (RunInterval <= 0)
+                {
+                    pts.PlayTransSound("walk");
+                    RunInterval = 0.4f;
+                }
+            }
+
+
+        }
+        else
+        {
+            currentState = AIState.Aim;
+        }
+
 
     }
 
@@ -157,46 +293,41 @@ public class AIManager : MonoBehaviour
         if (delayreflect <= 0)
         {
             currentState = AIState.Aim;
-            delayreflect = 0.05f;
+            delayreflect = GetRandomDelay();
         }
-        else
-        {
-            DelayingWalk();
-        }
+    }
+
+    private float GetRandomDelay()
+    {
+        return Random.Range(0.1f,0.7f);
     }
 
     private void DelayingWalk()
     {
-        Vector3 moveDirection = GetAdaptiveDirection(transform, target);
-
-        if (moveDirection != Vector3.zero)
-        {
-            cc.AIWalk(moveDirection * 0.2f);
-
-        }
+      
     }
 
 
-    public static Vector3 GetBestDirection(Transform self, Transform target)
+    public static Vector3 GetBestDirection(Transform self, Transform target, int number)
     {
-        // ©•ª‚©‚çƒ^[ƒQƒbƒg‚Ö‚Ì•ûŒüƒxƒNƒgƒ‹
+        // è‡ªåˆ†ã‹ã‚‰ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¸ã®æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
         Vector3 toTarget = (target.position - self.position).normalized;
 
-        // ©•ª‚ÌŠî€²
-        Vector3 forward = self.forward;
-        Vector3 right = self.right;
+        // è‡ªåˆ†ã®åŸºæº–è»¸
+        Vector3 forward = self.InverseTransformPoint(self.eulerAngles);
+        Vector3 right = self.InverseTransformPoint(self.eulerAngles);        
 
-        // Še•ûŒü‚Æ‚Ì“àÏ‚ğŒvZ
+        // å„æ–¹å‘ã¨ã®å†…ç©ã‚’è¨ˆç®—
         float forwardDot = Vector3.Dot(forward, toTarget);
         float backwardDot = Vector3.Dot(-forward, toTarget);
         float rightDot = Vector3.Dot(right, toTarget);
         float leftDot = Vector3.Dot(-right, toTarget);
 
-        // ˆê”Ô’l‚ª‘å‚«‚¢•ûŒü‚ğ‘I‘ğ
+        // ä¸€ç•ªå€¤ãŒå¤§ãã„æ–¹å‘ã‚’é¸æŠ
         float[] dotValues = { forwardDot, backwardDot, rightDot, leftDot };
         Vector3[] directions = { forward, -forward, right, -right };
 
-        // ƒ\[ƒg‚µ‚ÄÅ“K‚È‡”Ô‚ğŒˆ’è
+        // ã‚½ãƒ¼ãƒˆã—ã¦æœ€é©ãªé †ç•ªã‚’æ±ºå®š
         for (int i = 0; i < dotValues.Length - 1; i++)
         {
             for (int j = i + 1; j < dotValues.Length; j++)
@@ -214,30 +345,30 @@ public class AIManager : MonoBehaviour
             }
         }
 
-        return directions[0];
+        return directions[number];
     }
 
     public Vector3 GetAdaptiveDirection(Transform self, Transform target)
     {
-        Vector3 bestDirection = GetBestDirection(self, target);
+        Vector3 bestDirection = GetBestDirection(self, target, 0);
         Vector3 secondBestDirection = Vector3.zero;
 
-        // 1•bˆÈã“®‚©‚È‚©‚Á‚½ê‡A•Ê‚Ì•ûŒü‚ğ‚·
+        // 1ç§’ä»¥ä¸Šå‹•ã‹ãªã‹ã£ãŸå ´åˆã€åˆ¥ã®æ–¹å‘ã‚’è©¦ã™
         if (Vector3.Distance(self.position, lastPosition) < 0.01f)
         {
             stuckTime += Time.deltaTime;
             if (stuckTime >= stuckThreshold)
             {
-                secondBestDirection = GetBestDirection(self, target);
+               secondBestDirection = GetBestDirection(self, target, 1);
                 if (secondBestDirection != bestDirection)
                 {
                     bestDirection = secondBestDirection;
                 }
                 else
                 {
-                    bestDirection = Vector3.zero; // ‚»‚ê‚Å‚à“®‚¯‚È‚¢‚È‚ç’â~
+                    bestDirection = Vector3.zero; // ãã‚Œã§ã‚‚å‹•ã‘ãªã„ãªã‚‰åœæ­¢
                 }
-                stuckTime = 0f; // ƒXƒ^ƒbƒN”»’è‚ğƒŠƒZƒbƒg
+                stuckTime = 0f; // ã‚¹ã‚¿ãƒƒã‚¯åˆ¤å®šã‚’ãƒªã‚»ãƒƒãƒˆ
             }
         }
         else
@@ -258,9 +389,16 @@ public class AIManager : MonoBehaviour
 
         target = MyTag.mytag.transform;
         Vector3 direction = target.position - transform.position;
-        direction.y = 0; // Y²‚Ì‰ñ“]‚ğŒÅ’è
+        direction.y = 0; // Yè»¸ã®å›è»¢ã‚’å›ºå®š
 
-        StartCoroutine(RotateSmoothly(direction));
+        // ç¾åœ¨ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å‰æ–¹å‘ï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰ç©ºé–“ï¼‰
+        Vector3 currentDirection = transform.forward;
+
+        // ãƒ™ã‚¯ãƒˆãƒ«é–“ã®è§’åº¦ã®ã‚ºãƒ¬ã‚’è¨ˆç®—
+        float angleDifference = Vector3.Angle(currentDirection, direction);
+        float duration = angleDifference * 0.001f;
+
+        StartCoroutine(RotateSmoothly(direction, duration));
 
         RaycastHit hit;
         Physics.Raycast(point.position, point.forward, out hit, 200, HitMask);
@@ -281,9 +419,11 @@ public class AIManager : MonoBehaviour
 
     }
 
-    private IEnumerator RotateSmoothly(Vector3 targetDirection)
+    private IEnumerator RotateSmoothly(Vector3 targetDirection, float duration)
     {
-        if (targetDirection == Vector3.zero) yield break; // ƒ[ƒ•ûŒü‚È‚ç‰½‚à‚µ‚È‚¢
+        if (targetDirection == Vector3.zero) yield break; // ã‚¼ãƒ­æ–¹å‘ãªã‚‰ä½•ã‚‚ã—ãªã„
+
+        float delayflick = Random.Range(0.09f,0.13f);
 
         Quaternion startRotation = transform.rotation;
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
@@ -295,10 +435,13 @@ public class AIManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
-        transform.rotation = targetRotation; // ÅI“I‚Éƒsƒbƒ^ƒŠ–Ú•W•ûŒü‚ğŒü‚­
-        Vector3 targethead = new Vector3(target.position.x, target.position.y + Random.Range(1.1f, 2f), target.position.z);
+        Vector3 targethead = new Vector3(target.position.x, target.position.y + Random.Range(1f, 2f), target.position.z);
+        transform.rotation = targetRotation; // æœ€çµ‚çš„ã«ãƒ”ãƒƒã‚¿ãƒªç›®æ¨™æ–¹å‘ã‚’å‘ã
+        yield return new WaitForSeconds(delayflick);
         point.transform.LookAt(targethead);
+
+        
+
     }
 
     public void Attack()
@@ -311,6 +454,7 @@ public class AIManager : MonoBehaviour
         }
 
         Debug.Log("Attack");
+
 
         bool IsAiming = false;
         RaycastHit hit;
@@ -325,7 +469,7 @@ public class AIManager : MonoBehaviour
                 {
                     damage = HeadDamage;
                     IsAiming = true;
-                    GetTopmostParent(hit.collider.gameObject).GetComponent<CameraController>().Stuned(HeadPunch, HeadPunch);
+                    GetTopmostParent(hit.collider.gameObject).GetComponent<CameraController>().Recoiled(HeadPunch, HeadPunch, 0.1f);
 
                 }
                 if (hit.collider.gameObject.tag.Equals("Body"))
@@ -342,18 +486,20 @@ public class AIManager : MonoBehaviour
 
         }
 
+        AIState choosestate = AIState.Attack;
+
         DelayShoot = FirstDelayShoot;
         Physics.Raycast(point.position, point.forward, out hit, 200, HitMask);
         if (hit.collider != null)
         {
             if (hit.collider.gameObject.tag != "Body" && hit.collider.gameObject.tag != "Head")
             {
-                currentState = AIState.Aim;
+                choosestate = AIState.Aim;
             }
         }
         target = MyTag.mytag.transform;
         Vector3 direction = target.position - transform.position;
-        direction.y = 0; // Y²‚Ì‰ñ“]‚ğŒÅ’è
+        direction.y = 0; // Yè»¸ã®å›è»¢ã‚’å›ºå®š
         if (direction != Vector3.zero)
         {
             transform.rotation = Quaternion.LookRotation(direction);
@@ -363,20 +509,26 @@ public class AIManager : MonoBehaviour
         {
             if (hit.collider.gameObject.tag != "Body" && hit.collider.gameObject.tag != "Head")
             {
-                currentState = AIState.Chase;
+                choosestate = AIState.Chase;
             }
         }
-
-
-
-
-
+        if(choosestate == AIState.Attack)
+        {
+            choosestate = AIState.Avoid;
         }
+
+        currentState = choosestate;
+
+
+
+
+
+    }
     GameObject GetTopmostParent(GameObject obj)
     {
         Transform current = obj.transform;
 
-        // ƒ‹[ƒgƒIƒuƒWƒFƒNƒg‚É“’B‚·‚é‚Ü‚Åe‚ğ‚½‚Ç‚é
+        // ãƒ«ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«åˆ°é”ã™ã‚‹ã¾ã§è¦ªã‚’ãŸã©ã‚‹
         while (current.parent != null)
         {
             current = current.parent;

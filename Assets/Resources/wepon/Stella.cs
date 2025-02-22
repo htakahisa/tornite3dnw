@@ -6,7 +6,7 @@ using Photon.Pun;
 public class Stella : ScriptableObject
 {
 
-    float rate = 0.095f;
+    float rate = 0.1f;
     int damage = 42;
     int headdamage = 100;
     int magazine = 15;

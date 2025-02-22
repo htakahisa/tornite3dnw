@@ -367,9 +367,9 @@ public class RayController : MonoBehaviourPun {
 
             }
 
-            if (target.CompareTag("Head"))
+            if (target.CompareTag("Head") && MapManager.mapmanager.GetMapName() != "DuelLand")
             {
-                target.GetComponentInParent<CameraController>().Recoiled(punch, punch, 0);
+                target.GetComponentInParent<CameraController>().Recoiled(punch, punch, 0.1f);
             }
 
             if (target.CompareTag("Destructible"))
@@ -432,9 +432,9 @@ public class RayController : MonoBehaviourPun {
 
             }
 
-            if (target.CompareTag("Head"))
+            if (target.CompareTag("Head") && MapManager.mapmanager.GetMapName() != "DuelLand")
             {
-                target.GetComponentInParent<CameraController>().Recoiled(punch, punch, 0);
+                target.GetComponentInParent<CameraController>().Recoiled(punch, punch, 0.1f);
             }
 
             if (target.CompareTag("Destructible"))
