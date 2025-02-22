@@ -40,12 +40,18 @@ public class AIManager : MonoBehaviour
     public float avoidanceForce = 3f;
     public float characterWidth = 1.0f;
 
-    private float rayOffset = 0.3f; //  レイの発射位置を少し前にずらす
+    private float rayOffset = 0.1f; //  レイの発射位置を少し前にずらす
 
+    private float gravity = -16f;    // 重力の強さ
+    private CharacterController controller;  // CharacterControllerコンポーネント
+    private Vector3 velocity;
+
+    public Vector3 boxSize = new Vector3(0.3f, 0.1f, 0.3f); // 判定用のBoxサイズ
 
     // Start is called before the first frame update
     void Start()
     {
+        controller = GetComponent<CharacterController>();
         delayreflect = GetRandomDelay();
         int range = Random.Range(1, 5);
         if (range == 1)
@@ -114,14 +120,27 @@ public class AIManager : MonoBehaviour
                 break;
             case AIState.Avoid:
                 DelayShoot -= Time.deltaTime;
-                Attack();
+                Avoid();
                 break;
         }
-        Vector3 direction = (target.position - point.position).normalized;
-        Debug.DrawRay(point.position, direction * 100, Color.red);
+   
 
+    }
+
+    private void FixedUpdate()
+    {
+        // 地面にいる場合、垂直速度をリセット
+        if (IsGrounded() && velocity.y < 0)
+        {
+            velocity.y = -2f; // 少し負の値にして地面に密着させる
+            velocity.x = 0f;  // 水平方向の速度をリセット
+            velocity.z = 0f;
+        }
+        velocity.y += gravity * Time.fixedDeltaTime;
+
+        // 垂直方向の移動
+        controller.Move(velocity * Time.fixedDeltaTime);
         RunInterval -= Time.deltaTime;
-
     }
 
     public enum AIState
@@ -133,6 +152,10 @@ public class AIManager : MonoBehaviour
     }
     void OnDrawGizmos()
     {
+        Vector3 Target = new Vector3(target.position.x, target.position.y + 1.3f, target.position.z);
+        Vector3 TargetDirection = (Target - point.position);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawRay(point.position, TargetDirection);
         Gizmos.color = Color.red;
         Vector3 basePos = transform.position + transform.forward * rayOffset;
         Vector3 rightStart = basePos + transform.right * (characterWidth / 2);
@@ -148,8 +171,6 @@ public class AIManager : MonoBehaviour
 
     Vector3 AvoidObstacle()
     {
-
-
         Vector3 avoidance = Vector3.zero;
 
         Vector3 basePos = transform.position + transform.forward * rayOffset;
@@ -160,10 +181,9 @@ public class AIManager : MonoBehaviour
         bool rightBlocked = Physics.Raycast(rightPos, transform.forward, obstacleDetectionDistance);
         bool leftBlocked = Physics.Raycast(leftPos, transform.forward, obstacleDetectionDistance);
 
-        // 障害物が検出された場合、回避行動を開始
+
         if (frontBlocked || rightBlocked || leftBlocked)
         {
-
             Vector3 rightDir = transform.right;
             Vector3 leftDir = -transform.right;
 
@@ -178,11 +198,9 @@ public class AIManager : MonoBehaviour
                 avoidance = rightDir;
             else if (!rightClear && leftClear)
                 avoidance = leftDir;
-            //else
-            //    avoidance = rightDir;
+
 
             avoidance *= avoidanceForce;
-
         }
 
         return avoidance;
@@ -208,8 +226,7 @@ public class AIManager : MonoBehaviour
         else
         {
             // 回避方向とターゲット方向を合成
-            finalDirection = (avoidance).normalized;
-            Debug.Log(finalDirection);
+            finalDirection = avoidance;
         }
             finalDirection.y = 0;
 
@@ -233,14 +250,19 @@ public class AIManager : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(point.position, direction, out hit, 100, HitMask))
+        Vector3 Target = new Vector3(target.position.x, target.position.y + 1.3f, target.position.z);
+
+        Vector3 TargetDirection = (Target - point.position);
+
+        if (Physics.Raycast(point.position, TargetDirection, out hit, 100, HitMask))
         {
             
             if(hit.collider != null)
             {
+
                 if(hit.collider.gameObject.tag == "Body" || hit.collider.gameObject.tag == "Head")
                 {
-                    DelayReflect();
+                    currentState = AIState.Aim;
                 }
             }    
               
@@ -258,31 +280,57 @@ public class AIManager : MonoBehaviour
 
         Debug.Log("Avoid");
         target = MyTag.mytag.transform;
-        Vector3 direction = target.position - point.position;
 
-        Vector3 moveDirection = Vector3.right;
+        Vector3 moveDirection;
 
-        direction.y = 0;
-        float distance = Vector3.Distance(point.position, target.position);
-        
-        if (Physics.Raycast(point.position, direction, distance, WallHitMask))
+        if (AvoidObstacle() == Vector3.zero) {
+            moveDirection = -Vector3.right;
+        }
+        else
         {
-            while (Physics.Raycast(point.position, direction, distance, WallHitMask))
+            moveDirection = AvoidObstacle();
+        }
+
+        Vector3 Target = new Vector3(target.position.x, target.position.y + 1.3f, target.position.z);
+
+        Vector3 TargetDirection = (Target - point.position);
+
+
+        cc.AIWalk(moveDirection);
+        if (RunInterval <= 0)
+        {
+            pts.PlayTransSound("walk");
+            RunInterval = 0.4f;
+        }
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(point.position, TargetDirection, out hit, 100, HitMask))
+        {
+            if (hit.collider != null)
             {
-                cc.AIWalk(-moveDirection / 2);
-                if (RunInterval <= 0)
+
+                if (hit.collider.gameObject.tag == "Body" || hit.collider.gameObject.tag == "Head")
                 {
-                    pts.PlayTransSound("walk");
-                    RunInterval = 0.4f;
+                    DelayReflect();
+                }
+                else
+                {
+                    currentState = AIState.Chase;
                 }
             }
-
+            else
+            {
+                currentState = AIState.Chase;
+            }
 
         }
         else
         {
-            currentState = AIState.Aim;
+            currentState = AIState.Chase;
         }
+
+
 
 
     }
@@ -299,7 +347,7 @@ public class AIManager : MonoBehaviour
 
     private float GetRandomDelay()
     {
-        return Random.Range(0.1f,0.7f);
+        return Random.Range(0.1f,0.5f);
     }
 
     private void DelayingWalk()
@@ -380,6 +428,14 @@ public class AIManager : MonoBehaviour
         return bestDirection;
     }
 
+    public bool IsGrounded()
+    {
+
+        Vector3 footPosition = transform.position;
+        return Physics.BoxCast(footPosition, boxSize / 2, Vector3.down, Quaternion.identity, 0.3f, WallHitMask);
+
+    }
+
     public void Aim()
     {
         
@@ -406,15 +462,25 @@ public class AIManager : MonoBehaviour
         {
             if (hit.collider.gameObject.tag == "Body" || hit.collider.gameObject.tag == "Head")
             {
-                currentState = AIState.Attack;
+                if (Random.Range(0, 2) == 0)
+                {
+                    currentState = AIState.Attack;
+                }
+                else 
+                {
+                    currentState = AIState.Avoid;
+                }
             }
-            Physics.Raycast(point.position, direction, out hit, 200, HitMask);
-            if (hit.collider.gameObject.tag != "Body" && hit.collider.gameObject.tag != "Head")
+                Physics.Raycast(point.position, direction, out hit, 200, HitMask);
+            if (hit.collider != null)
             {
-                currentState = AIState.Chase;
+                if (hit.collider.gameObject.tag != "Body" && hit.collider.gameObject.tag != "Head")
+                {
+                    currentState = AIState.Chase;
+                }
             }
         }
-     
+
 
 
     }
@@ -485,6 +551,7 @@ public class AIManager : MonoBehaviour
             
 
         }
+
 
         AIState choosestate = AIState.Attack;
 

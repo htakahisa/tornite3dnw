@@ -757,7 +757,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
             // 移動処理
             //transform.position += moveDirection * speed;
             // キャラクターを移動
-            controller.Move(moveDirection * speed * Time.deltaTime);
+            //controller.Move(moveDirection * speed * Time.deltaTime);
+
+            controller.Move(inputDirection * speed * Time.deltaTime);
 
         }
     }

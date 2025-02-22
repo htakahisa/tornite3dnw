@@ -1987,9 +1987,9 @@ MonoBehaviour:
     m_Bits: 32776
   rotationSpeed: 5
   obstacleDetectionDistance: 1.5
-  sideDetectionDistance: 1
+  sideDetectionDistance: 1.5
   avoidanceForce: 5
-  characterWidth: 0.5
+  characterWidth: 0.4
 --- !u!114 &-5997940725063707501
 MonoBehaviour:
   m_ObjectHideFlags: 0
