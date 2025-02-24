@@ -19,46 +19,72 @@ public class CollectAbility : MonoBehaviourPun
 
     private DisturberMeter meter;
 
+    [SerializeField]
+    private LayerMask orb;
+
     // Start is called before the first frame update
     void Start()
     {
-      
+        if (meter == null)
+        {
+            meter = DisturberMeter.disturbermeter;
+        }
+        if (cc == null)
+        {
+            cc = Camera.main.GetComponentInParent<CameraController>();
+
+        }
+        if (rc == null)
+        {
+            rc = Camera.main.GetComponent<RayController>();
+        }
     }
 
         // Update is called once per frame
-    void OnMouseOver()
+    
+
+     
+    
+
+
+
+    private void Update()
     {
-        if (!photonView.IsMine){
+
+        if (!photonView.IsMine)
+        {
             return;
         }
 
 
         float distance = Vector3.Distance(transform.position, Camera.main.transform.parent.position);
-        if(distance >= 0.4f)
+
+        if (distance >= 1f)
         {
-            
-                cc.WalkAble = true;
-                cc.AbilityAble = true;
-                rc.CanShoot = true;
-            
-           
 
-                meter.MeterInactive();
-            
+            cc.WalkAble = true;
+            cc.AbilityAble = true;
+            rc.CanShoot = true;
 
-                return;
-            
+
+
+            meter.MeterInactive();
+
+
+            return;
+
         }
         if (Input.GetMouseButton(3))
         {
 
-            
+
             collectdeltatime += Time.deltaTime;
             meter.Collect(collectdeltatime, CollectingTime);
             Debug.Log(collectdeltatime);
             cc.WalkAble = false;
             cc.AbilityAble = false;
             rc.CanShoot = false;
+
 
         }
         else
@@ -69,19 +95,8 @@ public class CollectAbility : MonoBehaviourPun
             rc.CanShoot = true;
             meter.MeterInactive();
         }
-    }
 
-    private void OnMouseExit()
-    {
-        cc.WalkAble = true;
-        cc.AbilityAble = true;
-        rc.CanShoot = true;
-        meter.MeterInactive();
-    }
-
-    private void Update()
-    {
-        if(collectdeltatime >= CollectingTime)
+        if (collectdeltatime >= CollectingTime)
         {
             Ability ability = Camera.main.GetComponentInParent<Ability>();
             ability.Collect(AbilityKind, 1);
@@ -90,19 +105,6 @@ public class CollectAbility : MonoBehaviourPun
             rc.CanShoot = true;
             meter.MeterInactive();
             PhotonNetwork.Destroy(gameObject);
-        }
-        if (meter == null)
-        {
-            meter = DisturberMeter.disturbermeter;
-        }
-        if(cc == null)
-        {
-            cc = Camera.main.GetComponentInParent<CameraController>();
-
-        }
-        if(rc == null)
-        {
-            rc = Camera.main.GetComponent<RayController>();
         }
 
     }

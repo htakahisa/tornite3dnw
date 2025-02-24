@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CatController : MonoBehaviour
+public class CatController : MonoBehaviourPun
 {
     private Transform target;
     private NavMeshAgent agent;
@@ -52,7 +52,7 @@ public class CatController : MonoBehaviour
             agent.speed = randomValue * 2;
         }
 
-        if (target != null && agent != null)
+        if (agent != null)
         {
             stepTimer += Time.deltaTime;
 
@@ -113,6 +113,10 @@ public class CatController : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         PhotonNetwork.Instantiate("CatCollect", transform.position, Quaternion.identity);
     }
 

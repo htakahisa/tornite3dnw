@@ -115,6 +115,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CollectingTime: 3
   AbilityKind: 2
+  orb:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &85288373408296368
 MonoBehaviour:
   m_ObjectHideFlags: 0
