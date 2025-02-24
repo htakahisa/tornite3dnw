@@ -13,12 +13,11 @@ GameObject:
   - component: {fileID: 4908155221779180359}
   - component: {fileID: 7498816981152821833}
   - component: {fileID: -3695020887160112311}
-  - component: {fileID: 4377840968798571576}
   - component: {fileID: 518265870860974844}
   - component: {fileID: 4301272996159586410}
   m_Layer: 18
   m_Name: Stradarts
-  m_TagString: Destructible
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,19 +115,6 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 2048
---- !u!114 &4377840968798571576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4910192045670502487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebe656353231e164a84d8cb09a74aac6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Hp: 30
 --- !u!114 &518265870860974844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +134,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 4377840968798571576}
+  - {fileID: 0}
   - {fileID: 4301272996159586410}
   sceneViewId: 0
   InstantiationId: 0

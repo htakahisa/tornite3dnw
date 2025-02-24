@@ -13,7 +13,7 @@ public class Silver : ScriptableObject
     bool auto = false;
     float reloadtime = 0.5f;
     bool accuracy = true;
-    float YRecoil = 4f;
+    float YRecoil = 3f;
     float RecoilDuration = 0.04f;
 
     void Start() {

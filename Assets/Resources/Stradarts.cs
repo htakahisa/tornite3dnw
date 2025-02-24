@@ -4,7 +4,7 @@ using UnityEngine;
 public class Stradarts : MonoBehaviourPun
 {
     private float speed = 12f;                // ダートの移動速度        
-    private float scanRadius = 8f;           // スキャン範囲
+    private float scanRadius = 6f;           // スキャン範囲
     public LayerMask hitMask;                // ヒット判定用のレイヤーマスク
 
     private Vector3 launchDirection;         // 発射方向
@@ -66,7 +66,7 @@ public class Stradarts : MonoBehaviourPun
             sm.PlaySound("detectstart");
         }
             // スキャンを行う
-            yield return new WaitForSeconds(2f); // スキャン前の待機時間
+            yield return new WaitForSeconds(1f); // スキャン前の待機時間
                                              // 球の非表示フラグをセット
         showSphere = false;
         if (photonView.IsMine)

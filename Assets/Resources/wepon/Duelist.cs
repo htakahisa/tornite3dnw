@@ -6,13 +6,13 @@ using Photon.Pun;
 public class Duelist{
 
     float rate = 1;
-    int damage = 150;
-    int headdamage = 200;
+    int damage = 300;
+    int headdamage = 300;
     int magazine = 2;
     bool auto = false;
     float reloadtime = 3f;
     bool zoomable = true;
-    float zoomratio = 40;
+    float zoomratio = 35;
     bool accuracy = false;
     float PeekingSpeed = 0.2f;
     float YRecoil = 13;

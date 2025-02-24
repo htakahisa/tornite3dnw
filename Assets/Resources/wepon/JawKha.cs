@@ -15,7 +15,7 @@ public class JawKha
     bool zoomable = true;
     float zoomratio = 80;
     bool accuracy = true;
-    float YRecoil = 0.6f;
+    float YRecoil = 0.2f;
     float XRecoil = 0.3f;
     float punch = 4f;
     int Burst = 1;

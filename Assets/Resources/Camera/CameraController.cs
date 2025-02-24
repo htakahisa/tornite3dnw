@@ -110,6 +110,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     public Vector3 boxSize = new Vector3(0.3f, 0.1f, 0.3f); // 判定用のBoxサイズ
 
+    public bool IsExercise = true;
+
     // Start is called before the first frame update
     void Start() {
 
@@ -301,6 +303,11 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     public void move() {
 
+        if (!IsExercise)
+        {
+            return;
+        }
+
         float xRot = Input.GetAxis("Mouse X") * Ysensityvity;
         float yRot = Input.GetAxis("Mouse Y") * Xsensityvity;
 
@@ -454,6 +461,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
 
+        if (!IsExercise)
+        {
+            return;
+        }
 
         // バーが近く、Cキーを押した場合に登る
         if (isNearBottomBar && Input.GetMouseButton(3) && !isClimbing)
@@ -1198,13 +1209,12 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
 
-
-
         // カメラの向いている方向を取得
         Vector3 spawnDirection = Camera.main.transform.forward;
 
         // オブジェクトを生成
         PhotonNetwork.Instantiate("Eagle_Elite", spawnPosition, Quaternion.LookRotation(spawnDirection));
+        Debug.Log(spawnPosition);
     }
 
     public void Wolf() {
@@ -1212,9 +1222,6 @@ public class CameraController : MonoBehaviourPunCallbacks {
         if (photonView == null || !photonView.IsMine) {
             return;
         }
-
-        // カメラの位置を取得
-        Vector3 cameraPosition = Camera.main.transform.position;
 
         // カメラの向いている方向を取得
         Vector3 spawnDirection = Camera.main.transform.forward;
@@ -1318,9 +1325,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     public void StopKamaitachi()
     {
+        RayController.rc.Invoke(weapon, 0);
         RayController.rc.DestroyAbilityCheck();
         IsKamaitachi = false;
-        RayController.rc.Invoke(weapon, 0);
         servicespeed = 1f;
     }
 

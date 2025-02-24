@@ -6,7 +6,7 @@ using Photon.Pun;
 public class Rapetter
 {
 
-    float rate = 0.08f;
+    float rate = 0.075f;
     int damage = 50;
     int headdamage = 60;
     int magazine = 100;

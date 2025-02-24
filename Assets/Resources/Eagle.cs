@@ -26,8 +26,6 @@ public class Eagle : MonoBehaviourPun
             // Rigidbody コンポーネントの取得
             rb = GetComponent<Rigidbody>();
 
-            playerCamera = Camera.main.gameObject;
-            playerCamera.SetActive(false);
             gameObject.SetActive(true);
 
 
@@ -42,7 +40,6 @@ public class Eagle : MonoBehaviourPun
         if (photonView.IsMine)
         {
             cam.gameObject.SetActive(false);
-            playerCamera.SetActive(true);
             PhotonNetwork.Instantiate("EagleCollect", transform.position, transform.rotation);
             PhotonNetwork.Destroy(gameObject);
         }
@@ -52,13 +49,10 @@ public class Eagle : MonoBehaviourPun
     void Update()
     {
 
-        if (cam == null)
-        {
-            return;
-        }
+
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
-        Vector3 currentRotation = cam.transform.localEulerAngles;
+        Vector3 currentRotation = transform.localEulerAngles;
 
 
 
@@ -75,7 +69,7 @@ public class Eagle : MonoBehaviourPun
         currentRotation.y += mouseX;
 
 
-        cam.transform.localEulerAngles = currentRotation;
+        transform.localEulerAngles = currentRotation;
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -90,22 +84,17 @@ public class Eagle : MonoBehaviourPun
 
     void FixedUpdate()
     {
-        if (cam == null)
-        {
-            return;
-        }
-
-        // カメラの向いている正面方向を取得
-        Vector3 forwardDirection = cam.transform.forward;
 
         // カメラの正面方向に移動する
-        Vector3 newPosition = rb.position + forwardDirection * speed * Time.fixedDeltaTime;
+        //Vector3 newPosition = transform.forward * speed * Time.fixedDeltaTime;
+
+        transform.position += transform.forward * speed * Time.deltaTime;
 
         // RigidbodyのMovePositionを使って移動
-        rb.MovePosition(newPosition);
+        //rb.MovePosition(newPosition);
     }
-
-
+     
+    
 
 
 

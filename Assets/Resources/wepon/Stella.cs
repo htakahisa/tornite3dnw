@@ -15,10 +15,10 @@ public class Stella : ScriptableObject
     bool zoomable = true;
     float zoomratio = 65;
     bool accuracy = true;
-    float YRecoil = 0.7f;
-    float XRecoil = 0.23f;
+    float YRecoil = 0.9f;
+    float XRecoil = 0.25f;
     int Burst = 3;
-    float BurstingRate = 0.08f;
+    float BurstingRate = 0.09f;
     float BurstRate = 0.3f;
     float PeekingSpeed = 0.07f;
     float punch = 2f;

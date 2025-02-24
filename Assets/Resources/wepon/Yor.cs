@@ -5,17 +5,19 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class Yor {
 
-    float rate = 1f;
+    float rate = 0.75f;
     int damage = 125;
     int headdamage = 179;
     int magazine = 3;
     bool auto = false;
     float reloadtime = 1.5f;
-    bool zoomable = false;
-    float zoomratio = 1;
+    bool zoomable = true;
+    float zoomratio = 70;
     bool accuracy = true;
-    float YRecoil = 8f;
+    float YRecoil = 5f;
     float RecoilDuration = 0.1f;
+    float PeekingSpeed = 0.04f;
+
     void Start() {
 
     }
@@ -65,6 +67,11 @@ public class Yor {
     public float GetRecoilDuration()
     {
         return RecoilDuration;
+    }
+
+    public float GetPeekingSpeed()
+    {
+        return PeekingSpeed;
     }
     public void GetStatus() {
 

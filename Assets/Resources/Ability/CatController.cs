@@ -61,7 +61,7 @@ public class CatController : MonoBehaviour
             // ターゲットとの距離を計算
             float distance = Vector3.Distance(transform.position, target.position);
             Debug.Log(distance);
-            if (distance <= 2)
+            if (distance <= 3)
             {
                 HasDetected = true;
             }

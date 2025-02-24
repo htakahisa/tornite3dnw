@@ -284,7 +284,7 @@ public class AIManager : MonoBehaviour
         Vector3 moveDirection;
 
         if (AvoidObstacle() == Vector3.zero) {
-            moveDirection = -Vector3.right;
+            moveDirection = -transform.right;
         }
         else
         {
@@ -347,7 +347,7 @@ public class AIManager : MonoBehaviour
 
     private float GetRandomDelay()
     {
-        return Random.Range(0.1f,0.5f);
+        return Random.Range(0.1f,1f);
     }
 
     private void DelayingWalk()

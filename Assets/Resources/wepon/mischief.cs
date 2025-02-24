@@ -15,11 +15,11 @@ public class mischief : ScriptableObject
     bool zoomable = false;
     float zoomratio = 80;
     bool accuracy = true;
-    float YRecoil = 0.3f;
+    float YRecoil = 0.2f;
     float XRecoil = 0.09f;
     float PeekingSpeed = 0f;
     float punch = 3f;
-    float RecoilDuration = 0.1f;
+    float RecoilDuration = 0.2f;
 
     void Start() {
 

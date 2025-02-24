@@ -12,7 +12,7 @@ public class Mistake {
     bool auto = false;
     float reloadtime = 0.9f;
     bool accuracy = true;
-    float YRecoil = 6f;
+    float YRecoil = 5f;
     float punch = 4f;
     float RecoilDuration = 0.06f;
 

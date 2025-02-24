@@ -34,7 +34,7 @@ public class SoundManager : MonoBehaviourPun {
     public AudioClip cat3;
     public AudioClip cat4;
     public AudioClip collect;
-
+    public AudioClip blackBell;
 
     void Awake() {
         
@@ -165,6 +165,10 @@ public class SoundManager : MonoBehaviourPun {
         if (type.Equals("collect"))
         {
             audioSource.PlayOneShot(collect);
+        }
+        if (type.Equals("blackBell"))
+        {
+            audioSource.PlayOneShot(blackBell);
         }
     }
 

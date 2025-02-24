@@ -104,6 +104,8 @@ public class RayController : MonoBehaviourPun {
 
     private bool HasGetLand = false;
 
+    private GameObject BlackEffect = null;
+
     // Start is called before the first frame update
     void Start() {
 
@@ -267,7 +269,7 @@ public class RayController : MonoBehaviourPun {
 
         if ((Auto && HullAuto()) || (!Auto && SemiAuto())) {
 
-            if(currentWeaponIndex != 13 && currentWeaponIndex != 14)
+            if(currentWeaponIndex != 12 && currentWeaponIndex != 13 && currentWeaponIndex != 14)
             {
                 Fire();
             }
@@ -279,6 +281,11 @@ public class RayController : MonoBehaviourPun {
         {
             Stab();
         }
+        if (currentWeaponIndex == 12 && SemiAuto())
+        {
+            Ring();
+        }
+        
         if (CanCheckOnibi())
         {
             CheckOnibi();
@@ -332,6 +339,78 @@ public class RayController : MonoBehaviourPun {
         IsZooming = true;
     }
 
+
+
+    private void Ring()
+    {
+
+        if (MapOpening)
+        {
+            return;
+        }
+        if (BuyPanelOpening)
+        {
+            return;
+        }
+        if (!CanShoot)
+        {
+            return;
+        }
+
+
+        deltaTimeSum = 0;
+        GameObject target = RingHit();
+
+
+        if (target.CompareTag("Body") || target.CompareTag("Head"))
+        {
+
+
+
+
+            shoot(target, target.tag);
+
+
+
+        }
+
+        if (target.CompareTag("Head") && MapManager.mapmanager.GetMapName() != "DuelLand")
+        {
+            target.GetComponentInParent<CameraController>().Recoiled(punch, punch, 0.1f);
+        }
+
+        if (target.CompareTag("Destructible"))
+        {
+            shoot(target, target.tag);
+        }
+
+        StartCoroutine(BlackOut());
+
+
+    }
+
+    private IEnumerator BlackOut()
+    {
+        BlackOutStart();
+        yield return new WaitForSeconds(2);
+        BlackOutEnd();
+    }
+
+    private void BlackOutStart()
+    {
+        camcon.IsExercise = false;
+        camcon.AbilityAble = false;
+        CanShoot = false;
+        BlackEffect = PhotonNetwork.Instantiate("BlackEffect", new Vector3(0, -100, 0), Quaternion.identity);
+    }
+
+    private void BlackOutEnd()
+    {
+        camcon.IsExercise = true;
+        camcon.AbilityAble = true;
+        CanShoot = true;
+        PhotonNetwork.Destroy(BlackEffect);
+    }
 
 
     private void Stab()
@@ -409,7 +488,7 @@ public class RayController : MonoBehaviourPun {
 
             if (mzt != null)
             {
-                mzt.text = "écíeêî " + Magazinesize;
+                mzt.text = Magazinesize + "/" + MaxMagazine;
             }
 
             if(currentWeaponIndex == 11)
@@ -519,7 +598,7 @@ public class RayController : MonoBehaviourPun {
         Magazinesize = MaxMagazine;
 
         if (mzt != null) {
-            mzt.text = "écíeêî " + Magazinesize;
+            mzt.text = Magazinesize + "/" + MaxMagazine;
         }
 
         CanShoot = true;
@@ -545,7 +624,12 @@ public class RayController : MonoBehaviourPun {
                     sm.PlaySound("shoot_noel");
                     sound = true;
                 }
-                if(sound == false)
+                if (currentWeaponIndex == 12)
+                {
+                    sm.PlaySound("blackBell");
+                    sound = true;
+                }
+                if (sound == false)
                 {
                     sm.PlaySound("shoot");
                 }
@@ -648,6 +732,37 @@ public class RayController : MonoBehaviourPun {
 
     }
 
+    public GameObject RingHit()
+    {
+        RaycastHit hit;
+
+
+
+
+
+        if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, 10000, hitMask))
+        {
+            if (hit.collider.gameObject.tag == "Body" || hit.collider.gameObject.tag == "Head")
+            {
+                PhotonNetwork.Instantiate("DamageBlood", hit.point, Quaternion.identity);
+            }
+            else
+            {
+                PhotonNetwork.Instantiate("WallHit", hit.point, Quaternion.identity);
+            }
+            return hit.collider.gameObject;
+
+        }
+
+
+
+
+
+
+        return gameObject;
+
+    }
+
     public void DestroyAbilityCheck()
     {
         if(AbilityCheck == null)
@@ -731,7 +846,7 @@ public class RayController : MonoBehaviourPun {
 
         this.UseWepon = "Classic";
         if (mzt != null) {
-            mzt.text = "écíeêî " + Magazinesize;
+            mzt.text = Magazinesize + "/" + MaxMagazine;
         }
 
 
@@ -777,7 +892,7 @@ public class RayController : MonoBehaviourPun {
         this.UseWepon = "JawKha";
         if (mzt != null)
         {
-            mzt.text = "écíeêî " + Magazinesize;
+            mzt.text = Magazinesize + "/" + MaxMagazine;
         }
 
 
@@ -818,7 +933,7 @@ public class RayController : MonoBehaviourPun {
 
         this.UseWepon = "Mistake";
         if (mzt != null) {
-            mzt.text = "écíeêî " + Magazinesize;
+            mzt.text = Magazinesize + "/" + MaxMagazine;
         }
 
 
@@ -858,7 +973,7 @@ public class RayController : MonoBehaviourPun {
 
         this.UseWepon = "Silver";
         if (mzt != null) {
-            mzt.text = "écíeêî " + Magazinesize;
+            mzt.text = Magazinesize + "/" + MaxMagazine;
         }
 
 
@@ -901,7 +1016,7 @@ public class RayController : MonoBehaviourPun {
 
         this.UseWepon = "Pegasus";
         if (mzt != null) {
-            mzt.text = "écíeêî " + Magazinesize;
+            mzt.text = Magazinesize + "/" + MaxMagazine;
         }
 
 
@@ -944,7 +1059,7 @@ public class RayController : MonoBehaviourPun {
 
         this.UseWepon = "Stella";
         if (mzt != null) {
-            mzt.text = "écíeêî " + Magazinesize;
+            mzt.text = Magazinesize + "/" + MaxMagazine;
         }
 
 
@@ -988,7 +1103,7 @@ public class RayController : MonoBehaviourPun {
         this.UseWepon = "Rapetter";
         if (mzt != null)
         {
-            mzt.text = "écíeêî " + Magazinesize;
+            mzt.text = Magazinesize + "/" + MaxMagazine;
         }
 
 
@@ -1031,7 +1146,7 @@ public class RayController : MonoBehaviourPun {
         this.UseWepon = "Mischief";
         if (mzt != null)
         {
-            mzt.text = "écíeêî " + Magazinesize;
+            mzt.text = Magazinesize + "/" + MaxMagazine;
         }
 
 
@@ -1071,7 +1186,7 @@ public class RayController : MonoBehaviourPun {
 
         this.UseWepon = "Noel";
         if (mzt != null) {
-            mzt.text = "écíeêî " + Magazinesize;
+            mzt.text = Magazinesize + "/" + MaxMagazine;
         }
 
 
@@ -1111,7 +1226,7 @@ public class RayController : MonoBehaviourPun {
 
         this.UseWepon = "Reine";
         if (mzt != null) {
-            mzt.text = "écíeêî " + Magazinesize;
+            mzt.text = Magazinesize + "/" + MaxMagazine;
         }
 
 
@@ -1151,7 +1266,7 @@ public class RayController : MonoBehaviourPun {
 
         this.UseWepon = "Duelist";
         if (mzt != null) {
-            mzt.text = "écíeêî " + Magazinesize;
+            mzt.text = Magazinesize + "/" + MaxMagazine;
         }
         if (!IsDuelist) {
             photonView.RPC("Duelistcount", RpcTarget.All);
@@ -1192,7 +1307,7 @@ public class RayController : MonoBehaviourPun {
 
         this.UseAbilityWeapon = "Yor";
         if (mzt != null) {
-            mzt.text = "écíeêî " + Magazinesize;
+            mzt.text = Magazinesize + "/" + MaxMagazine;
         }
       
     }
@@ -1207,7 +1322,7 @@ public class RayController : MonoBehaviourPun {
         Magazinesize =  SaveAbilityMagazine;
         MaxMagazine = blackbell.GetMagazine();
         ReloadTime = blackbell.GetReloadTime();
-        yRecoil = 5;
+        yRecoil = 0;
         xRecoil = 0;
         punch = 0;
         burst = 0;
@@ -1221,7 +1336,7 @@ public class RayController : MonoBehaviourPun {
         }
         if (PhaseManager.pm.GetPhase() == "Duel")
         {
-            Magazinesize = 999999;
+            Magazinesize = 99999;
         }
 
         Auto = blackbell.GetAuto();
@@ -1231,7 +1346,7 @@ public class RayController : MonoBehaviourPun {
 
         this.UseAbilityWeapon = "BlackBell";
         if (mzt != null) {
-            mzt.text = "écíeêî " + Magazinesize;
+            mzt.text = "BlackBell";
         }
 
     }
