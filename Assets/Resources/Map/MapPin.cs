@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -24,40 +25,54 @@ public class MapPin : MonoBehaviourPun {
             sm = Camera.main.transform.parent.GetComponent<SoundManager>();
             player = Camera.main.transform.parent;
 
-            if (CanSmoke)
-            {
-                ability = Camera.main.transform.parent.GetComponent<Ability>();
+        if (CanSmoke)
+        {
+            ability = Camera.main.transform.parent.GetComponent<Ability>();
 
 
 
-                Vector3 position = ma.Position();
+            Vector3 position = ma.Position();
             if (Input.GetMouseButtonDown(0) && ability.number2 >= 1)
             {
-                PhotonNetwork.Instantiate("BlueLightSmoke", position, Quaternion.identity);
-              
                 ability.Spend(2, 1);
+
+                if (PhaseManager.pm.GetPhase() == "Buy")
+                {
+                    PhaseCommand.pc.CommandBlueLight(position);
+
+                }
+                else
+                {
+                    PhotonNetwork.Instantiate("BlueLightSmoke", position, Quaternion.identity);
+                }
+
+                    
+
             }
 
 
-            }
-            if (CanSetAqua)
-            {
-                ability = Camera.main.transform.parent.GetComponent<Ability>();
+        }
+        if (CanSetAqua)
+        {
+            ability = Camera.main.transform.parent.GetComponent<Ability>();
 
 
-
-
-
-                Vector3 position = ma.Position();
+            Vector3 position = ma.Position();
             if (Input.GetMouseButtonDown(0) && ability.number2 >= 1)
             {
-                PhotonNetwork.Instantiate("Aquaring", position, Quaternion.identity);
-
-              
-               
                 ability.Spend(2, 1);
+                if (PhaseManager.pm.GetPhase() == "Buy")
+                {
+                    PhaseCommand.pc.CommandAqua(position);
+
+                }
+                else
+                {
+                    PhotonNetwork.Instantiate("Aquaring", position, Quaternion.identity);
+                }
+                    
             }
-            }
+        }
         if (CanCat)
         {
             ability = Camera.main.transform.parent.GetComponent<Ability>();
@@ -89,8 +104,6 @@ public class MapPin : MonoBehaviourPun {
 
 
     }
-
-
 
 
 

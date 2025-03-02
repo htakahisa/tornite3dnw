@@ -15,12 +15,12 @@ public class Pegasus {
     float zoomratio = 70;
     bool accuracy = true;
     float YRecoil = 0.6f;
-    float XRecoil = 0.6f;
+    float XRecoil = 0.8f;
     int Burst = 5;
     float Punch = 0.5f;
     float BurstingRate = 0.065f;
     float BurstRate = 0.2f;
-    float PeekingSpeed = 0.04f;
+    float PeekingSpeed = 0.02f;
     float RecoilDuration = 0.1f;
 
     void Start() {

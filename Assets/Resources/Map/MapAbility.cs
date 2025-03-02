@@ -47,7 +47,7 @@ public class MapAbility : MonoBehaviour
         Physics.Raycast(down, transform.forward, out hit, Mathf.Infinity ,mapobject);
         
             mappointer.SetActive(true);
-            Debug.Log("smoke :" + hit.collider.gameObject);
+
             if (hit.transform == null)
             {
                 mappointer.GetComponent<SpriteRenderer>().sprite = ng;

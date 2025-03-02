@@ -12,7 +12,7 @@ public class ReineBlanche {
     bool auto = false;
     float reloadtime = 2.5f;
     bool zoomable = true;
-    float zoomratio = 40;
+    float zoomratio = 20;
     bool accuracy = true;
     float PeekingSpeed = 0.1f;
     float YRecoil = 5;

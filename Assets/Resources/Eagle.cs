@@ -8,8 +8,6 @@ public class Eagle : MonoBehaviourPun
 {
     private float speed = 8;      // 前進速度
 
-
-    private GameObject playerCamera;
     private Transform cam;
 
 
@@ -20,9 +18,11 @@ public class Eagle : MonoBehaviourPun
     void Awake()
     {
 
+       
+            cam = transform.GetChild(0);
+
         if (photonView.IsMine)
         {
-            cam = transform.GetChild(0);
             // Rigidbody コンポーネントの取得
             rb = GetComponent<Rigidbody>();
 
@@ -33,13 +33,16 @@ public class Eagle : MonoBehaviourPun
             rb.freezeRotation = true;
             Invoke("Destroy", 10f);
         }
+        else
+        {
+            cam.gameObject.SetActive(false);
+        }
     }
 
     private void Destroy()
     {
         if (photonView.IsMine)
         {
-            cam.gameObject.SetActive(false);
             PhotonNetwork.Instantiate("EagleCollect", transform.position, transform.rotation);
             PhotonNetwork.Destroy(gameObject);
         }

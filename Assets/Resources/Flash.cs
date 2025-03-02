@@ -1,8 +1,9 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class Flash : MonoBehaviour
+public class Flash : MonoBehaviourPun
 {
-    private Renderer _renderer;
+
 
     public float flashDuration = 2f; // フラッシュの持続時間
 
@@ -10,19 +11,19 @@ public class Flash : MonoBehaviour
 
     Rigidbody rb;
 
-    private SoundManager sm;
+    private AudioSource audio;
 
     // Start is called before the first frame update
     void Awake()
     {
-        rb = gameObject.GetComponent<Rigidbody>();
-        sm = Camera.main.transform.parent.GetComponent<SoundManager>();
-        // グレネードに力を加える
-        Vector3 throwDirection = transform.forward * 2;
-        rb.AddForce(throwDirection * throwForce, ForceMode.VelocityChange);
-        _renderer = GetComponent<Renderer>();
-
-        
+        audio = GetComponent<AudioSource>();
+        if (photonView.IsMine)
+        {
+            rb = gameObject.GetComponent<Rigidbody>();
+            // グレネードに力を加える
+            Vector3 throwDirection = transform.forward * 2;
+            rb.AddForce(throwDirection * throwForce, ForceMode.VelocityChange);
+        }
 
         Invoke("Blast", 0.7f);
     }
@@ -39,7 +40,7 @@ public class Flash : MonoBehaviour
 
     private void Blast()
     {
-        sm.PlayMySound("flash");
+        audio.Play();
 
         int layerMask = LayerMask.GetMask("MapObject", "BackHead");
 

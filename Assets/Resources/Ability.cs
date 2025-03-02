@@ -37,6 +37,10 @@ public class Ability : MonoBehaviourPun {
 
             if (PhaseManager.pm.GetPhase().Equals("Buy"))
             {
+                if (Input.GetKeyDown(KeyCode.Q) && (number2 >= 1 || Able2 == "Aqua"))
+                {
+                    Use(Able2);
+                }
                 return;
             }
         }
@@ -73,8 +77,8 @@ public class Ability : MonoBehaviourPun {
             {
                 Use(Able2);
             }
-         
 
+         
 
         }
 
@@ -142,7 +146,8 @@ public class Ability : MonoBehaviourPun {
         if (able.Equals("Yor")) {
             rc.Yor();
             Spend(1,1);
-
+            RayController.rc.ResetZoom();
+          
         }
         if (able.Equals("Stradarts")) {
             cc.StraDarts();
@@ -152,6 +157,7 @@ public class Ability : MonoBehaviourPun {
         if (able.Equals("BlackBell")) {
             rc.BlackBell();
             Spend(1, 1);
+            RayController.rc.ResetZoom();
 
         }
         if (able.Equals("Wolf")) {

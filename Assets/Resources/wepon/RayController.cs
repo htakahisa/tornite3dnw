@@ -106,12 +106,17 @@ public class RayController : MonoBehaviourPun {
 
     private GameObject BlackEffect = null;
 
+    [SerializeField]
+    private GameObject SniperScope;
+
+    private bool IsScoping = false;
+
+
     // Start is called before the first frame update
     void Start() {
 
         cam = GetComponent<Camera>();
        
-
         // 最初の武器をアクティブにする
         SwitchWeapon(currentWeaponIndex);
 
@@ -158,6 +163,18 @@ public class RayController : MonoBehaviourPun {
     // Update is called once per frame
     void Update() {
 
+        if (IsScoping)
+        {
+            SniperScope.SetActive(true);
+            weapons[currentWeaponIndex].gameObject.SetActive(false);
+            
+        }
+        else
+        {
+            SniperScope.SetActive(false);
+            SwitchWeapon(currentWeaponIndex);
+        }
+
         OnibiInterval -= Time.deltaTime;
         if (MapManager.mapmanager != null && !HasGetLand)
         {
@@ -172,10 +189,16 @@ public class RayController : MonoBehaviourPun {
 
         if (Input.GetKeyDown(knifeKey))
         {
-
-            if (!CanShoot)
+            if (!CanShoot || camcon.Planting)
             {
                 return;
+            }
+            cam.fieldOfView = 80;
+            IsZooming = false;
+            IsScoping = false;
+            if (camcon.IsKamaitachi)
+            {
+                camcon.StopKamaitachi();
             }
             if (currentWeaponIndex == 11 || currentWeaponIndex == 12)
             {
@@ -185,18 +208,12 @@ public class RayController : MonoBehaviourPun {
             {
                 SaveMagazine = Magazinesize;
             }
-            cam.fieldOfView = 80;
-            IsZooming = false;
-            if (camcon.IsKamaitachi)
-            {
-                camcon.StopKamaitachi();
-            }
             Knife();
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (!CanShoot)
+            if (!CanShoot || camcon.Planting)
             {
                 return;
             }
@@ -205,22 +222,26 @@ public class RayController : MonoBehaviourPun {
             {
                 return;
             }
-
-            if (currentWeaponIndex == 11 || currentWeaponIndex == 12)
+            if (currentWeaponIndex != 13)
             {
-                SaveAbilityMagazine = Magazinesize;
+                if (currentWeaponIndex == 11 || currentWeaponIndex == 12)
+                {
+                    SaveAbilityMagazine = Magazinesize;
+                }
+                else
+                {
+                    SaveMagazine = Magazinesize;
+                }
             }
-            else
-            {
-                SaveMagazine = Magazinesize;
-            }
+            IsZooming = false;
+            IsScoping = false;
             cam.fieldOfView = 80;
             Invoke(UseAbilityWeapon, 0);
         }
 
         if (Input.GetKeyDown(mainWeponKey) || Input.GetKeyDown(subWeponKey))
         {
-            if (!CanShoot)
+            if (!CanShoot || camcon.Planting)
             {
                 return;
             }
@@ -228,14 +249,17 @@ public class RayController : MonoBehaviourPun {
             {
                 camcon.StopKamaitachi();
             }
+            if (currentWeaponIndex != 13)
+            {
 
-            if (currentWeaponIndex == 11 || currentWeaponIndex == 12)
-            {
-                SaveAbilityMagazine = Magazinesize;
-            }
-            else
-            {
-                SaveMagazine = Magazinesize;
+                if (currentWeaponIndex == 11 || currentWeaponIndex == 12)
+                {
+                    SaveAbilityMagazine = Magazinesize;
+                }
+                else
+                {
+                    SaveMagazine = Magazinesize;
+                }
             }
             Debug.Log(UseWepon);
             cam.fieldOfView = 80;
@@ -253,6 +277,7 @@ public class RayController : MonoBehaviourPun {
             {
                 cam.fieldOfView = 80;
                 IsZooming = false;
+                IsScoping = false;
             }
         }
 
@@ -310,6 +335,13 @@ public class RayController : MonoBehaviourPun {
 
     }
 
+
+    public void ResetZoom()
+    {
+        IsZooming = false;
+        IsScoping = false;
+        cam.fieldOfView = 80;
+    }
     private IEnumerator Recoilbounce(float yRot, float duration)
     {
 
@@ -324,6 +356,10 @@ public class RayController : MonoBehaviourPun {
     private IEnumerator Zoom()
     {
         CanShoot = false;
+        if (currentWeaponIndex == 9 || currentWeaponIndex == 10)
+        {
+            IsScoping = true;
+        }
         for (float zoom = 80 - ZoomRatio; ZoomRatio < cam.fieldOfView;)
         {
             if (!Input.GetMouseButton(1))
@@ -337,6 +373,7 @@ public class RayController : MonoBehaviourPun {
         }
         CanShoot = true;
         IsZooming = true;
+        
     }
 
 
@@ -352,7 +389,7 @@ public class RayController : MonoBehaviourPun {
         {
             return;
         }
-        if (!CanShoot)
+        if (!CanShoot || camcon.Planting)
         {
             return;
         }
@@ -392,7 +429,7 @@ public class RayController : MonoBehaviourPun {
     private IEnumerator BlackOut()
     {
         BlackOutStart();
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         BlackOutEnd();
     }
 
@@ -424,7 +461,7 @@ public class RayController : MonoBehaviourPun {
         {
             return;
         }
-        if (!CanShoot)
+        if (!CanShoot || camcon.Planting)
         {
             return;
         }
@@ -539,6 +576,7 @@ public class RayController : MonoBehaviourPun {
             {
                 cam.fieldOfView = 80;
                 IsZooming = false;
+                IsScoping = false;
             }
 
         }
@@ -574,14 +612,14 @@ public class RayController : MonoBehaviourPun {
     }
 
 
-        public bool GetIsZooming() {
+    public bool GetIsZooming() {
         return IsZooming;
 
     }
 
 
     IEnumerator Reload() {
-        if (!CanShoot)
+        if (!CanShoot || camcon.Planting)
         {
             yield break;
         }
@@ -609,7 +647,7 @@ public class RayController : MonoBehaviourPun {
         
    
         
-        if (CanShoot) {
+        if (CanShoot || camcon.Planting) {
             bool sound = false;
             if (Magazinesize >= 1) {
                
@@ -807,7 +845,7 @@ public class RayController : MonoBehaviourPun {
             
         // オブジェクトを生成
         PhotonNetwork.Instantiate("Onibi", spawnPosition, Quaternion.identity);
-        camcon.kamaitachi -= 30;
+        camcon.kamaitachi -= 40;
         DestroyAbilityCheck();
     }
 
@@ -1330,15 +1368,6 @@ public class RayController : MonoBehaviourPun {
         PeekingSpeed = blackbell.GetPeekingSpeed();
         RecoilDuration = blackbell.GetRecoilDuration();
 
-        if (UseAbilityWeapon == "")
-        {
-            Magazinesize = blackbell.GetMagazine();
-        }
-        if (PhaseManager.pm.GetPhase() == "Duel")
-        {
-            Magazinesize = 99999;
-        }
-
         Auto = blackbell.GetAuto();
         ZoomAble = blackbell.GetZoomAble();
         ZoomRatio = blackbell.GetZoomRatio();
@@ -1376,7 +1405,7 @@ public class RayController : MonoBehaviourPun {
 
         if (mzt != null)
         {
-            mzt.text = "Knife";
+           mzt.text = "Knife";
         }
 
     }
@@ -1405,7 +1434,7 @@ public class RayController : MonoBehaviourPun {
         duelistcounter++;
         Debug.Log("There are " + duelistcounter + "duelist.");
         if (duelistcounter >= 2) {
-            rmc.IsOlive();
+            RoundManager.rm.IsOlive();
         }
     }
 
@@ -1502,21 +1531,21 @@ public class RayController : MonoBehaviourPun {
     private bool CanOnibi()
     {
 
-        return currentWeaponIndex == 14 && HavingOnibi && camcon.kamaitachi >= 30 && OnibiInterval <= 0;
+        return currentWeaponIndex == 14 && HavingOnibi && camcon.kamaitachi >= 40 && OnibiInterval <= 0;
 
     }
 
     private bool CanCheckOnibi()
     {
 
-        return Input.GetKey(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked && currentWeaponIndex == 14 && HavingOnibi && camcon.kamaitachi >= 30 && OnibiInterval <= 0;
+        return Input.GetKey(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked && currentWeaponIndex == 14 && HavingOnibi && camcon.kamaitachi >= 40 && OnibiInterval <= 0;
 
     }
 
     private bool CanFireOnibi()
     {
 
-        return Input.GetKeyUp(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked && currentWeaponIndex == 14 && HavingOnibi && camcon.kamaitachi >= 30 && OnibiInterval <= 0;
+        return Input.GetKeyUp(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked && currentWeaponIndex == 14 && HavingOnibi && camcon.kamaitachi >= 40 && OnibiInterval <= 0;
 
     }
 
@@ -1534,7 +1563,7 @@ public class RayController : MonoBehaviourPun {
 
     }
 
-        void SwitchWeapon(int index) {
+    void SwitchWeapon(int index) {
         for (int i = 0; i < weapons.Length; i++) {
             weapons[i].SetActive(i == index);
         }

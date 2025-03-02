@@ -34,10 +34,7 @@ public class CollectAbility : MonoBehaviourPun
             cc = Camera.main.GetComponentInParent<CameraController>();
 
         }
-        if (rc == null)
-        {
-            rc = Camera.main.GetComponent<RayController>();
-        }
+
     }
 
         // Update is called once per frame
@@ -61,16 +58,6 @@ public class CollectAbility : MonoBehaviourPun
 
         if (distance >= 1f)
         {
-
-            cc.WalkAble = true;
-            cc.AbilityAble = true;
-            rc.CanShoot = true;
-
-
-
-            meter.MeterInactive();
-
-
             return;
 
         }
@@ -81,28 +68,22 @@ public class CollectAbility : MonoBehaviourPun
             collectdeltatime += Time.deltaTime;
             meter.Collect(collectdeltatime, CollectingTime);
             Debug.Log(collectdeltatime);
-            cc.WalkAble = false;
-            cc.AbilityAble = false;
-            rc.CanShoot = false;
+            cc.Planting = true;
+
 
 
         }
         else
         {
-            collectdeltatime = 0;
-            cc.WalkAble = true;
-            cc.AbilityAble = true;
-            rc.CanShoot = true;
-            meter.MeterInactive();
+            cc.Planting = false;
         }
+
 
         if (collectdeltatime >= CollectingTime)
         {
             Ability ability = Camera.main.GetComponentInParent<Ability>();
             ability.Collect(AbilityKind, 1);
-            cc.WalkAble = true;
-            cc.AbilityAble = true;
-            rc.CanShoot = true;
+            cc.Planting = false;
             meter.MeterInactive();
             PhotonNetwork.Destroy(gameObject);
         }

@@ -59,7 +59,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private float jumpPower = 0.9f;
     // private Rigidbody rb;
-    private float distanceToGround = 0.07f;
+    private float distanceToGround = 0f;
 
     RayController rc;
     private SoundManager sm;
@@ -84,6 +84,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     private bool isCursorLocked = true;
 
+    public bool Planting = false;
 
     private GameObject abilitycheck;
 
@@ -153,11 +154,24 @@ public class CameraController : MonoBehaviourPunCallbacks {
     }
 
 
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
+        if (foot == null) return;
+
+        Vector3 footPosition = foot.transform.position + Vector3.up * 0.1f;
+        Vector3 halfExtents = boxSize / 2;
+        Vector3 direction = Vector3.down;
+        float maxDistance = 0.3f;
+
+        // BoxCast の開始位置
+        Vector3 boxCenter = footPosition + direction * maxDistance / 2;
+
+        // ギズモの色を設定
         Gizmos.color = Color.green;
-        Vector3 boxCenter = transform.position + Vector3.down * 0.17f;
-        Gizmos.DrawWireCube(boxCenter, boxSize);
+
+        // ボックスを描画
+        Gizmos.matrix = Matrix4x4.TRS(boxCenter, Quaternion.identity, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, boxSize);
     }
 
     // Update is called once per frame
@@ -195,7 +209,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         }
 #endif
 
-        if (AbilityAble)
+        if (AbilityAble && !Planting)
         {
             
             if (ability != null && ability.GetAbility(1) == "Kamaitachi")
@@ -368,6 +382,12 @@ public class CameraController : MonoBehaviourPunCallbacks {
                 return;
             }
         }
+
+        if (!WalkAble || Planting)
+        {
+            return;
+        }
+
         climbSoundInterval = 0;
         transform.position = BottomBarTransform.position;
         AbilityAble = false;
@@ -557,7 +577,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
         
 
-        if (WalkAble)
+        if (WalkAble && !Planting)
         {
             if (IsGrounded())
             {
@@ -581,11 +601,6 @@ public class CameraController : MonoBehaviourPunCallbacks {
                     float ratio = 1f;
                     bool issnake = false;
 
-                    if (z != 0 && x != 0)
-                    {
-                        ratio /= 2;
-
-                    }
                     if (Input.GetKey(KeyCode.LeftControl))
                     {
                         ratio /= 1.25f;
@@ -642,9 +657,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
                         bool issnake = false;
 
-                        //if (z != 0 && x != 0) {
-                        //    ratio /= 2;
-                        //}
+
                         if (Input.GetKey(KeyCode.LeftControl))
                         {
                             ratio /= 1.25f;
@@ -860,6 +873,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
 
+        if (Planting)
+        {
+            return;
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) && !Input.GetKey(KeyCode.W) && isTouchingWall() && !IsGrounded() && !IsJump && IsKamaitachi) {
             hasAppliedAirMove++;
@@ -1016,8 +1033,18 @@ public class CameraController : MonoBehaviourPunCallbacks {
         yield return new WaitUntil(() => Input.GetMouseButtonDown(3));
         currentCoroutine = null;
         abilitycheck.SetActive(false);
-        PhotonNetwork.Instantiate("C4", hit.point, Quaternion.identity);
+
         ability.Spend(2, 1);
+
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            PhaseCommand.pc.CommandC4(hit.point);
+        }
+        else
+        {
+            PhotonNetwork.Instantiate("C4", hit.point, Quaternion.identity);
+        }
+
     }
 
 
@@ -1401,8 +1428,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     public bool IsGrounded() {
 
-        Vector3 footPosition = foot.transform.position;
-        return Physics.BoxCast(footPosition, boxSize / 2, Vector3.down, Quaternion.identity, distanceToGround, GroundLayer);
+        Vector3 footPosition = foot.transform.position + Vector3.up * 0.1f;
+        return Physics.BoxCast(footPosition, boxSize / 2, Vector3.down, Quaternion.identity, 0.3f, GroundLayer);
         
     }
 
