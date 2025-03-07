@@ -5,17 +5,17 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class ReineBlanche {
 
-    float rate = 0.7f;
+    float rate = 0.8f;
     int damage = 105;
     int headdamage = 155;
     int magazine = 6;
     bool auto = false;
     float reloadtime = 2.5f;
     bool zoomable = true;
-    float zoomratio = 20;
+    float zoomratio = 30;
     bool accuracy = true;
-    float PeekingSpeed = 0.1f;
-    float YRecoil = 5;
+    float PeekingSpeed = 0.05f;
+    float YRecoil = 3.5f;
     float RecoilDuration = 0.05f;
 
     void Start() {

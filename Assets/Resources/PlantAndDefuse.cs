@@ -133,7 +133,7 @@ public class PlantAndDefuse : MonoBehaviourPun
                 HasDefuse = true;
                 if (RoundManager.rm.GetSide() == "Leviathan")
                 {
-                    RoundManager.rm.ChangeCoin(300, PhotonNetwork.LocalPlayer.ActorNumber);
+                    RoundManager.rm.ChangeCoin(500, PhotonNetwork.LocalPlayer.ActorNumber);
                 }
             }
         }
@@ -147,7 +147,7 @@ public class PlantAndDefuse : MonoBehaviourPun
             PlantTime = 5;
             if(RoundManager.rm.GetSide() == "Valkyrie")
             {
-                RoundManager.rm.ChangeCoin(500, PhotonNetwork.LocalPlayer.ActorNumber);
+                RoundManager.rm.ChangeCoin(800, PhotonNetwork.LocalPlayer.ActorNumber);
             }
         }
 

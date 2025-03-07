@@ -7,7 +7,7 @@ using UnityEngine;
 public class Diable : MonoBehaviourPun {
 
 
-   
+
 
     private float time = 0;
 
@@ -15,7 +15,9 @@ public class Diable : MonoBehaviourPun {
 
     // Start is called before the first frame update
     void Awake() {
-        Invoke("DestroyPhoton", 30f);
+
+
+
     }
 
     // Update is called once per frame
@@ -31,7 +33,7 @@ public class Diable : MonoBehaviourPun {
     private void OnTriggerStay(Collider other) {
 
         PhotonView targetPhotonView = other.gameObject.GetComponentInParent<PhotonView>();
- 
+
         if (targetPhotonView == null || !targetPhotonView.IsMine)
         {
             return;

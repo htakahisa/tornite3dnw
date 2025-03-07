@@ -6,14 +6,14 @@ using Photon.Pun;
 public class Silver : ScriptableObject
 {
 
-    float rate = 0.3f;
-    int damage = 60;
+    float rate = 0.6f;
+    int damage = 65;
     int headdamage = 163;
     int magazine = 6;
     bool auto = false;
     float reloadtime = 0.5f;
     bool accuracy = true;
-    float YRecoil = 3f;
+    float YRecoil = 2f;
     float RecoilDuration = 0.04f;
 
     void Start() {

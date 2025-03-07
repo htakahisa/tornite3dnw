@@ -9,7 +9,7 @@ public class Stella : ScriptableObject
     float rate = 0.1f;
     int damage = 42;
     int headdamage = 100;
-    int magazine = 15;
+    int magazine = 20;
     bool auto = true;
     float reloadtime = 1.5f;
     bool zoomable = true;
@@ -17,10 +17,10 @@ public class Stella : ScriptableObject
     bool accuracy = true;
     float YRecoil = 0.9f;
     float XRecoil = 0.25f;
-    int Burst = 3;
-    float BurstingRate = 0.09f;
-    float BurstRate = 0.3f;
-    float PeekingSpeed = 0.07f;
+    int Burst = 2;
+    float BurstingRate = 0.08f;
+    float BurstRate = 0.23f;
+    float PeekingSpeed = 0.04f;
     float punch = 2f;
     float RecoilDuration = 0.15f;
 

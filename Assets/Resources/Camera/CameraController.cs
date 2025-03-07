@@ -6,12 +6,12 @@ using Photon.Pun;
 
 public class CameraController : MonoBehaviourPunCallbacks {
     float x, z;
-    float speed = 1.8f;
+    float speed = 1.9f;
 
-    float OriginalSpeed = 1.8f;
+    float OriginalSpeed = 1.9f;
 
     private float stepTimer = 0f;
-    private float wallDetectionDistance = 0.17f;
+    private float wallDetectionDistance = 0.27f;
 
     public GameObject WallCheck;
 
@@ -113,6 +113,9 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
     public bool IsExercise = true;
 
+    private float airTime = 0f;
+    private bool isInAir = false;
+
     // Start is called before the first frame update
     void Start() {
 
@@ -130,11 +133,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
             if (photonView.IsMine)
             {
 
-                if (!Application.isEditor)
-                {
+
                     abilitycheck = Instantiate(ResourceManager.resourcemanager.GetObject("AbilityCheck"), new Vector3(0, -100, 0), Quaternion.identity);
                     abilitycheck.SetActive(false);
-                }
+                
 
             }
         }
@@ -185,7 +187,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         {
             if (rc.GetWeaponNumber() == 13)
             {
-                weaponspeed = 1.4f;
+                weaponspeed = 1.3f;
             }
             else
             {
@@ -199,7 +201,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.L))
         {
-
+            ability.number2++;
             ability.number1++;
         }
         if (Input.GetKeyDown(KeyCode.H))
@@ -354,9 +356,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
     {
         RaycastHit hit;
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 position = Camera.main.transform.position;
+        Vector3 direction = Camera.main.transform.forward;
 
-        if (Physics.Raycast(ray, out hit, 100, GroundLayer))
+        if (Physics.Raycast(position, direction, out hit, 100, GroundLayer))
         {
             Debug.Log(hit.collider.gameObject.name);
             Instantiate(pinPrefab, hit.point, Quaternion.identity);
@@ -504,7 +507,25 @@ public class CameraController : MonoBehaviourPunCallbacks {
             isNearBottomBar = false;
         }
 
+        Debug.Log(airTime);
 
+        if (!IsGrounded())
+        {
+            if (!isInAir)
+            {
+                isInAir = true;
+                airTime = 0f; // 空中時間のリセット
+            }
+            airTime += Time.deltaTime;
+        }
+        else if (isInAir)
+        {
+            if (airTime >= 0.5f)
+            {
+                sm.PlaySound("landing");
+            }
+            isInAir = false;
+        }
 
         // 地面にいる場合、垂直速度をリセット
         if (IsGrounded() && velocity.y < 0)
@@ -615,7 +636,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
                     if (Input.GetMouseButton(1))
                     {
-                        ratio /= 1.25f;
+                        ratio /= 2f;
                     }
                     if (z != 0 || x != 0)
                     {
@@ -631,7 +652,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
                             }
                             if (approach >= 0)
                             {
-                                ratio /= 2f;
+                                ratio /= 1.25f;
                             }
                         }
 
@@ -924,6 +945,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
         //rb.AddForce(new Vector3(0, jumpPower * 2, 0));
         sm.PlaySound("phantom");
         ability.Spend(2, 1);
+
+        
         }
 
     }
@@ -961,9 +984,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 position = Camera.main.transform.position;
+        Vector3 direction = Camera.main.transform.forward;
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100, AbilityHitMask)) {
+        if (Physics.Raycast(position, direction, out hit, 100, AbilityHitMask)) {
             PhotonNetwork.Instantiate("WhiteSmoke", hit.point, Quaternion.identity);
         }
 
@@ -976,9 +1000,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 position = Camera.main.transform.position;
+        Vector3 direction = Camera.main.transform.forward;
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100, AbilityHitMask))
+        if (Physics.Raycast(position, direction, out hit, 100, AbilityHitMask))
         {
             PhotonNetwork.Instantiate("KatarinaSmoke", hit.point, Quaternion.identity);
         }
@@ -992,10 +1017,11 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 position = Camera.main.transform.position;
+        Vector3 direction = Camera.main.transform.forward;
         RaycastHit hit;
      
-        if (Physics.Raycast(ray, out hit, 8, AbilityHitMask))
+        if (Physics.Raycast(position, direction, out hit, 8, AbilityHitMask))
         {
 
 
@@ -1050,21 +1076,6 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
 
 
-    public void RireDuDiable() {
-        if (photonView == null || !photonView.IsMine)
-        {
-            return;
-        }
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100, AbilityHitMask))
-        {
-            PhotonNetwork.Instantiate("Diable", hit.point, Quaternion.identity);
-        }
-     
-
-    }
     public void Coward()
     {
         abilitycheck.SetActive(false);
@@ -1072,12 +1083,13 @@ public class CameraController : MonoBehaviourPunCallbacks {
         {
             return;
         }
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 position = Camera.main.transform.position;
+        Vector3 direction = Camera.main.transform.forward;
         RaycastHit hit;
         Quaternion rota = transform.localRotation;
         rota *= Quaternion.Euler(0, 180, 0);
 
-        if (Physics.Raycast(ray, out hit, cowardRange, AbilityHitMask))
+        if (Physics.Raycast(position, direction, out hit, cowardRange, AbilityHitMask))
         {
             abilitycheck.SetActive(true);
             abilitycheck.transform.position = hit.point;
@@ -1125,10 +1137,11 @@ public class CameraController : MonoBehaviourPunCallbacks {
             {
 
 
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Vector3 position = Camera.main.transform.position;
+                Vector3 direction = Camera.main.transform.forward;
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, 5, AbilityHitMask))
+                if (Physics.Raycast(position, direction, out hit, 5, AbilityHitMask))
                 {
 
 
@@ -1277,10 +1290,10 @@ public class CameraController : MonoBehaviourPunCallbacks {
           
             // グレネードに力を加える
             // 垂直方向のジャンプ速度
-            velocity.y = Mathf.Sqrt(jumpPower * -3f * gravity);
+            velocity.y = Mathf.Sqrt(jumpPower * -1.5f * gravity);
             // 水平方向のブースト速度（前方向に移動）
             Vector3 boostDirection = transform.forward.normalized; // 前方向
-            velocity += boostDirection * 10f;
+            velocity += boostDirection * 9f;
             StartCoroutine(Motionless(false, false, true, 1f));
             IsJump = false;
             ability.Spend(1, 1);

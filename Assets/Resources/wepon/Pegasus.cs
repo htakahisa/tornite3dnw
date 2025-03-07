@@ -8,13 +8,13 @@ public class Pegasus {
     float rate = 0.06f;
     int damage = 20;
     int headdamage = 45;
-    int magazine = 20;
+    int magazine = 15;
     bool auto = true;
     float reloadtime = 1f;
     bool zoomable = true;
     float zoomratio = 70;
     bool accuracy = true;
-    float YRecoil = 0.6f;
+    float YRecoil = 0.5f;
     float XRecoil = 0.8f;
     int Burst = 5;
     float Punch = 0.5f;

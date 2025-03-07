@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8137085456206649609}
   - component: {fileID: 6100740400772542467}
   - component: {fileID: 6049082649857346168}
+  - component: {fileID: 4105840772383400340}
   m_Layer: 18
   m_Name: Stray
   m_TagString: Destructible
@@ -153,3 +154,15 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &4105840772383400340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8195206464509369683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe37180807eb794bba084cbff7e9581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

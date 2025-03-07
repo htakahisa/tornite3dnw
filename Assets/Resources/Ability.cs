@@ -18,6 +18,10 @@ public class Ability : MonoBehaviourPun {
 
     private KeyCode aquaCloseMap;
 
+    public bool HasUsed = false;
+
+    
+
     // Start is called before the first frame update
     void Start() {
 
@@ -35,14 +39,6 @@ public class Ability : MonoBehaviourPun {
                 return;
             }
 
-            if (PhaseManager.pm.GetPhase().Equals("Buy"))
-            {
-                if (Input.GetKeyDown(KeyCode.Q) && (number2 >= 1 || Able2 == "Aqua"))
-                {
-                    Use(Able2);
-                }
-                return;
-            }
         }
 
         if (cc == null)
@@ -91,20 +87,26 @@ public class Ability : MonoBehaviourPun {
 
     public void Use(string able) {
 
-
-
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            HasUsed = true;
+        }
 
         rc = RayController.rc;
         cc = gameObject.GetComponent<CameraController>();
+
         if (able.Equals("Phantom")) {
             cc.UpDraft();
             
         }
+        if (PhaseManager.pm.GetPhase() != "Buy")
+        {
+            if (able.Equals("Flash"))
+            {
+                cc.Flash();
+                Spend(1, 1);
 
-        if (able.Equals("Flash")) {
-            cc.Flash();
-            Spend(1, 1);
-
+            }
         }
         if (able.Equals("Stray"))
         {
@@ -112,15 +114,22 @@ public class Ability : MonoBehaviourPun {
             
 
         }
-        if (able.Equals("Whiteout")) {
-            cc.Smoke();
-            Spend(2, 1);
-
-        }
-        if (able.Equals("Cat"))
+        if (PhaseManager.pm.GetPhase() != "Buy")
         {
-            cc.Cat();
-           
+            if (able.Equals("Whiteout"))
+            {
+                cc.Smoke();
+                Spend(2, 1);
+
+            }
+        }
+        if (PhaseManager.pm.GetPhase() != "Buy")
+        {
+            if (able.Equals("Cat"))
+            {
+                cc.Cat();
+
+            }
         }
         if (able.Equals("BlueLight")) {
             cc.BlueLight();
@@ -128,48 +137,67 @@ public class Ability : MonoBehaviourPun {
 
         }
         if (able.Equals("Diable")) {
-            cc.RireDuDiable();
-            Spend(2, 1);
+
+            rc.Diable();
+            RayController.rc.ResetZoom();
+
 
         }
+
         if (able.Equals("Coward")) {
             cc.Coward();
             
 
         }
-        if (able.Equals("Kamaitachi"))
+        if (PhaseManager.pm.GetPhase() != "Buy")
         {
-            cc.Kamaitachi();
+            if (able.Equals("Kamaitachi"))
+            {
+                cc.Kamaitachi();
 
 
+            }
         }
         if (able.Equals("Yor")) {
+
             rc.Yor();
             Spend(1,1);
             RayController.rc.ResetZoom();
           
         }
-        if (able.Equals("Stradarts")) {
-            cc.StraDarts();
-            Spend(2, 1);
+        if (PhaseManager.pm.GetPhase() != "Buy")
+        {
+            if (able.Equals("Stradarts"))
+            {
+                cc.StraDarts();
+                Spend(2, 1);
 
+            }
         }
         if (able.Equals("BlackBell")) {
+
             rc.BlackBell();
             Spend(1, 1);
             RayController.rc.ResetZoom();
 
         }
-        if (able.Equals("Wolf")) {
-            cc.Wolf();
-            Spend(1, 1);
+        if (PhaseManager.pm.GetPhase() != "Buy")
+        {
+            if (able.Equals("Wolf"))
+            {
+                cc.Wolf();
+                Spend(1, 1);
 
+            }
         }
-    
-        if (able.Equals("Eagle")) {
-            cc.Eagle();
-            Spend(2, 1);
+        if (PhaseManager.pm.GetPhase() != "Buy")
+        {
+            if (able.Equals("Eagle"))
+            {
+                cc.Eagle();
+                Spend(2, 1);
 
+            }
         }
         if (able.Equals("Boostio")) {
             cc.Boostio();
@@ -185,17 +213,23 @@ public class Ability : MonoBehaviourPun {
             cc.C4();
 
         }
-        if (able.Equals("Arte"))
+        if (PhaseManager.pm.GetPhase() != "Buy")
         {
-            cc.Arte();
-            Spend(1, 1);
+            if (able.Equals("Arte"))
+            {
+                cc.Arte();
+                Spend(1, 1);
 
+            }
         }
-        if (able.Equals("Molesta"))
+        if (PhaseManager.pm.GetPhase() != "Buy")
         {
-            cc.Molesta();
-            Spend(1, 1);
+            if (able.Equals("Molesta"))
+            {
+                cc.Molesta();
+                Spend(1, 1);
 
+            }
         }
 
 

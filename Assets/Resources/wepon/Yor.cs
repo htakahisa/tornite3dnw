@@ -10,13 +10,13 @@ public class Yor {
     int headdamage = 179;
     int magazine = 3;
     bool auto = false;
-    float reloadtime = 1.5f;
+    float reloadtime = 1f;
     bool zoomable = true;
     float zoomratio = 70;
     bool accuracy = true;
     float YRecoil = 5f;
     float RecoilDuration = 0.1f;
-    float PeekingSpeed = 0.04f;
+    float PeekingSpeed = 0.02f;
 
     void Start() {
 

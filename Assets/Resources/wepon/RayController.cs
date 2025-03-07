@@ -111,6 +111,8 @@ public class RayController : MonoBehaviourPun {
 
     private bool IsScoping = false;
 
+    private string nowKind = "knife";
+    private Ability ability;
 
     // Start is called before the first frame update
     void Start() {
@@ -157,11 +159,28 @@ public class RayController : MonoBehaviourPun {
         avatar = transform.parent.gameObject;
         sm = gameObject.GetComponentInParent<SoundManager>();
         camcon = avatar.GetComponent<CameraController>();
-       
+        ability = gameObject.GetComponentInParent<Ability>();
     }
 
     // Update is called once per frame
     void Update() {
+
+        bool hasdetect = false;
+
+        if (currentWeaponIndex == 13)
+        {
+            hasdetect = true;
+            nowKind = "knife";
+        }
+        if (currentWeaponIndex == 12 || currentWeaponIndex == 14 || currentWeaponIndex == 15)
+        {
+            hasdetect = true;
+            nowKind = "ability";
+        }
+        if(!hasdetect)
+        {
+            nowKind = "weapon";
+        }
 
         if (IsScoping)
         {
@@ -176,10 +195,7 @@ public class RayController : MonoBehaviourPun {
         }
 
         OnibiInterval -= Time.deltaTime;
-        if (MapManager.mapmanager != null && !HasGetLand)
-        {
-      
-        }
+       
 
         if (Input.GetKeyDown(KeyCode.R) && !UseWepon.Equals("")) {
             StartCoroutine(Reload());
@@ -211,33 +227,6 @@ public class RayController : MonoBehaviourPun {
             Knife();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (!CanShoot || camcon.Planting)
-            {
-                return;
-            }
-
-            if(UseAbilityWeapon == "")
-            {
-                return;
-            }
-            if (currentWeaponIndex != 13)
-            {
-                if (currentWeaponIndex == 11 || currentWeaponIndex == 12)
-                {
-                    SaveAbilityMagazine = Magazinesize;
-                }
-                else
-                {
-                    SaveMagazine = Magazinesize;
-                }
-            }
-            IsZooming = false;
-            IsScoping = false;
-            cam.fieldOfView = 80;
-            Invoke(UseAbilityWeapon, 0);
-        }
 
         if (Input.GetKeyDown(mainWeponKey) || Input.GetKeyDown(subWeponKey))
         {
@@ -264,6 +253,34 @@ public class RayController : MonoBehaviourPun {
             Debug.Log(UseWepon);
             cam.fieldOfView = 80;
             Invoke(UseWepon,0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (!CanShoot || camcon.Planting)
+            {
+                return;
+            }
+
+            if (UseAbilityWeapon == "")
+            {
+                return;
+            }
+            if (currentWeaponIndex != 13)
+            {
+                if (currentWeaponIndex == 11 || currentWeaponIndex == 12)
+                {
+                    SaveAbilityMagazine = Magazinesize;
+                }
+                else
+                {
+                    SaveMagazine = Magazinesize;
+                }
+            }
+            IsZooming = false;
+            IsScoping = false;
+            cam.fieldOfView = 80;
+            Invoke(UseAbilityWeapon, 0);
         }
 
 
@@ -294,7 +311,7 @@ public class RayController : MonoBehaviourPun {
 
         if ((Auto && HullAuto()) || (!Auto && SemiAuto())) {
 
-            if(currentWeaponIndex != 12 && currentWeaponIndex != 13 && currentWeaponIndex != 14)
+            if(nowKind == "weapon")
             {
                 Fire();
             }
@@ -319,6 +336,10 @@ public class RayController : MonoBehaviourPun {
         if (CanFireOnibi())
         {
             FireOnibi(CheckOnibi());
+        }
+        if (CanFireDiable())
+        {
+            FireDiable();
         }
         if (Input.GetMouseButtonDown(0))
         {
@@ -1002,7 +1023,7 @@ public class RayController : MonoBehaviourPun {
 
         if (PhaseManager.pm.GetPhase() == "Buy")
         {
-            Magazinesize = noel.GetMagazine();
+            Magazinesize = silver.GetMagazine();
         }
         if (PhaseManager.pm.GetPhase() == "Duel")
         {
@@ -1421,12 +1442,28 @@ public class RayController : MonoBehaviourPun {
             mzt.text = "Onibi";
         }
 
-        this.UseAbilityWeapon = "Onibi";
         HavingOnibi = true;
 
     }
 
+    public void Diable()
+    {
 
+        currentWeaponIndex = 15;
+        SwitchWeapon(currentWeaponIndex);
+
+        if (camcon.IsKamaitachi)
+        {
+            camcon.StopKamaitachi();
+        }
+
+        if (mzt != null)
+        {
+            mzt.text = "Diable";
+        }
+
+
+    }
 
     [PunRPC]
     void Duelistcount() {
@@ -1444,7 +1481,31 @@ public class RayController : MonoBehaviourPun {
         return currentWeaponIndex;
     }
 
+    private void FireDiable()
+    {
 
+        Vector3 position = transform.position + transform.forward * 26;
+        Quaternion diabledirection = transform.rotation;
+
+        if (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            diabledirection.x = 0;
+            diabledirection.z = 0;
+            PhaseCommand.pc.CommandDiable(position, diabledirection);
+
+        }
+        else
+        {
+            Quaternion deviationrotation = transform.rotation;
+
+            GameObject deviation = PhotonNetwork.Instantiate("Deviation", position, deviationrotation);            
+            StartCoroutine(deviation.GetComponent<Deviation>().CallDiable(position, deviationrotation));
+        }
+     
+        
+        ability.Spend(2, 1);
+
+    }
 
 
     public void shoot(GameObject enemy, string tag) {
@@ -1548,7 +1609,12 @@ public class RayController : MonoBehaviourPun {
         return Input.GetKeyUp(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked && currentWeaponIndex == 14 && HavingOnibi && camcon.kamaitachi >= 40 && OnibiInterval <= 0;
 
     }
+    private bool CanFireDiable()
+    {
 
+        return Input.GetKeyUp(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked && currentWeaponIndex == 15 && ability.number2 >= 1;
+
+    }
 
     private IEnumerator Burst()
     {

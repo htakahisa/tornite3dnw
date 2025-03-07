@@ -17,7 +17,7 @@ public class Noel : ScriptableObject
     bool accuracy = true;
     float YRecoil = 0.4f;
     float XRecoil = 0.3f;
-    float PeekingSpeed = 0.06f;
+    float PeekingSpeed = 0.03f;
     float RecoilDuration = 0.15f;
 
     void Start() {

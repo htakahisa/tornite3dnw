@@ -5,16 +5,16 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class Duelist{
 
-    float rate = 1;
+    float rate = 1.5f;
     int damage = 300;
     int headdamage = 400;
     int magazine = 2;
     bool auto = false;
     float reloadtime = 3f;
     bool zoomable = true;
-    float zoomratio = 13;
+    float zoomratio = 20;
     bool accuracy = false;
-    float PeekingSpeed = 0.2f;
+    float PeekingSpeed = 0.07f;
     float YRecoil = 13;
     float RecoilDuration = 0.08f;
     void Start() {

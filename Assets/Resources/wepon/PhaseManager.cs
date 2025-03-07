@@ -39,7 +39,13 @@ public class PhaseManager : MonoBehaviourPun {
 
     // Update is called once per frame
     void Update() {
- 
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            EndBuyPhase();
+        }
+#endif
+
         if (phase == "Buy" || phase == "Duel")
         {
            
@@ -64,7 +70,7 @@ public class PhaseManager : MonoBehaviourPun {
     }
 
 
-        public void BuyPhase() {
+    public void BuyPhase() {
 
         phase = "Buy";
         buypanel.SetActive(true);

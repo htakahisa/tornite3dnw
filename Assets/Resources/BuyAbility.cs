@@ -18,6 +18,8 @@ public class BuyAbility : MonoBehaviour
     [SerializeField]
     private string Discription;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,12 @@ public class BuyAbility : MonoBehaviour
 
     private void OnMouseOver()
     {
+
+        if (GetComponentInParent<Ability>().HasUsed)
+        {
+            return;
+        }
+
         DiscriptionTextManager.dtm.TextChange(Discription);
 
         if (Input.GetMouseButtonDown(0))

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 public class BlackBell {
 
-    float rate = 2f;
+    float rate = 1.5f;
     int damage = 100;
     int headdamage = 150;
     int magazine = 50000;

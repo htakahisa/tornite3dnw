@@ -29,6 +29,11 @@ public class PhaseCommand : MonoBehaviourPun
     {
         StartCoroutine(InstantiateBlueLight(position));
     }
+
+    public void CommandDiable(Vector3 position, Quaternion rotation)
+    {
+        StartCoroutine(InstantiateDiable(position, rotation));
+    }
     public void CommandC4(Vector3 position)
     {
         StartCoroutine(InstantiateC4(position));
@@ -66,5 +71,17 @@ public class PhaseCommand : MonoBehaviourPun
         }
 
         PhotonNetwork.Instantiate("C4", position, Quaternion.identity);
+    }
+
+    private IEnumerator InstantiateDiable(Vector3 position, Quaternion rotation)
+    {
+        // "Buy" フェーズである間は待機
+        while (PhaseManager.pm.GetPhase() == "Buy")
+        {
+            Debug.Log("WaitForBattle");
+            yield return null; // 次のフレームまで待つ
+        }
+
+        PhotonNetwork.Instantiate("Diable", position, rotation);
     }
 }

@@ -38,18 +38,19 @@ public class TimerInRound : MonoBehaviourPun
     void Update()
     {
 
+        if (PhaseManager.pm.GetPhase().Equals("Duel"))
+        {
+            return;
+        }
+
+
         if (PhaseManager.pm.GetPhase().Equals("Buy"))
         {
             missionFailureTime = PhotonNetwork.Time + TimerBeforePlant;
             return;
         }
 
-        if (PhaseManager.pm.GetPhase().Equals("Duel"))
-        {
-            missionFailureTime = PhotonNetwork.Time + TimerBeforePlant;
-            return;
-        }
-
+    
 
         if (HasPlanting)
         {

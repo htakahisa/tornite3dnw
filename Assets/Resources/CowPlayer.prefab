@@ -891,7 +891,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a6e8ccf5d264b424ebfd55dde95f2535, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1732,6 +1732,7 @@ MonoBehaviour:
   number1: 0
   number2: 0
   CanAbility: 1
+  HasUsed: 0
 --- !u!114 &2009880871071656543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1820,7 +1821,8 @@ MonoBehaviour:
   cat3: {fileID: 8300000, guid: d179f2c7fddffc84caaa6dbde3b54a41, type: 3}
   cat4: {fileID: 8300000, guid: 83be1ce8a6efa4f42bed71249581fa72, type: 3}
   collect: {fileID: 8300000, guid: 7f95f14beec6da647a8abd078b91addd, type: 3}
-  blackBell: {fileID: 0}
+  blackBell: {fileID: 8300000, guid: f55dbd398bbc13642b71140bea2f7d89, type: 3}
+  landing: {fileID: 8300000, guid: 67335e7a8543e724c80b4b05655c2b34, type: 3}
 --- !u!82 &4909231365802194501
 AudioSource:
   m_ObjectHideFlags: 0
