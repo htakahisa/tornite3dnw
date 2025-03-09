@@ -15,12 +15,10 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks
 
     private Ability able;
 
-
-    GameObject rmo;
-    RoundManager rmc;
-
     [SerializeField]
     private BuyPanelManager bpm;
+
+    private CameraController cc;
 
     // Start is called before the first frame update
     void Awake()
@@ -33,7 +31,10 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks
     void Update()
     {
 
-
+        if(GetComponentInParent<CameraController>() != null && cc == null)
+        {
+            cc = GetComponentInParent<CameraController>();
+        }
 
 
 
@@ -45,9 +46,12 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks
     {
         able = Camera.main.GetComponentInParent<Ability>();
 
+        bool HadDecide = false;
+
         if (Ability == "cancel")
         {
-            
+            HadDecide = true;
+
             if (kind == 1)
             {
                 Return(able1cost);
@@ -73,13 +77,23 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks
             
             nowability = "";
         }
+        if (Ability == "Nakia")
+        {
+            if (CanBuy(cost) && able.Limit(limits, kind, Ability))
+            {
+                Pay(cost);
+                able.Buy(Ability, kind);
+                nowability = Ability;
+                cc.SlingPower += 10;
+            }
+        }
         else
         {
 
 
             if (CanBuy(cost) && able.Limit(limits, kind, Ability))
             {
-                
+
                 Pay(cost);
                 able.Buy(Ability, kind);
                 if (kind == 1)
@@ -90,7 +104,7 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks
                 {
                     able2cost += cost;
                 }
-                    nowability = Ability;
+                nowability = Ability;
             }
         }
                 bpm.AdjustSpriteOpacity(nowability);
@@ -102,7 +116,7 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks
     {
 
 
-        return (RoundManager.rm.IsCanBuy(cost, PhotonNetwork.LocalPlayer.ActorNumber));
+        return RoundManager.rm.IsCanBuy(cost, PhotonNetwork.LocalPlayer.ActorNumber);
 
 
     }
@@ -112,9 +126,6 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks
 
     public void Pay(int cost)
     {
-
-
-
         RoundManager.rm.ChangeCoin(cost * -1, PhotonNetwork.LocalPlayer.ActorNumber);
         RoundManager.rm.AddOutLoad(cost, PhotonNetwork.LocalPlayer.ActorNumber);
     }

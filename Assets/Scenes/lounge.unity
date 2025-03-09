@@ -603,6 +603,7 @@ MonoBehaviour:
   kamaitachi: 20
   boxSize: {x: 0.5, y: 0.1, z: 0.5}
   IsExercise: 1
+  SlingPower: 0
 --- !u!1 &442261872
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,9 +6,9 @@ using Photon.Pun;
 
 public class CameraController : MonoBehaviourPunCallbacks {
     float x, z;
-    float speed = 1.9f;
+    float speed = 2.2f;
 
-    float OriginalSpeed = 1.9f;
+    float OriginalSpeed = 2.2f;
 
     private float stepTimer = 0f;
     private float wallDetectionDistance = 0.27f;
@@ -116,6 +116,8 @@ public class CameraController : MonoBehaviourPunCallbacks {
     private float airTime = 0f;
     private bool isInAir = false;
 
+    public int SlingPower = 0;
+
     // Start is called before the first frame update
     void Start() {
 
@@ -187,7 +189,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         {
             if (rc.GetWeaponNumber() == 13)
             {
-                weaponspeed = 1.3f;
+                weaponspeed = 1.2f;
             }
             else
             {
@@ -195,11 +197,18 @@ public class CameraController : MonoBehaviourPunCallbacks {
             }
         }
 
-
+        if (ability != null)
+        {
+            if (ability.GetAbility(1) == "Nakia")
+            {
+                Debug.Log(SlingPower);
+                AbilityMeter.abilitymeter.SetValue(SlingPower);
+            }
+        }
 
 
 #if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.L))
+            if (Input.GetKeyDown(KeyCode.L))
         {
             ability.number2++;
             ability.number1++;
@@ -968,17 +977,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
         PhotonNetwork.Instantiate("Molesta", spawnPosition, Quaternion.LookRotation(spawnDirection));
     }
 
-    public void Arte()
-    {
-        if (photonView == null || !photonView.IsMine)
-        {
-            return;
-        }
-        Vector3 spawnDirection = Camera.main.transform.forward;
-        Vector3 spawnPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.2f;
-        PhotonNetwork.Instantiate("Arte", spawnPosition, Quaternion.LookRotation(spawnDirection));
 
-    }
     public void Smoke() {
         if (photonView == null || !photonView.IsMine) {
             return;

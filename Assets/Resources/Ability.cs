@@ -217,11 +217,17 @@ public class Ability : MonoBehaviourPun {
         {
             if (able.Equals("Arte"))
             {
-                cc.Arte();
-                Spend(1, 1);
-
+                rc.Arte();
+                RayController.rc.ResetZoom();
             }
         }
+       
+        if (able.Equals("Nakia"))
+        {
+            rc.Nakia();
+            RayController.rc.ResetZoom();
+        }
+        
         if (PhaseManager.pm.GetPhase() != "Buy")
         {
             if (able.Equals("Molesta"))

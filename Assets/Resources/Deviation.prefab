@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 7097553149944724087}
   - component: {fileID: -4550801015147978644}
   - component: {fileID: 7740426219264017170}
+  - component: {fileID: -1996542787341845368}
   - component: {fileID: -7943385703999268376}
+  - component: {fileID: 8703532222990706336}
   m_Layer: 13
   m_Name: Deviation
   m_TagString: Untagged
@@ -125,6 +127,22 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!54 &-1996542787341845368
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4364600296827227638}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &-7943385703999268376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,3 +155,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c60f24170cf8fee41a29d7f134bf6cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &8703532222990706336
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4364600296827227638}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300032, guid: 1ec55baed88ac07429a52bee4c519015, type: 3}

@@ -16,7 +16,7 @@ public class Rapetter
     float zoomratio = 45;
     bool accuracy = false;
     float YRecoil = 0.5f;
-    float XRecoil = 0.9f;
+    float XRecoil = 1.7f;
     float PeekingSpeed = 0.4f;
     float RecoilDuration = 0.25f;
 

@@ -230,8 +230,31 @@ public class AIManager : MonoBehaviour
         }
             finalDirection.y = 0;
 
-        // 最終的な進行方向が十分であれば、回転と移動を行う
-        if (finalDirection.magnitude > 0.1f)
+        Vector3 myleft = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
+        Vector3 myright = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
+
+        RaycastHit hit;
+
+        Physics.Raycast(myleft, ToPositionVector(myleft, target.position), out hit, 100, HitMask);
+        if (hit.transform != null)
+        {
+            if (hit.transform.tag != "MapObject")
+            {
+                currentState = AIState.Avoid;
+            }
+        }
+
+        Physics.Raycast(myright, ToPositionVector(myright, target.position), out hit, 100, HitMask);
+        if (hit.transform != null)
+        {
+            if (hit.transform.tag != "MapObject")
+            {
+                currentState = AIState.Avoid;
+            }
+        }
+
+            // 最終的な進行方向が十分であれば、回転と移動を行う
+            if (finalDirection.magnitude > 0.1f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(finalDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
@@ -248,7 +271,7 @@ public class AIManager : MonoBehaviour
                 
         }
 
-        RaycastHit hit;
+        
 
         Vector3 Target = new Vector3(target.position.x, target.position.y + 1.3f, target.position.z);
 
@@ -273,6 +296,14 @@ public class AIManager : MonoBehaviour
 
 
     }
+
+    private Vector3 ToPositionVector(Vector3 client, Vector3 target)
+    {
+        return client - target;
+
+    }
+
+
 
     public void Avoid()
     {
@@ -460,18 +491,8 @@ public class AIManager : MonoBehaviour
         Physics.Raycast(point.position, point.forward, out hit, 200, HitMask);
         if (hit.collider != null)
         {
-            if (hit.collider.gameObject.tag == "Body" || hit.collider.gameObject.tag == "Head")
-            {
-                if (Random.Range(0, 2) == 0)
-                {
-                    currentState = AIState.Attack;
-                }
-                else 
-                {
-                    currentState = AIState.Avoid;
-                }
-            }
-                Physics.Raycast(point.position, direction, out hit, 200, HitMask);
+            currentState = AIState.Attack;
+            Physics.Raycast(point.position, direction, out hit, 200, HitMask);
             if (hit.collider != null)
             {
                 if (hit.collider.gameObject.tag != "Body" && hit.collider.gameObject.tag != "Head")
@@ -579,10 +600,7 @@ public class AIManager : MonoBehaviour
                 choosestate = AIState.Chase;
             }
         }
-        if(choosestate == AIState.Attack)
-        {
-            choosestate = AIState.Avoid;
-        }
+
 
         currentState = choosestate;
 

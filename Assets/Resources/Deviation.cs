@@ -34,6 +34,7 @@ public class Deviation : MonoBehaviour
         }
 
         PhotonView targetPhotonView = other.gameObject.GetComponentInParent<PhotonView>();
+        Debug.Log(targetPhotonView);
 
         if (targetPhotonView == null || !targetPhotonView.IsMine)
         {

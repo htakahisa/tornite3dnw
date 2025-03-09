@@ -171,8 +171,9 @@ public class RayController : MonoBehaviourPun {
         {
             hasdetect = true;
             nowKind = "knife";
+            DestroyAbilityCheck();
         }
-        if (currentWeaponIndex == 12 || currentWeaponIndex == 14 || currentWeaponIndex == 15)
+        if (currentWeaponIndex == 12 || currentWeaponIndex == 14 || currentWeaponIndex == 15 || currentWeaponIndex == 16 || currentWeaponIndex == 17)
         {
             hasdetect = true;
             nowKind = "ability";
@@ -180,6 +181,7 @@ public class RayController : MonoBehaviourPun {
         if(!hasdetect)
         {
             nowKind = "weapon";
+            DestroyAbilityCheck();
         }
 
         if (IsScoping)
@@ -330,16 +332,23 @@ public class RayController : MonoBehaviourPun {
         
         if (CanCheckOnibi())
         {
-            CheckOnibi();
-         
+            CheckOnibi();         
         }
         if (CanFireOnibi())
         {
             FireOnibi(CheckOnibi());
         }
+        if (CanCheckDiable())
+        {
+            CheckDiable();
+        }
         if (CanFireDiable())
         {
             FireDiable();
+        }
+        if (CanFireArte())
+        {
+            FireArte();
         }
         if (Input.GetMouseButtonDown(0))
         {
@@ -824,15 +833,23 @@ public class RayController : MonoBehaviourPun {
 
     public void DestroyAbilityCheck()
     {
-        if(AbilityCheck == null)
+        GetComponentInParent<LineRenderer>().enabled = false; // èâä˙èÛë‘Ç≈îÒï\é¶
+        if (AbilityCheck == null)
         {
             return;
         }
-        Destroy(AbilityCheck);
+        if (AbilityCheck.GetComponent<PhotonView>() == null)
+        {
+            Destroy(AbilityCheck);
+        }
+        else
+        {
+            PhotonNetwork.Destroy(AbilityCheck);
+        }
     }
 
 
-    public Vector3 CheckOnibi()
+        public Vector3 CheckOnibi()
     {
         DestroyAbilityCheck();
         RaycastHit hit;
@@ -859,6 +876,7 @@ public class RayController : MonoBehaviourPun {
 
     }
 
+
     public void FireOnibi(Vector3 spawnPosition)
     {
         OnibiInterval = 1;
@@ -869,6 +887,18 @@ public class RayController : MonoBehaviourPun {
         camcon.kamaitachi -= 40;
         DestroyAbilityCheck();
     }
+
+
+
+    public void FireArte()
+    {
+        ability.Spend(1,1);
+        Vector3 spawnDirection = transform.forward;
+        Vector3 spawnPosition = transform.position + transform.forward * 1.2f;
+        PhotonNetwork.Instantiate("Arte", spawnPosition, Quaternion.LookRotation(spawnDirection));
+
+    }
+
 
     public void Classic() {
 
@@ -1465,6 +1495,44 @@ public class RayController : MonoBehaviourPun {
 
     }
 
+    public void Arte()
+    {
+
+        currentWeaponIndex = 16;
+        SwitchWeapon(currentWeaponIndex);
+
+        if (camcon.IsKamaitachi)
+        {
+            camcon.StopKamaitachi();
+        }
+
+        if (mzt != null)
+        {
+            mzt.text = "Arte";
+        }
+
+
+    }
+
+    public void Nakia()
+    {
+
+        currentWeaponIndex = 17;
+        SwitchWeapon(currentWeaponIndex);
+
+        if (camcon.IsKamaitachi)
+        {
+            camcon.StopKamaitachi();
+        }
+
+        if (mzt != null)
+        {
+            mzt.text = "Nakia";
+        }
+
+
+    }
+
     [PunRPC]
     void Duelistcount() {
 
@@ -1480,10 +1548,17 @@ public class RayController : MonoBehaviourPun {
     {
         return currentWeaponIndex;
     }
+    public void CheckDiable()
+    {
+        DestroyAbilityCheck();
+        Vector3 position = transform.position + transform.forward * 26;
+        Quaternion diabledirection = transform.rotation;
+        AbilityCheck = PhotonNetwork.Instantiate("DeviationCheck", position, diabledirection);
+    }
 
     private void FireDiable()
     {
-
+        DestroyAbilityCheck();
         Vector3 position = transform.position + transform.forward * 26;
         Quaternion diabledirection = transform.rotation;
 
@@ -1613,6 +1688,20 @@ public class RayController : MonoBehaviourPun {
     {
 
         return Input.GetKeyUp(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked && currentWeaponIndex == 15 && ability.number2 >= 1;
+
+    }
+
+    private bool CanCheckDiable()
+    {
+
+        return Input.GetKey(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked && currentWeaponIndex == 15 && ability.number2 >= 1;
+
+    }
+
+    private bool CanFireArte()
+    {
+
+        return Input.GetKeyUp(KeyCode.Mouse0) && Cursor.lockState == CursorLockMode.Locked && currentWeaponIndex == 16 && ability.number1 >= 1;
 
     }
 

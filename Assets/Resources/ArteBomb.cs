@@ -29,7 +29,7 @@ public class ArteBomb : MonoBehaviourPun
             materialmanager = MaterialManager.mm.gameObject;
         }
         // マテリアルのセットアップ (カスタムダブルサイドシェーダーを使用)
-        sphereMaterial = new Material(materialmanager.GetComponent<MeshRenderer>().materials[1]);
+        sphereMaterial = new Material(materialmanager.GetComponent<MeshRenderer>().materials[0]);
         
     }
     private void OnCollisionEnter(Collision collision)
