@@ -230,10 +230,12 @@ public class AIManager : MonoBehaviour
         }
             finalDirection.y = 0;
 
-        Vector3 myleft = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
-        Vector3 myright = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
+        
 
         RaycastHit hit;
+
+        Vector3 myleft = new Vector3(transform.position.x - 2, transform.position.y, transform.position.z);
+        Vector3 myright = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z);
 
         Physics.Raycast(myleft, ToPositionVector(myleft, target.position), out hit, 100, HitMask);
         if (hit.transform != null)
@@ -254,12 +256,11 @@ public class AIManager : MonoBehaviour
         }
 
             // 最終的な進行方向が十分であれば、回転と移動を行う
-            if (finalDirection.magnitude > 0.1f)
+        if (finalDirection.magnitude > 0.1f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(finalDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-            Vector3 walkdirection = finalDirection;
             
 
             cc.AIWalk(transform.forward);
@@ -275,23 +276,7 @@ public class AIManager : MonoBehaviour
 
         Vector3 Target = new Vector3(target.position.x, target.position.y + 1.3f, target.position.z);
 
-        Vector3 TargetDirection = (Target - point.position);
 
-        if (Physics.Raycast(point.position, TargetDirection, out hit, 100, HitMask))
-        {
-            
-            if(hit.collider != null)
-            {
-
-                if(hit.collider.gameObject.tag == "Body" || hit.collider.gameObject.tag == "Head")
-                {
-                    currentState = AIState.Aim;
-                }
-            }    
-              
-            
-            
-        }
 
 
 
@@ -322,7 +307,7 @@ public class AIManager : MonoBehaviour
             moveDirection = AvoidObstacle();
         }
 
-        Vector3 Target = new Vector3(target.position.x, target.position.y + 1.3f, target.position.z);
+        Vector3 Target = new Vector3(target.position.x, target.position.y + 1.4f, target.position.z);
 
         Vector3 TargetDirection = (Target - point.position);
 
@@ -378,13 +363,9 @@ public class AIManager : MonoBehaviour
 
     private float GetRandomDelay()
     {
-        return Random.Range(0.2f,1.0f);
+        return Random.Range(0.3f, 1.0f);
     }
 
-    private void DelayingWalk()
-    {
-      
-    }
 
 
     public static Vector3 GetBestDirection(Transform self, Transform target, int number)
@@ -483,7 +464,7 @@ public class AIManager : MonoBehaviour
 
         // ベクトル間の角度のズレを計算
         float angleDifference = Vector3.Angle(currentDirection, direction);
-        float duration = angleDifference * 0.01f;
+        float duration = angleDifference * 0.0001f;
 
         StartCoroutine(RotateSmoothly(direction, duration));
 
@@ -510,7 +491,7 @@ public class AIManager : MonoBehaviour
     {
         if (targetDirection == Vector3.zero) yield break; // ゼロ方向なら何もしない
 
-        float delayflick = Random.Range(0.09f,0.15f);
+        float delayflick = Random.Range(0.1f,0.15f);
 
         Quaternion startRotation = transform.rotation;
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
@@ -522,7 +503,7 @@ public class AIManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        Vector3 targethead = new Vector3(target.position.x, target.position.y + Random.Range(0.5f, 2.0f), target.position.z);
+        Vector3 targethead = new Vector3(target.position.x, target.position.y + Random.Range(0.5f, 3.0f), target.position.z);
         transform.rotation = targetRotation; // 最終的にピッタリ目標方向を向く
         yield return new WaitForSeconds(delayflick);
         point.transform.LookAt(targethead);

@@ -16,6 +16,7 @@ public class BlackBell {
     bool accuracy = true;
     float PeekingSpeed = 0.08f;
     float RecoilDuration = 0.08f;
+    float punch = 1.5f;
 
     void Start() {
 
@@ -25,6 +26,11 @@ public class BlackBell {
     void Update() {
 
 
+    }
+
+    public float GetPunch()
+    {
+        return punch;
     }
 
     public float GetRate() {

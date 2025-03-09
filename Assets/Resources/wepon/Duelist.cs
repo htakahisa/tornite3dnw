@@ -16,6 +16,7 @@ public class Duelist{
     bool accuracy = false;
     float PeekingSpeed = 0.07f;
     float YRecoil = 13;
+    float punch = 4f;
     float RecoilDuration = 0.08f;
     void Start() {
 
@@ -25,6 +26,11 @@ public class Duelist{
     void Update() {
 
 
+    }
+
+    public float GetPunch()
+    {
+        return punch;
     }
 
     public float GetRate() {

@@ -24,7 +24,7 @@ public class Stradarts : MonoBehaviourPun
             launchDirection = transform.forward;
 
             // マテリアルのセットアップ (カスタムダブルサイドシェーダーを使用)
-            sphereMaterial = new Material(materialmanager.GetComponent<MeshRenderer>().materials[0]);
+            sphereMaterial = new Material(materialmanager.GetComponent<MeshRenderer>().materials[1]);
 
            
         

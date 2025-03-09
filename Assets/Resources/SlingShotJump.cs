@@ -4,8 +4,8 @@ public class SlingShotJump : MonoBehaviour
 {
     private Transform cameraTransform; // カメラのTransform
     public LineRenderer lineRenderer; // スリングのライン
-    public float maxPullForce = 20f;  // 最大チャージ量
-    public float chargeSpeed = 15f;   // チャージ速度
+    public float maxPullForce = 30f;  // 最大チャージ量
+    public float chargeSpeed = 20f;   // チャージ速度
     private float gravity = 16f;      // 重力
     public LayerMask hitLayer;        // 地面や壁のレイヤー
 
@@ -17,11 +17,18 @@ public class SlingShotJump : MonoBehaviour
     private bool isLaunching = false; // 発射中かどうか
     private Vector3 launchVelocity;   // 発射時の速度
 
+    private CameraController cc;
+    private RayController rc;
+
+    public float SlingRatio = 0.5f;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
         lineRenderer.enabled = false; // 初期状態で非表示
         cameraTransform = Camera.main.transform;
+        cc = GetComponent<CameraController>();
+        rc = GetComponent<RayController>();
     }
 
     void Update()
@@ -31,9 +38,14 @@ public class SlingShotJump : MonoBehaviour
             ApplySlingShotMovement();
         }
 
-        if (cameraTransform.GetComponent<RayController>().GetWeaponNumber() == 17)
+        if (cameraTransform.GetComponent<RayController>().GetWeaponNumber() == 17 && cc.IsGrounded())
         {
             HandleInput();
+        }
+
+        if (!cc.IsGrounded())
+        {
+            rc.DestroyAbilityCheck();
         }
 
         UpdateSlingLine(); // スリングラインを更新
@@ -55,7 +67,7 @@ public class SlingShotJump : MonoBehaviour
 
         if (isCharging) // チャージ中の処理
         {
-            if (cameraTransform.GetComponentInParent<CameraController>().SlingPower >= currentCharge)
+            if (cc.SlingPower >= currentCharge)
             {
                 currentCharge += chargeSpeed * Time.deltaTime;
                 currentCharge = Mathf.Clamp(currentCharge, 0, maxPullForce);
@@ -79,7 +91,7 @@ public class SlingShotJump : MonoBehaviour
 
     void Launch()
     {
-        cameraTransform.GetComponentInParent<CameraController>().SlingPower -= (int)currentCharge;
+        GetComponent<Ability>().Spend(1, (int)currentCharge / 10);
         Vector3 launchDirection = (slingStartPoint + slingEndPoint) / 2 - transform.position;
         launchDirection.Normalize();
 
@@ -99,6 +111,8 @@ public class SlingShotJump : MonoBehaviour
 
         
         launchVelocity.y -= gravity * Time.deltaTime;
+        launchVelocity.x *= SlingRatio;
+        launchVelocity.z *= SlingRatio;
         controller.Move(launchVelocity * Time.deltaTime);
     }
 

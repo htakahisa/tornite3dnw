@@ -18,6 +18,7 @@ public class Noel : ScriptableObject
     float YRecoil = 0.4f;
     float XRecoil = 0.3f;
     float PeekingSpeed = 0.03f;
+    float punch = 2f;
     float RecoilDuration = 0.15f;
 
     void Start() {
@@ -28,6 +29,11 @@ public class Noel : ScriptableObject
     void Update() {
 
 
+    }
+
+    public float GetPunch()
+    {
+        return punch;
     }
 
     public float GetRate() {

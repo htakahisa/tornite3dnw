@@ -39,7 +39,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
     //変数の宣言(角度の制限用)
     float minX = -90f, maxX = 90f;
 
-    private bool IsJump = false;
+    public bool IsJump = false;
 
     private GameObject stray;
 
@@ -202,6 +202,12 @@ public class CameraController : MonoBehaviourPunCallbacks {
             if (ability.GetAbility(1) == "Nakia")
             {
                 Debug.Log(SlingPower);
+                SlingPower = ability.number1 * 10;
+                AbilityMeter.abilitymeter.SetValue(SlingPower);
+            }
+            else
+            {
+                SlingPower = 0;
                 AbilityMeter.abilitymeter.SetValue(SlingPower);
             }
         }
@@ -516,7 +522,6 @@ public class CameraController : MonoBehaviourPunCallbacks {
             isNearBottomBar = false;
         }
 
-        Debug.Log(airTime);
 
         if (!IsGrounded())
         {
@@ -913,16 +918,12 @@ public class CameraController : MonoBehaviourPunCallbacks {
             IsJump = true;
             WallKickAction();
             IsJump = false;
-        } else
-
+        }
+        else
         if(Input.GetKeyDown(KeyCode.Space) && IsGrounded() && !IsJump) {
             
            
             IsJump = true;
-
-            //velocity.y += jumpPower;
-
-            //rb.AddForce(new Vector3(0, jumpPower, 0));
 
             velocity.y = Mathf.Sqrt(jumpPower * -2f * gravity); // ジャンプの初速度
 
@@ -949,7 +950,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
             return;
         }
         if (IsGrounded()) { 
-        velocity.y = Mathf.Sqrt(jumpPower * -7f * gravity); // ジャンプの初速度
+        velocity.y = Mathf.Sqrt(jumpPower * -10f * gravity); // ジャンプの初速度
         //rb.velocity = new Vector3(0, 0, 0);  // 縦方向の速度リセット
         //rb.AddForce(new Vector3(0, jumpPower * 2, 0));
         sm.PlaySound("phantom");

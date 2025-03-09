@@ -1770,6 +1770,7 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 32768
+  IsJump: 0
   effectOffset: {x: 0, y: 1, z: 2}
   diable: {x: 0, y: 1, z: 2}
   IsKamaitachi: 0
@@ -1839,11 +1840,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: -6689839272753082248}
-  maxPullForce: 30
-  chargeSpeed: 20
+  maxPullForce: 50
+  chargeSpeed: 25
   hitLayer:
     serializedVersion: 2
     m_Bits: 32768
+  SlingRatio: 0.8
 --- !u!82 &4909231365802194501
 AudioSource:
   m_ObjectHideFlags: 0

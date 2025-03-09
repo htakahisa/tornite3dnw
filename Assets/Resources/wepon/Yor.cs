@@ -15,6 +15,7 @@ public class Yor {
     float zoomratio = 70;
     bool accuracy = true;
     float YRecoil = 5f;
+    float punch = 1.5f;
     float RecoilDuration = 0.1f;
     float PeekingSpeed = 0.02f;
 
@@ -26,6 +27,10 @@ public class Yor {
     void Update() {
 
 
+    }
+    public float GetPunch()
+    {
+        return punch;
     }
 
     public float GetRate() {

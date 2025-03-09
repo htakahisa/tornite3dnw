@@ -21,7 +21,7 @@ public class Stella : ScriptableObject
     float BurstingRate = 0.08f;
     float BurstRate = 0.23f;
     float PeekingSpeed = 0.04f;
-    float punch = 2f;
+    float punch = 1f;
     float RecoilDuration = 0.15f;
 
     void Start() {

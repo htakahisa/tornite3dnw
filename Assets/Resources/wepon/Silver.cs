@@ -14,6 +14,7 @@ public class Silver : ScriptableObject
     float reloadtime = 0.5f;
     bool accuracy = true;
     float YRecoil = 2f;
+    float punch = 1f;
     float RecoilDuration = 0.04f;
 
     void Start() {
@@ -24,6 +25,11 @@ public class Silver : ScriptableObject
     void Update() {
 
 
+    }
+
+    public float GetPunch()
+    {
+        return punch;
     }
 
     public float GetRate() {

@@ -267,35 +267,7 @@ public class RoundManager : MonoBehaviourPun {
         Debug.Log(winnerIsA);
 
 
-        // ラウンド数よりも多い場合は2回目の処理が走ってしまっている。
-       
-        if (this.Ascore + this.Bscore + 1 > round)
-        {
-            // 取り消し
-            round -= 1;
-            sideRound -= 1;
-
-            if (winnerIsA)
-            {
-                // 最初のBの分を取り消す
-                this.Acoin -= 1500;
-                this.streak = 0;
-                this.Bscore -= 1;
-                this.Bcoin -= 1500 + sideRound * 500;
-                this.Acoin -= 1000 + sideRound * 300;
-            }
-            else
-            {
-                // 最初のAの分を取り消す
-                this.Bcoin -= 1500;
-                this.streak = 0;
-                this.Ascore -= 1;
-                this.Acoin -= 1500 + sideRound * 500;
-                this.Bcoin -= 1000 + sideRound * 300;
-            }
-            // 常にプレイヤー2を勝者とする。
-            winnerIsA = false;
-        }
+        
         // その後もともとの処理を流す
 
 

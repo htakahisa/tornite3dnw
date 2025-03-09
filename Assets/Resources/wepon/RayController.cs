@@ -350,7 +350,7 @@ public class RayController : MonoBehaviourPun {
         {
             FireArte();
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && IsZooming)
         {
             if (deltaTimeSum >= burstrate)
             {
@@ -849,7 +849,7 @@ public class RayController : MonoBehaviourPun {
     }
 
 
-        public Vector3 CheckOnibi()
+    public Vector3 CheckOnibi()
     {
         DestroyAbilityCheck();
         RaycastHit hit;
@@ -1041,7 +1041,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = silver.GetReloadTime();
         yRecoil = silver.GetYRecoil();
         xRecoil = 0;
-        punch = 0;
+        punch = silver.GetPunch();
         burst = 0;
         burstrate = 0;
         PeekingSpeed = 0;
@@ -1253,7 +1253,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = noel.GetReloadTime();
         yRecoil = noel.GetYRecoil();
         xRecoil = noel.GetXRecoil();
-        punch = 0;
+        punch = noel.GetPunch();
         burst = 0;
         burstrate = 0;
         PeekingSpeed = noel.GetPeekingSpeed();
@@ -1293,7 +1293,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = reine.GetReloadTime();
         yRecoil = reine.GetYRecoil();
         xRecoil = 0;
-        punch = 0;
+        punch = reine.GetPunch();
         burst = 0;
         burstrate = 0;
         PeekingSpeed = reine.GetPeekingSpeed();
@@ -1333,7 +1333,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = duelist.GetReloadTime();
         yRecoil = duelist.GetYRecoil();
         xRecoil = 0;
-        punch = 0;
+        punch = duelist.GetPunch();
         burst = 0;
         burstrate = 0;
         PeekingSpeed = duelist.GetPeekingSpeed();
@@ -1373,7 +1373,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = yor.GetReloadTime();
         yRecoil = yor.GetYRecoil();
         xRecoil = 0;
-        punch = 0;
+        punch = yor.GetPunch();
         burst = 0;
         burstrate = 0;
         PeekingSpeed = 0;
@@ -1413,7 +1413,7 @@ public class RayController : MonoBehaviourPun {
         ReloadTime = blackbell.GetReloadTime();
         yRecoil = 0;
         xRecoil = 0;
-        punch = 0;
+        punch = blackbell.GetPunch();
         burst = 0;
         burstrate = 0;
         PeekingSpeed = blackbell.GetPeekingSpeed();

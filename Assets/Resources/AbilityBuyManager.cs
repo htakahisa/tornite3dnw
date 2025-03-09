@@ -84,7 +84,6 @@ public class AbilityBuyManager : MonoBehaviourPunCallbacks
                 Pay(cost);
                 able.Buy(Ability, kind);
                 nowability = Ability;
-                cc.SlingPower += 10;
             }
         }
         else

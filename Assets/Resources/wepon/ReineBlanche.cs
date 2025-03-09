@@ -16,6 +16,7 @@ public class ReineBlanche {
     bool accuracy = true;
     float PeekingSpeed = 0.05f;
     float YRecoil = 3.5f;
+    float punch = 2f;
     float RecoilDuration = 0.05f;
 
     void Start() {
@@ -26,6 +27,11 @@ public class ReineBlanche {
     void Update() {
 
 
+    }
+
+    public float GetPunch()
+    {
+        return punch;
     }
 
     public float GetRate() {
