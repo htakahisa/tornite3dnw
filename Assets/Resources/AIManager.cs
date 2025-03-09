@@ -378,7 +378,7 @@ public class AIManager : MonoBehaviour
 
     private float GetRandomDelay()
     {
-        return Random.Range(0.1f,1f);
+        return Random.Range(0.2f,1.0f);
     }
 
     private void DelayingWalk()
@@ -483,7 +483,7 @@ public class AIManager : MonoBehaviour
 
         // ベクトル間の角度のズレを計算
         float angleDifference = Vector3.Angle(currentDirection, direction);
-        float duration = angleDifference * 0.001f;
+        float duration = angleDifference * 0.01f;
 
         StartCoroutine(RotateSmoothly(direction, duration));
 
@@ -510,7 +510,7 @@ public class AIManager : MonoBehaviour
     {
         if (targetDirection == Vector3.zero) yield break; // ゼロ方向なら何もしない
 
-        float delayflick = Random.Range(0.09f,0.13f);
+        float delayflick = Random.Range(0.09f,0.15f);
 
         Quaternion startRotation = transform.rotation;
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
@@ -522,7 +522,7 @@ public class AIManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        Vector3 targethead = new Vector3(target.position.x, target.position.y + Random.Range(1f, 2f), target.position.z);
+        Vector3 targethead = new Vector3(target.position.x, target.position.y + Random.Range(0.5f, 2.0f), target.position.z);
         transform.rotation = targetRotation; // 最終的にピッタリ目標方向を向く
         yield return new WaitForSeconds(delayflick);
         point.transform.LookAt(targethead);

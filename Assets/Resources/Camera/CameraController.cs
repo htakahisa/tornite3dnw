@@ -208,7 +208,7 @@ public class CameraController : MonoBehaviourPunCallbacks {
 
 
 #if UNITY_EDITOR
-            if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             ability.number2++;
             ability.number1++;
